@@ -31,19 +31,31 @@ const plugin = {
     },
   },
   processors: {},
+  configs: {},
 };
 
-plugin.configs = {
-  recommended: [
-    {
-      plugins: {
-        'vue-modular': plugin,
-      },
-      rules: {
-        'vue-modular/no-var': 'error',
-      },
+// Flat config for ESLint v9+
+plugin.configs['flat/recommended'] = [
+  {
+    plugins: {
+      'vue-modular': plugin,
     },
-  ],
+    rules: {
+      'vue-modular/no-var': 'error',
+    },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+    },
+  },
+];
+
+// Classic config for legacy support
+plugin.configs.recommended = {
+  plugins: ['vue-modular'],
+  rules: {
+    'vue-modular/no-var': 'error',
+  },
 };
 
 export default plugin;

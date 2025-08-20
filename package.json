@@ -21,10 +21,7 @@
   },
   "homepage": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular#readme",
   "scripts": {
-    "test": "vitest",
-    "release": "standard-version",
-    "release:push": "npm run release && git push --follow-tags",
-    "release:github": "npm run release:push && gh release create $(git describe --tags --abbrev=0) --notes-file CHANGELOG.md"
+    "test": "vitest"
   },
   "devDependencies": {
     "eslint": "^9.33.0",

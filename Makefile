@@ -1,17 +1,13 @@
 @PHONY: lint install test update release
 
-
 install:
 	npm install
-
 
 lint:
 	npx markdownlint README.md
 
-
 test:
-	npm test
-
+	npx vitest
 
 update:
 	npx npm-check-updates -u
