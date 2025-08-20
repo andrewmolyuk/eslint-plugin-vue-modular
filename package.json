@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "ESLint plugin for checking and maintaining architecture boundaries in Vue 3 modular applications.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/andrewmolyuk/eslint-plugin-vue-modular.git"
@@ -23,9 +20,14 @@
     "url": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/issues"
   },
   "homepage": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular#readme",
+  "scripts": {
+    "test": "vitest"
+  },
   "devDependencies": {
+    "eslint": "^9.33.0",
     "markdownlint": "^0.38.0",
     "markdownlint-cli": "^0.45.0",
-    "npm-check-updates": "^18.0.2"
+    "npm-check-updates": "^18.0.2",
+    "vitest": "^3.2.4"
   }
 }
