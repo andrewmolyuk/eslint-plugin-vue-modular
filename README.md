@@ -21,7 +21,7 @@ npm install eslint-plugin-vue-modular --save-dev
 
 To enable the plugin and use one of the provided configurations, add the following to your eslint.config.js file:
 
-```json
+```js
 import modular from "eslint-plugin-vue-modular";
 export default [
   {
