@@ -65,6 +65,8 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 Modular architecture is a design pattern that promotes separation of concerns and encapsulation of features. By using this plugin, you can ensure that your Vue.js application follows best practices for modular development.
 
+For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).
+
 ### Modular Architecture in Vue
 
 In Vue applications, modular architecture means organizing your codebase into self-contained feature modules. Each module typically contains its own components, composables, stores, and styles, grouped by feature rather than by file type. This approach improves maintainability, scalability, and testability by reducing coupling and clarifying dependencies.
@@ -139,8 +141,6 @@ src/
 See the [Vue 3 Project Modules Blueprint](./docs/vue3-project-modules-blueprint.md) for more details and rationale behind this structure.
 
 The `eslint-plugin-vue-modular` plugin helps enforce these boundaries, ensuring that your Vue project remains modular as it grows.
-
-For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).
 
 ## Recommended VS Code Extensions
 
