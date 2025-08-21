@@ -25,13 +25,15 @@ release:
 	git add src/meta.js
 	git commit --amend --no-edit
 # Move the tag to point to the amended commit because the commit hash has changed
-	@TAG=$$(git describe --tags --abbrev=0); \
+	@VERSION=$$(node -p "require('./package.json').version"); \
+	TAG="v$$VERSION"; \
 	git tag -d $$TAG; \
 	git tag $$TAG
 	git push --follow-tags origin main
 # Handle situation where GitHub CLI is not authenticated
 	@if gh auth status >/dev/null 2>&1; then \
-		TAG=$$(git describe --tags --abbrev=0); \
+		VERSION=$$(node -p "require('./package.json').version"); \
+		TAG="v$$VERSION"; \
 		if gh release view $$TAG >/dev/null 2>&1; then \
 			echo "Release $$TAG already exists on GitHub"; \
 		else \
