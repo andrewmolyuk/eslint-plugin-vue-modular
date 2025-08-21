@@ -28,11 +28,16 @@ release:
 	@TAG=$$(git describe --tags --abbrev=0); \
 	git tag -d $$TAG; \
 	git tag $$TAG
-	git push --follow-tags --force-with-lease
+	git push --follow-tags origin main
 # Handle situation where GitHub CLI is not authenticated
 	@if gh auth status >/dev/null 2>&1; then \
-		gh release create $(shell git describe --tags --abbrev=0) --notes-file CHANGELOG.md; \
-		echo "GitHub release created successfully"; \
+		TAG=$$(git describe --tags --abbrev=0); \
+		if gh release view $$TAG >/dev/null 2>&1; then \
+			echo "Release $$TAG already exists on GitHub"; \
+		else \
+			gh release create $$TAG --notes-file CHANGELOG.md; \
+			echo "GitHub release $$TAG created successfully"; \
+		fi; \
 	else \
 		echo "GitHub CLI not authenticated. Run 'gh auth login' to create releases automatically."; \
 		echo "You can manually create a release at: https://github.com/andrewmolyuk/eslint-plugin-vue-modular/releases/new"; \
