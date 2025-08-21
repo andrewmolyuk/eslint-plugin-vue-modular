@@ -15,6 +15,19 @@ Rules that help maintain clean architectural boundaries in your Vue.js applicati
 
 - [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md) - Enforces that features should only be imported through their entry points
 
+## Planned Rules
+
+For a comprehensive list of planned rules and development timeline, see our [Roadmap](./roadmap.md).
+
+### Coming Soon
+
+| Rule | Priority | Description |
+|------|----------|-------------|
+| `vue-modular/no-cross-module-imports` | High | Prevent modules from importing directly from other modules |
+| `vue-modular/enforce-module-exports` | High | Ensure modules expose functionality through index.ts files |
+| `vue-modular/enforce-import-boundaries` | High | Enforce proper import paths based on module structure |
+| `vue-modular/no-cross-module-store-access` | High | Prevent direct access to other modules' stores |
+
 ## Configuration
 
 For detailed configuration examples and usage instructions, see the [main README](../README.md).
