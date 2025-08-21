@@ -1,0 +1,26 @@
+# Rules
+
+This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
+
+## Available Rules
+
+| Rule | Description | Type | Recommended | Fixable |
+|------|-------------|------|-------------|---------|
+| [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md) | Prevents direct imports from deep inside feature folders | Problem | ✅ | ❌ |
+
+## Rule Categories
+
+### Architectural Boundaries
+Rules that help maintain clean architectural boundaries in your Vue.js application:
+
+- [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md) - Enforces that features should only be imported through their entry points
+
+## Configuration
+
+For detailed configuration examples and usage instructions, see the [main README](../README.md).
+
+## Further Reading
+
+- [Feature-Driven Development](https://en.wikipedia.org/wiki/Feature-driven_development)
+- [Modular Architecture in Frontend Applications](https://martinfowler.com/articles/micro-frontends.html)
+- [Vue.js Large Scale Application Architecture](https://vuejs.org/guide/scaling-up/state-management.html)
