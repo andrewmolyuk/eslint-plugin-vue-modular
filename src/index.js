@@ -1,34 +1,10 @@
+import meta from './meta.js';
+import noCrossFeatureImports from './rules/no-cross-feature-imports.js';
+
 const plugin = {
-  meta: {
-    name: 'eslint-plugin-vue-modular',
-    version: '1.0.0',
-    namespace: 'vue-modular',
-  },
+  meta,
   rules: {
-    'no-var': {
-      meta: {
-        type: 'suggestion',
-        docs: {
-          description: "Disallow usage of 'var'",
-          recommended: false,
-        },
-        messages: {
-          unexpected: "Unexpected 'var', use 'let' or 'const' instead.",
-        },
-      },
-      create(context) {
-        return {
-          VariableDeclaration(node) {
-            if (node.kind === 'var') {
-              context.report({
-                node,
-                messageId: 'unexpected',
-              });
-            }
-          },
-        };
-      },
-    },
+    'no-cross-feature-imports': noCrossFeatureImports,
   },
   processors: {},
   configs: {},
@@ -41,7 +17,8 @@ plugin.configs['flat/recommended'] = [
       'vue-modular': plugin,
     },
     rules: {
-      'vue-modular/no-var': 'error',
+      'vue-modular/no-cross-feature-imports': 'error',
+  // ...existing code...
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -54,7 +31,8 @@ plugin.configs['flat/recommended'] = [
 plugin.configs.recommended = {
   plugins: ['vue-modular'],
   rules: {
-    'vue-modular/no-var': 'error',
+    'vue-modular/no-cross-feature-imports': 'error',
+  // ...existing code...
   },
 };
 
