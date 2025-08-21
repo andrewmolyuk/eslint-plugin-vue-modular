@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.2...v0.0.3) (2025-08-21)
+
+
+### Features
+
+* enhance release process with GitHub CLI authentication check ([a9ebbfe](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/a9ebbfed2552683fb109d8113f0ef81b55a58850))
+* implement no-cross-feature-imports rule and update related configurations ([96d5347](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/96d5347146e2f0bced223ea323a6164b27b09237))
+
 ### [0.0.8](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.2...v0.0.8) (2025-08-21)
 
 ### [0.0.7](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.2...v0.0.7) (2025-08-21)
