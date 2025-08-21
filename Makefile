@@ -29,4 +29,11 @@ release:
 	git tag -d $$TAG; \
 	git tag $$TAG
 	git push --follow-tags --force-with-lease
-	gh release create $(shell git describe --tags --abbrev=0) --notes-file CHANGELOG.md
+# Handle situation where GitHub CLI is not authenticated
+	@if gh auth status >/dev/null 2>&1; then \
+		gh release create $(shell git describe --tags --abbrev=0) --notes-file CHANGELOG.md; \
+		echo "GitHub release created successfully"; \
+	else \
+		echo "GitHub CLI not authenticated. Run 'gh auth login' to create releases automatically."; \
+		echo "You can manually create a release at: https://github.com/andrewmolyuk/eslint-plugin-vue-modular/releases/new"; \
+	fi
