@@ -6,7 +6,7 @@ describe('src-structure rule', () => {
   beforeEach(() => {
     // Reset any previous mocks
     vi.restoreAllMocks()
-    
+
     // Reset the rule's global state
     resetSession()
   })
@@ -111,7 +111,7 @@ describe('src-structure rule', () => {
     // Run the rule twice with the same context (simulating multiple files in src)
     const rule1 = srcStructureRule.create(context)
     const rule2 = srcStructureRule.create(context)
-    
+
     // Execute both Program visitors
     if (rule1.Program) {
       rule1.Program()
