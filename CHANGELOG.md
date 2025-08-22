@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.11...v0.0.12) (2025-08-22)
+
+
+### Bug Fixes
+
+* update test descriptions for clarity and remove unused dependencies ([8cffac5](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/8cffac590d8e3f2e2472ba1d65372e1fa1805cf2))
+
 ### [0.0.11](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.10...v0.0.11) (2025-08-22)
 
 
