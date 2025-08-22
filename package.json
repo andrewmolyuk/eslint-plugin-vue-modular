@@ -22,14 +22,19 @@
   },
   "homepage": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular#readme",
   "scripts": {
-    "test": "vitest"
+    "test": "vitest",
+    "test:mocha": "mocha tests/src-structure.spec.js"
   },
   "devDependencies": {
     "eslint": "^9.33.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-eslint-plugin": "^7.0.0",
+    "eslint-plugin-prettier": "^5.5.4",
     "markdownlint": "^0.38.0",
     "markdownlint-cli": "^0.45.0",
+    "mocha": "^11.7.1",
     "npm-check-updates": "^18.0.2",
+    "prettier": "^3.6.2",
     "standard-version": "^9.5.0",
     "vitest": "^3.2.4"
   }

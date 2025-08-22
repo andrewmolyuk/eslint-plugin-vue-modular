@@ -27,23 +27,24 @@ npm install eslint-plugin-vue-modular --save-dev
 
 ```js
 // eslint.config.js
-import vueModular from "eslint-plugin-vue-modular";
+import vueModular from 'eslint-plugin-vue-modular'
 
 export default [
   {
-    files: ["**/*.js", "**/*.vue", "**/*.ts"],
+    files: ['**/*.js', '**/*.vue', '**/*.ts'],
     plugins: {
-      "vue-modular": vueModular,
+      'vue-modular': vueModular,
     },
     rules: {
-      "vue-modular/no-cross-feature-imports": "error",
+      'vue-modular/no-cross-feature-imports': 'error',
+      'vue-modular/src-structure': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
-      sourceType: "module",
+      sourceType: 'module',
     },
   },
-];
+]
 ```
 
 ### Legacy Config (ESLint v8 and below)
@@ -51,19 +52,23 @@ export default [
 ```js
 // .eslintrc.js
 module.exports = {
-  plugins: ["vue-modular"],
-  extends: ["plugin:vue-modular/recommended"],
+  plugins: ['vue-modular'],
+  extends: ['plugin:vue-modular/recommended'],
   rules: {
-    "vue-modular/no-cross-feature-imports": "error",
+    'vue-modular/no-cross-feature-imports': 'error',
+    'vue-modular/src-structure': 'error',
   },
-};
+}
 ```
 
 ## Rules
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-Modular architecture is a design pattern that promotes separation of concerns and encapsulation of features. By using this plugin, you can ensure that your Vue.js application follows best practices for modular development.
+### Included Rules
+
+- [`vue-modular/no-cross-feature-imports`](./docs/rules/no-cross-feature-imports.md): Prevents direct imports from deep inside feature folders
+- [`vue-modular/src-structure`](./docs/rules/src-structure.md): Enforces allowed top-level folders/files in `src`
 
 For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).
 

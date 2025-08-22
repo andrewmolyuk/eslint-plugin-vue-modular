@@ -20,7 +20,8 @@ src/
 │   │   └── index.ts
 │   ├── stores/               # Pinia/Vuex root store setup
 │   ├── plugins/              # Global plugins (axios, i18n, etc.)
-│   └── layouts/              # App-level layouts (DefaultLayout.vue, AuthLayout.vue)
+│   ├── layouts/              # App-level layouts (DefaultLayout.vue, AuthLayout.vue)
+│   └── App.vue               # Application root component
 │
 ├── components/               # Global reusable components
 │   ├── layout/               # Layout-related components
@@ -97,7 +98,6 @@ src/
 │   ├── ui/                   # Basic UI kit (buttons, inputs, forms, etc.)
 │   └── utils/                # Formatters, validators, etc.
 │
-├── App.vue                   # Application root component
 └── main.ts                   # Application entry point
 ```
 

@@ -5,7 +5,7 @@
 // ========================================
 
 // Example 1: Basic flat config using the recommended preset
-import vueModular from 'eslint-plugin-vue-modular';
+import vueModular from 'eslint-plugin-vue-modular'
 
 export default [
   {
@@ -21,13 +21,13 @@ export default [
       sourceType: 'module',
     },
   },
-];
+]
 
 // Example 2: Using the built-in recommended config
 export const withRecommended = [
   ...vueModular.configs['flat/recommended'],
   // Add your other configs here
-];
+]
 
 // Example 3: Custom configuration with specific options
 export const customConfig = [
@@ -41,10 +41,7 @@ export const customConfig = [
         'error',
         {
           featurePattern: 'src/features/*',
-          allowedPatterns: [
-            'src/features/*/index.js',
-            'src/features/*/index.ts',
-          ],
+          allowedPatterns: ['src/features/*/index.js', 'src/features/*/index.ts'],
         },
       ],
     },
@@ -53,7 +50,7 @@ export const customConfig = [
       sourceType: 'module',
     },
   },
-];
+]
 
 // Example 4: Multiple configurations for different file types
 export const multipleConfigs = [
@@ -85,14 +82,13 @@ export const multipleConfigs = [
       sourceType: 'module',
     },
   },
-];
+]
 
 // ========================================
 // LEGACY CONFIG (ESLint v8 and below)
 // ========================================
 
 // Example 5: Legacy .eslintrc.js format
-/* 
 module.exports = {
   plugins: ['vue-modular'],
   extends: ['plugin:vue-modular/recommended'],
@@ -107,11 +103,9 @@ module.exports = {
     ecmaVersion: 2022,
     sourceType: 'module',
   },
-};
-*/
+}
 
 // Example 6: Legacy configuration with custom options
-/*
 module.exports = {
   plugins: ['vue-modular'],
   rules: {
@@ -119,10 +113,7 @@ module.exports = {
       'error',
       {
         featurePattern: 'src/features/*',
-        allowedPatterns: [
-          'src/features/*/index.js',
-          'src/features/*/index.ts',
-        ],
+        allowedPatterns: ['src/features/*/index.js', 'src/features/*/index.ts'],
       },
     ],
   },
@@ -134,45 +125,4 @@ module.exports = {
     ecmaVersion: 2022,
     sourceType: 'module',
   },
-};
-*/
-
-// ========================================
-// RULE CONFIGURATION OPTIONS
-// ========================================
-
-/*
-Available rule options for 'vue-modular/no-cross-feature-imports':
-
-{
-  // Pattern to identify feature directories
-  featurePattern: 'src/features/*', // default
-
-  // Patterns that are allowed to be imported from outside the feature
-  allowedPatterns: [
-    'src/features/*/index.js',
-    'src/features/*/index.ts',
-    'src/features/*/api.js',
-    'src/features/*/types.ts',
-  ],
-
-  // Additional patterns for modules directory
-  modulePattern: 'src/modules/*', // default
-  
-  // Allow imports between features in the same group
-  allowCrossFeatureImports: false, // default
 }
-
-Example usage:
-'vue-modular/no-cross-feature-imports': [
-  'error',
-  {
-    featurePattern: 'src/features/*',
-    allowedPatterns: [
-      'src/features/*/index.js',
-      'src/features/*/api.js',
-    ],
-    allowCrossFeatureImports: false,
-  },
-],
-*/

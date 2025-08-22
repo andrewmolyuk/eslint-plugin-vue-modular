@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach } from 'vitest';
-import { RuleTester } from 'eslint';
-import plugin from '../src/index.js';
+import { describe, it, expect, beforeEach } from 'vitest'
+import { RuleTester } from 'eslint'
+import plugin from '../src/index.js'
 
 describe('vue-modular/no-cross-feature-imports rule', () => {
-  let ruleTester;
+  let ruleTester
 
   beforeEach(() => {
     ruleTester = new RuleTester({
@@ -14,8 +14,8 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
       plugins: {
         'vue-modular': plugin,
       },
-    });
-  });
+    })
+  })
 
   it('should prevent cross-feature imports from src/features', () => {
     ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
@@ -51,19 +51,19 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
         {
           code: "import userService from '@/features/user/services/userService.js';",
           filename: '/project/src/components/UserList.js',
-          errors: [{ messageId: 'crossFeatureImport' }]
+          errors: [{ messageId: 'crossFeatureImport' }],
         },
         // ❌ Import from deep inside another feature via relative path
         {
           code: "import productService from '../../product/services/productService.js';",
           filename: '/project/src/features/user/components/UserProfile.js',
-          errors: [{ messageId: 'crossFeatureImport' }]
+          errors: [{ messageId: 'crossFeatureImport' }],
         },
       ],
-    });
+    })
 
-    expect(true).toBe(true); // Dummy assertion for Vitest
-  });
+    expect(true).toBe(true) // Dummy assertion for Vitest
+  })
 
   it('should prevent cross-feature imports from modules/<module>/features', () => {
     ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
@@ -84,13 +84,13 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
         {
           code: "import loginValidator from '../../modules/auth/features/login/utils/validator.js';",
           filename: '/project/src/components/App.js',
-          errors: [{ messageId: 'crossFeatureImport' }]
+          errors: [{ messageId: 'crossFeatureImport' }],
         },
       ],
-    });
+    })
 
-    expect(true).toBe(true); // Dummy assertion for Vitest
-  });
+    expect(true).toBe(true) // Dummy assertion for Vitest
+  })
 
   it('should work with custom configuration', () => {
     ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
@@ -108,11 +108,11 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
           code: "import userService from '@/components/user/services/userService.js';",
           filename: '/project/source/pages/UserList.js',
           options: [{ srcPath: 'source', featuresPath: 'components' }],
-          errors: [{ messageId: 'crossFeatureImport' }]
+          errors: [{ messageId: 'crossFeatureImport' }],
         },
       ],
-    });
+    })
 
-    expect(true).toBe(true); // Dummy assertion for Vitest
-  });
-});
+    expect(true).toBe(true) // Dummy assertion for Vitest
+  })
+})
