@@ -9,6 +9,7 @@ This document outlines the current status and planned development of rules for e
 | Rule | Status | Description |
 |------|--------|-------------|
 | `vue-modular/no-cross-feature-imports` | **Released** | Prevents direct imports from deep inside feature folders |
+| `vue-modular/src-structure` | **Released** | Enforces allowed top-level folders/files in source directory |
 
 ---
 

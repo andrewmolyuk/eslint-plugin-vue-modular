@@ -4,9 +4,9 @@
 
 ## Rule Details
 
-This rule ensures that only a specific set of folders and files are present at the top level of your project's `src` directory. This helps maintain a consistent and modular project structure.
+This rule ensures that only a specific set of folders and files are present at the top level of your project's source directory. This helps maintain a consistent and modular project structure.
 
-**Allowed top-level folders/files:**
+**Default allowed top-level folders/files:**
 - app
 - components
 - composables
@@ -14,10 +14,10 @@ This rule ensures that only a specific set of folders and files are present at t
 - features
 - modules
 - shared
-- App.vue
 - main.ts
+- main.js
 
-Any other folder or file at the top level of `src` will trigger a lint error.
+Any other folder or file at the top level of the source directory will trigger a lint error.
 
 ### Example of correct structure
 
@@ -30,7 +30,6 @@ src/
   features/
   modules/
   shared/
-  App.vue
   main.ts
 ```
 
@@ -41,13 +40,107 @@ src/
   app/
   components/
   utils/         # ❌ Not allowed
-  App.vue
   main.ts
 ```
 
+## Options
+
+This rule accepts an options object with the following properties:
+
+### `allowed`
+
+**Type:** `array`  
+**Default:** `['app', 'components', 'composables', 'entities', 'features', 'modules', 'shared', 'main.ts', 'main.js']`
+
+An array of strings specifying the allowed top-level folders and files.
+
+### `src`
+
+**Type:** `string`  
+**Default:** `'src'`
+
+The name of the source directory to check.
+
+## Configuration Examples
+
+### Default Configuration
+
+```js
+// eslint.config.js
+export default [
+  {
+    rules: {
+      'vue-modular/src-structure': 'error'
+    }
+  }
+];
+```
+
+### Custom allowed folders/files
+
+```js
+// eslint.config.js
+export default [
+  {
+    rules: {
+      'vue-modular/src-structure': [
+        'error',
+        {
+          allowed: ['components', 'pages', 'utils', 'App.vue', 'main.ts']
+        }
+      ]
+    }
+  }
+];
+```
+
+### Custom source directory
+
+```js
+// eslint.config.js
+export default [
+  {
+    rules: {
+      'vue-modular/src-structure': [
+        'error',
+        {
+          src: 'source'
+        }
+      ]
+    }
+  }
+];
+```
+
+### Full custom configuration
+
+```js
+// eslint.config.js
+export default [
+  {
+    rules: {
+      'vue-modular/src-structure': [
+        'error',
+        {
+          allowed: ['app', 'lib', 'pages', 'index.ts'],
+          src: 'lib'
+        }
+      ]
+    }
+  }
+];
+```
+
+## How It Works
+
+- The rule only runs when linting files inside the specified source directory (default: `src`)
+- It checks the contents of the source directory once per lint run
+- It reports any top-level entries (files or folders) that are not in the allowed list
+- The rule runs only once per lint session to avoid duplicate reports
+
 ## When Not To Use It
 
-If you want to allow arbitrary folders/files in your `src` directory, you can disable this rule.
+If you want to allow arbitrary folders/files in your source directory, you can disable this rule or exclude it from your configuration.
 
 ## Further Reading
 - [Vue 3 Project Modules Blueprint](../vue3-project-modules-blueprint.md)
