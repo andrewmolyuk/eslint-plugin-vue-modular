@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.12...v0.0.13) (2025-08-22)
+
+
+### Features
+
+* add no-cross-module-imports rule to enforce module boundaries ([fe9e060](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/fe9e06083d8b241b043fd91d0504cd92f2347500))
+
+
+### Bug Fixes
+
+* add 'stores' to allowed top-level folders in src structure ([076906a](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/076906ad0e032e779994cdf764fdfc0244634cf3))
+
 ### [0.0.12](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.11...v0.0.12) (2025-08-22)
 
 
