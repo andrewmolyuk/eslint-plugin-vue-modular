@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.7...v0.0.8) (2025-08-22)
+
+
+### Features
+
+* add roadmap and planned rules for eslint-plugin-vue-modular ([f37f4a8](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/f37f4a8924ed3c4ff7dbae1b6c626bb47cc312f8))
+* add src-structure rule to enforce allowed top-level folders and files in src directory ([f90a1d9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/f90a1d98fbfd11e16096399f51112039781a1045))
+* enhance README and documentation for eslint-plugin-vue-modular ([066823c](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/066823cda292843324a9531ab3a418fff851fdcd))
+
 ### [0.0.7](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.2...v0.0.7) (2025-08-21)
 
 
