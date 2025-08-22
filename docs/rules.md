@@ -7,6 +7,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | Rule | Description | Type | Recommended | Fixable |
 |------|-------------|------|-------------|---------|
 | [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md) | Prevents direct imports from deep inside feature folders | Problem | ✅ | ❌ |
+| [`vue-modular/no-cross-module-imports`](./rules/no-cross-module-imports.md) | Prevents imports between different modules | Problem | ✅ | ❌ |
 | [`vue-modular/src-structure`](./rules/src-structure.md) | Enforces allowed top-level folders/files in source directory | Problem | ✅ | ❌ |
 
 ## Rule Categories
@@ -15,6 +16,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 Rules that help maintain clean architectural boundaries in your Vue.js application:
 
 - [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md) - Enforces that features should only be imported through their entry points
+- [`vue-modular/no-cross-module-imports`](./rules/no-cross-module-imports.md) - Prevents imports between different modules
 - [`vue-modular/src-structure`](./rules/src-structure.md) - Enforces allowed top-level folders/files in source directory
 
 ## Planned Rules
@@ -25,7 +27,6 @@ For a comprehensive list of planned rules and development timeline, see our [Roa
 
 | Rule | Priority | Description |
 |------|----------|-------------|
-| `vue-modular/no-cross-module-imports` | High | Prevent modules from importing directly from other modules |
 | `vue-modular/enforce-module-exports` | High | Ensure modules expose functionality through index.ts files |
 | `vue-modular/enforce-import-boundaries` | High | Enforce proper import paths based on module structure |
 | `vue-modular/no-cross-module-store-access` | High | Prevent direct access to other modules' stores |

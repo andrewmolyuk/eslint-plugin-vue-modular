@@ -37,6 +37,7 @@ export default [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
+      'vue-modular/no-cross-module-imports': 'error',
       'vue-modular/src-structure': 'error',
     },
     languageOptions: {
@@ -56,6 +57,7 @@ module.exports = {
   extends: ['plugin:vue-modular/recommended'],
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
+    'vue-modular/no-cross-module-imports': 'error',
     'vue-modular/src-structure': 'error',
   },
 }
@@ -68,6 +70,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 ### Included Rules
 
 - [`vue-modular/no-cross-feature-imports`](./docs/rules/no-cross-feature-imports.md): Prevents direct imports from deep inside feature folders
+- [`vue-modular/no-cross-module-imports`](./docs/rules/no-cross-module-imports.md): Prevents imports between different modules
 - [`vue-modular/src-structure`](./docs/rules/src-structure.md): Enforces allowed top-level folders/files in source directory
 
 For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).

@@ -7,14 +7,14 @@ lint:
 	npx eslint . --ext .js,.vue --fix
 	npx markdownlint README.md
 
-test:
+test: lint
 	npx vitest
 
 update:
 	npx npm-check-updates -u
 	npm install
 
-release:
+release: test
 	@if gh auth status >/dev/null 2>&1; then \
 		npx standard-version; \
 		git push --follow-tags; \
