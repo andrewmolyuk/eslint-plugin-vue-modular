@@ -1,11 +1,14 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
-import srcStructureRule from '../src/rules/src-structure.js'
+import srcStructureRule, { resetSession } from '../src/rules/src-structure.js'
 
 describe('src-structure rule', () => {
   beforeEach(() => {
     // Reset any previous mocks
     vi.restoreAllMocks()
+    
+    // Reset the rule's global state
+    resetSession()
   })
 
   const createContext = (filename = '/project/src/App.vue', options = [{}]) => ({
@@ -22,6 +25,11 @@ describe('src-structure rule', () => {
     const context = createContext()
     const ruleInstance = srcStructureRule.create(context)
 
+    // Execute the Program visitor
+    if (ruleInstance.Program) {
+      ruleInstance.Program()
+    }
+
     expect(context.report).not.toHaveBeenCalled()
   })
 
@@ -31,6 +39,11 @@ describe('src-structure rule', () => {
 
     const context = createContext()
     const ruleInstance = srcStructureRule.create(context)
+
+    // Execute the Program visitor
+    if (ruleInstance.Program) {
+      ruleInstance.Program()
+    }
 
     expect(context.report).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -49,6 +62,11 @@ describe('src-structure rule', () => {
     const context = createContext('/project/src/foo.js', [{ allowed: ['foo', 'bar'] }])
     const ruleInstance = srcStructureRule.create(context)
 
+    // Execute the Program visitor
+    if (ruleInstance.Program) {
+      ruleInstance.Program()
+    }
+
     expect(context.report).not.toHaveBeenCalled()
   })
 
@@ -59,6 +77,11 @@ describe('src-structure rule', () => {
     const context = createContext('/project/customsrc/foo.js', [{ src: 'customsrc', allowed: ['foo', 'bar'] }])
     const ruleInstance = srcStructureRule.create(context)
 
+    // Execute the Program visitor
+    if (ruleInstance.Program) {
+      ruleInstance.Program()
+    }
+
     expect(context.report).not.toHaveBeenCalled()
   })
 
@@ -68,6 +91,11 @@ describe('src-structure rule', () => {
 
     const context = createContext('/project/otherdir/foo.js')
     const ruleInstance = srcStructureRule.create(context)
+
+    // Execute the Program visitor
+    if (ruleInstance.Program) {
+      ruleInstance.Program()
+    }
 
     // fs.readdirSync should not have been called since we're not in src
     expect(mockReaddir).not.toHaveBeenCalled()
@@ -81,8 +109,16 @@ describe('src-structure rule', () => {
     const context = createContext('/project/src/App.vue')
 
     // Run the rule twice with the same context (simulating multiple files in src)
-    srcStructureRule.create(context)
-    srcStructureRule.create(context)
+    const rule1 = srcStructureRule.create(context)
+    const rule2 = srcStructureRule.create(context)
+    
+    // Execute both Program visitors
+    if (rule1.Program) {
+      rule1.Program()
+    }
+    if (rule2.Program) {
+      rule2.Program()
+    }
 
     // Should only report once, not twice
     expect(context.report).toHaveBeenCalledTimes(1)
@@ -95,9 +131,14 @@ describe('src-structure rule', () => {
     })
 
     const context = createContext()
+    const ruleInstance = srcStructureRule.create(context)
 
     // Should not throw and should not report anything
-    expect(() => srcStructureRule.create(context)).not.toThrow()
+    expect(() => {
+      if (ruleInstance.Program) {
+        ruleInstance.Program()
+      }
+    }).not.toThrow()
     expect(context.report).not.toHaveBeenCalled()
   })
 })
