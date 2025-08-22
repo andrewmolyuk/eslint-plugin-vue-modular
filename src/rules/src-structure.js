@@ -10,26 +10,27 @@ const defaultOptions = {
   src: 'src',
 }
 
-// Create a session-based cache that resets for each ESLint run
-// Use process.hrtime.bigint() to get a unique session identifier
-let currentSession = null
-let checkedSrcDirs = new Set()
+// Use a combination of process.pid and current working directory to create a unique ESLint run identifier
+// This ensures that each ESLint process has its own set of checked directories
+const eslintRunId = `${process.pid}_${process.cwd()}_${Date.now()}`
 
-function getSession() {
-  // Create a new session based on current time - this ensures we get a fresh session for each ESLint run
-  const now = process.hrtime.bigint()
-  if (currentSession === null || now - currentSession > 1000000000n) {
-    // Reset after 1 second
-    currentSession = now
-    checkedSrcDirs = new Set()
+// Store checked directories globally to persist across rule instantiations within the same ESLint run
+if (!global.__eslintVueModularState) {
+  global.__eslintVueModularState = new Map()
+}
+
+function getCheckedDirs() {
+  if (!global.__eslintVueModularState.has(eslintRunId)) {
+    global.__eslintVueModularState.set(eslintRunId, new Set())
   }
-  return currentSession
+  return global.__eslintVueModularState.get(eslintRunId)
 }
 
 // Export for testing purposes
 export function resetSession() {
-  currentSession = null
-  checkedSrcDirs = new Set()
+  if (global.__eslintVueModularState) {
+    global.__eslintVueModularState.clear()
+  }
 }
 
 export default {
@@ -69,8 +70,8 @@ export default {
     },
   },
   create(context) {
-    // Initialize session
-    getSession()
+    // Get the checked directories for this ESLint run
+    const checkedDirs = getCheckedDirs()
 
     // Get options
     const options = context.options && context.options[0] ? context.options[0] : {}
@@ -91,11 +92,11 @@ export default {
     }
     const srcDir = filename.substring(0, srcIndex + srcSegment.length - 1) // Remove trailing separator
 
-    // Only check each src directory once per ESLint session
-    if (checkedSrcDirs.has(srcDir)) {
+    // Only check each src directory once per ESLint run
+    if (checkedDirs.has(srcDir)) {
       return {}
     }
-    checkedSrcDirs.add(srcDir)
+    checkedDirs.add(srcDir)
 
     return {
       Program() {

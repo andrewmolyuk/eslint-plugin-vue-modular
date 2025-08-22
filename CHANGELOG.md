@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.8...v0.0.10) (2025-08-22)
+
+
+### Bug Fixes
+
+* **src-structure:** fix rule running multiple times by using process-based cache ([TBD](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/TBD))
+
+### [0.0.8](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.7...v0.0.8) (2025-08-22)ngelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
 ### [0.0.10](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.9...v0.0.10) (2025-08-22)
 
 
