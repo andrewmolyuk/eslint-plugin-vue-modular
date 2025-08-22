@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.9...v0.0.10) (2025-08-22)
+
+
+### Bug Fixes
+
+* update changelog for version 0.0.9 and improve src-structure rule session handling ([e3e3f62](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/e3e3f6202a0e74c9faa957566bfaef847700814b))
+
 ### [0.0.9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.7...v0.0.9) (2025-08-22)
 
 
