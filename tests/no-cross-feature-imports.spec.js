@@ -20,17 +20,17 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
   it('should prevent cross-feature imports from src/features', () => {
     ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
       valid: [
-        // ✅ Import from feature's entry point is allowed
+        // ✅ Components can import from feature entry points
         {
           code: "import userApi from '@/features/user';",
           filename: '/project/src/components/UserList.js',
         },
-        // ✅ Import from same feature is allowed
+        // ✅ Same feature internal imports by relative paths
         {
           code: "import userService from './services/userService.js';",
           filename: '/project/src/features/user/components/UserProfile.js',
         },
-        // ✅ Import from same feature using relative path is allowed
+        // ✅ Same feature internal imports by relative paths
         {
           code: "import userTypes from '../types/userTypes.js';",
           filename: '/project/src/features/user/components/UserProfile.js',
@@ -47,13 +47,13 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
         },
       ],
       invalid: [
-        // ❌ Import from deep inside another feature via @ alias
+        // ❌ Components cannot import deep into features via @ alias
         {
           code: "import userService from '@/features/user/services/userService.js';",
           filename: '/project/src/components/UserList.js',
           errors: [{ messageId: 'crossFeatureImport' }],
         },
-        // ❌ Import from deep inside another feature via relative path
+        // ❌ Features cannot import deep into other features via relative path
         {
           code: "import productService from '../../product/services/productService.js';",
           filename: '/project/src/features/user/components/UserProfile.js',
@@ -68,19 +68,19 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
   it('should prevent cross-feature imports from modules/<module>/features', () => {
     ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
       valid: [
-        // ✅ Import from module feature's entry point is allowed
+        // ✅ Components can import from module feature entry points
         {
           code: "import authApi from '../../modules/auth/features/login';",
           filename: '/project/src/components/App.js',
         },
-        // ✅ Import within same module feature is allowed
+        // ✅ Module features can import internally
         {
           code: "import loginForm from './components/LoginForm.js';",
           filename: '/project/modules/auth/features/login/pages/LoginPage.js',
         },
       ],
       invalid: [
-        // ❌ Import from deep inside module feature
+        // ❌ Components cannot import deep into module features
         {
           code: "import loginValidator from '../../modules/auth/features/login/utils/validator.js';",
           filename: '/project/src/components/App.js',
