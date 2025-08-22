@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.10...v0.0.11) (2025-08-22)
+
+
+### Bug Fixes
+
+* improve src-structure rule to use process-based cache and remove session-based cache ([14442e9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/14442e96f23f9152d082a0fe0107844d5ec6c546))
+* remove unnecessary blank lines in src-structure tests ([4519f7d](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/4519f7d458854a1ffa0de87aaef301783dc1b823))
+
 ### [0.0.10](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.8...v0.0.10) (2025-08-22)
 
 
