@@ -8,7 +8,7 @@ lint:
 	npx markdownlint README.md
 
 test: lint
-	npx vitest
+	CI=CI npx vitest
 
 update:
 	npx npm-check-updates -u
