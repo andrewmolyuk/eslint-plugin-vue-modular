@@ -18,11 +18,25 @@ This rule ensures that only a specific set of folders and files are present at t
 - main.ts
 - main.js
 
+**Updated default allowed top-level folders/files:**
+
+- app
+- components
+- composables
+- entities
+- features
+- modules
+- shared
+- views
+- stores
+- main.ts
+- main.js
+
 Any other folder or file at the top level of the source directory will trigger a lint error.
 
 ### Example of correct structure
 
-```
+```text
 src/
   app/
   components/
@@ -36,7 +50,7 @@ src/
 
 ### Example of incorrect structure
 
-```
+```text
 src/
   app/
   components/
@@ -51,7 +65,7 @@ This rule accepts an options object with the following properties:
 ### `allowed`
 
 **Type:** `array`  
-**Default:** `['app', 'components', 'composables', 'entities', 'features', 'modules', 'shared', 'main.ts', 'main.js']`
+**Default:** `['app', 'components', 'composables', 'entities', 'features', 'modules', 'shared', 'views', 'stores', 'main.ts', 'main.js']`
 
 An array of strings specifying the allowed top-level folders and files.
 
@@ -87,7 +101,7 @@ export default [
       'vue-modular/src-structure': [
         'error',
         {
-          allowed: ['components', 'pages', 'utils', 'App.vue', 'main.ts'],
+          allowed: ['components', 'pages', 'utils', 'views', 'stores', 'main.ts'],
         },
       ],
     },
@@ -123,7 +137,7 @@ export default [
       'vue-modular/src-structure': [
         'error',
         {
-          allowed: ['app', 'lib', 'pages', 'index.ts'],
+          allowed: ['app', 'lib', 'pages', 'views', 'stores', 'index.ts'],
           src: 'lib',
         },
       ],
