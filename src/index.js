@@ -5,6 +5,7 @@ import noCrossModuleImports from './rules/no-cross-module-imports.js'
 import srcStructure from './rules/src-structure.js'
 import appStructure from './rules/app-structure.js'
 import moduleStructure from './rules/module-structure.js'
+import featureStructure from './rules/feature-structure.js'
 
 const plugin = {
   meta,
@@ -14,6 +15,7 @@ const plugin = {
     'src-structure': srcStructure,
     'app-structure': appStructure,
     'module-structure': moduleStructure,
+    'feature-structure': featureStructure,
   },
   processors: {},
   configs: {},
@@ -31,6 +33,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/src-structure': 'error',
       'vue-modular/app-structure': 'error',
       'vue-modular/module-structure': 'error',
+      'vue-modular/feature-structure': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -48,6 +51,7 @@ plugin.configs.recommended = {
     'vue-modular/src-structure': 'error',
     'vue-modular/app-structure': 'error',
     'vue-modular/module-structure': 'error',
+    'vue-modular/feature-structure': 'error',
   },
 }
 
