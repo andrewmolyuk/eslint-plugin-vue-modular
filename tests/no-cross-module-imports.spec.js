@@ -39,6 +39,11 @@ describe('vue-modular/no-cross-module-imports rule', () => {
           code: "import Button from '@/modules/admin/components/Button'",
           filename: '/src/modules/admin/pages/Users.vue',
         },
+        // Importing module public API (index) is allowed
+        {
+          code: "import AdminModule from '@/modules/admin'",
+          filename: '/src/modules/admin/pages/Users.vue',
+        },
         // Shared folders are allowed (not considered modules)
         {
           code: "import utils from '@/shared/utils'",

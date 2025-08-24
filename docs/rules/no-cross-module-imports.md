@@ -37,11 +37,11 @@ import UserProfile from './components/UserProfile.vue'
 import userService from '../services/userService.js'
 import Button from '@/modules/user/components/Button.vue' // Same module via @ alias
 
-// Imports from shared/common areas (not modules)
-import utils from '@/shared/utils'
-import commonComponent from '@/common/Component.vue'
+// Imports from shared areas (not modules)
+import formatters from '@/shared/formatters'
+import commonComponent from '@/shared/ui/Component.vue'
 import apiService from '@/services/api'
-import store from '@/store/index'
+import store from '@/stores/index'
 
 // Node module imports
 import Vue from 'vue'
@@ -69,7 +69,7 @@ import { computed } from 'vue'
 
 ## Project Structure
 
-```
+```text
 src/
 ├── modules/
 │   ├── admin/
@@ -93,19 +93,16 @@ src/
 │       │   └── PaymentForm.vue   ❌ Cannot import from other modules
 │       └── services/
 │           └── paymentApi.js     ✅ Can import from billing module
-├── shared/                       ✅ Available to all modules
-│   ├── utils/
-│   │   └── formatters.js
-│   └── components/
+├── shared/                       ✅ Available to all modules (flat for utilities; `ui/` for UI kit)
+│   ├── formatters.js
+│   └── ui/
 │       └── BaseButton.vue
-├── common/                       ✅ Available to all modules
-│   └── constants.js
 ├── services/                     ✅ Available to all modules
 │   └── httpClient.js
-├── store/                        ✅ Available to all modules
+├── stores/                       ✅ Available to all modules
 │   └── index.js
 └── components/                   ✅ Available to all modules
-    └── AppLayout.vue
+  └── AppLayout.vue
 ```
 
 ## Configuration Examples
@@ -138,7 +135,7 @@ src/
 
 This would enforce the rule for a structure like:
 
-```
+```text
 source/
 ├── features/
 │   ├── moduleA/

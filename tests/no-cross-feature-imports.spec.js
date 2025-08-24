@@ -65,6 +65,51 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
     expect(true).toBe(true) // Dummy assertion for Vitest
   })
 
+  it('allows importing a module feature entry via alias and disallows deep alias imports into other module features', () => {
+    ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
+      valid: [
+        // ✅ Module internal files can import other internal features inside the same module
+        {
+          code: "import helper from '@/modules/auth/features/login/helpers/utils';",
+          filename: '/project/modules/auth/features/login/index.js',
+        },
+        // ✅ App-layer may import module public API
+        {
+          code: "import AuthModule from '@/modules/auth';",
+          filename: '/project/src/app/router/index.js',
+        },
+      ],
+      invalid: [
+        // ❌ App-layer or components cannot import internal module feature files directly
+        {
+          code: "import LoginFeature from '@/modules/auth/features/login';",
+          filename: '/project/src/app/router/index.js',
+          errors: [{ messageId: 'crossFeatureImport' }],
+        },
+        // ❌ Components cannot import internal module feature files directly
+        {
+          code: "import LoginFeature from '@/modules/auth/features/login';",
+          filename: '/project/src/components/App.js',
+          errors: [{ messageId: 'crossFeatureImport' }],
+        },
+        // ❌ Components may NOT import module public API directly (must be app layer)
+        {
+          code: "import AuthModule from '@/modules/auth';",
+          filename: '/project/src/components/App.js',
+          errors: [{ messageId: 'crossFeatureImport' }],
+        },
+        // ❌ Deep import into another module feature via @ alias
+        {
+          code: "import secret from '@/modules/payments/features/checkout/secret';",
+          filename: '/project/modules/auth/features/login/index.js',
+          errors: [{ messageId: 'crossFeatureImport' }],
+        },
+      ],
+    })
+
+    expect(true).toBe(true) // Dummy assertion for Vitest
+  })
+
   it('should prevent cross-feature imports from modules/<module>/features', () => {
     ruleTester.run('vue-modular/no-cross-feature-imports', plugin.rules['no-cross-feature-imports'], {
       valid: [
