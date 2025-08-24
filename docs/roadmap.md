@@ -6,10 +6,14 @@ This document outlines the current status and planned development of rules for e
 
 ### Implemented Rules
 
-| Rule                                   | Status       | Description                                                  |
-| -------------------------------------- | ------------ | ------------------------------------------------------------ |
-| `vue-modular/no-cross-feature-imports` | **Released** | Prevents direct imports from deep inside feature folders     |
-| `vue-modular/src-structure`            | **Released** | Enforces allowed top-level folders/files in source directory |
+| Rule                                   | Status       | Description                                                                          |
+| -------------------------------------- | ------------ | ------------------------------------------------------------------------------------ |
+| `vue-modular/no-cross-feature-imports` | **Released** | Prevents direct imports from deep inside feature folders                             |
+| `vue-modular/no-cross-module-imports`  | **Released** | Prevents deep imports between modules; prefer module public API                      |
+| `vue-modular/src-structure`            | **Released** | Enforces allowed top-level folders/files in the `src/` folder                        |
+| `vue-modular/app-structure`            | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
+| `vue-modular/module-structure`         | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
+| `vue-modular/feature-structure`        | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
 
 ---
 
@@ -17,11 +21,9 @@ This document outlines the current status and planned development of rules for e
 
 ### Module Boundary Enforcement
 
-| Rule                                  | Priority   | Description                                                      | Status      |
-| ------------------------------------- | ---------- | ---------------------------------------------------------------- | ----------- |
-| `vue-modular/no-cross-module-imports` | **High**   | Prevent modules from importing directly from other modules       | **Planned** |
-| `vue-modular/enforce-module-exports`  | **High**   | Ensure modules expose their functionality through index.ts files | **Planned** |
-| `vue-modular/no-shared-in-modules`    | **Medium** | Prevent modules from importing shared utilities incorrectly      | **Planned** |
+| Rule                               | Priority   | Description                                                 | Status      |
+| ---------------------------------- | ---------- | ----------------------------------------------------------- | ----------- |
+| `vue-modular/no-shared-in-modules` | **Medium** | Prevent modules from importing shared utilities incorrectly | **Planned** |
 
 ### Component Organization
 
@@ -74,7 +76,6 @@ This document outlines the current status and planned development of rules for e
 | -------------------------------------- | ---------- | -------------------------------------------------- | ----------- |
 | `vue-modular/enforce-folder-structure` | **High**   | Ensure consistent folder structure within modules  | **Planned** |
 | `vue-modular/no-deep-nesting`          | **Medium** | Prevent excessive folder nesting in modules        | **Planned** |
-| `vue-modular/enforce-index-exports`    | **High**   | Require index.ts files for module exports          | **Planned** |
 | `vue-modular/no-orphaned-files`        | **Medium** | Flag files that don't belong to any clear category | **Planned** |
 
 ### TypeScript and Type Safety
@@ -188,10 +189,11 @@ Rules are prioritized based on:
 
 ## Rule Count Summary
 
-- **Total Planned Rules**: 42+ rules across 9 categories
-- **High Priority**: 12 rules (architectural foundations)
-- **Medium Priority**: 20 rules (quality and consistency)
-- **Low Priority**: 10+ rules (additional improvements)
+- **Released**: 6 rules (core structure & boundary enforcement)
+- **Total Planned Rules**: 40 remaining across categories (projected total 46)
+- **High Priority**: ~8 rules remaining
+- **Medium Priority**: ~22 rules remaining
+- **Low Priority**: ~10 rules remaining
 
 ### Categories Overview
 
@@ -212,4 +214,4 @@ Rules are prioritized based on:
 
 ---
 
-_Last updated: August 21, 2025_
+Last updated: August 24, 2025
