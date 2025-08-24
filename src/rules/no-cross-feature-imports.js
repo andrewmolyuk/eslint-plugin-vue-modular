@@ -68,7 +68,7 @@ export default {
             featureName,
             subPath,
             fullPath: importPath,
-            allowedPath: `${srcPath}/${featuresPath}/${featureName}`,
+            allowedPath: `@/${featuresPath}/${featureName}`,
           }
         }
         return null
@@ -88,7 +88,7 @@ export default {
             featureName,
             subPath,
             fullPath: resolvedPath,
-            allowedPath: `${srcPath}/${featuresPath}/${featureName}`,
+            allowedPath: `@/${featuresPath}/${featureName}`,
           }
         }
 

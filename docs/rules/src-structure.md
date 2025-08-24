@@ -7,6 +7,7 @@
 This rule ensures that only a specific set of folders and files are present at the top level of your project's source directory. This helps maintain a consistent and modular project structure.
 
 **Default allowed top-level folders/files:**
+
 - app
 - components
 - composables
@@ -70,10 +71,10 @@ The name of the source directory to check.
 export default [
   {
     rules: {
-      'vue-modular/src-structure': 'error'
-    }
-  }
-];
+      'vue-modular/src-structure': 'error',
+    },
+  },
+]
 ```
 
 ### Custom allowed folders/files
@@ -86,12 +87,12 @@ export default [
       'vue-modular/src-structure': [
         'error',
         {
-          allowed: ['components', 'pages', 'utils', 'App.vue', 'main.ts']
-        }
-      ]
-    }
-  }
-];
+          allowed: ['components', 'pages', 'utils', 'App.vue', 'main.ts'],
+        },
+      ],
+    },
+  },
+]
 ```
 
 ### Custom source directory
@@ -104,12 +105,12 @@ export default [
       'vue-modular/src-structure': [
         'error',
         {
-          src: 'source'
-        }
-      ]
-    }
-  }
-];
+          src: 'source',
+        },
+      ],
+    },
+  },
+]
 ```
 
 ### Full custom configuration
@@ -123,12 +124,12 @@ export default [
         'error',
         {
           allowed: ['app', 'lib', 'pages', 'index.ts'],
-          src: 'lib'
-        }
-      ]
-    }
-  }
-];
+          src: 'lib',
+        },
+      ],
+    },
+  },
+]
 ```
 
 ## How It Works
@@ -143,4 +144,5 @@ export default [
 If you want to allow arbitrary folders/files in your source directory, you can disable this rule or exclude it from your configuration.
 
 ## Further Reading
+
 - [Vue 3 Project Modules Blueprint](../vue3-project-modules-blueprint.md)

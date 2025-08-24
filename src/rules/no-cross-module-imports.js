@@ -55,7 +55,7 @@ export default {
             moduleName,
             subPath,
             fullPath: importPath,
-            allowedPath: `${srcPath}/${modulesPath}/${moduleName}`,
+            allowedPath: `@/${modulesPath}/${moduleName}`,
           }
         }
         return null
@@ -75,7 +75,7 @@ export default {
             moduleName,
             subPath,
             fullPath: resolvedPath,
-            allowedPath: `${srcPath}/${modulesPath}/${moduleName}`,
+            allowedPath: `@/${modulesPath}/${moduleName}`,
           }
         }
         return null

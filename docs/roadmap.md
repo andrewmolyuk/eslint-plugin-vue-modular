@@ -6,10 +6,10 @@ This document outlines the current status and planned development of rules for e
 
 ### Implemented Rules
 
-| Rule | Status | Description |
-|------|--------|-------------|
-| `vue-modular/no-cross-feature-imports` | **Released** | Prevents direct imports from deep inside feature folders |
-| `vue-modular/src-structure` | **Released** | Enforces allowed top-level folders/files in source directory |
+| Rule                                   | Status       | Description                                                  |
+| -------------------------------------- | ------------ | ------------------------------------------------------------ |
+| `vue-modular/no-cross-feature-imports` | **Released** | Prevents direct imports from deep inside feature folders     |
+| `vue-modular/src-structure`            | **Released** | Enforces allowed top-level folders/files in source directory |
 
 ---
 
@@ -17,116 +17,116 @@ This document outlines the current status and planned development of rules for e
 
 ### Module Boundary Enforcement
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/no-cross-module-imports` | **High** | Prevent modules from importing directly from other modules | **Planned** |
-| `vue-modular/enforce-module-exports` | **High** | Ensure modules expose their functionality through index.ts files | **Planned** |
-| `vue-modular/no-shared-in-modules` | **Medium** | Prevent modules from importing shared utilities incorrectly | **Planned** |
+| Rule                                  | Priority   | Description                                                      | Status      |
+| ------------------------------------- | ---------- | ---------------------------------------------------------------- | ----------- |
+| `vue-modular/no-cross-module-imports` | **High**   | Prevent modules from importing directly from other modules       | **Planned** |
+| `vue-modular/enforce-module-exports`  | **High**   | Ensure modules expose their functionality through index.ts files | **Planned** |
+| `vue-modular/no-shared-in-modules`    | **Medium** | Prevent modules from importing shared utilities incorrectly      | **Planned** |
 
 ### Component Organization
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/component-naming-convention` | **Medium** | Enforce consistent naming patterns for components | **Planned** |
-| `vue-modular/no-business-logic-in-ui-kit` | **Medium** | Prevent business logic in shared/ui components | **Planned** |
-| `vue-modular/prefer-composition-api` | **Low** | Encourage Composition API usage in modular components | **Planned** |
+| Rule                                      | Priority   | Description                                           | Status      |
+| ----------------------------------------- | ---------- | ----------------------------------------------------- | ----------- |
+| `vue-modular/component-naming-convention` | **Medium** | Enforce consistent naming patterns for components     | **Planned** |
+| `vue-modular/no-business-logic-in-ui-kit` | **Medium** | Prevent business logic in shared/ui components        | **Planned** |
+| `vue-modular/prefer-composition-api`      | **Low**    | Encourage Composition API usage in modular components | **Planned** |
 
 ### Import Path Enforcement
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/enforce-import-boundaries` | **High** | Enforce proper import paths based on module structure | **Planned** |
-| `vue-modular/no-relative-imports-across-modules` | **High** | Prevent relative imports that cross module boundaries | **Planned** |
-| `vue-modular/prefer-absolute-imports` | **Medium** | Encourage absolute imports for better maintainability | **Planned** |
+| Rule                                             | Priority   | Description                                           | Status      |
+| ------------------------------------------------ | ---------- | ----------------------------------------------------- | ----------- |
+| `vue-modular/enforce-import-boundaries`          | **High**   | Enforce proper import paths based on module structure | **Planned** |
+| `vue-modular/no-relative-imports-across-modules` | **High**   | Prevent relative imports that cross module boundaries | **Planned** |
+| `vue-modular/prefer-absolute-imports`            | **Medium** | Encourage absolute imports for better maintainability | **Planned** |
 
 ### Store and State Management
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/no-cross-module-store-access` | **High** | Prevent direct access to other modules' stores | **Planned** |
-| `vue-modular/enforce-store-naming` | **Medium** | Enforce consistent store naming conventions | **Planned** |
-| `vue-modular/no-global-state-in-modules` | **Medium** | Discourage global state access in modules | **Planned** |
+| Rule                                       | Priority   | Description                                    | Status      |
+| ------------------------------------------ | ---------- | ---------------------------------------------- | ----------- |
+| `vue-modular/no-cross-module-store-access` | **High**   | Prevent direct access to other modules' stores | **Planned** |
+| `vue-modular/enforce-store-naming`         | **Medium** | Enforce consistent store naming conventions    | **Planned** |
+| `vue-modular/no-global-state-in-modules`   | **Medium** | Discourage global state access in modules      | **Planned** |
 
 ### Route and Navigation
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
+| Rule                                         | Priority   | Description                                         | Status      |
+| -------------------------------------------- | ---------- | --------------------------------------------------- | ----------- |
 | `vue-modular/enforce-route-module-structure` | **Medium** | Ensure routes are properly organized within modules | **Planned** |
-| `vue-modular/no-hardcoded-routes` | **Low** | Prevent hardcoded route strings | **Planned** |
+| `vue-modular/no-hardcoded-routes`            | **Low**    | Prevent hardcoded route strings                     | **Planned** |
 
 ### API and Services
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
+| Rule                                        | Priority   | Description                                    | Status      |
+| ------------------------------------------- | ---------- | ---------------------------------------------- | ----------- |
 | `vue-modular/enforce-api-service-structure` | **Medium** | Ensure API services follow consistent patterns | **Planned** |
-| `vue-modular/no-direct-api-imports` | **Low** | Encourage API access through service layer | **Planned** |
+| `vue-modular/no-direct-api-imports`         | **Low**    | Encourage API access through service layer     | **Planned** |
 
 ### Testing and Quality
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/enforce-test-structure` | **Low** | Ensure tests follow modular organization | **Planned** |
-| `vue-modular/no-untested-modules` | **Low** | Flag modules without corresponding tests | **Planned** |
+| Rule                                 | Priority | Description                              | Status      |
+| ------------------------------------ | -------- | ---------------------------------------- | ----------- |
+| `vue-modular/enforce-test-structure` | **Low**  | Ensure tests follow modular organization | **Planned** |
+| `vue-modular/no-untested-modules`    | **Low**  | Flag modules without corresponding tests | **Planned** |
 
 ### File and Folder Organization
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/enforce-folder-structure` | **High** | Ensure consistent folder structure within modules | **Planned** |
-| `vue-modular/no-deep-nesting` | **Medium** | Prevent excessive folder nesting in modules | **Planned** |
-| `vue-modular/enforce-index-exports` | **High** | Require index.ts files for module exports | **Planned** |
-| `vue-modular/no-orphaned-files` | **Medium** | Flag files that don't belong to any clear category | **Planned** |
+| Rule                                   | Priority   | Description                                        | Status      |
+| -------------------------------------- | ---------- | -------------------------------------------------- | ----------- |
+| `vue-modular/enforce-folder-structure` | **High**   | Ensure consistent folder structure within modules  | **Planned** |
+| `vue-modular/no-deep-nesting`          | **Medium** | Prevent excessive folder nesting in modules        | **Planned** |
+| `vue-modular/enforce-index-exports`    | **High**   | Require index.ts files for module exports          | **Planned** |
+| `vue-modular/no-orphaned-files`        | **Medium** | Flag files that don't belong to any clear category | **Planned** |
 
 ### TypeScript and Type Safety
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/enforce-entity-types` | **Medium** | Ensure entities have proper TypeScript interfaces | **Planned** |
-| `vue-modular/no-any-in-modules` | **Medium** | Discourage 'any' type usage in module code | **Planned** |
-| `vue-modular/enforce-strict-imports` | **High** | Enforce type-only imports where appropriate | **Planned** |
-| `vue-modular/consistent-type-exports` | **Medium** | Ensure consistent type export patterns | **Planned** |
+| Rule                                  | Priority   | Description                                       | Status      |
+| ------------------------------------- | ---------- | ------------------------------------------------- | ----------- |
+| `vue-modular/enforce-entity-types`    | **Medium** | Ensure entities have proper TypeScript interfaces | **Planned** |
+| `vue-modular/no-any-in-modules`       | **Medium** | Discourage 'any' type usage in module code        | **Planned** |
+| `vue-modular/enforce-strict-imports`  | **High**   | Enforce type-only imports where appropriate       | **Planned** |
+| `vue-modular/consistent-type-exports` | **Medium** | Ensure consistent type export patterns            | **Planned** |
 
 ### Dependency Management
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/no-circular-dependencies` | **High** | Prevent circular dependencies between modules | **Planned** |
-| `vue-modular/limit-module-dependencies` | **Medium** | Limit number of dependencies per module | **Planned** |
-| `vue-modular/no-external-deps-in-modules` | **Medium** | Prevent direct external library imports in modules | **Planned** |
-| `vue-modular/enforce-dependency-boundaries` | **High** | Control which modules can depend on others | **Planned** |
+| Rule                                        | Priority   | Description                                        | Status      |
+| ------------------------------------------- | ---------- | -------------------------------------------------- | ----------- |
+| `vue-modular/no-circular-dependencies`      | **High**   | Prevent circular dependencies between modules      | **Planned** |
+| `vue-modular/limit-module-dependencies`     | **Medium** | Limit number of dependencies per module            | **Planned** |
+| `vue-modular/no-external-deps-in-modules`   | **Medium** | Prevent direct external library imports in modules | **Planned** |
+| `vue-modular/enforce-dependency-boundaries` | **High**   | Control which modules can depend on others         | **Planned** |
 
 ### Performance and Bundle Management
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/no-heavy-imports` | **Medium** | Flag imports that might affect bundle size | **Planned** |
-| `vue-modular/enforce-lazy-loading` | **Medium** | Encourage lazy loading for module routes | **Planned** |
-| `vue-modular/no-duplicate-dependencies` | **Low** | Prevent duplicate functionality across modules | **Planned** |
+| Rule                                    | Priority   | Description                                    | Status      |
+| --------------------------------------- | ---------- | ---------------------------------------------- | ----------- |
+| `vue-modular/no-heavy-imports`          | **Medium** | Flag imports that might affect bundle size     | **Planned** |
+| `vue-modular/enforce-lazy-loading`      | **Medium** | Encourage lazy loading for module routes       | **Planned** |
+| `vue-modular/no-duplicate-dependencies` | **Low**    | Prevent duplicate functionality across modules | **Planned** |
 
 ### Security and Best Practices
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/no-sensitive-data-in-modules` | **High** | Prevent hardcoded sensitive data in modules | **Planned** |
-| `vue-modular/enforce-error-boundaries` | **Medium** | Ensure proper error handling in modules | **Planned** |
-| `vue-modular/no-console-in-production` | **Low** | Remove console statements in production modules | **Planned** |
+| Rule                                       | Priority   | Description                                     | Status      |
+| ------------------------------------------ | ---------- | ----------------------------------------------- | ----------- |
+| `vue-modular/no-sensitive-data-in-modules` | **High**   | Prevent hardcoded sensitive data in modules     | **Planned** |
+| `vue-modular/enforce-error-boundaries`     | **Medium** | Ensure proper error handling in modules         | **Planned** |
+| `vue-modular/no-console-in-production`     | **Low**    | Remove console statements in production modules | **Planned** |
 
 ### Vue.js Specific Rules
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/component-composition` | **Medium** | Enforce composition API patterns in modules | **Planned** |
-| `vue-modular/no-global-components` | **Medium** | Prevent global component registration in modules | **Planned** |
-| `vue-modular/enforce-vue-naming` | **Low** | Ensure Vue component naming follows conventions | **Planned** |
-| `vue-modular/no-template-literals-in-templates` | **Low** | Prevent complex logic in Vue templates | **Planned** |
+| Rule                                            | Priority   | Description                                      | Status      |
+| ----------------------------------------------- | ---------- | ------------------------------------------------ | ----------- |
+| `vue-modular/component-composition`             | **Medium** | Enforce composition API patterns in modules      | **Planned** |
+| `vue-modular/no-global-components`              | **Medium** | Prevent global component registration in modules | **Planned** |
+| `vue-modular/enforce-vue-naming`                | **Low**    | Ensure Vue component naming follows conventions  | **Planned** |
+| `vue-modular/no-template-literals-in-templates` | **Low**    | Prevent complex logic in Vue templates           | **Planned** |
 
 ### Documentation and Maintenance
 
-| Rule | Priority | Description | Status |
-|------|----------|-------------|--------|
-| `vue-modular/require-module-docs` | **Low** | Ensure modules have documentation | **Planned** |
-| `vue-modular/enforce-jsdoc-comments` | **Low** | Require JSDoc comments for exported functions | **Planned** |
-| `vue-modular/no-todo-comments` | **Low** | Flag TODO comments in production code | **Planned** |
+| Rule                                 | Priority | Description                                   | Status      |
+| ------------------------------------ | -------- | --------------------------------------------- | ----------- |
+| `vue-modular/require-module-docs`    | **Low**  | Ensure modules have documentation             | **Planned** |
+| `vue-modular/enforce-jsdoc-comments` | **Low**  | Require JSDoc comments for exported functions | **Planned** |
+| `vue-modular/no-todo-comments`       | **Low**  | Flag TODO comments in production code         | **Planned** |
 
 ---
 
@@ -134,12 +134,12 @@ This document outlines the current status and planned development of rules for e
 
 ### Recommended Configuration Sets
 
-| Configuration | Description | Status |
-|---------------|-------------|--------|
-| `@vue-modular/recommended` | Essential rules for modular architecture | **Available** |
-| `@vue-modular/strict` | Strict enforcement of all architectural patterns | **Planned** |
-| `@vue-modular/legacy` | Rules for migrating existing projects | **Planned** |
-| `@vue-modular/enterprise` | Additional rules for large-scale applications | **Planned** |
+| Configuration              | Description                                      | Status        |
+| -------------------------- | ------------------------------------------------ | ------------- |
+| `@vue-modular/recommended` | Essential rules for modular architecture         | **Available** |
+| `@vue-modular/strict`      | Strict enforcement of all architectural patterns | **Planned**   |
+| `@vue-modular/legacy`      | Rules for migrating existing projects            | **Planned**   |
+| `@vue-modular/enterprise`  | Additional rules for large-scale applications    | **Planned**   |
 
 ---
 
@@ -162,6 +162,7 @@ This document outlines the current status and planned development of rules for e
 ### Priority Criteria
 
 Rules are prioritized based on:
+
 - **Architectural impact** - Does it prevent major violations?
 - **Common pain points** - Does it address frequent issues?
 - **Developer experience** - Does it improve productivity?
@@ -172,11 +173,13 @@ Rules are prioritized based on:
 ## Resources
 
 ### Architecture References
+
 - [Vue 3 Project Modules Blueprint](./vue3-project-modules-blueprint.md)
 - [Feature-Driven Development](https://en.wikipedia.org/wiki/Feature-driven_development)
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 
 ### ESLint Development
+
 - [ESLint Rule Development Guide](https://eslint.org/docs/developer-guide/working-with-rules)
 - [AST Explorer](https://astexplorer.net/) - For rule development
 - [ESLint Plugin Template](https://github.com/eslint/generator-eslint)
@@ -191,6 +194,7 @@ Rules are prioritized based on:
 - **Low Priority**: 10+ rules (additional improvements)
 
 ### Categories Overview
+
 1. **Module Boundary Enforcement** (3 rules)
 2. **Component Organization** (3 rules)
 3. **Import Path Enforcement** (3 rules)
@@ -208,4 +212,4 @@ Rules are prioritized based on:
 
 ---
 
-*Last updated: August 21, 2025*
+_Last updated: August 21, 2025_

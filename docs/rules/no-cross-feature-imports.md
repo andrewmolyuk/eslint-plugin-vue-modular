@@ -7,6 +7,7 @@ Prevents direct imports from deep inside feature folders, enforcing that feature
 This rule prevents importing files from deep inside feature directories. Instead, features should expose their public API through entry points (like `index.js`) and only those entry points should be imported from outside the feature.
 
 **Why this rule exists:**
+
 - Enforces encapsulation of feature internals
 - Prevents tight coupling between features
 - Makes refactoring easier by limiting external dependencies
@@ -18,27 +19,27 @@ This rule prevents importing files from deep inside feature directories. Instead
 
 ```javascript
 // Importing directly from inside a feature
-import UserList from '@/features/user/components/UserList.vue';
-import userService from '@/features/user/services/userService.js';
-import { validateUser } from '@/features/user/utils/validation.js';
+import UserList from '@/features/user/components/UserList.vue'
+import userService from '@/features/user/services/userService.js'
+import { validateUser } from '@/features/user/utils/validation.js'
 
 // Cross-feature imports (when allowCrossFeatureImports is false)
-import AuthForm from '@/features/auth/components/AuthForm.vue';
+import AuthForm from '@/features/auth/components/AuthForm.vue'
 ```
 
 ### ✅ Correct
 
 ```javascript
 // Importing from feature entry points
-import userApi from '@/features/user';
-import { UserService } from '@/features/auth';
+import userApi from '@/features/user'
+import { UserService } from '@/features/auth'
 
 // Importing within the same feature
-import UserProfile from './components/UserProfile.vue';
-import userService from './services/userService.js';
+import UserProfile from './components/UserProfile.vue'
+import userService from './services/userService.js'
 
 // Importing from allowed patterns
-import { UserTypes } from '@/features/user/types.ts';
+import { UserTypes } from '@/features/user/types.ts'
 ```
 
 ## Options
@@ -49,10 +50,7 @@ import { UserTypes } from '@/features/user/types.ts';
     "error",
     {
       "featurePattern": "src/features/*",
-      "allowedPatterns": [
-        "src/features/*/index.js",
-        "src/features/*/index.ts"
-      ],
+      "allowedPatterns": ["src/features/*/index.js", "src/features/*/index.ts"],
       "modulePattern": "src/modules/*",
       "allowCrossFeatureImports": false
     }
@@ -104,16 +102,17 @@ src/
 
 ```javascript
 // src/features/user/index.js
-export { default as UserService } from './services/userApi.js';
-export { default as UserList } from './components/UserList.vue';
-export { default as UserProfile } from './components/UserProfile.vue';
-export * from './types.js';
-export { validateUser } from './utils/validation.js';
+export { default as UserService } from './services/userApi.js'
+export { default as UserList } from './components/UserList.vue'
+export { default as UserProfile } from './components/UserProfile.vue'
+export * from './types.js'
+export { validateUser } from './utils/validation.js'
 ```
 
 ## Configuration Examples
 
 ### Default Configuration
+
 ```json
 {
   "rules": {
@@ -123,6 +122,7 @@ export { validateUser } from './utils/validation.js';
 ```
 
 ### Custom Feature Pattern
+
 ```json
 {
   "rules": {
@@ -130,11 +130,7 @@ export { validateUser } from './utils/validation.js';
       "error",
       {
         "featurePattern": "src/modules/*",
-        "allowedPatterns": [
-          "src/modules/*/index.js",
-          "src/modules/*/api.js",
-          "src/modules/*/types.ts"
-        ]
+        "allowedPatterns": ["src/modules/*/index.js", "src/modules/*/api.js", "src/modules/*/types.ts"]
       }
     ]
   }
@@ -142,6 +138,7 @@ export { validateUser } from './utils/validation.js';
 ```
 
 ### Allow Cross-Feature Imports
+
 ```json
 {
   "rules": {
