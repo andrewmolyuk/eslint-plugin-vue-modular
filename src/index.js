@@ -3,6 +3,7 @@ import meta from './meta.js'
 import noCrossFeatureImports from './rules/no-cross-feature-imports.js'
 import noCrossModuleImports from './rules/no-cross-module-imports.js'
 import srcStructure from './rules/src-structure.js'
+import appStructure from './rules/app-structure.js'
 
 const plugin = {
   meta,
@@ -10,6 +11,7 @@ const plugin = {
     'no-cross-feature-imports': noCrossFeatureImports,
     'no-cross-module-imports': noCrossModuleImports,
     'src-structure': srcStructure,
+    'app-structure': appStructure,
   },
   processors: {},
   configs: {},
@@ -25,6 +27,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/no-cross-feature-imports': 'error',
       'vue-modular/no-cross-module-imports': 'error',
       'vue-modular/src-structure': 'error',
+      'vue-modular/app-structure': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -40,6 +43,7 @@ plugin.configs.recommended = {
     'vue-modular/no-cross-feature-imports': 'error',
     'vue-modular/no-cross-module-imports': 'error',
     'vue-modular/src-structure': 'error',
+    'vue-modular/app-structure': 'error',
   },
 }
 
