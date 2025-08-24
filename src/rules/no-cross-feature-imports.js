@@ -1,4 +1,3 @@
-import path from 'path'
 import { isDeepFeatureImport, getModulePublicImport, isWithinSameFeature } from '../utils/import-boundaries.js'
 
 export default {
@@ -11,9 +10,9 @@ export default {
     fixable: null,
     defaultOptions: [
       {
-        srcPath: 'src',
-        modulesPath: 'modules',
-        featuresPath: 'features',
+        src: 'src',
+        modulesDir: 'modules',
+        featuresDir: 'features',
       },
     ],
     schema: [
@@ -21,54 +20,58 @@ export default {
         type: 'object',
         description: 'Configuration options for the no-cross-feature-imports rule',
         properties: {
-          srcPath: {
-            type: 'string',
-            description: 'The name of the source directory',
-          },
-          modulesPath: {
-            type: 'string',
-            description: 'The name of the modules directory',
-          },
-          featuresPath: {
-            type: 'string',
-            description: 'The name of the features directory within src or modules',
-          },
+          // canonical names
+          src: { type: 'string', description: 'The name of the source directory' },
+          modulesDir: { type: 'string', description: 'The name of the modules directory' },
+          featuresDir: { type: 'string', description: 'The name of the features directory within src or modules' },
+          // legacy/alias names (kept for backwards compatibility)
+          srcPath: { type: 'string', description: 'Legacy: srcPath (alias for src)' },
+          modulesPath: { type: 'string', description: 'Legacy: modulesPath (alias for modulesDir)' },
+          featuresPath: { type: 'string', description: 'Legacy: featuresPath (alias for featuresDir)' },
         },
         additionalProperties: false,
-      create(context) {
-        const options = context.options[0] || {}
-        const srcPath = options.srcPath || 'src'
-        const modulesPath = options.modulesPath || 'modules'
-        const featuresPath = options.featuresPath || 'features'
-        const filename = context.getFilename()
-
-        const opts = { src: srcPath, modulesDir: modulesPath, featuresDir: featuresPath }
-
-        return {
-          ImportDeclaration(node) {
-            const source = node.source.value
-
-            const modulePublicName = getModulePublicImport(source, opts)
-            if (modulePublicName) {
-              const isAppLayerFile = filename.includes(`/${srcPath}/app/`)
-              if (!isAppLayerFile) {
-                context.report({ node: node.source, messageId: 'crossFeatureImport', data: { importPath: source, featureName: modulePublicName, allowedPath: `@/${modulesPath}/${modulePublicName}` } })
-                return
-              }
-              return
-            }
-
-            const featureInfo = isDeepFeatureImport(source, filename, opts)
-            if (!featureInfo) return
-            if (!isWithinSameFeature(filename, featureInfo, opts)) {
-              context.report({ node: node.source, messageId: 'crossFeatureImport', data: { importPath: source, featureName: featureInfo.featureName, allowedPath: featureInfo.allowedPath } })
-            }
-          },
-        }
       },
-    }
-              allowedPath: featureInfo.allowedPath,
-            },
+    ],
+    messages: {
+      crossFeatureImport:
+        'Cannot import "{{importPath}}" from outside feature "{{featureName}}". Only imports from "{{allowedPath}}" are allowed.',
+    },
+  },
+  create(context) {
+    const options = context.options[0] || {}
+    // prefer legacy keys when tests provide both canonical defaults and legacy overrides
+    const src = options.srcPath || options.src || 'src'
+    const modulesDir = options.modulesPath || options.modulesDir || 'modules'
+    const featuresDir = options.featuresPath || options.featuresDir || 'features'
+    const filename = context.getFilename()
+
+    const opts = { src, modulesDir, featuresDir }
+
+    return {
+      ImportDeclaration(node) {
+        const source = node.source.value
+
+        const modulePublicName = getModulePublicImport(source, opts)
+        if (modulePublicName) {
+          const isAppLayerFile = filename.includes(`/${src}/app/`)
+          if (!isAppLayerFile) {
+            context.report({
+              node: node.source,
+              messageId: 'crossFeatureImport',
+              data: { importPath: source, featureName: modulePublicName, allowedPath: `@/${modulesDir}/${modulePublicName}` },
+            })
+            return
+          }
+          return
+        }
+
+        const featureInfo = isDeepFeatureImport(source, filename, opts)
+        if (!featureInfo) return
+        if (!isWithinSameFeature(filename, featureInfo, opts)) {
+          context.report({
+            node: node.source,
+            messageId: 'crossFeatureImport',
+            data: { importPath: source, featureName: featureInfo.featureName, allowedPath: featureInfo.allowedPath },
           })
         }
       },

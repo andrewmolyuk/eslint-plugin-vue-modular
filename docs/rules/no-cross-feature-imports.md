@@ -44,26 +44,33 @@ import { UserTypes } from '@/features/user/types.ts'
 
 ## Options
 
+The rule in this plugin uses a consolidated set of import-boundary helpers. Common options are passed as an object using the same names as the consolidated rule:
+
 ```json
 {
   "vue-modular/no-cross-feature-imports": [
     "error",
     {
-      "featurePattern": "src/features/*",
-      "allowedPatterns": ["src/features/*/index.js", "src/features/*/index.ts"],
-      "modulePattern": "src/modules/*",
+      "src": "src",
+      "modulesDir": "modules",
+      "featuresDir": "features",
+      "aliases": { "@": "src" },
       "allowCrossFeatureImports": false
     }
   ]
 }
 ```
 
+Notes:
+
+- `aliases` accepts an object of alias -> path mappings (for example `{ "@": "src" }`). The rules understand alias imports (e.g. `@/modules/foo/...`) and also resolve relative imports to determine feature/module boundaries.
+
 ### Option Details
 
-- **`featurePattern`** (string): Pattern to identify feature directories. Default: `"src/features/*"`
-- **`allowedPatterns`** (array): File patterns that are allowed to be imported from outside the feature. Default: `["src/features/*/index.js", "src/features/*/index.ts"]`
-- **`modulePattern`** (string): Pattern to identify module directories. Default: `"src/modules/*"`
-- **`allowCrossFeatureImports`** (boolean): Whether to allow imports between different features. Default: `false`
+**`featurePattern`** (string): Pattern to identify feature directories. Default: `"src/features/*"`
+**`allowedPatterns`** (array): File patterns that are allowed to be imported from outside the feature. Default: `["src/features/*/index.js", "src/features/*/index.ts"]`
+**`modulePattern`** (string): Pattern to identify module directories. Default: `"src/modules/*"`
+**`allowCrossFeatureImports`** (boolean): Whether to allow imports between different features. Default: `false`
 
 ## Project Structure
 

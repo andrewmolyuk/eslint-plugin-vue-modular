@@ -6,14 +6,15 @@ This document outlines the current status and planned development of rules for e
 
 ### Implemented Rules
 
-| Rule                                   | Status       | Description                                                                          |
-| -------------------------------------- | ------------ | ------------------------------------------------------------------------------------ |
-| `vue-modular/no-cross-feature-imports` | **Released** | Prevents direct imports from deep inside feature folders                             |
-| `vue-modular/no-cross-module-imports`  | **Released** | Prevents deep imports between modules; prefer module public API                      |
-| `vue-modular/src-structure`            | **Released** | Enforces allowed top-level folders/files in the `src/` folder                        |
-| `vue-modular/app-structure`            | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
-| `vue-modular/module-structure`         | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
-| `vue-modular/feature-structure`        | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
+| Rule                                    | Status       | Description                                                                          |
+| --------------------------------------- | ------------ | ------------------------------------------------------------------------------------ |
+| `vue-modular/no-cross-feature-imports`  | **Released** | Prevents direct imports from deep inside feature folders                             |
+| `vue-modular/no-cross-module-imports`   | **Released** | Prevents deep imports between modules; prefer module public API                      |
+| `vue-modular/enforce-import-boundaries` | **Released** | Enforces proper import paths and module/feature boundaries across the project        |
+| `vue-modular/src-structure`             | **Released** | Enforces allowed top-level folders/files in the `src/` folder                        |
+| `vue-modular/app-structure`             | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
+| `vue-modular/module-structure`          | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
+| `vue-modular/feature-structure`         | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
 
 ---
 
@@ -35,11 +36,11 @@ This document outlines the current status and planned development of rules for e
 
 ### Import Path Enforcement
 
-| Rule                                             | Priority   | Description                                           | Status      |
-| ------------------------------------------------ | ---------- | ----------------------------------------------------- | ----------- |
-| `vue-modular/enforce-import-boundaries`          | **High**   | Enforce proper import paths based on module structure | **Planned** |
-| `vue-modular/no-relative-imports-across-modules` | **High**   | Prevent relative imports that cross module boundaries | **Planned** |
-| `vue-modular/prefer-absolute-imports`            | **Medium** | Encourage absolute imports for better maintainability | **Planned** |
+| Rule                                             | Priority   | Description                                           | Status       |
+| ------------------------------------------------ | ---------- | ----------------------------------------------------- | ------------ |
+| `vue-modular/enforce-import-boundaries`          | **High**   | Enforce proper import paths based on module structure | **Released** |
+| `vue-modular/no-relative-imports-across-modules` | **High**   | Prevent relative imports that cross module boundaries | **Planned**  |
+| `vue-modular/prefer-absolute-imports`            | **Medium** | Encourage absolute imports for better maintainability | **Planned**  |
 
 ### Store and State Management
 
@@ -189,8 +190,8 @@ Rules are prioritized based on:
 
 ## Rule Count Summary
 
-- **Released**: 6 rules (core structure & boundary enforcement)
-- **Total Planned Rules**: 40 remaining across categories (projected total 46)
+- **Released**: 7 rules (core structure & boundary enforcement)
+- **Total Planned Rules**: 39 remaining across categories (projected total 46)
 - **High Priority**: ~8 rules remaining
 - **Medium Priority**: ~22 rules remaining
 - **Low Priority**: ~10 rules remaining
@@ -214,4 +215,4 @@ Rules are prioritized based on:
 
 ---
 
-Last updated: August 24, 2025
+Last updated: August 25, 2025

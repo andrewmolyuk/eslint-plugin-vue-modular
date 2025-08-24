@@ -46,7 +46,11 @@ export function getLayerForPath(filePath, opts) {
 
 export function isDeepModuleImport(importPath, filename, opts) {
   // handle alias-based imports like 'src/modules/<name>/...'
-  const importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
+  let importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
+  // if applyAliases transformed '@/...' into 'src/...', strip leading src/
+  if (importAfterAlias.startsWith(`${opts.src}/`)) {
+    importAfterAlias = importAfterAlias.replace(`${opts.src}/`, '')
+  }
   const modulesRegex = new RegExp(`^${opts.modulesDir}/([^/]+)/(.+)`)
   const m = importAfterAlias.match(modulesRegex)
   if (m) {
@@ -82,7 +86,10 @@ export function isDeepModuleImport(importPath, filename, opts) {
 
 export function isDeepFeatureImport(importPath, filename, opts) {
   // alias style
-  const importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
+  let importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
+  if (importAfterAlias.startsWith(`${opts.src}/`)) {
+    importAfterAlias = importAfterAlias.replace(`${opts.src}/`, '')
+  }
   const featuresRegex = new RegExp(`^${opts.featuresDir}/([^/]+)(?:/(.+))?$`)
   const m = importAfterAlias.match(featuresRegex)
   if (m) {
@@ -96,8 +103,15 @@ export function isDeepFeatureImport(importPath, filename, opts) {
   const mm = importAfterAlias.match(modulesFeaturesRegex)
   if (mm) {
     const [, moduleName, featureName, subPath] = mm
-    if (!subPath) return null
-    return { type: 'modules', moduleName, featureName, subPath, fullPath: importPath, allowedPath: `${opts.src}/${opts.modulesDir}/${moduleName}/${opts.featuresDir}/${featureName}` }
+    // For module features, we want to detect the entry import as well
+    return {
+      type: 'modules',
+      moduleName,
+      featureName,
+      subPath: subPath || null,
+      fullPath: importPath,
+      allowedPath: `${opts.src}/${opts.modulesDir}/${moduleName}/${opts.featuresDir}/${featureName}`,
+    }
   }
 
   // relative resolution
@@ -114,7 +128,14 @@ export function isDeepFeatureImport(importPath, filename, opts) {
     if (rel2) {
       const [, moduleName, featureName, subPath] = rel2
       if (!subPath) return null
-      return { type: 'modules', moduleName, featureName, subPath, fullPath: resolved, allowedPath: `${opts.src}/${opts.modulesDir}/${moduleName}/${opts.featuresDir}/${featureName}` }
+      return {
+        type: 'modules',
+        moduleName,
+        featureName,
+        subPath,
+        fullPath: resolved,
+        allowedPath: `${opts.src}/${opts.modulesDir}/${moduleName}/${opts.featuresDir}/${featureName}`,
+      }
     }
   }
 
@@ -122,23 +143,31 @@ export function isDeepFeatureImport(importPath, filename, opts) {
 }
 
 export function getModulePublicImport(importPath, opts) {
-  if (!importPath.startsWith('@/')) return null
-  const aliasPath = importPath.replace('@/', '')
+  if (!importPath) return null
+  // accept '@/modules/name', 'src/modules/name' and 'modules/name'
+  let aliasPath = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
+  if (aliasPath.startsWith(`${opts.src}/`)) aliasPath = aliasPath.replace(`${opts.src}/`, '')
   const m = aliasPath.match(new RegExp(`^${opts.modulesDir}/([^/]+)(?:/index(?:\.(?:js|ts|jsx|tsx))?)?$`))
   if (m) return m[1]
   return null
 }
 
 export function isWithinSameModule(filename, moduleName, opts) {
-  return filename.includes(`/${opts.src}/${opts.modulesDir}/${moduleName}/`)
+  return filename.includes(`/${opts.src}/${opts.modulesDir}/${moduleName}/`) || filename.includes(`/${opts.modulesDir}/${moduleName}/`)
 }
 
 export function isWithinSameFeature(filename, featureInfo, opts) {
   if (featureInfo.type === 'src') {
-    return filename.includes(`/${opts.src}/${opts.featuresDir}/${featureInfo.featureName}/`)
+    return (
+      filename.includes(`/${opts.src}/${opts.featuresDir}/${featureInfo.featureName}/`) ||
+      filename.includes(`/${opts.featuresDir}/${featureInfo.featureName}/`)
+    )
   }
   if (featureInfo.type === 'modules') {
-    return filename.includes(`/${opts.modulesDir}/${featureInfo.moduleName}/`)
+    return (
+      filename.includes(`/${opts.src}/${opts.modulesDir}/${featureInfo.moduleName}/`) ||
+      filename.includes(`/${opts.modulesDir}/${featureInfo.moduleName}/`)
+    )
   }
   return false
 }

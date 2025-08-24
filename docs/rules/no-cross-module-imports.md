@@ -55,8 +55,8 @@ import { computed } from 'vue'
   "vue-modular/no-cross-module-imports": [
     "error",
     {
-      "srcPath": "src",
-      "modulesPath": "modules"
+      "src": "src",
+      "modulesDir": "modules"
     }
   ]
 }
@@ -64,8 +64,8 @@ import { computed } from 'vue'
 
 ### Option Details
 
-- **`srcPath`** (string): The source directory path. Default: `"src"`
-- **`modulesPath`** (string): The modules directory name within srcPath. Default: `"modules"`
+- **`src`** (string): The source directory path. Default: `"src"`
+- **`modulesDir`** (string): The modules directory name within `src`. Default: `"modules"`
 
 ## Project Structure
 
@@ -125,8 +125,8 @@ src/
     "vue-modular/no-cross-module-imports": [
       "error",
       {
-        "srcPath": "source",
-        "modulesPath": "features"
+        "src": "source",
+        "modulesDir": "features"
       }
     ]
   }

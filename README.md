@@ -83,6 +83,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 - [`vue-modular/no-cross-feature-imports`](./docs/rules/no-cross-feature-imports.md): Prevents direct imports from deep inside feature folders
 - [`vue-modular/no-cross-module-imports`](./docs/rules/no-cross-module-imports.md): Prevents imports between different modules
+- [`vue-modular/enforce-import-boundaries`](./docs/rules/enforce-import-boundaries.md): Consolidated import-boundary enforcement (modules/features/app/shared)
 - [`vue-modular/src-structure`](./docs/rules/src-structure.md): Enforces allowed top-level folders/files in source directory
 - [`vue-modular/app-structure`](./docs/rules/app-structure.md): Enforces presence of application infrastructure under `src/app`
 - [`vue-modular/module-structure`](./docs/rules/module-structure.md): Ensures modules expose a public API via `index.ts`/`index.js`
