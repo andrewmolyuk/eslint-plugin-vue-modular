@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.14...v0.0.15) (2025-08-24)
+
+
+### Features
+
+* add app-structure rule to enforce required application infrastructure in src/app ([af8c6e7](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/af8c6e7cf543709de95ad4a6feaa1b84bf3848a1))
+* add enforce-import-boundaries rule to enforce proper import paths between modules and features ([f03a868](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/f03a8687d5032188d9d4af00bd73c1c33df60466))
+* add feature-structure rule to enforce public API exposure for global features ([75b381f](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/75b381f8cec628e2d2a01876ecd2f84a9cf508ad))
+* add module-structure rule to enforce public API exposure in modules ([c5d3195](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/c5d3195eca5df025da5d657c1ff1ac7bae262ade))
+* update documentation and rules for import boundary enforcement ([f08aaa2](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/f08aaa23f5a1dae5fc8d8c18e427cfa34ef2aa87))
+
 ### [0.0.14](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.13...v0.0.14) (2025-08-24)
 
 ### [0.0.13](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.12...v0.0.13) (2025-08-22)
