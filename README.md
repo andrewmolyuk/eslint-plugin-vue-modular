@@ -48,6 +48,17 @@ export default [
 ]
 ```
 
+You can also use the plugin's bundled flat configuration for convenience:
+
+```js
+// eslint.config.js
+import pluginVueModular from 'eslint-plugin-vue-modular'
+
+export default [pluginVueModular.configs['flat/recommended']]
+```
+
+This will apply the recommended rules and settings for ESLint v9+ (flat config) without manually listing each rule.
+
 ### Legacy Config (ESLint v8 and below)
 
 ```js
