@@ -1,4 +1,5 @@
 import path from 'path'
+import { isDeepModuleImport, isWithinSameModule, defaultOptions, applyAliases, resolveToAbsolute } from '../utils/import-boundaries.js'
 
 export default {
   meta: {
@@ -41,82 +42,22 @@ export default {
     const srcPath = options.srcPath || 'src'
     const modulesPath = options.modulesPath || 'modules'
 
-    function getModuleInfo(importPath, filename) {
-      // Handle @ alias imports
-      if (importPath.startsWith('@/')) {
-        const aliasPath = importPath.replace('@/', '')
-
-        // Check for modules/<modulename>/<something>
-        const modulesMatch = aliasPath.match(new RegExp(`^${modulesPath}/([^/]+)/(.+)`))
-        if (modulesMatch) {
-          const [, moduleName, subPath] = modulesMatch
-          return {
-            type: 'src',
-            moduleName,
-            subPath,
-            fullPath: importPath,
-            allowedPath: `@/${modulesPath}/${moduleName}`,
-          }
-        }
-        return null
-      }
-
-      // Handle relative imports
-      if (importPath.startsWith('./') || importPath.startsWith('../')) {
-        const currentDir = path.dirname(filename)
-        const resolvedPath = path.resolve(currentDir, importPath)
-
-        // Check for modules/<modulename>/<something>
-        const modulesMatch = resolvedPath.match(new RegExp(`/${srcPath}/${modulesPath}/([^/]+)/(.+)`))
-        if (modulesMatch) {
-          const [, moduleName, subPath] = modulesMatch
-          return {
-            type: 'src',
-            moduleName,
-            subPath,
-            fullPath: resolvedPath,
-            allowedPath: `@/${modulesPath}/${moduleName}`,
-          }
-        }
-        return null
-      }
-
-      return null
-    }
-
-    function isWithinSameModule(moduleInfo, filename) {
-      const currentDir = path.dirname(filename)
-      const moduleBasePath = `/${srcPath}/${modulesPath}/${moduleInfo.moduleName}/`
-      return currentDir.includes(moduleBasePath)
-    }
+    const filename = context.getFilename()
 
     return {
       ImportDeclaration(node) {
         const source = node.source.value
-        const filename = context.getFilename()
+        if (!source.includes('/')) return
 
-        // Skip external imports (no path separators) and non-module imports
-        if (!source.includes('/')) {
-          return
-        }
+        // normalize input to helper expectations
+        const opts = { src: srcPath, modulesDir: modulesPath }
+        const aliased = applyAliases(source, options.aliases || {}, opts.src)
+        const maybe = isDeepModuleImport(aliased, filename, opts)
+        if (!maybe) return
 
-        const moduleInfo = getModuleInfo(source, filename)
-        if (!moduleInfo) {
-          return // Not a module import, skip
-        }
-
-        // Check if we're importing from outside the module
-        const isWithinSame = isWithinSameModule(moduleInfo, filename)
-        if (!isWithinSame) {
-          context.report({
-            node: node.source,
-            messageId: 'crossModuleImport',
-            data: {
-              importPath: source,
-              moduleName: moduleInfo.moduleName,
-              allowedPath: moduleInfo.allowedPath,
-            },
-          })
+        const within = isWithinSameModule(filename, maybe.moduleName, opts)
+        if (!within) {
+          context.report({ node: node.source, messageId: 'crossModuleImport', data: { importPath: source, moduleName: maybe.moduleName, allowedPath: maybe.allowedPath } })
         }
       },
     }

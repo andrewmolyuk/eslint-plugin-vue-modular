@@ -6,6 +6,7 @@ import srcStructure from './rules/src-structure.js'
 import appStructure from './rules/app-structure.js'
 import moduleStructure from './rules/module-structure.js'
 import featureStructure from './rules/feature-structure.js'
+import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 
 const plugin = {
   meta,
@@ -16,6 +17,7 @@ const plugin = {
     'app-structure': appStructure,
     'module-structure': moduleStructure,
     'feature-structure': featureStructure,
+    'enforce-import-boundaries': enforceImportBoundaries,
   },
   processors: {},
   configs: {},
@@ -34,6 +36,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/app-structure': 'error',
       'vue-modular/module-structure': 'error',
       'vue-modular/feature-structure': 'error',
+      'vue-modular/enforce-import-boundaries': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -52,6 +55,7 @@ plugin.configs.recommended = {
     'vue-modular/app-structure': 'error',
     'vue-modular/module-structure': 'error',
     'vue-modular/feature-structure': 'error',
+    'vue-modular/enforce-import-boundaries': 'error',
   },
 }
 
