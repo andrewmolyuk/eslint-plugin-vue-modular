@@ -111,7 +111,7 @@ export default {
               })
             }
           }
-        } catch (e) {
+        } catch {
           // Ignore if srcDir can't be read
         }
       },

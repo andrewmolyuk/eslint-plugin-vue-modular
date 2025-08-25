@@ -1,5 +1,4 @@
 import path from 'node:path'
-import fs from 'node:fs'
 
 const defaultOptions = {
   src: 'src',
@@ -74,7 +73,6 @@ export default {
         additionalProperties: false,
       },
     ],
-    defaultOptions: [],
   },
 
   create(context) {
@@ -98,7 +96,7 @@ export default {
         if (rel === '' || rel === '.') return true
         if (rel === 'index.js' || rel === 'index.ts') return true
         return false
-      } catch (e) {
+      } catch {
         return false
       }
     }
@@ -149,15 +147,14 @@ export default {
 
       // app -> module/feature: public API only
       if (from === 'app' && (to === 'module' || to === 'feature')) {
-        const base = to === 'module' ? opts.modulesDir : opts.featuresDir
-        if (!isPublicApiImportFor(targetPath, path.join(opts.modulesDir))) {
-          // specifically check that the import targets the module/feature root index
-          const isPublic =
-            isPublicApiImportFor(targetPath, path.join(opts.modulesDir, targetLayer.name)) ||
-            isPublicApiImportFor(targetPath, path.join(opts.featuresDir, targetLayer.name))
-          if (!isPublic) context.report({ node, messageId: 'appDeepImport', data: { importPath: importPathRaw } })
-          return
+        // only allow importing the module/feature public API (index file)
+        const isPublic =
+          isPublicApiImportFor(targetPath, path.join(opts.modulesDir, targetLayer.name)) ||
+          isPublicApiImportFor(targetPath, path.join(opts.featuresDir, targetLayer.name))
+        if (!isPublic) {
+          context.report({ node, messageId: 'appDeepImport', data: { importPath: importPathRaw } })
         }
+        return
       }
 
       // module -> module: distinguish deep internal imports vs root imports

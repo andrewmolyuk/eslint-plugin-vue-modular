@@ -1,5 +1,4 @@
-import path from 'path'
-import { isDeepModuleImport, isWithinSameModule, defaultOptions, applyAliases, resolveToAbsolute } from '../utils/import-boundaries.js'
+import { isDeepModuleImport, isWithinSameModule, applyAliases } from '../utils/import-boundaries.js'
 
 export default {
   meta: {

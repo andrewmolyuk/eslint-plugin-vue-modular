@@ -93,12 +93,12 @@ export default {
                   data: { feature: feat, indexFiles: indexFiles.join(', ') },
                 })
               }
-            } catch (e) {
+            } catch {
               // skip non-directories or unreadable feature entries
               continue
             }
           }
-        } catch (e) {
+        } catch {
           // ignore read errors
         }
       },

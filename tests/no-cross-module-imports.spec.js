@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, beforeEach } from 'vitest'
 import { RuleTester } from 'eslint'
 import plugin from '../src/index.js'
 

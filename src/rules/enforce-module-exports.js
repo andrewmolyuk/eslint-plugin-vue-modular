@@ -94,12 +94,12 @@ export default {
                   data: { module: mod, indexFiles: indexFiles.join(', ') },
                 })
               }
-            } catch (e) {
+            } catch {
               // skip non-directories or unreadable module entries
               continue
             }
           }
-        } catch (e) {
+        } catch {
           // ignore read errors
         }
       },

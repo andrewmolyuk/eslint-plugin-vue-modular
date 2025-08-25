@@ -147,7 +147,7 @@ export function getModulePublicImport(importPath, opts) {
   // accept '@/modules/name', 'src/modules/name' and 'modules/name'
   let aliasPath = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
   if (aliasPath.startsWith(`${opts.src}/`)) aliasPath = aliasPath.replace(`${opts.src}/`, '')
-  const m = aliasPath.match(new RegExp(`^${opts.modulesDir}/([^/]+)(?:/index(?:\.(?:js|ts|jsx|tsx))?)?$`))
+  const m = aliasPath.match(new RegExp(`^${opts.modulesDir}/([^/]+)(?:/index(?:\\.(?:js|ts|jsx|tsx))?)?$`))
   if (m) return m[1]
   return null
 }

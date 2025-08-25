@@ -87,7 +87,7 @@ export default {
           }
 
           // router index file is optional; do not enforce an index export here
-        } catch (e) {
+        } catch {
           // ignore read errors
         }
       },
