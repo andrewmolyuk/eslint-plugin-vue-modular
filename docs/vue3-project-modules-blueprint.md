@@ -861,8 +861,8 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 | 🟡 **features/**    | Shared Business, State, Data, Utility layers  | ❌ No cross-feature imports                        |
 | 🟢 **composables/** | Components, Services, State, Data, Utility    | Cross-reference with components                    |
 | 🟢 **components/**  | Composables, Services, State, Data, Utility   | Cross-reference with composables                   |
-| 🟢 **services/**    | State, Data, Utility layers                   | No service-to-service imports                      |
-| ⚫ **stores/**      | Data, Utility layers                          | State management kernel                            |
+| 🟢 **services/**    | State, Data, Utility layers                   | Global services can import other global services   |
+| ⚫ **stores/**      | Data, Utility layers                          | Global stores can import other global stores       |
 | 🔵 **entities/**    | Other entities, Utility layer                 | Entity relationships allowed                       |
 | 🟣 **shared/**      | Self-contained                                | Foundation layer - no imports                      |
 
@@ -888,8 +888,8 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 | **`features/`**    | ❌     | ❌         | ❌          | ✅             | ✅            | ✅          | ✅        | ✅          | ✅        |
 | **`composables/`** | ❌     | ❌         | ❌          | ✅             | ✅            | ✅          | ✅        | ✅          | ✅        |
 | **`components/`**  | ❌     | ❌         | ❌          | ✅             | ✅            | ✅          | ✅        | ✅          | ✅        |
-| **`services/`**    | ❌     | ❌         | ❌          | ❌             | ❌            | ❌          | ✅        | ✅          | ✅        |
-| **`stores/`**      | ❌     | ❌         | ❌          | ❌             | ❌            | ❌          | ❌        | ✅          | ✅        |
+| **`services/`**    | ❌     | ❌         | ❌          | ❌             | ❌            | ✅          | ✅        | ✅          | ✅        |
+| **`stores/`**      | ❌     | ❌         | ❌          | ❌             | ❌            | ❌          | ✅        | ✅          | ✅        |
 | **`entities/`**    | ❌     | ❌         | ❌          | ❌             | ❌            | ❌          | ❌        | ✅          | ✅        |
 | **`shared/`**      | ❌     | ❌         | ❌          | ❌             | ❌            | ❌          | ❌        | ❌          | ✅        |
 
@@ -1450,13 +1450,13 @@ export default {
    import { useApi } from '@/composables/useApi'
    ```
 
-2. **`services/` cross-referencing**: ❌ **Forbidden**
+2. **`services/` cross-referencing**: ✅ **Allowed for global services**
 
    ```javascript
-   // ❌ Services should not import from each other
+   // ✅ Global services can import other global services
    import { authService } from '@/services/auth' // from userService
 
-   // ✅ Use dependency injection or shared stores instead
+   // ✅ Also can use dependency injection or shared stores
    import { useAuthStore } from '@/stores/auth'
    ```
 

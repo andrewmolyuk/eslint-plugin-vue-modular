@@ -21,8 +21,8 @@ Rules implemented by this lint rule (short):
 - Modules (`src/modules/<name>`): isolated from other modules — importing other modules or their internals is forbidden.
 - Features (`src/features/<name>`): isolated from other features — importing other features is forbidden. Features must not import modules directly.
 - Composables / Components (`src/composables`, `src/components`): should not import app/modules/features internals — these are global-business layers and should stay framework-agnostic.
-- Services (`src/services`): allowed to import `stores`, `entities`, `shared` only.
-- Stores (`src/stores`): allowed to import `entities`, `shared` only.
+- Services (`src/services`): allowed to import other `services`, `stores`, `entities`, `shared`.
+- Stores (`src/stores`): allowed to import other `stores`, `entities`, `shared`.
 - Entities (`src/entities`): allowed to import `entities`, `shared` only.
 - Shared (`src/shared`): must be self-contained; importing other layers is forbidden.
 

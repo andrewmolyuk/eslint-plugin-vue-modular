@@ -34,6 +34,12 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
           filename: '/src/modules/admin/pages/Users.vue',
           options: [{ allow: ['@/modules/allowed/*'] }],
         },
+        // ✅ Global services can import other global services
+        { code: "import { authService } from '@/services/auth'", filename: '/src/services/user/api.js' },
+        { code: "import apiClient from '@/services/http'", filename: '/src/services/auth/index.js' },
+        // ✅ Global stores can import other global stores
+        { code: "import { useAuthStore } from '@/stores/auth'", filename: '/src/stores/user.js' },
+        { code: "import appStore from '@/stores/app'", filename: '/src/stores/settings.js' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [
