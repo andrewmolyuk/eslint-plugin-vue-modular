@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.18...v0.0.19) (2025-08-25)
+
+
+### Features
+
+* add badges for build status, Codacy grade, issues, NPM version, downloads, and license to README ([5c5b388](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/5c5b38870d272b7d805ac2999befa89d346b4e41))
+* enhance ESLint configuration and rules with improved error handling and global definitions ([48e504b](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/48e504b1d9fc28840cd6525bddbd14d1c43f29cd))
+* expand tests for enforce-import-boundaries rule with additional valid and invalid import cases ([36afc3d](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/36afc3d67b6d179fab47b5a88f5259df8af16d66))
+* update enforce-import-boundaries documentation and tests to allow global services and stores imports ([5050ab9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/5050ab98c73bce6137c73fafdf54bc87c7136b8e))
+
 ### [0.0.18](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.17...v0.0.18) (2025-08-25)
 
 
