@@ -37,9 +37,18 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         // ✅ Global services can import other global services
         { code: "import { authService } from '@/services/auth'", filename: '/src/services/user/api.js' },
         { code: "import apiClient from '@/services/http'", filename: '/src/services/auth/index.js' },
+        { code: "import logger from '@/services/logging'", filename: '/src/services/analytics/tracker.js' },
         // ✅ Global stores can import other global stores
         { code: "import { useAuthStore } from '@/stores/auth'", filename: '/src/stores/user.js' },
         { code: "import appStore from '@/stores/app'", filename: '/src/stores/settings.js' },
+        { code: "import { useUserStore } from '@/stores/user'", filename: '/src/stores/notifications.js' },
+        // ✅ Services can still import stores, entities, shared
+        { code: "import { useAppStore } from '@/stores/app'", filename: '/src/services/auth/index.js' },
+        { code: "import { User } from '@/entities/User'", filename: '/src/services/user/api.js' },
+        { code: "import utils from '@/shared/utils'", filename: '/src/services/http/client.js' },
+        // ✅ Stores can still import entities, shared
+        { code: "import { User } from '@/entities/User'", filename: '/src/stores/user.js' },
+        { code: "import constants from '@/shared/constants'", filename: '/src/stores/app.js' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [
@@ -97,10 +106,42 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
           filename: '/src/services/payment/api.js',
           errors: [{ messageId: 'forbiddenLayerImport' }],
         },
+        // ❌ services -> forbidden layers (modules, features, composables, components, app)
+        {
+          code: "import mod from '@/modules/auth'",
+          filename: '/src/services/user/api.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        {
+          code: "import feat from '@/features/search'",
+          filename: '/src/services/search/api.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        {
+          code: "import comp from '@/composables/useAuth'",
+          filename: '/src/services/auth/client.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
         // stores importing forbidden target (e.g., modules)
         {
           code: "import M from '@/modules/auth'",
           filename: '/src/stores/app.store.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        // ❌ stores -> forbidden layers (services, modules, features, composables, components, app)
+        {
+          code: "import service from '@/services/api'",
+          filename: '/src/stores/user.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        {
+          code: "import feat from '@/features/notifications'",
+          filename: '/src/stores/notifications.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        {
+          code: "import comp from '@/composables/useLocalStorage'",
+          filename: '/src/stores/settings.js',
           errors: [{ messageId: 'forbiddenLayerImport' }],
         },
         // entities importing forbidden target
