@@ -43,17 +43,65 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
           filename: '/src/modules/inventory/pages/List.vue',
           errors: [{ messageId: 'deepModuleImport' }],
         },
-        // deep import from feature
+        // module -> module forbidden (deep import case)
+        {
+          code: "import mod from '@/modules/billing/internal/secret'",
+          filename: '/src/modules/inventory/pages/List.vue',
+          errors: [{ messageId: 'deepModuleImport' }],
+        },
+        // deep import from feature (cross-feature)
         {
           code: "import f from '@/features/auth/internal/util'",
           filename: '/src/features/ui/components/Button.vue',
-          errors: [{ messageId: 'deepFeatureImport' }],
+          errors: [{ messageId: 'featureToFeatureImport' }],
+        },
+        // feature -> feature forbidden
+        {
+          code: "import other from '@/features/notifications/components/Toast.vue'",
+          filename: '/src/features/search/components/SearchBar.vue',
+          errors: [{ messageId: 'featureToFeatureImport' }],
+        },
+        // feature -> module forbidden
+        {
+          code: "import m from '@/modules/auth'",
+          filename: '/src/features/search/index.js',
+          errors: [{ messageId: 'featureToModuleImport' }],
         },
         // app deep import
         {
           code: "import s from '@/modules/billing/internal/secret'",
           filename: '/src/app/main.js',
           errors: [{ messageId: 'appDeepImport' }],
+        },
+        // module/feature importing into app forbidden
+        {
+          code: "import something from '@/app/utils'",
+          filename: '/src/modules/auth/index.js',
+          errors: [{ messageId: 'layerImportAppForbidden' }],
+        },
+        // composables/components shouldn't import domain internals (example)
+        {
+          code: "import mod from '@/modules/auth/internal/helper'",
+          filename: '/src/composables/useFoo.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        // services -> forbidden target (e.g., trying to import a component)
+        {
+          code: "import C from '@/components/Button.vue'",
+          filename: '/src/services/payment/api.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        // stores importing forbidden target (e.g., modules)
+        {
+          code: "import M from '@/modules/auth'",
+          filename: '/src/stores/app.store.js',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
+        },
+        // entities importing forbidden target
+        {
+          code: "import s from '@/services/api'",
+          filename: '/src/entities/User.ts',
+          errors: [{ messageId: 'forbiddenLayerImport' }],
         },
       ],
     })
