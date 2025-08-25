@@ -17,7 +17,7 @@ This rule prevents importing files from deep inside feature directories. Instead
 
 ### ❌ Incorrect
 
-```javascript
+````javascript
 // Importing directly from inside a feature
 import UserList from '@/features/user/components/UserList.vue'
 import userService from '@/features/user/services/userService.js'
@@ -40,7 +40,7 @@ import userService from './services/userService.js'
 
 // Importing from allowed patterns
 import { UserTypes } from '@/features/user/types.ts'
-```
+````
 
 ## Options
 
@@ -74,7 +74,7 @@ Notes:
 
 ## Project Structure
 
-```
+```text
 src/
 ├── features/
 │   ├── user/
