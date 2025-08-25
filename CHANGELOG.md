@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.17...v0.0.18) (2025-08-25)
+
+
+### Features
+
+* enhance enforce-import-boundaries rule with detailed layer access control and additional test cases ([2aa2f8d](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/2aa2f8d74ef7ba7f89b439a41b21cd122d50e31f))
+
 ### [0.0.17](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.16...v0.0.17) (2025-08-25)
 
 
