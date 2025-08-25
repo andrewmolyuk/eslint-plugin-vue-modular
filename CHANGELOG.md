@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.17](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.16...v0.0.17) (2025-08-25)
+
+
+### Features
+
+* enhance linting and documentation for modular rules ([e942e29](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/e942e29156e5b3b0b784ad7df0a7349a7c6f82b4))
+* update error messages for cross feature imports and clarify optional features directory in tests ([c87f757](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/c87f757e851c4a35b01d27d071c66b810a3daa8f))
+
+
+### Bug Fixes
+
+* correct code block formatting in no-cross-feature-imports documentation ([1093f0e](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/1093f0e199d157eb3729db2fb7995badee37eb33))
+
 ### [0.0.16](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.15...v0.0.16) (2025-08-25)
 
 
