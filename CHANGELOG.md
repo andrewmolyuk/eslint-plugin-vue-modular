@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.16](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.15...v0.0.16) (2025-08-25)
+
+
+### Features
+
+* rename app-structure rule to enforce-app-structure and update related documentation ([1b8436f](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/1b8436fe71aec2805911c15dcb7c2ec484e03add))
+* rename feature-structure rule to enforce-feature-exports and update related documentation ([af2ec8c](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/af2ec8cba842adff22a3bd0d213dba557a81bed0))
+* rename module-structure rule to enforce-module-exports and update related documentation ([3148940](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/31489401eac650d25ad2db8292ba4f5f537be870))
+* rename src-structure rule to enforce-src-structure and update related documentation ([1ba646c](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/1ba646cf1c77d735b501e30c7bfee75e915b26ad))
+
 ### [0.0.15](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.14...v0.0.15) (2025-08-24)
 
 
