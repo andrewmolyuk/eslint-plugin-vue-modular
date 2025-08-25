@@ -1,4 +1,5 @@
-# vue-modular/feature-structure
+````markdown
+# vue-modular/enforce-feature-exports
 
 Ensure every global feature under `src/features` exposes a public API via an `index.ts` or `index.js` file. This enforces the blueprint requirement that global features export a stable public interface.
 
@@ -27,3 +28,4 @@ Incorrect (missing index in feature):
 ```text
 src/features/search/components/SearchInput.vue
 ```
+````

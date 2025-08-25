@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
-import featureStructureRule from '../src/rules/feature-structure.js'
+import featureStructureRule from '../src/rules/enforce-feature-exports.js'
 
-describe('feature-structure rule', () => {
+describe('enforce-feature-exports rule', () => {
   beforeEach(() => {
     vi.restoreAllMocks()
     if (global.__eslintVueModularState) {

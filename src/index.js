@@ -5,7 +5,7 @@ import noCrossModuleImports from './rules/no-cross-module-imports.js'
 import srcStructure from './rules/src-structure.js'
 import appStructure from './rules/app-structure.js'
 import enforceModuleExports from './rules/enforce-module-exports.js'
-import featureStructure from './rules/feature-structure.js'
+import featureStructure from './rules/enforce-feature-exports.js'
 import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 
 const plugin = {
@@ -16,7 +16,7 @@ const plugin = {
     'src-structure': srcStructure,
     'app-structure': appStructure,
     'enforce-module-exports': enforceModuleExports,
-    'feature-structure': featureStructure,
+    'enforce-feature-exports': featureStructure,
     'enforce-import-boundaries': enforceImportBoundaries,
   },
   processors: {},
@@ -35,7 +35,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/src-structure': 'error',
       'vue-modular/app-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
-      'vue-modular/feature-structure': 'error',
+      'vue-modular/enforce-feature-exports': 'error',
       'vue-modular/enforce-import-boundaries': 'error',
     },
     languageOptions: {
@@ -54,7 +54,7 @@ plugin.configs.recommended = {
     'vue-modular/src-structure': 'error',
     'vue-modular/app-structure': 'error',
     'vue-modular/enforce-module-exports': 'error',
-    'vue-modular/feature-structure': 'error',
+    'vue-modular/enforce-feature-exports': 'error',
     'vue-modular/enforce-import-boundaries': 'error',
   },
 }

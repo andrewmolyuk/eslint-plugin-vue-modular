@@ -11,7 +11,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | [`vue-modular/src-structure`](./rules/src-structure.md)                       | Enforces allowed top-level folders/files in source directory      | Problem | ✅          | ❌      |
 | [`vue-modular/app-structure`](./rules/app-structure.md)                       | Enforces presence of application infrastructure under `src/app`   | Problem | ✅          | ❌      |
 | [`vue-modular/enforce-module-exports`](./rules/enforce-module-exports.md)     | Ensures modules expose a public API via index.ts/index.js         | Problem | ✅          | ❌      |
-| [`vue-modular/feature-structure`](./rules/feature-structure.md)               | Ensures global features expose a public API via index.ts/index.js | Problem | ✅          | ❌      |
+| [`vue-modular/enforce-feature-exports`](./rules/enforce-feature-exports.md)   | Ensures global features expose a public API via index.ts/index.js | Problem | ✅          | ❌      |
 
 ## Rule Categories
 
@@ -25,7 +25,7 @@ Rules that help maintain clean architectural boundaries in your Vue.js applicati
 - [`vue-modular/src-structure`](./rules/src-structure.md) - Enforces allowed top-level folders/files in source directory
 - [`vue-modular/app-structure`](./rules/app-structure.md) - Enforces presence of application infrastructure under `src/app`
 - [`vue-modular/enforce-module-exports`](./rules/enforce-module-exports.md) - Ensures modules expose a public API via `index.ts`/`index.js`
-- [`vue-modular/feature-structure`](./rules/feature-structure.md) - Ensures global features expose a public API via `index.ts`/`index.js`
+- [`vue-modular/enforce-feature-exports`](./rules/enforce-feature-exports.md) - Ensures global features expose a public API via `index.ts`/`index.js`
 
 ## Planned Rules
 

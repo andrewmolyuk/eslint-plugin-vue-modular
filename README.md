@@ -87,7 +87,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 - [`vue-modular/src-structure`](./docs/rules/src-structure.md): Enforces allowed top-level folders/files in source directory
 - [`vue-modular/app-structure`](./docs/rules/app-structure.md): Enforces presence of application infrastructure under `src/app`
 - [`vue-modular/enforce-module-exports`](./docs/rules/enforce-module-exports.md): Ensures modules expose a public API via `index.ts`/`index.js`
-- [`vue-modular/feature-structure`](./docs/rules/feature-structure.md): Ensures global features expose a public API via `index.ts`/`index.js`
+- [`vue-modular/enforce-feature-exports`](./docs/rules/enforce-feature-exports.md): Ensures global features expose a public API via `index.ts`/`index.js`
 
 For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).
 
