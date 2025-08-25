@@ -1,5 +1,12 @@
 # eslint-plugin-vue-modular
 
+[![Build Status](https://img.shields.io/github/actions/workflow/status/andrewmolyuk/eslint-plugin-vue-modular/build.yml)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/build.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/819ccf509a694fcc8204bca4a78c634d)](https://app.codacy.com/gh/andrewmolyuk/eslint-plugin-vue-modular/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Issues](https://img.shields.io/github/issues/andrewmolyuk/eslint-plugin-vue-modular)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/issues)
+[![NPM](https://img.shields.io/npm/v/eslint-plugin-vue-modular.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-vue-modular)
+[![NPM downloads](https://img.shields.io/npm/dw/eslint-plugin-vue-modular.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-vue-modular)
+[![License](https://img.shields.io/npm/l/eslint-plugin-vue-modular.svg)](LICENSE)
+
 A custom ESLint plugin for enforcing modular patterns in Vue 3 projects.
 
 ## Features
