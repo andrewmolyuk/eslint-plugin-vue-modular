@@ -1,5 +1,4 @@
-````markdown
-# vue-modular/enforce-module-exports
+# enforce-module-exports
 
 Ensure every module under `src/modules` exposes a public API via an `index.ts` or `index.js` file. This helps the `app/` layer and other modules import modules through a stable public interface.
 
@@ -32,4 +31,3 @@ Incorrect (missing index in module):
 ```text
 src/modules/auth/views/LoginView.vue
 ```
-````

@@ -38,7 +38,7 @@ export default [
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
       'vue-modular/no-cross-module-imports': 'error',
-  'vue-modular/enforce-src-structure': 'error',
+      'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
     },
     languageOptions: {
@@ -70,7 +70,7 @@ module.exports = {
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
     'vue-modular/no-cross-module-imports': 'error',
-  'vue-modular/enforce-src-structure': 'error',
+    'vue-modular/enforce-src-structure': 'error',
   },
 }
 ```

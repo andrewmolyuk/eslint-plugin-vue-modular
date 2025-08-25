@@ -74,7 +74,7 @@ Notes:
 
 ## Project Structure
 
-```
+```text
 src/
 ├── features/
 │   ├── user/

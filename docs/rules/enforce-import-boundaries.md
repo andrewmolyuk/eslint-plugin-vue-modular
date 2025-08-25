@@ -1,4 +1,4 @@
-# `vue-modular/enforce-import-boundaries`
+# enforce-import-boundaries
 
 Enforce proper import paths based on the project modules/features blueprint. By default this rule prevents deep imports into other modules or features — imports between modules/features should go through the respective public API index files.
 

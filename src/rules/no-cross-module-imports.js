@@ -55,10 +55,12 @@ export default {
 
         const within = isWithinSameModule(filename, maybe.moduleName, opts)
         if (!within) {
+          // prefer alias-style allowed path when the original import used the '@/' alias
+          const allowedDisplay = source && String(source).startsWith('@/') ? `@/${modulesDir}/${maybe.moduleName}` : maybe.allowedPath
           context.report({
             node: node.source,
             messageId: 'crossModuleImport',
-            data: { importPath: source, moduleName: maybe.moduleName, allowedPath: maybe.allowedPath },
+            data: { importPath: source, moduleName: maybe.moduleName, allowedPath: allowedDisplay },
           })
         }
       },

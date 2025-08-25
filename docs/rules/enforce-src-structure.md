@@ -1,5 +1,4 @@
-````markdown
-# vue-modular/enforce-src-structure
+# enforce-src-structure
 
 Enforce allowed top-level folders and files in the `src` directory.
 
@@ -27,5 +26,3 @@ This rule ensures that the top-level entries inside your configured source direc
   }
 }
 ```
-
-````

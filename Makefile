@@ -5,7 +5,7 @@ install:
 
 lint:
 	npx eslint . --ext .js,.vue --fix
-	npx markdownlint README.md
+	npx markdownlint README.md docs/**/*.md --fix
 
 test: lint
 	CI=CI npx vitest

@@ -1,5 +1,4 @@
-````markdown
-# vue-modular/enforce-app-structure
+# enforce-app-structure
 
 **Ensure the `src/app` folder contains the required application infrastructure.**
 
@@ -22,15 +21,15 @@ Correct structure (default required entries present):
 
 ```text
 src/
-	app/
-		router/
-			index.ts
-		stores/
-		layouts/
-		App.vue
-	components/
-	modules/
-	main.ts
+ app/
+  router/
+   index.ts
+  stores/
+  layouts/
+  App.vue
+ components/
+ modules/
+ main.ts
 ```
 
 Missing `App.vue` or `stores` will trigger a report.
@@ -106,4 +105,3 @@ Disable this rule if you prefer no enforcement of app-level scaffolding or if yo
 ## Further Reading
 
 - [Vue 3 Project Modules Blueprint](../vue3-project-modules-blueprint.md)
-````

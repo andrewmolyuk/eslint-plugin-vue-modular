@@ -33,8 +33,7 @@ export default {
       },
     ],
     messages: {
-      crossFeatureImport:
-        'Cannot import "{{importPath}}" from outside feature "{{featureName}}". Only imports from "{{allowedPath}}" are allowed.',
+      crossFeatureImport: 'Cannot import "{{importPath}}" from outside "{{name}}". Only imports from "{{allowedPath}}" are allowed.',
     },
   },
   create(context) {
@@ -58,7 +57,7 @@ export default {
             context.report({
               node: node.source,
               messageId: 'crossFeatureImport',
-              data: { importPath: source, featureName: modulePublicName, allowedPath: `@/${modulesDir}/${modulePublicName}` },
+              data: { importPath: source, name: modulePublicName, allowedPath: `@/${modulesDir}/${modulePublicName}` },
             })
             return
           }
@@ -71,7 +70,7 @@ export default {
           context.report({
             node: node.source,
             messageId: 'crossFeatureImport',
-            data: { importPath: source, featureName: featureInfo.featureName, allowedPath: featureInfo.allowedPath },
+            data: { importPath: source, name: featureInfo.featureName, allowedPath: featureInfo.allowedPath },
           })
         }
       },
