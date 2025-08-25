@@ -45,7 +45,6 @@ export default {
     ],
     defaultOptions: [defaultOptions],
     messages: {
-      missingFeaturesDir: 'Project is missing `{{src}}/{{featuresDir}}` directory. Create features under `{{src}}/{{featuresDir}}`',
       missingIndex: 'Feature `{{feature}}` is missing a public API file (expected one of: {{indexFiles}})',
     },
   },
@@ -76,7 +75,7 @@ export default {
         try {
           const entries = fs.readdirSync(srcDir)
           if (!entries.includes(featuresDirName)) {
-            context.report({ loc: { line: 1, column: 0 }, messageId: 'missingFeaturesDir', data: { src, featuresDir: featuresDirName } })
+            // features directory is optional; do not report an error when absent
             return
           }
 

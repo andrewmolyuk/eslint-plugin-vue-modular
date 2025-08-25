@@ -17,14 +17,14 @@ describe('enforce-feature-exports rule', () => {
     settings: {},
   })
 
-  it('reports when features directory is missing', () => {
+  it('does not report when features directory is missing (features optional)', () => {
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['components', 'main.ts'])
 
     const context = createContext()
     const rule = featureStructureRule.create(context)
     if (rule.Program) rule.Program()
 
-    expect(context.report).toHaveBeenCalledWith(expect.objectContaining({ messageId: 'missingFeaturesDir' }))
+    expect(context.report).not.toHaveBeenCalled()
   })
 
   it('reports features missing index files', () => {
