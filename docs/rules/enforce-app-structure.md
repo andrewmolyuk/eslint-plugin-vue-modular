@@ -1,15 +1,9 @@
 ````markdown
-# vue-modular/app-structure
+# vue-modular/enforce-app-structure
 
 **Ensure the `src/app` folder contains the required application infrastructure.**
 
 This rule checks that your application's `app/` directory (inside the configured source folder) exists and contains a set of required entries. By default the rule expects:
-
-# vue-modular/app-structure
-
-**Ensure the `src/app` folder contains the required application infrastructure.**
-
-This rule checks that your project's `app/` directory (inside the configured source folder) exists and contains a set of required entries. By default the rule expects:
 
 - `router`
 - `stores`
@@ -39,19 +33,7 @@ src/
 	main.ts
 ```
 
-Missing `App.vue` or `stores` will trigger a report:
-
-```text
-src/
-	app/
-		router/
-		layouts/
-	main.ts
-
-# ❌ 'stores' and 'App.vue' are missing
-```
-
-> Note: `app/router` does not have to export an `index` file — an index export is optional. The rule only ensures the existence of configured required entries. If your project uses an index export in `app/router` for automatic module discovery, keep it in your codebase, but the rule will not enforce it.
+Missing `App.vue` or `stores` will trigger a report.
 
 ## Options
 
@@ -80,7 +62,7 @@ Array of required entries that must exist inside the `app/` directory. Each item
 export default [
   {
     rules: {
-      'vue-modular/app-structure': 'error',
+      'vue-modular/enforce-app-structure': 'error',
     },
   },
 ]
@@ -92,7 +74,7 @@ export default [
 export default [
   {
     rules: {
-      'vue-modular/app-structure': ['error', { required: ['router', 'stores', 'layouts', 'App.vue', 'plugins'] }],
+      'vue-modular/enforce-app-structure': ['error', { required: ['router', 'stores', 'layouts', 'App.vue', 'plugins'] }],
     },
   },
 ]
@@ -104,7 +86,7 @@ export default [
 export default [
   {
     rules: {
-      'vue-modular/app-structure': ['error', { src: 'source' }],
+      'vue-modular/enforce-app-structure': ['error', { src: 'source' }],
     },
   },
 ]
