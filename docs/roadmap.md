@@ -13,7 +13,7 @@ This document outlines the current status and planned development of rules for e
 | `vue-modular/enforce-import-boundaries` | **Released** | Enforces proper import paths and module/feature boundaries across the project        |
 | `vue-modular/src-structure`             | **Released** | Enforces allowed top-level folders/files in the `src/` folder                        |
 | `vue-modular/app-structure`             | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
-| `vue-modular/module-structure`          | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
+| `vue-modular/enforce-module-exports`    | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
 | `vue-modular/feature-structure`         | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
 
 ---
