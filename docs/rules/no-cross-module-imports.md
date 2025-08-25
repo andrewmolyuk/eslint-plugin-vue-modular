@@ -205,4 +205,4 @@ import { userStore } from '@/store/modules/user'
 ## Related Rules
 
 - [`no-cross-feature-imports`](./no-cross-feature-imports.md) - Similar rule for feature-based architecture
-- [`src-structure`](./src-structure.md) - Enforces allowed top-level directories
+- [`enforce-src-structure`](./enforce-src-structure.md) - Enforces allowed top-level directories

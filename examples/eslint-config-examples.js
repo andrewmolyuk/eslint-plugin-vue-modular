@@ -15,7 +15,7 @@ export default [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
-      'vue-modular/src-structure': 'error',
+      'vue-modular/enforce-src-structure': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -45,7 +45,7 @@ export const customConfig = [
           allowedPatterns: ['src/features/*/index.js', 'src/features/*/index.ts'],
         },
       ],
-      'vue-modular/src-structure': [
+      'vue-modular/enforce-src-structure': [
         'error',
         {
           allowed: ['app', 'features', 'components', 'utils', 'main.ts'],
@@ -70,7 +70,7 @@ export const multipleConfigs = [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
-      'vue-modular/src-structure': 'error',
+      'vue-modular/enforce-src-structure': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -85,7 +85,7 @@ export const multipleConfigs = [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'warn',
-      'vue-modular/src-structure': 'error',
+      'vue-modular/enforce-src-structure': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -104,7 +104,7 @@ module.exports = {
   extends: ['plugin:vue-modular/recommended'],
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
-    'vue-modular/src-structure': 'error',
+    'vue-modular/enforce-src-structure': 'error',
   },
   env: {
     es2022: true,
@@ -127,7 +127,7 @@ module.exports = {
         allowedPatterns: ['src/features/*/index.js', 'src/features/*/index.ts'],
       },
     ],
-    'vue-modular/src-structure': [
+    'vue-modular/enforce-src-structure': [
       'error',
       {
         allowed: ['app', 'features', 'components', 'utils', 'main.ts'],

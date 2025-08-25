@@ -9,7 +9,7 @@ const defaultOptions = {
   required: ['router', 'stores', 'layouts', 'App.vue'],
 }
 
-// reuse global run state from src-structure rule
+// reuse global run state from enforce-src-structure rule
 const eslintRunId = `${process.pid}_${process.cwd()}_appstructure`
 if (!global.__eslintVueModularState) {
   global.__eslintVueModularState = new Map()

@@ -2,7 +2,7 @@ import meta from './meta.js'
 
 import noCrossFeatureImports from './rules/no-cross-feature-imports.js'
 import noCrossModuleImports from './rules/no-cross-module-imports.js'
-import srcStructure from './rules/src-structure.js'
+import srcStructure from './rules/enforce-src-structure.js'
 import appStructure from './rules/enforce-app-structure.js'
 import enforceModuleExports from './rules/enforce-module-exports.js'
 import featureStructure from './rules/enforce-feature-exports.js'
@@ -13,7 +13,7 @@ const plugin = {
   rules: {
     'no-cross-feature-imports': noCrossFeatureImports,
     'no-cross-module-imports': noCrossModuleImports,
-    'src-structure': srcStructure,
+    'enforce-src-structure': srcStructure,
     'enforce-app-structure': appStructure,
     'enforce-module-exports': enforceModuleExports,
     'enforce-feature-exports': featureStructure,
@@ -32,7 +32,7 @@ plugin.configs['flat/recommended'] = [
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
       'vue-modular/no-cross-module-imports': 'error',
-      'vue-modular/src-structure': 'error',
+      'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-app-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/enforce-feature-exports': 'error',
@@ -51,7 +51,7 @@ plugin.configs.recommended = {
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
     'vue-modular/no-cross-module-imports': 'error',
-    'vue-modular/src-structure': 'error',
+    'vue-modular/enforce-src-structure': 'error',
     'vue-modular/enforce-app-structure': 'error',
     'vue-modular/enforce-module-exports': 'error',
     'vue-modular/enforce-feature-exports': 'error',

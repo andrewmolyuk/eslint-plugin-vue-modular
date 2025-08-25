@@ -1,8 +1,8 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
-import srcStructureRule, { resetSession } from '../src/rules/src-structure.js'
+import srcStructureRule, { resetSession } from '../src/rules/enforce-src-structure.js'
 
-describe('src-structure rule', () => {
+describe('enforce-src-structure rule', () => {
   beforeEach(() => {
     // Reset any previous mocks
     vi.restoreAllMocks()
