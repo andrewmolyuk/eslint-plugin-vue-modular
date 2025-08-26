@@ -2,14 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.0.20](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.19...v0.0.20) (2025-08-26)
+
+
+### Features
+
+* add initial version configuration file with commit message formats ([a0f4e96](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/a0f4e969769e2b128b82539eb6da7fc74370125f))
+* enhance enforce-naming-convention rule to support Vue 3 modular architecture with file type-specific naming conventions and comprehensive validation ([c27dac4](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/c27dac4601ba5cf9de426625d0ca37f8f21a17ee))
+* rename component naming convention rule to enforce-naming-convention and update related documentation ([cacf020](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/cacf020b8ac6e9ee375869b8d944b3b2ca16caeb))
+
+
+### Bug Fixes
+
+* update types structure in version configuration for consistency ([8801736](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/88017364570ae388bcf3178a707c1c437ec791b3))
+
 
 
 ### Features
 
 * add component naming convention rule with tests and documentation ([d4ab529](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/d4ab529e6600c8ddc0146b2df859c5ecef3b938b))
 
-### [0.0.19](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.18...v0.0.19) (2025-08-25)
 
 
 ### Features
@@ -19,14 +30,12 @@ All notable changes to this project will be documented in this file. See [standa
 * expand tests for enforce-import-boundaries rule with additional valid and invalid import cases ([36afc3d](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/36afc3d67b6d179fab47b5a88f5259df8af16d66))
 * update enforce-import-boundaries documentation and tests to allow global services and stores imports ([5050ab9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/5050ab98c73bce6137c73fafdf54bc87c7136b8e))
 
-### [0.0.18](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.17...v0.0.18) (2025-08-25)
 
 
 ### Features
 
 * enhance enforce-import-boundaries rule with detailed layer access control and additional test cases ([2aa2f8d](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/2aa2f8d74ef7ba7f89b439a41b21cd122d50e31f))
 
-### [0.0.17](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.16...v0.0.17) (2025-08-25)
 
 
 ### Features
@@ -39,7 +48,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * correct code block formatting in no-cross-feature-imports documentation ([1093f0e](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/1093f0e199d157eb3729db2fb7995badee37eb33))
 
-### [0.0.16](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.15...v0.0.16) (2025-08-25)
 
 
 ### Features
@@ -49,7 +57,6 @@ All notable changes to this project will be documented in this file. See [standa
 * rename module-structure rule to enforce-module-exports and update related documentation ([3148940](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/31489401eac650d25ad2db8292ba4f5f537be870))
 * rename src-structure rule to enforce-src-structure and update related documentation ([1ba646c](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/1ba646cf1c77d735b501e30c7bfee75e915b26ad))
 
-### [0.0.15](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.14...v0.0.15) (2025-08-24)
 
 
 ### Features
@@ -60,9 +67,7 @@ All notable changes to this project will be documented in this file. See [standa
 * add module-structure rule to enforce public API exposure in modules ([c5d3195](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/c5d3195eca5df025da5d657c1ff1ac7bae262ade))
 * update documentation and rules for import boundary enforcement ([f08aaa2](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/f08aaa23f5a1dae5fc8d8c18e427cfa34ef2aa87))
 
-### [0.0.14](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.13...v0.0.14) (2025-08-24)
 
-### [0.0.13](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.12...v0.0.13) (2025-08-22)
 
 
 ### Features
@@ -74,14 +79,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 * add 'stores' to allowed top-level folders in src structure ([076906a](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/076906ad0e032e779994cdf764fdfc0244634cf3))
 
-### [0.0.12](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.11...v0.0.12) (2025-08-22)
 
 
 ### Bug Fixes
 
 * update test descriptions for clarity and remove unused dependencies ([8cffac5](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/8cffac590d8e3f2e2472ba1d65372e1fa1805cf2))
 
-### [0.0.11](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.10...v0.0.11) (2025-08-22)
 
 
 ### Bug Fixes
@@ -89,7 +92,6 @@ All notable changes to this project will be documented in this file. See [standa
 * improve src-structure rule to use process-based cache and remove session-based cache ([14442e9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/14442e96f23f9152d082a0fe0107844d5ec6c546))
 * remove unnecessary blank lines in src-structure tests ([4519f7d](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/4519f7d458854a1ffa0de87aaef301783dc1b823))
 
-### [0.0.10](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.8...v0.0.10) (2025-08-22)
 
 
 ### Bug Fixes
@@ -100,14 +102,12 @@ All notable changes to this project will be documented in this file. See [standa
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.0.10](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.9...v0.0.10) (2025-08-22)
 
 
 ### Bug Fixes
 
 * update changelog for version 0.0.9 and improve src-structure rule session handling ([e3e3f62](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/e3e3f6202a0e74c9faa957566bfaef847700814b))
 
-### [0.0.9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.7...v0.0.9) (2025-08-22)
 
 
 ### Features
@@ -116,7 +116,6 @@ All notable changes to this project will be documented in this file. See [standa
 * add src-structure rule to enforce allowed top-level folders and files in src directory ([f90a1d9](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/f90a1d98fbfd11e16096399f51112039781a1045))
 * enhance README and documentation for eslint-plugin-vue-modular ([066823c](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/066823cda292843324a9531ab3a418fff851fdcd))
 
-### [0.0.7](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.2...v0.0.7) (2025-08-21)
 
 
 ### Bug Fixes
