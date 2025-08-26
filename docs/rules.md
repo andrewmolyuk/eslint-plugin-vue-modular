@@ -4,15 +4,15 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ## Available Rules
 
-| Rule                                                                                | Description                                                       | Type       | Recommended | Fixable |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ---------- | ----------- | ------- |
-| [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md)       | Prevents direct imports from deep inside feature folders          | Problem    | ✅          | ❌      |
-| [`vue-modular/no-cross-module-imports`](./rules/no-cross-module-imports.md)         | Prevents imports between different modules                        | Problem    | ✅          | ❌      |
-| [`vue-modular/enforce-import-boundaries`](./rules/enforce-import-boundaries.md)     | Consolidated import-boundary enforcement                          | Problem    | ✅          | ❌      |
-| [`vue-modular/enforce-src-structure`](./rules/enforce-src-structure.md)             | Enforces allowed top-level folders/files in source directory      | Problem    | ✅          | ❌      |
-| [`vue-modular/enforce-app-structure`](./rules/enforce-app-structure.md)             | Enforces presence of application infrastructure under `src/app`   | Problem    | ✅          | ❌      |
-| [`vue-modular/enforce-module-exports`](./rules/enforce-module-exports.md)           | Ensures modules expose a public API via index.ts/index.js         | Problem    | ✅          | ❌      |
-| [`vue-modular/enforce-feature-exports`](./rules/enforce-feature-exports.md)         | Ensures global features expose a public API via index.ts/index.js | Problem    | ✅          | ❌      |
+| Rule                                                                            | Description                                                       | Type       | Recommended | Fixable |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------- | ---------- | ----------- | ------- |
+| [`vue-modular/no-cross-feature-imports`](./rules/no-cross-feature-imports.md)   | Prevents direct imports from deep inside feature folders          | Problem    | ✅          | ❌      |
+| [`vue-modular/no-cross-module-imports`](./rules/no-cross-module-imports.md)     | Prevents imports between different modules                        | Problem    | ✅          | ❌      |
+| [`vue-modular/enforce-import-boundaries`](./rules/enforce-import-boundaries.md) | Consolidated import-boundary enforcement                          | Problem    | ✅          | ❌      |
+| [`vue-modular/enforce-src-structure`](./rules/enforce-src-structure.md)         | Enforces allowed top-level folders/files in source directory      | Problem    | ✅          | ❌      |
+| [`vue-modular/enforce-app-structure`](./rules/enforce-app-structure.md)         | Enforces presence of application infrastructure under `src/app`   | Problem    | ✅          | ❌      |
+| [`vue-modular/enforce-module-exports`](./rules/enforce-module-exports.md)       | Ensures modules expose a public API via index.ts/index.js         | Problem    | ✅          | ❌      |
+| [`vue-modular/enforce-feature-exports`](./rules/enforce-feature-exports.md)     | Ensures global features expose a public API via index.ts/index.js | Problem    | ✅          | ❌      |
 | [`vue-modular/enforce-naming-convention`](./rules/enforce-naming-convention.md) | Enforce consistent naming patterns for Vue components             | Suggestion | ❌          | ❌      |
 
 ## Rule Categories
