@@ -13,7 +13,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | [`vue-modular/enforce-app-structure`](./rules/enforce-app-structure.md)             | Enforces presence of application infrastructure under `src/app`   | Problem    | ✅          | ❌      |
 | [`vue-modular/enforce-module-exports`](./rules/enforce-module-exports.md)           | Ensures modules expose a public API via index.ts/index.js         | Problem    | ✅          | ❌      |
 | [`vue-modular/enforce-feature-exports`](./rules/enforce-feature-exports.md)         | Ensures global features expose a public API via index.ts/index.js | Problem    | ✅          | ❌      |
-| [`vue-modular/component-naming-convention`](./rules/component-naming-convention.md) | Enforce consistent naming patterns for Vue components             | Suggestion | ❌          | ❌      |
+| [`vue-modular/enforce-naming-convention`](./rules/enforce-naming-convention.md) | Enforce consistent naming patterns for Vue components             | Suggestion | ❌          | ❌      |
 
 ## Rule Categories
 
@@ -33,7 +33,7 @@ Rules that help maintain clean architectural boundaries in your Vue.js applicati
 
 Rules that help maintain consistent component organization and naming:
 
-- [`vue-modular/component-naming-convention`](./rules/component-naming-convention.md) - Enforce consistent naming patterns for Vue components
+- [`vue-modular/enforce-naming-convention`](./rules/enforce-naming-convention.md) - Enforce consistent naming patterns for Vue components
 
 ## Planned Rules
 

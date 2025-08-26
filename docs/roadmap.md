@@ -15,7 +15,7 @@ This document outlines the current status and planned development of rules for e
 | `vue-modular/enforce-app-structure`       | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
 | `vue-modular/enforce-module-exports`      | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
 | `vue-modular/enforce-feature-exports`     | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
-| `vue-modular/component-naming-convention` | **Released** | Enforce consistent naming patterns for Vue components                                |
+| `vue-modular/enforce-naming-convention` | **Released** | Enforce consistent naming patterns for Vue components                                |
 
 ---
 

@@ -1,4 +1,4 @@
-# vue-modular/component-naming-convention
+# vue-modular/enforce-naming-convention
 
 Enforce consistent naming patterns for Vue components.
 
@@ -53,7 +53,7 @@ export default {
 
 ```js
 {
-  "vue-modular/component-naming-convention": ["error", {
+  "vue-modular/enforce-naming-convention": ["error", {
     "style": "PascalCase",
     "requireFileNameMatches": true
   }]
@@ -80,7 +80,7 @@ When enabled, requires that the filename matches the component name exactly.
 
 ```js
 {
-  "vue-modular/component-naming-convention": "error"
+  "vue-modular/enforce-naming-convention": "error"
 }
 ```
 
@@ -93,7 +93,7 @@ This enforces:
 
 ```js
 {
-  "vue-modular/component-naming-convention": ["error", {
+  "vue-modular/enforce-naming-convention": ["error", {
     "style": "kebab-case"
   }]
 }
@@ -103,7 +103,7 @@ This enforces:
 
 ```js
 {
-  "vue-modular/component-naming-convention": ["error", {
+  "vue-modular/enforce-naming-convention": ["error", {
     "requireFileNameMatches": false
   }]
 }

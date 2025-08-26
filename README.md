@@ -48,7 +48,7 @@ export default [
       'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       // Optional: Enable component naming convention
-      // 'vue-modular/component-naming-convention': 'error',
+      // 'vue-modular/enforce-naming-convention': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -90,7 +90,7 @@ module.exports = {
     'vue-modular/no-cross-module-imports': 'error',
     'vue-modular/enforce-src-structure': 'error',
     // Optional: Enable component naming convention
-    // 'vue-modular/component-naming-convention': 'error',
+    // 'vue-modular/enforce-naming-convention': 'error',
   },
 }
 ```
@@ -111,7 +111,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 - [`vue-modular/enforce-app-structure`](./docs/rules/enforce-app-structure.md): Enforces presence of application infrastructure under `src/app`
 - [`vue-modular/enforce-module-exports`](./docs/rules/enforce-module-exports.md): Ensures modules expose a public API via `index.ts`/`index.js`
 - [`vue-modular/enforce-feature-exports`](./docs/rules/enforce-feature-exports.md): Ensures global features expose a public API via `index.ts`/`index.js`
-- [`vue-modular/component-naming-convention`](./docs/rules/component-naming-convention.md): Enforce consistent naming patterns for Vue components
+- [`vue-modular/enforce-naming-convention`](./docs/rules/enforce-naming-convention.md): Enforce consistent naming patterns for Vue components
 
 For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).
 

@@ -2,7 +2,7 @@ import { describe, it, beforeEach } from 'vitest'
 import { RuleTester } from 'eslint'
 import plugin from '../src/index.js'
 
-describe('vue-modular/component-naming-convention rule', () => {
+describe('vue-modular/enforce-naming-convention rule', () => {
   let ruleTester
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe('vue-modular/component-naming-convention rule', () => {
   })
 
   it('basic cases', () => {
-    ruleTester.run('component-naming-convention', plugin.rules['component-naming-convention'], {
+    ruleTester.run('enforce-naming-convention', plugin.rules['enforce-naming-convention'], {
       valid: [
         { code: "export default { name: 'UserCard' }", filename: '/src/components/UserCard.js' },
         { code: "export default { name: 'LoginView' }", filename: '/src/views/LoginView.js' },
