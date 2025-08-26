@@ -39,14 +39,6 @@ Rules that help maintain consistent component organization and naming:
 
 For a comprehensive list of planned rules and development timeline, see our [Roadmap](./roadmap.md).
 
-### Coming Soon
-
-| Rule                                       | Priority | Description                                                |
-| ------------------------------------------ | -------- | ---------------------------------------------------------- |
-| `vue-modular/enforce-module-exports`       | High     | Ensure modules expose functionality through index.ts files |
-| `vue-modular/enforce-import-boundaries`    | High     | Enforce proper import paths based on module structure      |
-| `vue-modular/no-cross-module-store-access` | High     | Prevent direct access to other modules' stores             |
-
 ## Configuration
 
 For detailed configuration examples and usage instructions, see the [main README](../README.md).
