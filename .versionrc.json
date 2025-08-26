@@ -1,49 +1,62 @@
 {
-  "types": {
-    "feat": {
+  "types": [
+    {
+      "type": "feat",
       "section": "Features"
     },
-    "fix": {
+    {
+      "type": "fix",
       "section": "Bug Fixes"
     },
-    "perf": {
+    {
+      "type": "perf",
       "section": "Performance Improvements",
       "hidden": true
     },
-    "docs": {
+    {
+      "type": "docs",
       "section": "Documentation",
       "hidden": true
     },
-    "style": {
+    {
+      "type": "style",
       "section": "Styles",
       "hidden": true
     },
-    "refactor": {
+    {
+      "type": "refactor",
       "section": "Code Refactoring",
       "hidden": true
     },
-    "test": {
+    {
+      "type": "test",
       "section": "Tests",
       "hidden": true
     },
-    "build": {
+    {
+      "type": "build",
       "section": "Build System",
       "hidden": true
     },
-    "ci": {
+    {
+      "type": "ci",
       "section": "Continuous Integration",
       "hidden": true
     },
-    "chore": {
+    {
+      "type": "chore",
       "section": "Chores",
       "hidden": true
     }
-  },
+  ],
   "commitUrlFormat": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/{{hash}}",
   "compareUrlFormat": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/{{previousTag}}...{{currentTag}}",
   "issueUrlFormat": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/issues/{{id}}",
   "userUrlFormat": "https://github.com/{{user}}",
   "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
   "issuePrefixes": ["#"],
-  "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+  "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"],
+  "scripts": {
+    "postchangelog": "sed -i '' -e '/^### \\[[^]]*\\]([^)]*) ([^)]*)$/d' -e '/./,$!d' CHANGELOG.md && echo '✓ Cleaned up changelog format'"
+  }
 }
