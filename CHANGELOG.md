@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.19...v0.0.20) (2025-08-26)
+
+
+### Features
+
+* add component naming convention rule with tests and documentation ([d4ab529](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/d4ab529e6600c8ddc0146b2df859c5ecef3b938b))
+
 ### [0.0.19](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/v0.0.18...v0.0.19) (2025-08-25)
 
 
