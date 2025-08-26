@@ -1,0 +1,49 @@
+{
+  "types": {
+    "feat": {
+      "section": "Features"
+    },
+    "fix": {
+      "section": "Bug Fixes"
+    },
+    "perf": {
+      "section": "Performance Improvements",
+      "hidden": true
+    },
+    "docs": {
+      "section": "Documentation",
+      "hidden": true
+    },
+    "style": {
+      "section": "Styles",
+      "hidden": true
+    },
+    "refactor": {
+      "section": "Code Refactoring",
+      "hidden": true
+    },
+    "test": {
+      "section": "Tests",
+      "hidden": true
+    },
+    "build": {
+      "section": "Build System",
+      "hidden": true
+    },
+    "ci": {
+      "section": "Continuous Integration",
+      "hidden": true
+    },
+    "chore": {
+      "section": "Chores",
+      "hidden": true
+    }
+  },
+  "commitUrlFormat": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/commit/{{hash}}",
+  "compareUrlFormat": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/compare/{{previousTag}}...{{currentTag}}",
+  "issueUrlFormat": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular/issues/{{id}}",
+  "userUrlFormat": "https://github.com/{{user}}",
+  "releaseCommitMessageFormat": "chore(release): {{currentTag}}",
+  "issuePrefixes": ["#"],
+  "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+}
