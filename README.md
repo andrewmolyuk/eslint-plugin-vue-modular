@@ -47,6 +47,8 @@ export default [
       'vue-modular/no-cross-module-imports': 'error',
       'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
+      // Optional: Enable component naming convention
+      // 'vue-modular/component-naming-convention': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -56,16 +58,21 @@ export default [
 ]
 ```
 
-You can also use the plugin's bundled flat configuration for convenience:
+You can also use the plugin's bundled configurations for convenience:
 
 ```js
 // eslint.config.js
 import pluginVueModular from 'eslint-plugin-vue-modular'
 
+// Recommended config (core architectural rules)
 export default [pluginVueModular.configs['flat/recommended']]
+
+// OR strict config (includes all rules, including style-related)
+export default [pluginVueModular.configs['flat/strict']]
 ```
 
-This will apply the recommended rules and settings for ESLint v9+ (flat config) without manually listing each rule.
+- **Recommended config**: Includes core architectural rules that enforce modular boundaries
+- **Strict config**: Includes all rules, including style-related rules like component naming conventions
 
 ### Legacy Config (ESLint v8 and below)
 
@@ -73,14 +80,23 @@ This will apply the recommended rules and settings for ESLint v9+ (flat config) 
 // .eslintrc.js
 module.exports = {
   plugins: ['vue-modular'],
-  extends: ['plugin:vue-modular/recommended'],
+  extends: [
+    'plugin:vue-modular/recommended', // Core architectural rules
+    // OR
+    // 'plugin:vue-modular/strict', // All rules including style-related
+  ],
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
     'vue-modular/no-cross-module-imports': 'error',
     'vue-modular/enforce-src-structure': 'error',
+    // Optional: Enable component naming convention
+    // 'vue-modular/component-naming-convention': 'error',
   },
 }
 ```
+
+- **Recommended preset**: Includes core architectural rules that enforce modular boundaries
+- **Strict preset**: Includes all rules, including style-related rules like component naming conventions
 
 ## Rules
 
@@ -95,6 +111,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 - [`vue-modular/enforce-app-structure`](./docs/rules/enforce-app-structure.md): Enforces presence of application infrastructure under `src/app`
 - [`vue-modular/enforce-module-exports`](./docs/rules/enforce-module-exports.md): Ensures modules expose a public API via `index.ts`/`index.js`
 - [`vue-modular/enforce-feature-exports`](./docs/rules/enforce-feature-exports.md): Ensures global features expose a public API via `index.ts`/`index.js`
+- [`vue-modular/component-naming-convention`](./docs/rules/component-naming-convention.md): Enforce consistent naming patterns for Vue components
 
 For detailed documentation about rules, see the [Rules Documentation](./docs/rules.md).
 

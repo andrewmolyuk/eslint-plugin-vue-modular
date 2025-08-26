@@ -7,6 +7,7 @@ import appStructure from './rules/enforce-app-structure.js'
 import enforceModuleExports from './rules/enforce-module-exports.js'
 import featureStructure from './rules/enforce-feature-exports.js'
 import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
+import componentNamingConvention from './rules/component-naming-convention.js'
 
 const plugin = {
   meta,
@@ -17,6 +18,7 @@ const plugin = {
     'enforce-app-structure': appStructure,
     'enforce-module-exports': enforceModuleExports,
     'enforce-feature-exports': featureStructure,
+    'component-naming-convention': componentNamingConvention,
     'enforce-import-boundaries': enforceImportBoundaries,
   },
   processors: {},
@@ -45,6 +47,29 @@ plugin.configs['flat/recommended'] = [
   },
 ]
 
+// Strict config with all rules enabled
+plugin.configs['flat/strict'] = [
+  {
+    plugins: {
+      'vue-modular': plugin,
+    },
+    rules: {
+      'vue-modular/no-cross-feature-imports': 'error',
+      'vue-modular/no-cross-module-imports': 'error',
+      'vue-modular/enforce-src-structure': 'error',
+      'vue-modular/enforce-app-structure': 'error',
+      'vue-modular/enforce-module-exports': 'error',
+      'vue-modular/enforce-feature-exports': 'error',
+      'vue-modular/enforce-import-boundaries': 'error',
+      'vue-modular/component-naming-convention': 'error',
+    },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+    },
+  },
+]
+
 // Classic config for legacy support
 plugin.configs.recommended = {
   plugins: ['vue-modular'],
@@ -56,6 +81,21 @@ plugin.configs.recommended = {
     'vue-modular/enforce-module-exports': 'error',
     'vue-modular/enforce-feature-exports': 'error',
     'vue-modular/enforce-import-boundaries': 'error',
+  },
+}
+
+// Strict config with all rules enabled (legacy)
+plugin.configs.strict = {
+  plugins: ['vue-modular'],
+  rules: {
+    'vue-modular/no-cross-feature-imports': 'error',
+    'vue-modular/no-cross-module-imports': 'error',
+    'vue-modular/enforce-src-structure': 'error',
+    'vue-modular/enforce-app-structure': 'error',
+    'vue-modular/enforce-module-exports': 'error',
+    'vue-modular/enforce-feature-exports': 'error',
+    'vue-modular/enforce-import-boundaries': 'error',
+    'vue-modular/component-naming-convention': 'error',
   },
 }
 

@@ -1,4 +1,4 @@
-@PHONY: lint install test update release update-meta
+@PHONY: lint install test update release
 
 install:
 	npm install

@@ -6,31 +6,25 @@ This document outlines the current status and planned development of rules for e
 
 ### Implemented Rules
 
-| Rule                                    | Status       | Description                                                                          |
-| --------------------------------------- | ------------ | ------------------------------------------------------------------------------------ |
-| `vue-modular/no-cross-feature-imports`  | **Released** | Prevents direct imports from deep inside feature folders                             |
-| `vue-modular/no-cross-module-imports`   | **Released** | Prevents deep imports between modules; prefer module public API                      |
-| `vue-modular/enforce-import-boundaries` | **Released** | Enforces proper import paths and module/feature boundaries across the project        |
-| `vue-modular/enforce-src-structure`     | **Released** | Enforces allowed top-level folders/files in the `src/` folder                        |
-| `vue-modular/enforce-app-structure`     | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
-| `vue-modular/enforce-module-exports`    | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
-| `vue-modular/enforce-feature-exports`   | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
+| Rule                                      | Status       | Description                                                                          |
+| ----------------------------------------- | ------------ | ------------------------------------------------------------------------------------ |
+| `vue-modular/no-cross-feature-imports`    | **Released** | Prevents direct imports from deep inside feature folders                             |
+| `vue-modular/no-cross-module-imports`     | **Released** | Prevents deep imports between modules; prefer module public API                      |
+| `vue-modular/enforce-import-boundaries`   | **Released** | Enforces proper import paths and module/feature boundaries across the project        |
+| `vue-modular/enforce-src-structure`       | **Released** | Enforces allowed top-level folders/files in the `src/` folder                        |
+| `vue-modular/enforce-app-structure`       | **Released** | Validates `src/app` contains the expected entries (router, stores, layouts, App.vue) |
+| `vue-modular/enforce-module-exports`      | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
+| `vue-modular/enforce-feature-exports`     | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
+| `vue-modular/component-naming-convention` | **Released** | Enforce consistent naming patterns for Vue components                                |
 
 ---
 
 ## Planned Rules
 
-### Module Boundary Enforcement
-
-| Rule                               | Priority   | Description                                                 | Status      |
-| ---------------------------------- | ---------- | ----------------------------------------------------------- | ----------- |
-| `vue-modular/no-shared-in-modules` | **Medium** | Prevent modules from importing shared utilities incorrectly | **Planned** |
-
 ### Component Organization
 
 | Rule                                      | Priority   | Description                                           | Status      |
 | ----------------------------------------- | ---------- | ----------------------------------------------------- | ----------- |
-| `vue-modular/component-naming-convention` | **Medium** | Enforce consistent naming patterns for components     | **Planned** |
 | `vue-modular/no-business-logic-in-ui-kit` | **Medium** | Prevent business logic in shared/ui components        | **Planned** |
 | `vue-modular/prefer-composition-api`      | **Low**    | Encourage Composition API usage in modular components | **Planned** |
 
@@ -190,10 +184,10 @@ Rules are prioritized based on:
 
 ## Rule Count Summary
 
-- **Released**: 7 rules (core structure & boundary enforcement)
-- **Total Planned Rules**: 39 remaining across categories (projected total 46)
+- **Released**: 8 rules (core structure & boundary enforcement + component naming)
+- **Total Planned Rules**: 38 remaining across categories (projected total 46)
 - **High Priority**: ~8 rules remaining
-- **Medium Priority**: ~22 rules remaining
+- **Medium Priority**: ~21 rules remaining
 - **Low Priority**: ~10 rules remaining
 
 ### Categories Overview
@@ -215,4 +209,4 @@ Rules are prioritized based on:
 
 ---
 
-Last updated: August 25, 2025
+Last updated: August 26, 2025
