@@ -8,6 +8,35 @@ export const defaultOptions = {
 }
 
 /**
+ * Apply path aliases to resolve import paths
+ * @param {string} importPath - The import path to resolve
+ * @param {Object} aliases - Alias mappings
+ * @param {string} defaultSrc - Default source directory for '@/' alias
+ * @returns {string} Resolved import path
+ */
+export function applyAliases(importPath, aliases, defaultSrc) {
+  // Apply custom aliases first
+  for (const [k, v] of Object.entries(aliases || {})) {
+    if (importPath === k || importPath.startsWith(k + '/')) {
+      return importPath.replace(k, v)
+    }
+  }
+  // Handle default '@/' alias
+  if (importPath.startsWith('@/')) {
+    return importPath.replace('@', defaultSrc)
+  }
+  return importPath
+}
+
+/**
+ * Resolve alias - legacy function name for backward compatibility
+ * @deprecated Use applyAliases instead
+ */
+export function resolveAlias(importPath, aliases) {
+  return applyAliases(importPath, aliases)
+}
+
+/**
  * Check if a file is a test file based on common patterns
  * @param {string} filePath - Path to the file
  * @returns {boolean} - True if the file is a test file
@@ -34,18 +63,6 @@ export function isTestFile(filePath) {
   }
 
   return false
-}
-
-export function applyAliases(importPath, aliases, defaultSrc) {
-  for (const [k, v] of Object.entries(aliases || {})) {
-    if (importPath === k || importPath.startsWith(k + '/')) {
-      return importPath.replace(k, v)
-    }
-  }
-  if (importPath.startsWith('@/')) {
-    return importPath.replace('@', defaultSrc)
-  }
-  return importPath
 }
 
 export function resolveToAbsolute(importPath, filename, opts) {
