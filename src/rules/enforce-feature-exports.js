@@ -3,6 +3,7 @@
  */
 import path from 'path'
 import fs from 'fs'
+import { createCheckedDirsGetter } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -10,19 +11,8 @@ const defaultOptions = {
   indexFiles: ['index.ts', 'index.js'],
 }
 
-const eslintRunId = `${process.pid}_${process.cwd()}_featurestructure`
-if (!global.__eslintVueModularState) {
-  global.__eslintVueModularState = new Map()
-}
-function getCheckedDirs() {
-  if (!global.__eslintVueModularState) {
-    global.__eslintVueModularState = new Map()
-  }
-  if (!global.__eslintVueModularState.has(eslintRunId)) {
-    global.__eslintVueModularState.set(eslintRunId, new Set())
-  }
-  return global.__eslintVueModularState.get(eslintRunId)
-}
+// Create the getCheckedDirs function for this rule
+const getCheckedDirs = createCheckedDirsGetter('featurestructure')
 
 export default {
   meta: {

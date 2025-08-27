@@ -3,27 +3,15 @@
  */
 import path from 'path'
 import fs from 'fs'
+import { createCheckedDirsGetter } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
   required: ['router', 'stores', 'layouts', 'App.vue'],
 }
 
-// reuse global run state from enforce-src-structure rule
-const eslintRunId = `${process.pid}_${process.cwd()}_appstructure`
-if (!global.__eslintVueModularState) {
-  global.__eslintVueModularState = new Map()
-}
-function getCheckedDirs() {
-  // Ensure the global map exists (tests may delete it between runs)
-  if (!global.__eslintVueModularState) {
-    global.__eslintVueModularState = new Map()
-  }
-  if (!global.__eslintVueModularState.has(eslintRunId)) {
-    global.__eslintVueModularState.set(eslintRunId, new Set())
-  }
-  return global.__eslintVueModularState.get(eslintRunId)
-}
+// Create the getCheckedDirs function for this rule
+const getCheckedDirs = createCheckedDirsGetter('appstructure')
 
 export default {
   meta: {
