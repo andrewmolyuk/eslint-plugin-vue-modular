@@ -12,6 +12,28 @@ function toKebabCase(name) {
     .toLowerCase()
 }
 
+/**
+ * Check if a declared name matches the expected style and report if not
+ * @param {Object} context - ESLint context
+ * @param {Object} node - The AST node to report on
+ * @param {string} declared - The declared name
+ * @param {string} style - The expected style ('kebab-case' or 'PascalCase')
+ * @returns {boolean} - True if style check passed, false if reported
+ */
+function checkAndReportStyle(context, node, declared, style) {
+  const expectedStyle = style === 'kebab-case' ? toKebabCase(declared) : toPascalCase(declared)
+
+  if (declared !== expectedStyle) {
+    context.report({
+      node,
+      messageId: 'badStyle',
+      data: { name: declared, expected: expectedStyle, style },
+    })
+    return false
+  }
+  return true
+}
+
 function getFileType(filename) {
   const path = filename.toLowerCase()
   const basename = filename.split('/').pop()
@@ -220,26 +242,8 @@ export default {
         if (!nameProp || !nameProp.value || nameProp.value.type !== 'Literal') return
 
         // Check style
-        if (style === 'kebab-case') {
-          const expectedStyle = toKebabCase(declared)
-          if (declared !== expectedStyle) {
-            context.report({
-              node: nameProp.value,
-              messageId: 'badStyle',
-              data: { name: declared, expected: expectedStyle, style },
-            })
-            return
-          }
-        } else {
-          const expectedStyle = toPascalCase(declared)
-          if (declared !== expectedStyle) {
-            context.report({
-              node: nameProp.value,
-              messageId: 'badStyle',
-              data: { name: declared, expected: expectedStyle, style },
-            })
-            return
-          }
+        if (!checkAndReportStyle(context, nameProp.value, declared, style)) {
+          return
         }
 
         // Check filename matching
