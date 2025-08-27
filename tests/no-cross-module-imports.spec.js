@@ -1,25 +1,12 @@
 import { describe, it, beforeEach } from 'vitest'
-import { RuleTester } from 'eslint'
 import plugin from '../src/index.js'
+import { setupRuleTester } from './test-utils.js'
 
 describe('vue-modular/no-cross-module-imports rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = new RuleTester({
-      languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-      },
-      plugins: {
-        'vue-modular': plugin,
-      },
-    })
-
-    // Clean up global state after each test
-    if (global.__eslintVueModularState) {
-      delete global.__eslintVueModularState
-    }
+    ruleTester = setupRuleTester()
   })
 
   it('should allow same module imports', () => {

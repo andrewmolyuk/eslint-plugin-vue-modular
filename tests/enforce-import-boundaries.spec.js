@@ -1,22 +1,12 @@
 import { describe, it, beforeEach } from 'vitest'
-import { RuleTester } from 'eslint'
 import plugin from '../src/index.js'
+import { setupRuleTester } from './test-utils.js'
 
 describe('vue-modular/enforce-import-boundaries rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = new RuleTester({
-      languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-      },
-      plugins: {
-        'vue-modular': plugin,
-      },
-    })
-
-    if (global.__eslintVueModularState) delete global.__eslintVueModularState
+    ruleTester = setupRuleTester()
   })
 
   it('basic cases', () => {

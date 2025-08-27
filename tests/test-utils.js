@@ -1,4 +1,6 @@
 import { vi } from 'vitest'
+import { RuleTester } from 'eslint'
+import plugin from '../src/index.js'
 
 /**
  * Common beforeEach setup for ESLint rule tests
@@ -9,6 +11,42 @@ export const setupTest = () => {
   if (global.__eslintVueModularState) {
     delete global.__eslintVueModularState
   }
+}
+
+/**
+ * Creates a configured RuleTester instance for vue-modular plugin tests
+ * @returns {RuleTester} Configured RuleTester instance
+ */
+export const createRuleTester = () => {
+  return new RuleTester({
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+    },
+    plugins: {
+      'vue-modular': plugin,
+    },
+  })
+}
+
+/**
+ * Cleans up global state used by vue-modular plugin
+ * Should be called in beforeEach or afterEach hooks
+ */
+export const cleanupGlobalState = () => {
+  if (global.__eslintVueModularState) {
+    delete global.__eslintVueModularState
+  }
+}
+
+/**
+ * Sets up a fresh RuleTester and cleans global state
+ * Use this in beforeEach hooks for consistent test setup
+ * @returns {RuleTester} Fresh RuleTester instance
+ */
+export const setupRuleTester = () => {
+  cleanupGlobalState()
+  return createRuleTester()
 }
 
 /**

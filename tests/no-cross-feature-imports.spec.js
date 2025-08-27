@@ -1,20 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest'
-import { RuleTester } from 'eslint'
 import plugin from '../src/index.js'
+import { setupRuleTester } from './test-utils.js'
 
 describe('vue-modular/no-cross-feature-imports rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = new RuleTester({
-      languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-      },
-      plugins: {
-        'vue-modular': plugin,
-      },
-    })
+    ruleTester = setupRuleTester()
   })
 
   it('should prevent cross-feature imports from src/features', () => {
