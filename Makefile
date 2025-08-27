@@ -1,4 +1,4 @@
-@PHONY: lint install test update release
+@PHONY: lint install test update release drawio
 
 install:
 	npm install
@@ -24,3 +24,6 @@ release: test
 		echo "GitHub CLI not authenticated. Run 'gh auth login' to create releases automatically."; \
 		echo "You can manually create a release at: https://github.com/andrewmolyuk/eslint-plugin-vue-modular/releases/new"; \
 	fi
+
+drawio:
+	/mnt/c/Program\ Files/draw.io/draw.io.exe -x -o docs/assets --transparent -f png docs/assets/drawio/*.drawio
