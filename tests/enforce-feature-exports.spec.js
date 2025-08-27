@@ -1,28 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import featureStructureRule from '../src/rules/enforce-feature-exports.js'
+import { setupTest, runRule } from './test-utils.js'
 
 describe('enforce-feature-exports rule', () => {
-  beforeEach(() => {
-    vi.restoreAllMocks()
-    if (global.__eslintVueModularState) {
-      delete global.__eslintVueModularState
-    }
-  })
-
-  const createContext = (filename = '/project/src/App.vue', options = [{}]) => ({
-    options,
-    getFilename: () => filename,
-    report: vi.fn(),
-    settings: {},
-  })
+  beforeEach(setupTest)
 
   it('does not report when features directory is missing (features optional)', () => {
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['components', 'main.ts'])
 
-    const context = createContext()
-    const rule = featureStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(featureStructureRule)
 
     expect(context.report).not.toHaveBeenCalled()
   })
@@ -36,9 +23,7 @@ describe('enforce-feature-exports rule', () => {
       return []
     })
 
-    const context = createContext()
-    const rule = featureStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(featureStructureRule)
 
     expect(context.report).toHaveBeenCalledWith(expect.objectContaining({ messageId: 'missingIndex' }))
   })
@@ -52,9 +37,7 @@ describe('enforce-feature-exports rule', () => {
       return []
     })
 
-    const context = createContext()
-    const rule = featureStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(featureStructureRule)
 
     expect(context.report).not.toHaveBeenCalled()
   })

@@ -1,28 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import moduleStructureRule from '../src/rules/enforce-module-exports.js'
+import { setupTest, runRule } from './test-utils.js'
 
 describe('enforce-module-exports rule', () => {
-  beforeEach(() => {
-    vi.restoreAllMocks()
-    if (global.__eslintVueModularState) {
-      delete global.__eslintVueModularState
-    }
-  })
-
-  const createContext = (filename = '/project/src/App.vue', options = [{}]) => ({
-    options,
-    getFilename: () => filename,
-    report: vi.fn(),
-    settings: {},
-  })
+  beforeEach(setupTest)
 
   it('reports when modules directory is missing', () => {
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['components', 'main.ts'])
 
-    const context = createContext()
-    const rule = moduleStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(moduleStructureRule)
 
     expect(context.report).toHaveBeenCalledWith(expect.objectContaining({ messageId: 'missingModulesDir' }))
   })
@@ -36,9 +23,7 @@ describe('enforce-module-exports rule', () => {
       return []
     })
 
-    const context = createContext()
-    const rule = moduleStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(moduleStructureRule)
 
     expect(context.report).toHaveBeenCalledWith(expect.objectContaining({ messageId: 'missingIndex' }))
   })
@@ -52,9 +37,7 @@ describe('enforce-module-exports rule', () => {
       return []
     })
 
-    const context = createContext()
-    const rule = moduleStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(moduleStructureRule)
 
     expect(context.report).not.toHaveBeenCalled()
   })

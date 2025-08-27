@@ -1,28 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import appStructureRule from '../src/rules/enforce-app-structure.js'
+import { setupTest, runRule } from './test-utils.js'
 
 describe('enforce-app-structure rule', () => {
-  beforeEach(() => {
-    vi.restoreAllMocks()
-    if (global.__eslintVueModularState) {
-      delete global.__eslintVueModularState
-    }
-  })
-
-  const createContext = (filename = '/project/src/App.vue', options = [{}]) => ({
-    options,
-    getFilename: () => filename,
-    report: vi.fn(),
-    settings: {},
-  })
+  beforeEach(setupTest)
 
   it('reports missing app dir', () => {
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['components', 'modules'])
 
-    const context = createContext()
-    const rule = appStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(appStructureRule)
 
     expect(context.report).toHaveBeenCalledWith(expect.objectContaining({ messageId: 'missingApp' }))
   })
@@ -34,9 +21,7 @@ describe('enforce-app-structure rule', () => {
       return []
     })
 
-    const context = createContext()
-    const rule = appStructureRule.create(context)
-    if (rule.Program) rule.Program()
+    const context = runRule(appStructureRule)
 
     expect(context.report).toHaveBeenCalled()
   })

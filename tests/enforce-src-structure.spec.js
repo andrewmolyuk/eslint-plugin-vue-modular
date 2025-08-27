@@ -1,34 +1,16 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import srcStructureRule, { resetSession } from '../src/rules/enforce-src-structure.js'
+import { setupTestWithReset, createContext, runRule } from './test-utils.js'
 
 describe('enforce-src-structure rule', () => {
-  beforeEach(() => {
-    // Reset any previous mocks
-    vi.restoreAllMocks()
-
-    // Reset the rule's global state
-    resetSession()
-  })
-
-  const createContext = (filename = '/project/src/App.vue', options = [{}]) => ({
-    options,
-    getFilename: () => filename,
-    report: vi.fn(),
-    settings: {},
-  })
+  beforeEach(setupTestWithReset(resetSession))
 
   it('should not report when all entries are allowed', () => {
     // Mock fs.readdirSync to return allowed entries
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['app', 'components', 'main.ts'])
 
-    const context = createContext()
-    const ruleInstance = srcStructureRule.create(context)
-
-    // Execute the Program visitor
-    if (ruleInstance.Program) {
-      ruleInstance.Program()
-    }
+    const context = runRule(srcStructureRule)
 
     expect(context.report).not.toHaveBeenCalled()
   })
