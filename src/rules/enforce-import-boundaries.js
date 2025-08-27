@@ -246,53 +246,27 @@ export default {
         return
       }
 
+      // Helper function to check layer access rules
+      const checkLayerAccess = (fromLayer, allowedLayers) => {
+        if (from === fromLayer) {
+          const allowed = Array.isArray(allowedLayers) ? allowedLayers : [allowedLayers]
+          if (!allowed.includes(to)) {
+            context.report({
+              node,
+              messageId: 'forbiddenLayerImport',
+              data: { from, to, importPath: importPathRaw },
+            })
+          }
+          return true // processed
+        }
+        return false // not processed
+      }
+
       // Layer access control rules
-      if (from === 'services') {
-        const allowedLayers = ['services', 'stores', 'entities', 'shared']
-        if (!allowedLayers.includes(to)) {
-          context.report({
-            node,
-            messageId: 'forbiddenLayerImport',
-            data: { from, to, importPath: importPathRaw },
-          })
-        }
-        return
-      }
-
-      if (from === 'stores') {
-        const allowedLayers = ['stores', 'entities', 'shared']
-        if (!allowedLayers.includes(to)) {
-          context.report({
-            node,
-            messageId: 'forbiddenLayerImport',
-            data: { from, to, importPath: importPathRaw },
-          })
-        }
-        return
-      }
-
-      if (from === 'entities') {
-        const allowedLayers = ['entities', 'shared']
-        if (!allowedLayers.includes(to)) {
-          context.report({
-            node,
-            messageId: 'forbiddenLayerImport',
-            data: { from, to, importPath: importPathRaw },
-          })
-        }
-        return
-      }
-
-      if (from === 'shared') {
-        if (to !== 'shared') {
-          context.report({
-            node,
-            messageId: 'forbiddenLayerImport',
-            data: { from, to, importPath: importPathRaw },
-          })
-        }
-        return
-      }
+      if (checkLayerAccess('services', ['services', 'stores', 'entities', 'shared'])) return
+      if (checkLayerAccess('stores', ['stores', 'entities', 'shared'])) return
+      if (checkLayerAccess('entities', ['entities', 'shared'])) return
+      if (checkLayerAccess('shared', 'shared')) return
 
       // default: allow
     }
