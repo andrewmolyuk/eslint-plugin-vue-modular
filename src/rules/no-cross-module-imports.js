@@ -1,4 +1,4 @@
-import { isDeepModuleImport, isWithinSameModule, applyAliases } from '../utils/import-boundaries.js'
+import { isDeepModuleImport, isWithinSameModule, applyAliases, isTestFile } from '../utils/import-boundaries.js'
 
 export default {
   meta: {
@@ -45,6 +45,9 @@ export default {
       ImportDeclaration(node) {
         const source = node.source.value
         if (!source.includes('/')) return
+
+        // Allow test files to import from anywhere without restrictions
+        if (isTestFile(filename)) return
 
         // normalize input to helper expectations
         const opts = { src, modulesDir }

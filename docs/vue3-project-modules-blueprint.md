@@ -217,9 +217,16 @@ export type { SearchResult, SearchFilters } from './entities/SearchResult'
 
 ## Testing and test folder exceptions
 
-Tests often need deeper access to implementation details. Test code (placed under `tests/`, `__tests__/` or similar) is allowed to import from any layer — including internal module files — to make unit and integration testing practical.
+Tests often need deeper access to implementation details. Test code is automatically allowed to import from any layer — including internal module files — to make unit and integration testing practical.
 
-This allowance also applies to individual test files following common naming patterns such as `*.test.*` or `*.spec.*` (for example: `some.test.ts`, `some.spec.ts`, `some.test.tsx`).
+**Automatic Test File Detection**: The ESLint rules automatically detect test files and allow them unrestricted imports. This includes:
+
+- Files in `tests/` directories (e.g., `tests/unit/auth.test.js`, `/project/tests/integration/`)
+- Files with `.test.` in the name (e.g., `component.test.js`, `utils.test.ts`)
+- Files with `.spec.` in the name (e.g., `component.spec.js`, `utils.spec.ts`)
+- Files in `__tests__/` directories (e.g., `src/__tests__/setup.js`, `src/components/__tests__/Button.js`)
+
+**No additional configuration required** - test files are detected automatically and exempt from import boundary restrictions.
 
 Recommended patterns:
 
@@ -227,19 +234,8 @@ Recommended patterns:
 - Integration tests: prefer exercising modules/features through their public API (`index.ts`) to validate real integration points.
 - Test helpers: create a `tests/test-utils.ts` or `tests/utils/` that re-exports common setup/mocks; prefer adapters that call public APIs when feasible to ease refactors.
 - Organization: keep internal-focused tests separate (e.g. `tests/internal/`) from cross-module/integration tests.
-- Tooling: configure ESLint rules to allow `tests/**` exceptions (for example, whitelist `tests/**` in the `no-cross-module-imports` rule) so test imports do not trigger violations.
 
-Example ESLint whitelist pattern (conceptual):
-
-`allowedPatterns: ['tests/**', '**/*.spec.{js,ts,tsx}', '**/*.test.{js,ts,tsx}']`
-
-Note: if your tests are located outside `src/` (for example a top-level `tests/` folder), some ESLint configurations or path-based rule implementations that only scan `src/**` may ignore them. To ensure test files are checked:
-
-- Add the test paths to your ESLint file globs or the rule's whitelist (as shown above).
-- Use an `.eslintrc` `overrides` section to enable rules for `**/*.spec.*` / `**/*.test.*` and `tests/**` paths.
-- Or place tests under `src/` so they fall under existing `src/**` globs.
-
-These options make sure test-only imports are permitted for testing purposes while keeping runtime import rules enforced for production code.
+For custom test patterns not covered by automatic detection, you can still use the `allow` option in ESLint rule configurations to whitelist specific patterns.
 
 Keep test-only imports clearly flagged as test code and out of production bundles (tests should not accidentally ship in the app). These exceptions exist to improve testability without weakening runtime architectural guarantees.
 

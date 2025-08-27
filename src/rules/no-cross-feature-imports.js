@@ -1,4 +1,4 @@
-import { isDeepFeatureImport, getModulePublicImport, isWithinSameFeature } from '../utils/import-boundaries.js'
+import { isDeepFeatureImport, getModulePublicImport, isWithinSameFeature, isTestFile } from '../utils/import-boundaries.js'
 
 export default {
   meta: {
@@ -50,6 +50,9 @@ export default {
     return {
       ImportDeclaration(node) {
         const source = node.source.value
+
+        // Allow test files to import from anywhere without restrictions
+        if (isTestFile(filename)) return
 
         const modulePublicName = getModulePublicImport(source, opts)
         if (modulePublicName) {

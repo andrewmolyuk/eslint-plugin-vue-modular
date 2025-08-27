@@ -7,6 +7,35 @@ export const defaultOptions = {
   aliases: {},
 }
 
+/**
+ * Check if a file is a test file based on common patterns
+ * @param {string} filePath - Path to the file
+ * @returns {boolean} - True if the file is a test file
+ */
+export function isTestFile(filePath) {
+  if (!filePath) return false
+
+  const normalizedPath = path.normalize(filePath)
+  const basename = path.basename(filePath)
+
+  // Check if file is in a tests directory (sibling to src or anywhere in the path)
+  if (normalizedPath.includes('/tests/') || normalizedPath.includes('\\tests\\')) {
+    return true
+  }
+
+  // Check if file has test patterns in the name
+  if (basename.includes('.test.') || basename.includes('.spec.')) {
+    return true
+  }
+
+  // Check for __tests__ directories (common Jest pattern)
+  if (normalizedPath.includes('/__tests__/') || normalizedPath.includes('\\__tests__\\')) {
+    return true
+  }
+
+  return false
+}
+
 export function applyAliases(importPath, aliases, defaultSrc) {
   for (const [k, v] of Object.entries(aliases || {})) {
     if (importPath === k || importPath.startsWith(k + '/')) {

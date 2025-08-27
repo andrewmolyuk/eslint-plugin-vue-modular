@@ -1,4 +1,5 @@
 import path from 'node:path'
+import { isTestFile } from '../utils/import-boundaries.js'
 
 const defaultOptions = {
   src: 'src',
@@ -20,6 +21,12 @@ function resolveAlias(importPath, aliases) {
 
 function getLayerForFile(filePath, options) {
   if (!filePath) return null
+
+  // Check if this is a test file first
+  if (isTestFile(filePath)) {
+    return { layer: 'test' }
+  }
+
   const parts = path.normalize(filePath).split(path.sep)
   const srcIdx = parts.indexOf(options.src)
   if (srcIdx === -1) return null
@@ -109,6 +116,9 @@ export default {
 
       const importerFilename = context.getFilename()
       if (!importerFilename || importerFilename === '<input>') return
+
+      // Allow test files to import from anywhere without restrictions
+      if (isTestFile(importerFilename)) return
 
       let resolved = resolveAlias(importPathRaw, opts.aliases)
       // support common @/ alias mapping to src when not configured

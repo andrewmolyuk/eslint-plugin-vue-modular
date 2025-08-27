@@ -9,6 +9,9 @@ import enforceFeatureExports from './rules/enforce-feature-exports.js'
 import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 import enforceNamingConvention from './rules/enforce-naming-convention.js'
 
+// Import utilities
+import { isTestFile } from './utils/import-boundaries.js'
+
 const plugin = {
   meta,
   rules: {
@@ -23,6 +26,9 @@ const plugin = {
   },
   processors: {},
   configs: {},
+  utils: {
+    isTestFile,
+  },
 }
 
 // Flat config for ESLint v9+

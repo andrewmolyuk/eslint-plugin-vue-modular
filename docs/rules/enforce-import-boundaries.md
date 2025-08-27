@@ -75,4 +75,9 @@ Use the `allow` option to whitelist specific import patterns when necessary. The
 
 - The rule ignores imports not starting with the configured `src` root, relative imports are resolved against the importer file.
 - Type-only imports can be ignored by setting `ignoreTypeImports: true` (default).
-- Test files may require special allowances. Use the `allow` option to whitelist `tests/**` or add ESLint override sections for test directories.
+- Test files are automatically detected and allowed to import from anywhere without restrictions. This includes:
+  - Files in `tests/` directories (e.g., `tests/unit/auth.test.js`, `/project/tests/integration/`)
+  - Files with `.test.` in the name (e.g., `component.test.js`, `utils.test.ts`)
+  - Files with `.spec.` in the name (e.g., `component.spec.js`, `utils.spec.ts`)
+  - Files in `__tests__/` directories (e.g., `src/__tests__/setup.js`, `src/components/__tests__/Button.js`)
+- For additional custom patterns, use the `allow` option to whitelist specific import patterns or add ESLint override sections for custom test directories.
