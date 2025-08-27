@@ -3,7 +3,7 @@
  */
 import path from 'path'
 import fs from 'fs'
-import { createCheckedDirsGetter, parseRuleOptions, setupSrcDirectoryCheck } from '../utils/global-state.js'
+import { createCheckedDirsGetter, parseRuleOptions, createDirectoryStructureRule } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -44,42 +44,31 @@ export default {
     const checked = getCheckedDirs()
     const { src, modulesDir, indexFiles } = parseRuleOptions(context, defaultOptions)
 
-    const setup = setupSrcDirectoryCheck(context, src, checked)
-    if (!setup) return {}
-    const { srcDir } = setup
+    return createDirectoryStructureRule(context, src, checked, (srcDir, entries, ctx) => {
+      if (!entries.includes(modulesDir)) {
+        ctx.report({ loc: { line: 1, column: 0 }, messageId: 'missingModulesDir', data: { src, modulesDir } })
+        return
+      }
 
-    return {
-      Program() {
+      const modulesDirPath = path.join(srcDir, modulesDir)
+      const modules = fs.readdirSync(modulesDirPath)
+      for (const mod of modules) {
+        const modPath = path.join(modulesDirPath, mod)
         try {
-          const entries = fs.readdirSync(srcDir)
-          if (!entries.includes(modulesDir)) {
-            context.report({ loc: { line: 1, column: 0 }, messageId: 'missingModulesDir', data: { src, modulesDir } })
-            return
-          }
-
-          const modulesDirPath = path.join(srcDir, modulesDir)
-          const modules = fs.readdirSync(modulesDirPath)
-          for (const mod of modules) {
-            const modPath = path.join(modulesDirPath, mod)
-            try {
-              const modEntries = fs.readdirSync(modPath)
-              const hasIndex = modEntries.some((f) => indexFiles.includes(f))
-              if (!hasIndex) {
-                context.report({
-                  loc: { line: 1, column: 0 },
-                  messageId: 'missingIndex',
-                  data: { module: mod, indexFiles: indexFiles.join(', ') },
-                })
-              }
-            } catch {
-              // skip non-directories or unreadable module entries
-              continue
-            }
+          const modEntries = fs.readdirSync(modPath)
+          const hasIndex = modEntries.some((f) => indexFiles.includes(f))
+          if (!hasIndex) {
+            ctx.report({
+              loc: { line: 1, column: 0 },
+              messageId: 'missingIndex',
+              data: { module: mod, indexFiles: indexFiles.join(', ') },
+            })
           }
         } catch {
-          // ignore read errors
+          // skip non-directories or unreadable module entries
+          continue
         }
-      },
-    }
+      }
+    })
   },
 }

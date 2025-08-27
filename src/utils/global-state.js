@@ -4,6 +4,7 @@
  */
 
 import path from 'node:path'
+import fs from 'node:fs'
 
 /**
  * Creates a function to get checked directories for a specific rule
@@ -92,4 +93,29 @@ export function setupSrcDirectoryCheck(context, src, checked) {
   checked.add(srcDir)
 
   return { srcDir }
+}
+
+/**
+ * Creates a standardized ESLint rule Program handler for directory structure validation
+ * @param {Object} context - ESLint rule context
+ * @param {string} src - Source directory name
+ * @param {Set} checked - Set of already checked directories for this rule
+ * @param {Function} handler - Function that takes (srcDir, entries) and performs validation
+ * @returns {Object} ESLint rule Program handler
+ */
+export function createDirectoryStructureRule(context, src, checked, handler) {
+  const setup = setupSrcDirectoryCheck(context, src, checked)
+  if (!setup) return {}
+  const { srcDir } = setup
+
+  return {
+    Program() {
+      try {
+        const entries = fs.readdirSync(srcDir)
+        handler(srcDir, entries, context)
+      } catch {
+        // Ignore read errors - directory might not exist or be accessible
+      }
+    },
+  }
 }

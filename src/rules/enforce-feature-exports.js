@@ -3,7 +3,7 @@
  */
 import path from 'node:path'
 import fs from 'node:fs'
-import { createCheckedDirsGetter, parseRuleOptions, setupSrcDirectoryCheck } from '../utils/global-state.js'
+import { createCheckedDirsGetter, parseRuleOptions, createDirectoryStructureRule } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -43,42 +43,31 @@ export default {
     const checked = getCheckedDirs()
     const { src, featuresDir, indexFiles } = parseRuleOptions(context, defaultOptions)
 
-    const setup = setupSrcDirectoryCheck(context, src, checked)
-    if (!setup) return {}
-    const { srcDir } = setup
+    return createDirectoryStructureRule(context, src, checked, (srcDir, entries, ctx) => {
+      if (!entries.includes(featuresDir)) {
+        // features directory is optional; do not report an error when absent
+        return
+      }
 
-    return {
-      Program() {
+      const featuresDirPath = path.join(srcDir, featuresDir)
+      const features = fs.readdirSync(featuresDirPath)
+      for (const feat of features) {
+        const featPath = path.join(featuresDirPath, feat)
         try {
-          const entries = fs.readdirSync(srcDir)
-          if (!entries.includes(featuresDir)) {
-            // features directory is optional; do not report an error when absent
-            return
-          }
-
-          const featuresDirPath = path.join(srcDir, featuresDir)
-          const features = fs.readdirSync(featuresDirPath)
-          for (const feat of features) {
-            const featPath = path.join(featuresDirPath, feat)
-            try {
-              const featEntries = fs.readdirSync(featPath)
-              const hasIndex = featEntries.some((f) => indexFiles.includes(f))
-              if (!hasIndex) {
-                context.report({
-                  loc: { line: 1, column: 0 },
-                  messageId: 'missingIndex',
-                  data: { feature: feat, indexFiles: indexFiles.join(', ') },
-                })
-              }
-            } catch {
-              // skip non-directories or unreadable feature entries
-              continue
-            }
+          const featEntries = fs.readdirSync(featPath)
+          const hasIndex = featEntries.some((f) => indexFiles.includes(f))
+          if (!hasIndex) {
+            ctx.report({
+              loc: { line: 1, column: 0 },
+              messageId: 'missingIndex',
+              data: { feature: feat, indexFiles: indexFiles.join(', ') },
+            })
           }
         } catch {
-          // ignore read errors
+          // skip non-directories or unreadable feature entries
+          continue
         }
-      },
-    }
+      }
+    })
   },
 }

@@ -3,7 +3,7 @@
  */
 import path from 'node:path'
 import fs from 'node:fs'
-import { createCheckedDirsGetter, parseRuleOptions, setupSrcDirectoryCheck } from '../utils/global-state.js'
+import { createCheckedDirsGetter, parseRuleOptions, createDirectoryStructureRule } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -42,32 +42,21 @@ export default {
     const checked = getCheckedDirs()
     const { src, required } = parseRuleOptions(context, defaultOptions)
 
-    const setup = setupSrcDirectoryCheck(context, src, checked)
-    if (!setup) return {}
-    const { srcDir } = setup
+    return createDirectoryStructureRule(context, src, checked, (srcDir, entries, ctx) => {
+      if (!entries.includes('app')) {
+        ctx.report({ loc: { line: 1, column: 0 }, messageId: 'missingApp', data: { src, required: required.join(', ') } })
+        return
+      }
 
-    return {
-      Program() {
-        try {
-          const entries = fs.readdirSync(srcDir)
-          if (!entries.includes('app')) {
-            context.report({ loc: { line: 1, column: 0 }, messageId: 'missingApp', data: { src, required: required.join(', ') } })
-            return
-          }
-
-          const appDir = path.join(srcDir, 'app')
-          const appEntries = fs.readdirSync(appDir)
-          for (const req of required) {
-            if (!appEntries.includes(req)) {
-              context.report({ loc: { line: 1, column: 0 }, messageId: 'missingEntry', data: { name: req, required: required.join(', ') } })
-            }
-          }
-
-          // router index file is optional; do not enforce an index export here
-        } catch {
-          // ignore read errors
+      const appDir = path.join(srcDir, 'app')
+      const appEntries = fs.readdirSync(appDir)
+      for (const req of required) {
+        if (!appEntries.includes(req)) {
+          ctx.report({ loc: { line: 1, column: 0 }, messageId: 'missingEntry', data: { name: req, required: required.join(', ') } })
         }
-      },
-    }
+      }
+
+      // router index file is optional; do not enforce an index export here
+    })
   },
 }
