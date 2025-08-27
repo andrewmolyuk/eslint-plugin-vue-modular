@@ -18,7 +18,6 @@ release: test
 	@if gh auth status >/dev/null 2>&1; then \
 		rm -Rf CHANGELOG.md; \
 		npx standard-version; \
-		# Clean up changelog format for Linux sed
 		sed -i -e '/^### \[[^]]*\](\([^)]*\)) ([^)]*)$$/d' \
 			-e '/^# Changelog$$/d' \
 			-e '/^All notable changes to this project will be documented in this file\./d' \
@@ -34,3 +33,4 @@ release: test
 
 drawio:
 	/mnt/c/Program\ Files/draw.io/draw.io.exe -x -o docs/assets --transparent -f png docs/assets/drawio/*.drawio
+
