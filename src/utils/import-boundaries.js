@@ -76,6 +76,22 @@ export function resolveToAbsolute(importPath, filename, opts) {
   return null
 }
 
+/**
+ * Normalize import path by handling aliases and source directory prefixes
+ * @param {string} importPath - The import path to normalize
+ * @param {Object} opts - Configuration options
+ * @returns {string} Normalized import path
+ */
+function normalizeImportPath(importPath, opts) {
+  // Handle alias-based imports like '@/...'
+  let importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
+  // If the path starts with the source directory, strip it
+  if (importAfterAlias.startsWith(`${opts.src}/`)) {
+    importAfterAlias = importAfterAlias.replace(`${opts.src}/`, '')
+  }
+  return importAfterAlias
+}
+
 export function getLayerForPath(filePath, opts) {
   if (!filePath) return null
   const parts = path.normalize(filePath).split(path.sep)
@@ -91,12 +107,8 @@ export function getLayerForPath(filePath, opts) {
 }
 
 export function isDeepModuleImport(importPath, filename, opts) {
-  // handle alias-based imports like 'src/modules/<name>/...'
-  let importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
-  // if applyAliases transformed '@/...' into 'src/...', strip leading src/
-  if (importAfterAlias.startsWith(`${opts.src}/`)) {
-    importAfterAlias = importAfterAlias.replace(`${opts.src}/`, '')
-  }
+  // Handle alias-based imports like 'src/modules/<name>/...'
+  const importAfterAlias = normalizeImportPath(importPath, opts)
   const modulesRegex = new RegExp(`^${opts.modulesDir}/([^/]+)/(.+)`)
   const m = importAfterAlias.match(modulesRegex)
   if (m) {
@@ -131,11 +143,8 @@ export function isDeepModuleImport(importPath, filename, opts) {
 }
 
 export function isDeepFeatureImport(importPath, filename, opts) {
-  // alias style
-  let importAfterAlias = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
-  if (importAfterAlias.startsWith(`${opts.src}/`)) {
-    importAfterAlias = importAfterAlias.replace(`${opts.src}/`, '')
-  }
+  // Handle alias-based imports
+  const importAfterAlias = normalizeImportPath(importPath, opts)
   const featuresRegex = new RegExp(`^${opts.featuresDir}/([^/]+)(?:/(.+))?$`)
   const m = importAfterAlias.match(featuresRegex)
   if (m) {
@@ -190,9 +199,8 @@ export function isDeepFeatureImport(importPath, filename, opts) {
 
 export function getModulePublicImport(importPath, opts) {
   if (!importPath) return null
-  // accept '@/modules/name', 'src/modules/name' and 'modules/name'
-  let aliasPath = importPath.startsWith('@/') ? importPath.replace('@/', '') : importPath
-  if (aliasPath.startsWith(`${opts.src}/`)) aliasPath = aliasPath.replace(`${opts.src}/`, '')
+  // Accept '@/modules/name', 'src/modules/name' and 'modules/name'
+  const aliasPath = normalizeImportPath(importPath, opts)
   const m = aliasPath.match(new RegExp(`^${opts.modulesDir}/([^/]+)(?:/index(?:\\.(?:js|ts|jsx|tsx))?)?$`))
   if (m) return m[1]
   return null
