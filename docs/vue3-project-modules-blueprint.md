@@ -888,7 +888,7 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 
 The `app/` layer has **strict public API access** to modules - everything must go through the module's public interface. Features, components, composables, entities, and shared utilities remain directly accessible as global resources.
 
-#### Allowed App → Module Imports (Public API Only):
+#### Allowed App → Module Imports (Public API Only)
 
 ```ts
 // ✅ ONLY via public module API (index.ts exports)
@@ -906,7 +906,7 @@ import UserCard from '@/components/UserCard.vue'
 import { useApi } from '@/composables/useApi'
 ```
 
-#### Forbidden App → Module/Feature Imports:
+#### Forbidden App → Module/Feature Imports
 
 ```ts
 // ❌ Direct module file imports (must go through public API)
@@ -1528,7 +1528,7 @@ Everything else (business components, composables, entities, features) has been 
   Place in `modules/<module-name>/entities/` (e.g., `modules/users/entities/UserPreferences.ts`).
   These are domain objects specific to one module's business logic.
 
-#### Examples
+### Example: Types of Entities
 
 - Global: `User`, `Permission`, `ApiResponse`, `PaginationMeta`
 - Module-specific: `UserInvitation` (users module), `LoginAttempt` (auth module)
@@ -1703,7 +1703,7 @@ export * from './entities/SearchResult'
 | **Entities**    | Core domain models, base types                  | Module-specific variations   |
 | **Features**    | Cross-cutting functionality, reusable workflows | Domain-specific features     |
 
-#### Examples
+#### Example: Files Organization
 
 - `Button.vue` → shared/ui (UI primitive)
 - `UserCard.vue` → Global components (business component)
