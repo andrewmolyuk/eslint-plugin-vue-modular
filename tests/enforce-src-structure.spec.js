@@ -19,13 +19,7 @@ describe('enforce-src-structure rule', () => {
     // Mock fs.readdirSync to return some disallowed entries
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['app', 'bad-folder', 'main.ts'])
 
-    const context = createContext()
-    const ruleInstance = srcStructureRule.create(context)
-
-    // Execute the Program visitor
-    if (ruleInstance.Program) {
-      ruleInstance.Program()
-    }
+    const context = runRule(srcStructureRule)
 
     expect(context.report).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -41,13 +35,7 @@ describe('enforce-src-structure rule', () => {
     // Mock fs.readdirSync to return custom entries
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['foo', 'bar'])
 
-    const context = createContext('/project/src/foo.js', [{ allowed: ['foo', 'bar'] }])
-    const ruleInstance = srcStructureRule.create(context)
-
-    // Execute the Program visitor
-    if (ruleInstance.Program) {
-      ruleInstance.Program()
-    }
+    const context = runRule(srcStructureRule, createContext('/project/src/foo.js', [{ allowed: ['foo', 'bar'] }]))
 
     expect(context.report).not.toHaveBeenCalled()
   })
@@ -56,13 +44,7 @@ describe('enforce-src-structure rule', () => {
     // Mock fs.readdirSync to return custom entries
     vi.spyOn(fs, 'readdirSync').mockReturnValue(['foo', 'bar'])
 
-    const context = createContext('/project/customsrc/foo.js', [{ src: 'customsrc', allowed: ['foo', 'bar'] }])
-    const ruleInstance = srcStructureRule.create(context)
-
-    // Execute the Program visitor
-    if (ruleInstance.Program) {
-      ruleInstance.Program()
-    }
+    const context = runRule(srcStructureRule, createContext('/project/customsrc/foo.js', [{ src: 'customsrc', allowed: ['foo', 'bar'] }]))
 
     expect(context.report).not.toHaveBeenCalled()
   })
@@ -71,13 +53,7 @@ describe('enforce-src-structure rule', () => {
     // Mock fs.readdirSync (shouldn't be called)
     const mockReaddir = vi.spyOn(fs, 'readdirSync').mockReturnValue(['foo', 'bar'])
 
-    const context = createContext('/project/otherdir/foo.js')
-    const ruleInstance = srcStructureRule.create(context)
-
-    // Execute the Program visitor
-    if (ruleInstance.Program) {
-      ruleInstance.Program()
-    }
+    const context = runRule(srcStructureRule, createContext('/project/otherdir/foo.js'))
 
     // fs.readdirSync should not have been called since we're not in src
     expect(mockReaddir).not.toHaveBeenCalled()
@@ -112,15 +88,9 @@ describe('enforce-src-structure rule', () => {
       throw new Error('Permission denied')
     })
 
-    const context = createContext()
-    const ruleInstance = srcStructureRule.create(context)
+    const context = runRule(srcStructureRule)
 
     // Should not throw and should not report anything
-    expect(() => {
-      if (ruleInstance.Program) {
-        ruleInstance.Program()
-      }
-    }).not.toThrow()
     expect(context.report).not.toHaveBeenCalled()
   })
 })
