@@ -15,6 +15,11 @@ update:
 	npm install
 
 release: test
+	@if [ -n "$$(git status --porcelain)" ]; then \
+		echo "Error: There are uncommitted changes. Please commit or stash them before releasing."; \
+		git status --short; \
+		exit 1; \
+	fi
 	@if gh auth status >/dev/null 2>&1; then \
 		rm -Rf CHANGELOG.md; \
 		npx standard-version; \
