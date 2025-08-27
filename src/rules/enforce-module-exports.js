@@ -3,7 +3,7 @@
  */
 import path from 'path'
 import fs from 'fs'
-import { createCheckedDirsGetter } from '../utils/global-state.js'
+import { createCheckedDirsGetter, parseRuleOptions } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -42,11 +42,7 @@ export default {
 
   create(context) {
     const checked = getCheckedDirs()
-    const options = context.options && context.options[0] ? context.options[0] : {}
-    const src = typeof options.src === 'string' && options.src.trim() ? options.src.trim() : defaultOptions.src
-    const modulesDirName =
-      typeof options.modulesDir === 'string' && options.modulesDir.trim() ? options.modulesDir.trim() : defaultOptions.modulesDir
-    const indexFiles = Array.isArray(options.indexFiles) && options.indexFiles.length > 0 ? options.indexFiles : defaultOptions.indexFiles
+    const { src, modulesDir, indexFiles } = parseRuleOptions(context, defaultOptions)
 
     const filename = context.getFilename()
     if (!filename.includes(`${path.sep}${src}${path.sep}`)) {
@@ -65,15 +61,15 @@ export default {
       Program() {
         try {
           const entries = fs.readdirSync(srcDir)
-          if (!entries.includes(modulesDirName)) {
-            context.report({ loc: { line: 1, column: 0 }, messageId: 'missingModulesDir', data: { src, modulesDir: modulesDirName } })
+          if (!entries.includes(modulesDir)) {
+            context.report({ loc: { line: 1, column: 0 }, messageId: 'missingModulesDir', data: { src, modulesDir } })
             return
           }
 
-          const modulesDir = path.join(srcDir, modulesDirName)
-          const modules = fs.readdirSync(modulesDir)
+          const modulesDirPath = path.join(srcDir, modulesDir)
+          const modules = fs.readdirSync(modulesDirPath)
           for (const mod of modules) {
-            const modPath = path.join(modulesDir, mod)
+            const modPath = path.join(modulesDirPath, mod)
             try {
               const modEntries = fs.readdirSync(modPath)
               const hasIndex = modEntries.some((f) => indexFiles.includes(f))

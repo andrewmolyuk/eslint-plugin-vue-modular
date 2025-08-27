@@ -1,9 +1,9 @@
 /**
  * @fileoverview Ensure each global feature under src/features exposes a public API (index.ts/index.js)
  */
-import path from 'path'
-import fs from 'fs'
-import { createCheckedDirsGetter } from '../utils/global-state.js'
+import path from 'node:path'
+import fs from 'node:fs'
+import { createCheckedDirsGetter, parseRuleOptions } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -41,11 +41,7 @@ export default {
 
   create(context) {
     const checked = getCheckedDirs()
-    const options = context.options && context.options[0] ? context.options[0] : {}
-    const src = typeof options.src === 'string' && options.src.trim() ? options.src.trim() : defaultOptions.src
-    const featuresDirName =
-      typeof options.featuresDir === 'string' && options.featuresDir.trim() ? options.featuresDir.trim() : defaultOptions.featuresDir
-    const indexFiles = Array.isArray(options.indexFiles) && options.indexFiles.length > 0 ? options.indexFiles : defaultOptions.indexFiles
+    const { src, featuresDir, indexFiles } = parseRuleOptions(context, defaultOptions)
 
     const filename = context.getFilename()
     if (!filename.includes(`${path.sep}${src}${path.sep}`)) {
@@ -64,15 +60,15 @@ export default {
       Program() {
         try {
           const entries = fs.readdirSync(srcDir)
-          if (!entries.includes(featuresDirName)) {
+          if (!entries.includes(featuresDir)) {
             // features directory is optional; do not report an error when absent
             return
           }
 
-          const featuresDir = path.join(srcDir, featuresDirName)
-          const features = fs.readdirSync(featuresDir)
+          const featuresDirPath = path.join(srcDir, featuresDir)
+          const features = fs.readdirSync(featuresDirPath)
           for (const feat of features) {
-            const featPath = path.join(featuresDir, feat)
+            const featPath = path.join(featuresDirPath, feat)
             try {
               const featEntries = fs.readdirSync(featPath)
               const hasIndex = featEntries.some((f) => indexFiles.includes(f))

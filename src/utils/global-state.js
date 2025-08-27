@@ -27,3 +27,43 @@ export function createCheckedDirsGetter(ruleName) {
     return global.__eslintVueModularState.get(eslintRunId)
   }
 }
+
+/**
+ * Shared utility for parsing ESLint rule options with common validation patterns
+ * @param {Object} context - ESLint rule context
+ * @param {Object} defaultOptions - Default options for the rule
+ * @returns {Object} Parsed and validated options
+ */
+export function parseRuleOptions(context, defaultOptions) {
+  const options = context.options && context.options[0] ? context.options[0] : {}
+  const parsed = {}
+
+  // Parse src option with string validation
+  if (defaultOptions.src !== undefined) {
+    parsed.src = typeof options.src === 'string' && options.src.trim() ? options.src.trim() : defaultOptions.src
+  }
+
+  // Parse featuresDir option with string validation
+  if (defaultOptions.featuresDir !== undefined) {
+    parsed.featuresDir =
+      typeof options.featuresDir === 'string' && options.featuresDir.trim() ? options.featuresDir.trim() : defaultOptions.featuresDir
+  }
+
+  // Parse modulesDir option with string validation
+  if (defaultOptions.modulesDir !== undefined) {
+    parsed.modulesDir =
+      typeof options.modulesDir === 'string' && options.modulesDir.trim() ? options.modulesDir.trim() : defaultOptions.modulesDir
+  }
+
+  // Parse indexFiles option with array validation
+  if (defaultOptions.indexFiles !== undefined) {
+    parsed.indexFiles = Array.isArray(options.indexFiles) && options.indexFiles.length > 0 ? options.indexFiles : defaultOptions.indexFiles
+  }
+
+  // Parse required option with array validation
+  if (defaultOptions.required !== undefined) {
+    parsed.required = Array.isArray(options.required) && options.required.length > 0 ? options.required : defaultOptions.required
+  }
+
+  return parsed
+}

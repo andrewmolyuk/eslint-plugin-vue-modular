@@ -1,9 +1,9 @@
 /**
  * @fileoverview Ensure the `app/` folder under `src/` follows the blueprint structure
  */
-import path from 'path'
-import fs from 'fs'
-import { createCheckedDirsGetter } from '../utils/global-state.js'
+import path from 'node:path'
+import fs from 'node:fs'
+import { createCheckedDirsGetter, parseRuleOptions } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -40,9 +40,7 @@ export default {
 
   create(context) {
     const checked = getCheckedDirs()
-    const options = context.options && context.options[0] ? context.options[0] : {}
-    const src = typeof options.src === 'string' && options.src.trim() ? options.src.trim() : defaultOptions.src
-    const required = Array.isArray(options.required) && options.required.length > 0 ? options.required : defaultOptions.required
+    const { src, required } = parseRuleOptions(context, defaultOptions)
 
     const filename = context.getFilename()
     if (!filename.includes(`${path.sep}${src}${path.sep}`)) {
