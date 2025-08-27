@@ -3,6 +3,8 @@
  * This prevents duplicate directory checking within the same ESLint run
  */
 
+import path from 'node:path'
+
 /**
  * Creates a function to get checked directories for a specific rule
  * @param {string} ruleName - Unique identifier for the rule (e.g., 'appstructure', 'featurestructure')
@@ -66,4 +68,28 @@ export function parseRuleOptions(context, defaultOptions) {
   }
 
   return parsed
+}
+
+/**
+ * Shared utility for setting up source directory detection and duplicate checking
+ * @param {Object} context - ESLint rule context
+ * @param {string} src - Source directory name
+ * @param {Set} checked - Set of already checked directories
+ * @returns {Object|null} Object with srcDir if valid, null if should skip
+ */
+export function setupSrcDirectoryCheck(context, src, checked) {
+  const filename = context.getFilename()
+  if (!filename.includes(`${path.sep}${src}${path.sep}`)) {
+    return null
+  }
+
+  const srcSegment = `${path.sep}${src}${path.sep}`
+  const srcIndex = filename.indexOf(srcSegment)
+  if (srcIndex === -1) return null
+  const srcDir = filename.substring(0, srcIndex + srcSegment.length - 1)
+
+  if (checked.has(srcDir)) return null
+  checked.add(srcDir)
+
+  return { srcDir }
 }

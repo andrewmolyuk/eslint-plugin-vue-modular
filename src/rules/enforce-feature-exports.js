@@ -3,7 +3,7 @@
  */
 import path from 'node:path'
 import fs from 'node:fs'
-import { createCheckedDirsGetter, parseRuleOptions } from '../utils/global-state.js'
+import { createCheckedDirsGetter, parseRuleOptions, setupSrcDirectoryCheck } from '../utils/global-state.js'
 
 const defaultOptions = {
   src: 'src',
@@ -43,18 +43,9 @@ export default {
     const checked = getCheckedDirs()
     const { src, featuresDir, indexFiles } = parseRuleOptions(context, defaultOptions)
 
-    const filename = context.getFilename()
-    if (!filename.includes(`${path.sep}${src}${path.sep}`)) {
-      return {}
-    }
-
-    const srcSegment = `${path.sep}${src}${path.sep}`
-    const srcIndex = filename.indexOf(srcSegment)
-    if (srcIndex === -1) return {}
-    const srcDir = filename.substring(0, srcIndex + srcSegment.length - 1)
-
-    if (checked.has(srcDir)) return {}
-    checked.add(srcDir)
+    const setup = setupSrcDirectoryCheck(context, src, checked)
+    if (!setup) return {}
+    const { srcDir } = setup
 
     return {
       Program() {
