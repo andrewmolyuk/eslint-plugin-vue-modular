@@ -39,6 +39,11 @@ src/
 │   ├── useAuth.ts
 │   └── useLocalStorage.ts
 │
+├── services/                 # Global API clients and business logic services
+│   ├── auth.api.ts
+│   ├── users.api.ts
+│   └── notifications.api.ts
+│
 ├── entities/                 # Global business entities
 │   ├── base/
 │   ├── User.ts
@@ -795,9 +800,9 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 #### **Shared Business Layer (`composables/`, `components/`, `services/`)**
 
 - **Access**: Can import from State, Data, and Utility layers
-- **Purpose**: Reusable business logic, UI components, and API clients
-- **Cross-referencing**: ✅ Composables and components can reference each other
-- **Contains**: Business logic hooks, reusable UI components, API service clients
+- **Purpose**: Reusable business logic, UI components, and API service clients
+- **Cross-referencing**: ✅ Composables, components, and services can reference each other
+- **Contains**: Business logic hooks, reusable UI components, API service clients (including global services in `services/`)
 - **Note**: Green background represents shared business functionality
 
 #### **State Layer (`stores/`)**
@@ -859,9 +864,9 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 | 🔴 **app/**         | All business layers + module public APIs ONLY | Module public API access via index.ts exports only |
 | 🟡 **modules/**     | Shared Business, State, Data, Utility layers  | ❌ No cross-module imports                         |
 | 🟡 **features/**    | Shared Business, State, Data, Utility layers  | ❌ No cross-feature imports                        |
-| 🟢 **composables/** | Components, Services, State, Data, Utility    | Cross-reference with components                    |
-| 🟢 **components/**  | Composables, Services, State, Data, Utility   | Cross-reference with composables                   |
-| 🟢 **services/**    | State, Data, Utility layers                   | Global services can import other global services   |
+| 🟢 **composables/** | Components, Services, State, Data, Utility    | Cross-reference with components and services       |
+| 🟢 **components/**  | Composables, Services, State, Data, Utility   | Cross-reference with composables and services      |
+| 🟢 **services/**    | Composables, Components, State, Data, Utility | Global services can import other global services   |
 | ⚫ **stores/**      | Data, Utility layers                          | Global stores can import other global stores       |
 | 🔵 **entities/**    | Other entities, Utility layer                 | Entity relationships allowed                       |
 | 🟣 **shared/**      | Self-contained                                | Foundation layer - no imports                      |
@@ -1887,6 +1892,7 @@ src/
 │   └── styles/           # Global styles (only accessible by app layer)
 ├── components/           # Global business components
 ├── composables/          # Global composables
+├── services/             # Global API clients and business logic services
 ├── entities/             # Global business entities
 ├── features/             # Global cross-cutting features
 ├── modules/              # Domain-specific modules

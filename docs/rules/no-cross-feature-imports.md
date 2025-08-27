@@ -99,10 +99,12 @@ src/
 │           └── ProductCard.vue   ❌ Internal - cannot be imported directly
 ├── components/                   ✅ Shared components - can be imported
 │   └── AppHeader.vue
+├── services/                     ✅ Global services - can be imported
+│   └── userService.js
 ├── utils/                        ✅ Shared utilities - can be imported
 │   └── formatters.js
 └── store/                        ✅ Shared store - can be imported
-    └── index.js
+  └── index.js
 ```
 
 ## Feature Entry Point Example

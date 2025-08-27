@@ -6,7 +6,20 @@ import fs from 'fs'
 
 // Allowed top-level folders and files in src
 const defaultOptions = {
-  allowed: ['app', 'components', 'views', 'composables', 'entities', 'stores', 'features', 'modules', 'shared', 'main.ts', 'main.js'],
+  allowed: [
+    'app',
+    'components',
+    'views',
+    'composables',
+    'entities',
+    'stores',
+    'features',
+    'modules',
+    'shared',
+    'services',
+    'main.ts',
+    'main.js',
+  ],
   src: 'src',
 }
 
