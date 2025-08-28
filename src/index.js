@@ -8,6 +8,7 @@ import enforceModuleExports from './rules/enforce-module-exports.js'
 import enforceFeatureExports from './rules/enforce-feature-exports.js'
 import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 import enforceNamingConvention from './rules/enforce-naming-convention.js'
+import noBusinessLogicInUiKit from './rules/no-business-logic-in-ui-kit.js'
 
 // Import utilities
 import { isTestFile } from './utils/import-boundaries.js'
@@ -23,6 +24,7 @@ const plugin = {
     'enforce-feature-exports': enforceFeatureExports,
     'enforce-naming-convention': enforceNamingConvention,
     'enforce-import-boundaries': enforceImportBoundaries,
+    'no-business-logic-in-ui-kit': noBusinessLogicInUiKit,
   },
   processors: {},
   configs: {},
@@ -40,11 +42,12 @@ plugin.configs['flat/recommended'] = [
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
       'vue-modular/no-cross-module-imports': 'error',
+      'vue-modular/no-business-logic-in-ui-kit': 'error',
+      'vue-modular/enforce-import-boundaries': 'error',
       'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-app-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/enforce-feature-exports': 'error',
-      'vue-modular/enforce-import-boundaries': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -62,11 +65,12 @@ plugin.configs['flat/strict'] = [
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
       'vue-modular/no-cross-module-imports': 'error',
+      'vue-modular/no-business-logic-in-ui-kit': 'error',
+      'vue-modular/enforce-import-boundaries': 'error',
       'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-app-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/enforce-feature-exports': 'error',
-      'vue-modular/enforce-import-boundaries': 'error',
       'vue-modular/enforce-naming-convention': 'error',
     },
     languageOptions: {
@@ -82,11 +86,12 @@ plugin.configs.recommended = {
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
     'vue-modular/no-cross-module-imports': 'error',
+    'vue-modular/no-business-logic-in-ui-kit': 'error',
+    'vue-modular/enforce-import-boundaries': 'error',
     'vue-modular/enforce-src-structure': 'error',
     'vue-modular/enforce-app-structure': 'error',
     'vue-modular/enforce-module-exports': 'error',
     'vue-modular/enforce-feature-exports': 'error',
-    'vue-modular/enforce-import-boundaries': 'error',
   },
 }
 

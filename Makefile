@@ -1,4 +1,4 @@
-@PHONY: lint install test update release commitlint drawio
+@PHONY: lint install test update commitlint drawio
 
 install:
 	npm install
@@ -17,18 +17,5 @@ update:
 	npx npm-check-updates -u
 	npm install
 
-release: test
-	@if [ -n "$$(git status --porcelain)" ]; then \
-		echo "Error: There are uncommitted changes. Please commit or stash them before releasing."; \
-		git status --short; \
-		exit 1; \
-	fi
-	@echo "Testing semantic-release configuration..."
-	@echo "Note: Actual releases happen automatically on push to main branch via GitHub Actions."
-	@echo "This will show what would be released:"
-	@echo ""
-	npx semantic-release --dry-run --no-ci || echo "Note: Authentication errors are expected in local dry-run mode."
-
 drawio:
 	/mnt/c/Program\ Files/draw.io/draw.io.exe -x -o docs/assets --transparent -f png docs/assets/drawio/*.drawio
-

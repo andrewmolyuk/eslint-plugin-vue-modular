@@ -15,6 +15,7 @@ export default [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
+      'vue-modular/no-business-logic-in-ui-kit': 'error',
       'vue-modular/enforce-src-structure': 'error',
     },
     languageOptions: {
@@ -45,6 +46,13 @@ export const customConfig = [
           allowedPatterns: ['src/features/*/index.js', 'src/features/*/index.ts'],
         },
       ],
+      'vue-modular/no-business-logic-in-ui-kit': [
+        'error',
+        {
+          uiKitPaths: ['src/shared/ui/', 'src/design-system/'],
+          detectSideEffects: true,
+        },
+      ],
       'vue-modular/enforce-src-structure': [
         'error',
         {
@@ -70,6 +78,7 @@ export const multipleConfigs = [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
+      'vue-modular/no-business-logic-in-ui-kit': 'error',
       'vue-modular/enforce-src-structure': 'error',
     },
     languageOptions: {
@@ -85,6 +94,7 @@ export const multipleConfigs = [
     },
     rules: {
       'vue-modular/no-cross-feature-imports': 'warn',
+      'vue-modular/no-business-logic-in-ui-kit': 'error',
       'vue-modular/enforce-src-structure': 'error',
     },
     languageOptions: {
@@ -104,6 +114,7 @@ module.exports = {
   extends: ['plugin:vue-modular/recommended'],
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
+    'vue-modular/no-business-logic-in-ui-kit': 'error',
     'vue-modular/enforce-src-structure': 'error',
   },
   env: {
@@ -125,6 +136,13 @@ module.exports = {
       {
         featurePattern: 'src/features/*',
         allowedPatterns: ['src/features/*/index.js', 'src/features/*/index.ts'],
+      },
+    ],
+    'vue-modular/no-business-logic-in-ui-kit': [
+      'error',
+      {
+        uiKitPaths: ['src/shared/ui/', 'src/design-system/'],
+        detectSideEffects: true,
       },
     ],
     'vue-modular/enforce-src-structure': [

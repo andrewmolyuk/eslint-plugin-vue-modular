@@ -47,6 +47,7 @@ export default [
     rules: {
       'vue-modular/no-cross-feature-imports': 'error',
       'vue-modular/no-cross-module-imports': 'error',
+      'vue-modular/no-business-logic-in-ui-kit': 'error',
       'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       // Optional: Enable component naming convention
@@ -90,6 +91,7 @@ module.exports = {
   rules: {
     'vue-modular/no-cross-feature-imports': 'error',
     'vue-modular/no-cross-module-imports': 'error',
+    'vue-modular/no-business-logic-in-ui-kit': 'error',
     'vue-modular/enforce-src-structure': 'error',
     // Optional: Enable component naming convention
     // 'vue-modular/enforce-naming-convention': 'error',
@@ -108,6 +110,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 - [`vue-modular/no-cross-feature-imports`](./docs/rules/no-cross-feature-imports.md): Prevents direct imports from deep inside feature folders
 - [`vue-modular/no-cross-module-imports`](./docs/rules/no-cross-module-imports.md): Prevents imports between different modules
+- [`vue-modular/no-business-logic-in-ui-kit`](./docs/rules/no-business-logic-in-ui-kit.md): Prevents business logic imports in UI kit components
 - [`vue-modular/enforce-import-boundaries`](./docs/rules/enforce-import-boundaries.md): Consolidated import-boundary enforcement (modules/features/app/shared)
 - [`vue-modular/enforce-src-structure`](./docs/rules/enforce-src-structure.md): Enforces allowed top-level folders/files in source directory
 - [`vue-modular/enforce-app-structure`](./docs/rules/enforce-app-structure.md): Enforces presence of application infrastructure under `src/app`
