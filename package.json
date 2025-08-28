@@ -22,7 +22,6 @@
   },
   "homepage": "https://github.com/andrewmolyuk/eslint-plugin-vue-modular#readme",
   "scripts": {
-    "install": "make install",
     "lint": "make lint",
     "test": "make test",
     "commitlint": "make commitlint",
