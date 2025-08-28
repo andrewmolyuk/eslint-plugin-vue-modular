@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import moduleStructureRule from '../src/rules/enforce-module-exports.js'
-import { setupTest, runRule } from './test-utils.js'
+import { setupTest, runRule, createMockFileSystem } from './test-utils.js'
 
 describe('enforce-module-exports rule', () => {
   beforeEach(setupTest)
@@ -15,13 +15,13 @@ describe('enforce-module-exports rule', () => {
   })
 
   it('reports modules missing index files', () => {
-    vi.spyOn(fs, 'readdirSync').mockImplementation((p) => {
-      if (p.endsWith('/src')) return ['modules']
-      if (p.endsWith('/src/modules')) return ['auth', 'users']
-      if (p.endsWith('/src/modules/auth')) return ['views', 'components']
-      if (p.endsWith('/src/modules/users')) return ['index.ts']
-      return []
+    const mockFileSystem = createMockFileSystem({
+      '**/src': ['modules'],
+      '**/src/modules': ['auth', 'users'],
+      '**/src/modules/auth': ['views', 'components'],
+      '**/src/modules/users': ['index.ts'],
     })
+    vi.spyOn(fs, 'readdirSync').mockImplementation(mockFileSystem)
 
     const context = runRule(moduleStructureRule)
 
@@ -29,13 +29,13 @@ describe('enforce-module-exports rule', () => {
   })
 
   it('passes when all modules have index files', () => {
-    vi.spyOn(fs, 'readdirSync').mockImplementation((p) => {
-      if (p.endsWith('/src')) return ['modules']
-      if (p.endsWith('/src/modules')) return ['auth', 'users']
-      if (p.endsWith('/src/modules/auth')) return ['index.js']
-      if (p.endsWith('/src/modules/users')) return ['index.ts']
-      return []
+    const mockFileSystem = createMockFileSystem({
+      '**/src': ['modules'],
+      '**/src/modules': ['auth', 'users'],
+      '**/src/modules/auth': ['index.js'],
+      '**/src/modules/users': ['index.ts'],
     })
+    vi.spyOn(fs, 'readdirSync').mockImplementation(mockFileSystem)
 
     const context = runRule(moduleStructureRule)
 

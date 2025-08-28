@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import appStructureRule from '../src/rules/enforce-app-structure.js'
-import { setupTest, runRule } from './test-utils.js'
+import { setupTest, runRule, createMockFileSystem } from './test-utils.js'
 
 describe('enforce-app-structure rule', () => {
   beforeEach(setupTest)
@@ -15,11 +15,11 @@ describe('enforce-app-structure rule', () => {
   })
 
   it('reports missing required entries', () => {
-    vi.spyOn(fs, 'readdirSync').mockImplementation((p) => {
-      if (p.endsWith('/src')) return ['app']
-      if (p.endsWith('/src/app')) return ['router']
-      return []
+    const mockFileSystem = createMockFileSystem({
+      '**/src': ['app'],
+      '**/src/app': ['router'],
     })
+    vi.spyOn(fs, 'readdirSync').mockImplementation(mockFileSystem)
 
     const context = runRule(appStructureRule)
 
