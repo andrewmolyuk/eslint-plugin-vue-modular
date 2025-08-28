@@ -24,7 +24,7 @@ src / utils.ts // Should be in shared/
 src / RandomComponent.vue // Should be in components/ or views/
 src / styles.css // Should be in app/styles/
 src / config / database.ts // 'config' is not a recognized category
-src / entities / custom / User.ts // 'custom' is not allowed in entities/
+src / composables / api / useAuth.ts // 'api' is not allowed in composables/ (flat structure)
 ```
 
 ### ✅ Correct
@@ -70,7 +70,7 @@ The rule validates files against these predefined categories:
 ### Data Layer
 
 - **`entities/`** - Data models and entities
-  - Allowed subdirectories: `base`
+  - Allowed subdirectories: any (wildcard `*` support)
 
 ### Utility Layer
 
@@ -114,7 +114,7 @@ The `allowedDirectories` configuration supports glob patterns for flexible file 
 - **`'*'`** - Allows any subdirectory structure (e.g., `modules: ['*']`)
 - **`'*.ts'`** - Allows any `.ts` file in subdirectories (e.g., `shared: ['ui', '*.ts']`)
 - **`'*.js'`** - Allows any `.js` file in subdirectories
-- **Explicit names** - Only allows specific subdirectory names (e.g., `entities: ['base']`)
+- **Explicit names** - Only allows specific subdirectory names (e.g., `app: ['router', 'stores']`)
 
 Example: `shared: ['ui', '*.ts']` allows:
 
@@ -250,8 +250,10 @@ src/
 ├── stores/                     ✅ Global stores (flat)
 │   └── userStore.ts
 ├── entities/                   ✅ Data models
-│   └── base/
-│       └── User.ts
+│   ├── base/
+│   │   └── BaseEntity.ts
+│   └── custom/
+│       └── User.ts             ✅ Any subdirectory allowed
 ├── shared/                     ✅ Shared utilities
 │   ├── ui/
 │   │   ├── Button.vue

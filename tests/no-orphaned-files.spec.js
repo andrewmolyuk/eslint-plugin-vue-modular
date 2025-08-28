@@ -80,6 +80,10 @@ describe('no-orphaned-files rule', () => {
             code: 'export const BaseEntity = {}',
             filename: '/project/src/entities/base/BaseEntity.ts',
           },
+          {
+            code: 'export const CustomEntity = {}',
+            filename: '/project/src/entities/custom/CustomEntity.ts', // Entities can have any subdirectory
+          },
 
           // Views
           {
@@ -336,32 +340,6 @@ describe('no-orphaned-files rule', () => {
                 messageId: 'orphanedFile',
                 data: {
                   message: "Directory 'stores' should have a flat structure, but found subdirectory 'auth'",
-                },
-              },
-            ],
-          },
-        ],
-      })
-    })
-
-    it('should flag invalid subdirectories in structured categories', () => {
-      ruleTester.run('no-orphaned-files', noOrphanedFilesRule, {
-        valid: [],
-        invalid: [
-          {
-            code: 'export const CustomEntity = {}',
-            filename: '/project/src/entities/custom/CustomEntity.ts',
-            errors: [
-              {
-                messageId: 'orphanedFile',
-                data: {
-                  message: "Subdirectory 'custom' is not allowed in 'entities'. Allowed: base",
-                },
-              },
-              {
-                messageId: 'suggestion',
-                data: {
-                  suggestion: 'Use one of the allowed subdirectories or move to a more appropriate location',
                 },
               },
             ],

@@ -27,7 +27,7 @@ const defaultOptions = {
     stores: [], // Flat structure expected
 
     // Data layer
-    entities: ['base'], // Can have base/ subfolder
+    entities: ['*'], // Can have any subdirectory structure
 
     // Utility layer
     shared: ['ui', '*.ts'],
