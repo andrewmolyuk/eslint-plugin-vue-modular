@@ -32,6 +32,11 @@ describe('vue-modular/no-business-logic-in-ui-kit rule', () => {
           code: "import { BaseButton } from '@/shared/ui/BaseButton.vue';",
           filename: '/project/src/shared/ui/Button.js',
         },
+        // ✅ UI-kit importing from src/shared (common utilities)
+        {
+          code: "import cn from '@/shared/cn';",
+          filename: '/project/src/shared/ui/Tooltip.js',
+        },
         // ✅ UI-kit importing explicitly allowed import via options
         {
           code: "import foo from '@/features/foo';",

@@ -99,8 +99,9 @@ export default {
         }
       }
 
-      // UI kit can only import from shared/ui
-      if (resolvedSource.startsWith('src/shared/ui/')) {
+      // Allow imports from shared/ui and from the top-level shared folder
+      // (projects may keep common utilities/constants under `src/shared/`)
+      if (resolvedSource.startsWith('src/shared/ui/') || resolvedSource === 'src/shared' || resolvedSource.startsWith('src/shared/')) {
         return false
       }
 

@@ -1,10 +1,15 @@
 # no-business-logic-in-ui-kit
 
-Enforces that UI kit files only import from their own layer or external libraries, preventing business logic dependencies in shared UI components.
+Enforces that UI kit files only import from their own layer, common shared utilities, or external libraries, preventing business
+logic dependencies in shared UI components.
 
 ## Rule Details
 
 This rule ensures that UI kit components remain truly reusable by preventing them from importing business logic, state management, or domain-specific functionality. UI kit components should be pure, stateless, and only concerned with presentation.
+
+Note: the rule permits imports from `src/shared/ui/` and from the top-level `src/shared/` folder which is commonly used for shared
+utilities/constants (for example `@/shared/cn`). If your project keeps business logic inside `src/shared/`, tighten the rule by
+using the `allowedImports` option or restricting `uiKitPaths` in your ESLint configuration.
 
 **Why this rule exists:**
 
@@ -53,10 +58,12 @@ import { computed, ref } from 'vue'
 import { VueUse } from '@vueuse/core'
 import lodash from 'lodash'
 
-// UI kit importing other UI kit components
+// UI kit importing other UI kit components or shared utilities
 import Icon from './Icon.vue'
 import BaseButton from '../BaseButton.vue'
 import Tooltip from '@/shared/ui/Tooltip.vue'
+// UI kit importing shared utilities (allowed by the rule)
+import cn from '@/shared/cn'
 
 // UI kit with pure presentation logic
 export default {
@@ -107,6 +114,9 @@ export default {
 ### Option Details
 
 - **`uiKitPaths`** (array): Array of paths that should be treated as UI kit directories. Default: `["src/shared/ui/"]`
+  Note: common utilities placed under `src/shared/` are considered safe by the rule implementation. To change this behavior,
+  either add specific modules to `allowedImports` or include `src/shared/` in `uiKitPaths` if you want the rule to consider a
+  broader set of files as part of the UI kit.
 - **`allowedImports`** (array): Array of explicitly allowed import module names. Default: `[]`
 - **`detectSideEffects`** (boolean): Whether to detect and report side-effectful operations. Default: `true`
 
