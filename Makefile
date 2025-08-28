@@ -20,15 +20,11 @@ release: test
 		git status --short; \
 		exit 1; \
 	fi
-	@if gh auth status >/dev/null 2>&1; then \
-		rm -Rf CHANGELOG.md; \
-		npx standard-version; \
-		git push --follow-tags; \
-		gh release create $$(git describe --tags --abbrev=0) --notes-file CHANGELOG.md; \
-	else \
-		echo "GitHub CLI not authenticated. Run 'gh auth login' to create releases automatically."; \
-		echo "You can manually create a release at: https://github.com/andrewmolyuk/eslint-plugin-vue-modular/releases/new"; \
-	fi
+	@echo "Testing semantic-release configuration..."
+	@echo "Note: Actual releases happen automatically on push to main branch via GitHub Actions."
+	@echo "This will show what would be released:"
+	@echo ""
+	npx semantic-release --dry-run --no-ci || echo "Note: Authentication errors are expected in local dry-run mode."
 
 drawio:
 	/mnt/c/Program\ Files/draw.io/draw.io.exe -x -o docs/assets --transparent -f png docs/assets/drawio/*.drawio
