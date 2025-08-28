@@ -1,5 +1,9 @@
+/**
+ * @fileoverview Simplified import boundaries enforcement
+ * This is a proposed refactor to reduce complexity
+ */
 import path from 'node:path'
-import { isTestFile } from '../utils/import-boundaries.js'
+import { isTestFile, applyAliases } from '../utils/import-boundaries.js'
 
 const defaultOptions = {
   src: 'src',
@@ -10,37 +14,275 @@ const defaultOptions = {
   ignoreTypeImports: true,
 }
 
-function getLayerForFile(filePath, options) {
-  if (!filePath) return null
+/**
+ * Layer hierarchy and access rules (simplified configuration-driven approach)
+ */
+const LAYER_RULES = {
+  // Each layer can import from layers listed in 'canImport'
+  app: {
+    canImport: ['shared', 'components', 'composables', 'services', 'stores', 'entities'],
+    // Special rules for modules/features - only public API
+    restrictedImports: {
+      module: 'publicApiOnly',
+      feature: 'publicApiOnly',
+    },
+  },
+  module: {
+    canImport: ['shared', 'entities', 'services', 'stores', 'components', 'composables'],
+    restrictedImports: {
+      module: 'forbidden', // modules are isolated
+      feature: 'publicApiOnly',
+    },
+  },
+  feature: {
+    canImport: ['shared', 'entities', 'services', 'stores', 'components', 'composables'],
+    restrictedImports: {
+      module: 'forbidden',
+      feature: 'forbidden', // features are isolated
+      app: 'forbidden',
+    },
+  },
+  components: {
+    canImport: ['shared', 'entities'],
+    restrictedImports: {
+      app: 'forbidden',
+      module: 'forbidden',
+      feature: 'forbidden',
+    },
+  },
+  composables: {
+    canImport: ['shared', 'entities', 'services', 'stores'],
+    restrictedImports: {
+      app: 'forbidden',
+      module: 'forbidden',
+      feature: 'forbidden',
+      components: 'forbidden',
+    },
+  },
+  services: {
+    canImport: ['shared', 'entities', 'stores', 'services'],
+    restrictedImports: {
+      app: 'forbidden',
+      module: 'forbidden',
+      feature: 'forbidden',
+      components: 'forbidden',
+      composables: 'forbidden',
+    },
+  },
+  stores: {
+    canImport: ['shared', 'entities', 'stores'],
+    restrictedImports: {
+      app: 'forbidden',
+      module: 'forbidden',
+      feature: 'forbidden',
+      components: 'forbidden',
+      composables: 'forbidden',
+      services: 'forbidden',
+    },
+  },
+  entities: {
+    canImport: ['shared', 'entities'],
+    restrictedImports: {
+      '*': 'forbidden', // entities can only import shared and other entities
+    },
+  },
+  shared: {
+    canImport: ['shared'], // shared can only import other shared
+    restrictedImports: {
+      '*': 'forbidden',
+    },
+  },
+  test: {
+    canImport: ['*'], // tests can import anything
+    restrictedImports: {},
+  },
+}
 
-  // Check if this is a test file first
-  if (isTestFile(filePath)) {
+/**
+ * Extract layer information from file path
+ */
+function getLayerInfo(filePath, options) {
+  if (!filePath || isTestFile(filePath)) {
     return { layer: 'test' }
   }
 
   const parts = path.normalize(filePath).split(path.sep)
   const srcIdx = parts.indexOf(options.src)
   if (srcIdx === -1) return null
-  const next = parts[srcIdx + 1]
-  if (!next) return null
-  // map common layer folder names to layer identifiers
-  if (next === 'app') return { layer: 'app' }
-  if (next === options.modulesDir) return { layer: 'module', name: parts[srcIdx + 2] }
-  if (next === options.featuresDir) return { layer: 'feature', name: parts[srcIdx + 2] }
-  if (next === 'composables') return { layer: 'composables' }
-  if (next === 'components') return { layer: 'components' }
-  if (next === 'services') return { layer: 'services' }
-  if (next === 'stores') return { layer: 'stores' }
-  if (next === 'entities') return { layer: 'entities' }
-  if (next === 'shared' || next === 'lib') return { layer: 'shared' }
-  return { layer: 'other' }
+
+  const layerDir = parts[srcIdx + 1]
+  if (!layerDir) return null
+
+  // Map directory names to layers
+  const layerMap = {
+    app: 'app',
+    [options.modulesDir]: 'module',
+    [options.featuresDir]: 'feature',
+    components: 'components',
+    composables: 'composables',
+    services: 'services',
+    stores: 'stores',
+    entities: 'entities',
+    shared: 'shared',
+    lib: 'shared', // alias for shared
+  }
+
+  const layer = layerMap[layerDir]
+  if (!layer) return { layer: 'other' }
+
+  // For modules and features, extract the name
+  if (layer === 'module' || layer === 'feature') {
+    return {
+      layer,
+      name: parts[srcIdx + 2],
+      path: filePath,
+    }
+  }
+
+  return { layer, path: filePath }
+}
+
+/**
+ * Resolve import path to absolute path
+ */
+function resolveImportPath(importPath, importerPath, options) {
+  // Apply aliases
+  const resolved = applyAliases(importPath, options.aliases, options.src)
+
+  // Handle relative imports
+  if (resolved.startsWith('./') || resolved.startsWith('../')) {
+    return path.normalize(path.resolve(path.dirname(importerPath), resolved))
+  }
+
+  // Handle absolute imports (src/...)
+  if (resolved.startsWith(options.src)) {
+    return path.normalize(path.resolve(process.cwd(), resolved))
+  }
+
+  // External import - not our concern
+  return null
+}
+
+/**
+ * Check if import is to public API only
+ */
+function isPublicApiImport(targetPath, options) {
+  const parts = path.normalize(targetPath).split(path.sep)
+  const srcIdx = parts.indexOf(options.src)
+  if (srcIdx === -1) return false
+
+  const layerDir = parts[srcIdx + 1]
+  const entityName = parts[srcIdx + 2]
+  const fileName = parts[parts.length - 1]
+  const remainingPath = parts.slice(srcIdx + 3)
+
+  // Public API patterns:
+  // - src/modules/auth (directory)
+  // - src/modules/auth/index.js
+  // - src/modules/auth/index.ts
+  if ((layerDir === options.modulesDir || layerDir === options.featuresDir) && entityName) {
+    return remainingPath.length === 0 || (remainingPath.length === 1 && /^index\.(js|ts)$/.test(fileName))
+  }
+
+  return false
+}
+
+/**
+ * Check if two module/feature imports are from the same entity
+ */
+function isSameEntity(fromLayer, toLayer) {
+  if (fromLayer.layer !== toLayer.layer) return false
+  if (!fromLayer.name || !toLayer.name) return false
+  return fromLayer.name === toLayer.name
+}
+
+/**
+ * Main validation logic
+ */
+function validateImport(fromLayer, toLayer, targetPath, importPath, options) {
+  // Allow same-entity imports (same module or same feature)
+  if (isSameEntity(fromLayer, toLayer)) {
+    return null
+  }
+
+  // Handle module-to-module imports (they're always forbidden, but with different messages)
+  if (fromLayer.layer === 'module' && toLayer.layer === 'module') {
+    if (isPublicApiImport(targetPath, options)) {
+      return {
+        messageId: 'moduleToModuleImport',
+        data: { importPath },
+      }
+    } else {
+      return {
+        messageId: 'deepModuleImport',
+        data: { importPath },
+      }
+    }
+  }
+
+  // Handle feature-to-feature imports (always forbidden)
+  if (fromLayer.layer === 'feature' && toLayer.layer === 'feature') {
+    return {
+      messageId: 'featureToFeatureImport',
+      data: { importPath },
+    }
+  }
+
+  // Handle feature-to-module imports (always forbidden)
+  if (fromLayer.layer === 'feature' && toLayer.layer === 'module') {
+    return {
+      messageId: 'featureToModuleImport',
+      data: { importPath },
+    }
+  }
+
+  // Handle imports into app layer (forbidden from modules/features)
+  if ((fromLayer.layer === 'module' || fromLayer.layer === 'feature') && toLayer.layer === 'app') {
+    return {
+      messageId: 'layerImportAppForbidden',
+      data: { importPath },
+    }
+  }
+
+  const rules = LAYER_RULES[fromLayer.layer]
+  if (!rules) return null // Unknown layer, allow
+
+  const restriction = rules.restrictedImports[toLayer.layer] || rules.restrictedImports['*']
+
+  if (restriction === 'forbidden') {
+    return {
+      messageId: 'forbiddenLayerImport',
+      data: { from: fromLayer.layer, to: toLayer.layer, importPath },
+    }
+  }
+
+  if (restriction === 'publicApiOnly' && !isPublicApiImport(targetPath, options)) {
+    const messageMap = {
+      module: fromLayer.layer === 'app' ? 'appDeepImport' : 'deepModuleImport',
+      feature: fromLayer.layer === 'app' ? 'appDeepImport' : 'deepFeatureImport',
+    }
+    return {
+      messageId: messageMap[toLayer.layer] || 'forbiddenLayerImport',
+      data: { importPath },
+    }
+  }
+
+  // Check if import is generally allowed
+  if (!rules.canImport.includes(toLayer.layer) && !rules.canImport.includes('*')) {
+    return {
+      messageId: 'forbiddenLayerImport',
+      data: { from: fromLayer.layer, to: toLayer.layer, importPath },
+    }
+  }
+
+  return null // Import is allowed
 }
 
 export default {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Enforce import boundaries between app/modules/features/shared according to the project blueprint',
+      description: 'Enforce import boundaries between layers according to the project blueprint',
       recommended: false,
     },
     messages: {
@@ -56,7 +298,6 @@ export default {
       forbiddenLayerImport: "Importing from '{{from}}' to '{{to}}' is forbidden: '{{importPath}}'",
     },
     defaultOptions: [defaultOptions],
-
     schema: [
       {
         type: 'object',
@@ -74,213 +315,60 @@ export default {
   },
 
   create(context) {
-    const opts = Object.assign({}, defaultOptions, context.options && context.options[0])
+    const options = { ...defaultOptions, ...(context.options[0] || {}) }
 
     function isAllowedByList(importPath) {
-      return (opts.allow || []).some((pat) => {
-        if (pat === importPath) return true
-        // simple startsWith glob
-        if (pat.endsWith('/*')) {
-          return importPath.startsWith(pat.slice(0, -1))
+      return options.allow.some((pattern) => {
+        if (pattern === importPath) return true
+        if (pattern.endsWith('/*')) {
+          return importPath.startsWith(pattern.slice(0, -1))
         }
         return false
       })
     }
 
-    function isPublicApiImportFor(targetPath, baseDir) {
-      // true if targetPath equals baseDir or points to index.js/index.ts in that dir
-      try {
-        const rel = path.relative(path.resolve(process.cwd(), opts.src, baseDir), targetPath)
-        if (rel === '' || rel === '.') return true
-        if (rel === 'index.js' || rel === 'index.ts') return true
-        return false
-      } catch {
-        return false
-      }
-    }
+    function checkImport(node, importPath) {
+      if (!importPath || isAllowedByList(importPath)) return
 
-    function checkImport(node, importPathRaw) {
-      if (!importPathRaw || isAllowedByList(importPathRaw)) return
+      // Ignore type imports if configured
+      if (options.ignoreTypeImports && node.importKind === 'type') return
 
-      // ignore types if option set and node is TS import type
-      if (opts.ignoreTypeImports && node.importKind === 'type') return
+      const importerPath = context.getFilename()
+      if (!importerPath || importerPath === '<input>') return
 
-      const importerFilename = context.getFilename()
-      if (!importerFilename || importerFilename === '<input>') return
+      // Resolve the target path
+      const targetPath = resolveImportPath(importPath, importerPath, options)
+      if (!targetPath) return // External import
 
-      // Allow test files to import from anywhere without restrictions
-      if (isTestFile(importerFilename)) return
+      // Get layer information
+      const fromLayer = getLayerInfo(importerPath, options)
+      const toLayer = getLayerInfo(targetPath, options)
 
-      // Apply aliases manually
-      let resolved = importPathRaw
-      for (const [k, v] of Object.entries(opts.aliases || {})) {
-        if (importPathRaw === k || importPathRaw.startsWith(k + '/')) {
-          resolved = importPathRaw.replace(k, v)
-          break
-        }
-      }
+      if (!fromLayer || !toLayer) return
 
-      // support common @/ alias mapping to src when not configured
-      if (resolved.startsWith('@/')) {
-        resolved = resolved.replace('@', opts.src)
-      }
-
-      // only handle src-local paths
-      if (!resolved.startsWith(opts.src) && !resolved.startsWith('./') && !resolved.startsWith('../')) return
-
-      // try to resolve to absolute path if possible
-      let targetPath = resolved
-      if (resolved.startsWith('./') || resolved.startsWith('../')) {
-        targetPath = path.normalize(path.resolve(path.dirname(importerFilename), resolved))
-      } else {
-        // treat as project-local absolute like 'src/modules/foo'
-        targetPath = path.normalize(path.resolve(context.getCwd ? context.getCwd() : process.cwd(), resolved))
-      }
-
-      const importerLayer = getLayerForFile(importerFilename, opts)
-      const targetLayer = getLayerForFile(targetPath, opts)
-      if (!importerLayer || !targetLayer) return
-
-      // allow same-layer or same-module/feature internal imports
-      if (importerLayer.layer === targetLayer.layer) {
-        if (importerLayer.layer === 'module' || importerLayer.layer === 'feature') {
-          if (importerLayer.name && targetLayer.name && importerLayer.name === targetLayer.name) return
-        } else {
-          return
-        }
-      }
-
-      // now enforce matrix rules
-      const from = importerLayer.layer
-      const to = targetLayer.layer
-
-      // app -> module/feature: public API only
-      if (from === 'app' && (to === 'module' || to === 'feature')) {
-        // only allow importing the module/feature public API (index file)
-        const isPublic =
-          isPublicApiImportFor(targetPath, path.join(opts.modulesDir, targetLayer.name)) ||
-          isPublicApiImportFor(targetPath, path.join(opts.featuresDir, targetLayer.name))
-        if (!isPublic) {
-          context.report({
-            node,
-            messageId: 'appDeepImport',
-            data: { importPath: importPathRaw },
-          })
-        }
-        return
-      }
-
-      // module -> module: distinguish deep internal imports vs root imports
-      if (from === 'module' && to === 'module') {
-        const rel = path.relative(path.resolve(process.cwd(), opts.src, opts.modulesDir, targetLayer.name), targetPath)
-        if (rel && !rel.startsWith('..') && rel !== '' && rel !== 'index.js' && rel !== 'index.ts') {
-          // deep internal import
-          context.report({
-            node,
-            messageId: 'deepModuleImport',
-            data: { importPath: importPathRaw },
-          })
-        } else {
-          // importing module root/public API from another module is also forbidden by isolation
-          context.report({
-            node,
-            messageId: 'moduleToModuleImport',
-            data: { importPath: importPathRaw },
-          })
-        }
-        return
-      }
-
-      // feature -> feature: forbidden
-      if (from === 'feature' && to === 'feature') {
+      // Validate the import
+      const violation = validateImport(fromLayer, toLayer, targetPath, importPath, options)
+      if (violation) {
         context.report({
           node,
-          messageId: 'featureToFeatureImport',
-          data: { importPath: importPathRaw },
+          messageId: violation.messageId,
+          data: violation.data,
         })
-        return
       }
-
-      // feature -> module: forbidden
-      if (from === 'feature' && to === 'module') {
-        context.report({
-          node,
-          messageId: 'featureToModuleImport',
-          data: { importPath: importPathRaw },
-        })
-        return
-      }
-
-      // module/feature importing into app: forbidden
-      if ((from === 'module' || from === 'feature') && to === 'app') {
-        context.report({
-          node,
-          messageId: 'layerImportAppForbidden',
-          data: { importPath: importPathRaw },
-        })
-        return
-      }
-
-      // module -> feature: allow only public API (index)
-      if (from === 'module' && to === 'feature') {
-        const isPublic = isPublicApiImportFor(targetPath, path.join(opts.featuresDir, targetLayer.name))
-        if (!isPublic) {
-          context.report({
-            node,
-            messageId: 'deepFeatureImport',
-            data: { importPath: importPathRaw },
-          })
-        }
-        return
-      }
-
-      // (duplicate module->module handling removed)
-
-      // composables/components rules: cannot import app/modules/features
-      if ((from === 'composables' || from === 'components') && (to === 'app' || to === 'module' || to === 'feature')) {
-        context.report({
-          node,
-          messageId: 'forbiddenLayerImport',
-          data: { from, to, importPath: importPathRaw },
-        })
-        return
-      }
-
-      // Helper function to check layer access rules
-      const checkLayerAccess = (fromLayer, allowedLayers) => {
-        if (from === fromLayer) {
-          const allowed = Array.isArray(allowedLayers) ? allowedLayers : [allowedLayers]
-          if (!allowed.includes(to)) {
-            context.report({
-              node,
-              messageId: 'forbiddenLayerImport',
-              data: { from, to, importPath: importPathRaw },
-            })
-          }
-          return true // processed
-        }
-        return false // not processed
-      }
-
-      // Layer access control rules
-      if (checkLayerAccess('services', ['services', 'stores', 'entities', 'shared'])) return
-      if (checkLayerAccess('stores', ['stores', 'entities', 'shared'])) return
-      if (checkLayerAccess('entities', ['entities', 'shared'])) return
-      if (checkLayerAccess('shared', 'shared')) return
-
-      // default: allow
     }
 
     return {
       ImportDeclaration(node) {
-        checkImport(node, node.source && node.source.value)
+        checkImport(node, node.source?.value)
       },
       ImportExpression(node) {
-        if (node.source && node.source.type === 'Literal') checkImport(node, node.source.value)
+        if (node.source?.type === 'Literal') {
+          checkImport(node, node.source.value)
+        }
       },
       CallExpression(node) {
-        // handle require('...')
-        if (node.callee && node.callee.name === 'require' && node.arguments && node.arguments[0] && node.arguments[0].type === 'Literal') {
+        // Handle require('...')
+        if (node.callee?.name === 'require' && node.arguments?.[0]?.type === 'Literal') {
           checkImport(node, node.arguments[0].value)
         }
       },
