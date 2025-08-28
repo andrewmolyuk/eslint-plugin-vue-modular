@@ -9,6 +9,7 @@ import enforceFeatureExports from './rules/enforce-feature-exports.js'
 import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 import enforceNamingConvention from './rules/enforce-naming-convention.js'
 import noBusinessLogicInUiKit from './rules/no-business-logic-in-ui-kit.js'
+import noOrphanedFiles from './rules/no-orphaned-files.js'
 
 // Import utilities
 import { isTestFile } from './utils/import-boundaries.js'
@@ -25,6 +26,7 @@ const plugin = {
     'enforce-naming-convention': enforceNamingConvention,
     'enforce-import-boundaries': enforceImportBoundaries,
     'no-business-logic-in-ui-kit': noBusinessLogicInUiKit,
+    'no-orphaned-files': noOrphanedFiles,
   },
   processors: {},
   configs: {},
@@ -48,6 +50,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/enforce-app-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/enforce-feature-exports': 'error',
+      'vue-modular/no-orphaned-files': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -72,6 +75,7 @@ plugin.configs['flat/strict'] = [
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/enforce-feature-exports': 'error',
       'vue-modular/enforce-naming-convention': 'error',
+      'vue-modular/no-orphaned-files': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -92,6 +96,7 @@ plugin.configs.recommended = {
     'vue-modular/enforce-app-structure': 'error',
     'vue-modular/enforce-module-exports': 'error',
     'vue-modular/enforce-feature-exports': 'error',
+    'vue-modular/no-orphaned-files': 'error',
   },
 }
 
@@ -107,6 +112,7 @@ plugin.configs.strict = {
     'vue-modular/enforce-feature-exports': 'error',
     'vue-modular/enforce-import-boundaries': 'error',
     'vue-modular/enforce-naming-convention': 'error',
+    'vue-modular/no-orphaned-files': 'error',
   },
 }
 
