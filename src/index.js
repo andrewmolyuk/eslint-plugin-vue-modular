@@ -10,6 +10,7 @@ import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 import enforceNamingConvention from './rules/enforce-naming-convention.js'
 import noBusinessLogicInUiKit from './rules/no-business-logic-in-ui-kit.js'
 import noOrphanedFiles from './rules/no-orphaned-files.js'
+import noDeepNesting from './rules/no-deep-nesting.js'
 
 // Import utilities
 import { isTestFile } from './utils/import-boundaries.js'
@@ -27,6 +28,7 @@ const plugin = {
     'enforce-import-boundaries': enforceImportBoundaries,
     'no-business-logic-in-ui-kit': noBusinessLogicInUiKit,
     'no-orphaned-files': noOrphanedFiles,
+    'no-deep-nesting': noDeepNesting,
   },
   processors: {},
   configs: {},
@@ -51,6 +53,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/enforce-feature-exports': 'error',
       'vue-modular/no-orphaned-files': 'error',
+      'vue-modular/no-deep-nesting': 'warn',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -76,6 +79,7 @@ plugin.configs['flat/strict'] = [
       'vue-modular/enforce-feature-exports': 'error',
       'vue-modular/enforce-naming-convention': 'error',
       'vue-modular/no-orphaned-files': 'error',
+      'vue-modular/no-deep-nesting': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -97,6 +101,7 @@ plugin.configs.recommended = {
     'vue-modular/enforce-module-exports': 'error',
     'vue-modular/enforce-feature-exports': 'error',
     'vue-modular/no-orphaned-files': 'error',
+    'vue-modular/no-deep-nesting': 'warn',
   },
 }
 
@@ -113,6 +118,7 @@ plugin.configs.strict = {
     'vue-modular/enforce-import-boundaries': 'error',
     'vue-modular/enforce-naming-convention': 'error',
     'vue-modular/no-orphaned-files': 'error',
+    'vue-modular/no-deep-nesting': 'error',
   },
 }
 

@@ -16,6 +16,7 @@ This document outlines the current status and planned development of rules for e
 | `vue-modular/enforce-module-exports`    | **Released** | Ensures each `src/modules/*` exposes a public API index file                         |
 | `vue-modular/enforce-feature-exports`   | **Released** | Ensures each `src/features/*` exposes a public API index file                        |
 | `vue-modular/enforce-naming-convention` | **Released** | Enforce consistent naming patterns for Vue components                                |
+| `vue-modular/no-deep-nesting`           | **Released** | Prevent excessive folder nesting in modules and features                            |
 
 ---
 
@@ -64,8 +65,7 @@ This document outlines the current status and planned development of rules for e
 
 | Rule                            | Priority   | Description                                        | Status      |
 | ------------------------------- | ---------- | -------------------------------------------------- | ----------- |
-| `vue-modular/no-deep-nesting`   | **Medium** | Prevent excessive folder nesting in modules        | **Planned** |
-| `vue-modular/no-orphaned-files` | **Medium** | Flag files that don't belong to any clear category | **Planned** |
+| `vue-modular/no-orphaned-files` | **Medium** | Flag files that don't belong to any clear category | **Released** |
 
 ### Vue.js Specific Rules
 

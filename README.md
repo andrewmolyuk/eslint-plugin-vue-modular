@@ -51,6 +51,7 @@ export default [
       'vue-modular/enforce-src-structure': 'error',
       'vue-modular/enforce-module-exports': 'error',
       'vue-modular/no-orphaned-files': 'error',
+      'vue-modular/no-deep-nesting': 'warn',
       // Optional: Enable component naming convention
       // 'vue-modular/enforce-naming-convention': 'error',
     },
@@ -95,6 +96,7 @@ module.exports = {
     'vue-modular/no-business-logic-in-ui-kit': 'error',
     'vue-modular/enforce-src-structure': 'error',
     'vue-modular/no-orphaned-files': 'error',
+    'vue-modular/no-deep-nesting': 'warn',
     // Optional: Enable component naming convention
     // 'vue-modular/enforce-naming-convention': 'error',
   },
@@ -119,6 +121,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 - [`vue-modular/enforce-module-exports`](./docs/rules/enforce-module-exports.md): Ensures modules expose a public API via `index.ts`/`index.js`
 - [`vue-modular/enforce-feature-exports`](./docs/rules/enforce-feature-exports.md): Ensures global features expose a public API via `index.ts`/`index.js`
 - [`vue-modular/no-orphaned-files`](./docs/rules/no-orphaned-files.md): Flag files that don't belong to any clear category in the modular architecture
+- [`vue-modular/no-deep-nesting`](./docs/rules/no-deep-nesting.md): Prevent excessive folder nesting in modules and features
 - [`vue-modular/enforce-naming-convention`](./docs/rules/enforce-naming-convention.md): Enforce consistent naming patterns for Vue components
 
 ### Modular Architecture in Vue
