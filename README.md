@@ -166,16 +166,6 @@ Use [conventional commit messages](https://www.conventionalcommits.org/) to trig
 4. After PR approval and merge → automatic release is triggered
 5. New version is published to NPM automatically
 
-### Local Testing
-
-```bash
-# Test release configuration (dry-run)
-make release
-
-# Run tests
-make test
-```
-
 ## License
 
 MIT, see [LICENSE](./LICENSE) for details.
