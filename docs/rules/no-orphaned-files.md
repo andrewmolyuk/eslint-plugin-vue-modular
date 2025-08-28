@@ -76,7 +76,8 @@ The rule validates files against these predefined categories:
 
 - **`shared/`** - Shared utilities and UI components
   - Allowed subdirectories: `ui`
-  - Allowed files: `constants.ts`, `formatters.ts`, `validators.ts`, `helpers.ts`, `types.ts`
+  - Allowed file patterns: `*.ts` (any TypeScript file in any subdirectory)
+  - Allowed root files: `constants.ts`, `formatters.ts`, `validators.ts`, `helpers.ts`, `types.ts`
 
 ### View Layer
 
@@ -105,6 +106,22 @@ interface Options {
   ignorePatterns?: string[] // default: ['**/*.d.ts', '**/index.ts', '**/index.js', '**/.DS_Store', '**/Thumbs.db']
 }
 ```
+
+### Pattern Matching
+
+The `allowedDirectories` configuration supports glob patterns for flexible file matching:
+
+- **`'*'`** - Allows any subdirectory structure (e.g., `modules: ['*']`)
+- **`'*.ts'`** - Allows any `.ts` file in subdirectories (e.g., `shared: ['ui', '*.ts']`)
+- **`'*.js'`** - Allows any `.js` file in subdirectories
+- **Explicit names** - Only allows specific subdirectory names (e.g., `entities: ['base']`)
+
+Example: `shared: ['ui', '*.ts']` allows:
+
+- `shared/ui/Button.vue` ✅ (explicit subdirectory)
+- `shared/utils/helpers.ts` ✅ (matches `*.ts` pattern)
+- `shared/config/settings.ts` ✅ (matches `*.ts` pattern)
+- `shared/helpers/utils.js` ❌ (doesn't match any pattern)
 
 ## Configuration Examples
 
@@ -237,7 +254,10 @@ src/
 │       └── User.ts
 ├── shared/                     ✅ Shared utilities
 │   ├── ui/
-│   │   └── Button.vue
+│   │   ├── Button.vue
+│   │   └── helpers.ts          ✅ .ts files allowed in subdirectories
+│   ├── utils/
+│   │   └── string.ts           ✅ .ts files allowed in subdirectories
 │   ├── constants.ts
 │   └── formatters.ts
 └── views/                      ✅ Page components (flat)

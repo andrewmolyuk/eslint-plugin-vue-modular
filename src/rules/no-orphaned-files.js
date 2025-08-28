@@ -30,7 +30,7 @@ const defaultOptions = {
     entities: ['base'], // Can have base/ subfolder
 
     // Utility layer
-    shared: ['ui', 'constants.ts', 'formatters.ts', 'validators.ts', 'helpers.ts', 'types.ts'],
+    shared: ['ui', '*.ts'],
 
     // Global directories
     views: [], // Flat structure expected
@@ -141,7 +141,7 @@ function checkOrphanedFile(fileInfo, allowedDirectories, allowedRootFiles) {
   }
 
   // Handle directory structure
-  const { category, subcategory, hasSubdirectory } = fileInfo
+  const { category, subcategory, hasSubdirectory, fileName } = fileInfo
 
   // Check if category is allowed
   if (!allowedDirectories[category]) {
@@ -167,7 +167,25 @@ function checkOrphanedFile(fileInfo, allowedDirectories, allowedRootFiles) {
   }
 
   // Check structured categories (specific subdirectories allowed)
-  if (allowedSubdirs.length > 0 && hasSubdirectory && !allowedSubdirs.includes(subcategory)) {
+  if (allowedSubdirs.length > 0 && hasSubdirectory) {
+    // Check if subcategory is explicitly allowed
+    if (allowedSubdirs.includes(subcategory)) {
+      return null
+    }
+
+    // Check if file matches any glob patterns in allowed subdirectories
+    const matchesPattern = allowedSubdirs.some((pattern) => {
+      if (pattern.includes('*')) {
+        // Use minimatch for glob pattern matching
+        return minimatch(fileName, pattern)
+      }
+      return false
+    })
+
+    if (matchesPattern) {
+      return null // File matches a glob pattern
+    }
+
     return {
       message: `Subdirectory '${subcategory}' is not allowed in '${category}'. Allowed: ${allowedSubdirs.join(', ')}`,
       // Suggestions for invalid subdirectories are handled separately

@@ -104,6 +104,14 @@ describe('no-orphaned-files rule', () => {
             code: 'export default {}',
             filename: '/project/src/shared/ui/Button.vue',
           },
+          {
+            code: 'export const helpers = {}',
+            filename: '/project/src/shared/helpers/string.ts', // .ts files allowed in subdirectories
+          },
+          {
+            code: 'export const uiHelpers = {}',
+            filename: '/project/src/shared/ui/helpers.ts', // .ts files allowed in ui subdirectories
+          },
 
           // App infrastructure
           {
@@ -354,19 +362,6 @@ describe('no-orphaned-files rule', () => {
                 messageId: 'suggestion',
                 data: {
                   suggestion: 'Use one of the allowed subdirectories or move to a more appropriate location',
-                },
-              },
-            ],
-          },
-          {
-            code: 'export const helpers = {}',
-            filename: '/project/src/shared/helpers/string.ts',
-            errors: [
-              {
-                messageId: 'orphanedFile',
-                data: {
-                  message:
-                    "Subdirectory 'helpers' is not allowed in 'shared'. Allowed: ui, constants.ts, formatters.ts, validators.ts, helpers.ts, types.ts",
                 },
               },
             ],
