@@ -4,7 +4,7 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 export default [
   // ignore common build and dependency folders
-  { ignores: ['node_modules/**', 'dist/**', '.git/**'] },
+  { ignores: ['node_modules/**', 'dist/**', '.git/**', 'examples/**'] },
   js.configs.recommended,
   eslintPlugin.configs.recommended,
   eslintPluginPrettierRecommended,
