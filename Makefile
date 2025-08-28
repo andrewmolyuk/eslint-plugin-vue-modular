@@ -1,4 +1,4 @@
-@PHONY: lint install test update release drawio
+@PHONY: lint install test update release commitlint drawio
 
 install:
 	npm install
@@ -6,6 +6,9 @@ install:
 lint:
 	npx eslint . --ext .js,.vue --fix
 	npx markdownlint README.md docs/**/*.md --fix
+
+commitlint:
+	npx commitlint --from HEAD~1 --to HEAD --verbose
 
 test: lint
 	CI=CI npx vitest
