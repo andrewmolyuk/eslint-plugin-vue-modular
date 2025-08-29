@@ -4,8 +4,9 @@ install:
 	npm install --no-audit --no-fund --prefer-offline
 
 lint:
-	npx eslint . --ext .js,.vue --fix
-	npx markdownlint README.md docs/**/*.md --fix
+	npx eslint . --ext .ts,.js,.vue --fix
+	npx markdownlint --fix "**/*.md" -i node_modules
+	npx prettier --write "**/*.md" "**/*.json" "**/*.js" "**/*.ts"
 
 test: lint
 	CI=CI npx vitest

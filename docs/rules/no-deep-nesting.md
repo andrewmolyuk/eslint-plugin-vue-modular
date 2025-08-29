@@ -15,7 +15,7 @@ export default {
   name: 'PasswordField'
 }
 
-// Too many levels of nesting in features (5 levels, default max is 3)  
+// Too many levels of nesting in features (5 levels, default max is 3)
 // File: /src/features/search/filters/advanced/date/DateRangePicker.vue
 export default {
   name: 'DateRangePicker'
@@ -32,7 +32,7 @@ export default {
 }
 
 // Within nesting limits (2 levels)
-// File: /src/features/search/components/SearchBar.vue  
+// File: /src/features/search/components/SearchBar.vue
 export default {
   name: 'SearchBar'
 }
@@ -87,7 +87,7 @@ export default { name: 'LoginForm' }
 
 ✅ **Correct:**
 
-```javascript  
+```javascript
 // File: /src/modules/auth/components/LoginForm.vue (2 levels ≤ 2)
 export default { name: 'LoginForm' }
 ```
@@ -115,7 +115,7 @@ export default { name: 'LoginForm' }
 The rule calculates nesting depth by counting directory levels after the base path, excluding the filename:
 
 - `/src/modules/auth/index.ts` → **1 level** (`auth`)
-- `/src/modules/auth/components/LoginForm.vue` → **2 levels** (`auth/components`)  
+- `/src/modules/auth/components/LoginForm.vue` → **2 levels** (`auth/components`)
 - `/src/modules/auth/components/forms/LoginForm.vue` → **3 levels** (`auth/components/forms`)
 - `/src/modules/auth/components/forms/fields/PasswordField.vue` → **4 levels** (`auth/components/forms/fields`)
 
@@ -124,15 +124,15 @@ The rule calculates nesting depth by counting directory levels after the base pa
 The rule provides contextual suggestions based on the base path:
 
 ### For `modules`
->
+
 > "Consider extracting nested functionality into separate services or components within the {module} module"
 
-### For `features`  
->
+### For `features`
+
 > "Consider breaking down the {feature} feature into smaller, more focused features"
 
 ### For custom paths
->
+
 > "Consider restructuring to stay within {maxDepth} levels of nesting"
 
 ## When Not to Use

@@ -4,9 +4,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnType": true,
   "editor.tabSize": 2,
-  "editor.rulers": [
-    140
-  ],
+  "editor.rulers": [140],
   "editor.insertSpaces": true,
   "editor.trimAutoWhitespace": true,
   "editor.inlineSuggest.enabled": true,
@@ -32,8 +30,5 @@
   "workbench.colorTheme": "Visual Studio Dark",
   "workbench.layoutControl.enabled": false,
   // Spell check settings
-  "cSpell.words": [
-    "Molyuk",
-    "vitest"
-  ]
+  "cSpell.words": ["Molyuk", "vitest"]
 }

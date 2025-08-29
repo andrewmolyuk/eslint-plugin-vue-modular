@@ -1491,6 +1491,7 @@ Complex components are reusable UI blocks that contain business logic or advance
 
 - **Business components (`components/`):**
   Application-specific components that contain business logic or complex functionality.
+
   ```js
   // Examples:
   import UserCard from '@/components/UserCard.vue'
@@ -1737,22 +1738,22 @@ A feature-oriented module organizes files by feature, not by type. Each feature 
 
 ### Example: UserInvite feature in the users module
 
-```
+```plaintext
 src/
 └── modules/
-    └── users/
-        ├── features/
-        │   └── user-invite/
-        │       ├── entities/
-        │       │   └── UserInvite.ts
-        │       ├── UserInviteForm.vue
-        │       ├── useUserInvite.ts
-        │       ├── userInvite.api.ts
-        │       ├── UserInviteView.vue
-        │       └── index.ts
-        ├── components/
-        ├── views/
-        └── ...
+  └── users/
+    ├── features/
+    │   └── user-invite/
+    │       ├── entities/
+    │       │   └── UserInvite.ts
+    │       ├── UserInviteForm.vue
+    │       ├── useUserInvite.ts
+    │       ├── userInvite.api.ts
+    │       ├── UserInviteView.vue
+    │       └── index.ts
+    ├── components/
+    ├── views/
+    └── ...
 ```
 
 - `features/user-invite/UserInviteForm.vue`: UI for inviting a new user
@@ -1768,7 +1769,7 @@ This keeps features self-contained, modular, and easy to maintain.
 
 For small features, a flat structure (all files in the feature root) is simple and easy to navigate:
 
-```
+```plaintext
 features/user-invite/
   UserInviteForm.vue
   useUserInvite.ts
@@ -1779,7 +1780,7 @@ features/user-invite/
 
 For larger or more complex features, use subfolders by type for better scalability and clarity:
 
-```
+```plaintext
 features/user-invite/
   components/
     UserInviteForm.vue
@@ -1856,7 +1857,7 @@ import authRoutes from '@/modules/auth/routes' // Direct import violation
 
 ### Directory Structure Summary
 
-```
+```plaintext
 src/
 ├── app/                  # Framework infrastructure (router, stores, plugins, layouts)
 │   ├── router/           # App routing configuration
@@ -1933,7 +1934,7 @@ This modular architecture implements a strict **6-layer hierarchy** where depend
 
 #### Infrastructure Layer (App Foundation)
 
-```
+```plaintext
 app/ (Pink/Red Background)
 ├── routing/        ← Navigation and route configuration
 ├── config/         ← App-wide settings and environment (including tailwind.config.js)
@@ -1948,7 +1949,7 @@ app/ (Pink/Red Background)
 
 #### Domain Layer (Business Domains)
 
-```
+```plaintext
 modules/           features/ (Yellow Background)
 ├── auth/          ├── search/
 │   └── index.ts   │   └── index.ts    ← PUBLIC API exports
@@ -1964,7 +1965,7 @@ modules/           features/ (Yellow Background)
 
 #### Shared Business Layer (Reusable Logic)
 
-```
+```plaintext
 composables/       components/       services/ (Green Background)
 ├── useApi.ts      ├── UserCard.vue  ├── auth.api.ts
 ├── useAuth.ts     ├── DataTable.vue ├── users.api.ts
@@ -1977,7 +1978,7 @@ composables/       components/       services/ (Green Background)
 
 #### State Layer (Global State)
 
-```
+```plaintext
 stores/ (Gray Background)
 ├── authStore.ts       ← Authentication state
 ├── userStore.ts       ← User management state
@@ -1990,7 +1991,7 @@ stores/ (Gray Background)
 
 #### Data Layer (Data Models)
 
-```
+```plaintext
 entities/ (Blue Background)
 ├── User.ts           ← User data model
 ├── Product.ts        ← Product data model
@@ -2004,7 +2005,7 @@ entities/ (Blue Background)
 
 #### Utility Layer (Foundation)
 
-```
+```plaintext
 shared/ (Purple Background)
 ├── ui/               ← UI kit components (Button, Input, etc.)
 ├── constants.ts      ← App-wide constants
