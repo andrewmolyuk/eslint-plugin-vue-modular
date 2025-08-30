@@ -241,7 +241,7 @@ Keep test-only imports clearly flagged as test code and out of production bundle
 
 - **views/** → Pages mapped to routes (e.g., `LoginView.vue`, `UserListView.vue`).
 - **components/** → UI parts specific to the module (not shared globally).
-- **services/** → API calls or domain logic (e.g., `auth.api.ts`).
+- **services/** → API calls or domain logic (e.g., `auth.api.ts`, `index.ts`, `frameMessages.ts`).
 - **composables/** → Hooks with stateful or computed logic (e.g., `useUsers.ts`).
 - **store/** → Module-specific Pinia/Vuex stores (e.g., `useAuthStore.ts`).
 - **entities/** → Business/domain entities specific to this module.
@@ -754,7 +754,7 @@ This navigation organization system provides flexibility for apps of any size wh
 - **Components** → PascalCase, descriptive → `UserTable.vue`, `LoginForm.vue`.
 - **Stores** → Use Pinia convention: `useXxxStore.ts`.
 - **Composables** → Always start with `useXxx.ts`.
-- **Services** → `<domain>.api.ts` for API clients (e.g., `auth.api.ts`).
+- **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`.
 - **Entities** → `<domain>.ts` for business/domain entities (e.g., `User.ts`, `Settings.ts`).
 - **Routes** → `routes.ts` inside module.
 

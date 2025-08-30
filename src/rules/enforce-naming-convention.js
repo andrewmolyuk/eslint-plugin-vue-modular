@@ -171,14 +171,13 @@ function validateNamingConvention(filename, componentName) {
     }
 
     case 'service': {
-      // Services should use '<domain>.api.ts' pattern
-      if (!basename.includes('.api.')) {
-        const domain = nameFromFile.replace(/Service$/, '').replace(/API$/, '')
-        const suggested = `${toKebabCase(domain)}.api.ts`
+      // Services should start with lowercase letter
+      if (nameFromFile.charAt(0) !== nameFromFile.charAt(0).toLowerCase()) {
+        const suggested = nameFromFile.charAt(0).toLowerCase() + nameFromFile.slice(1)
         violations.push({
           type: 'filename',
-          message: `Service files should follow '<domain>.api.ts' pattern. Expected: ${suggested}`,
-          expected: suggested,
+          message: `Service files should start with lowercase letter. Expected: ${suggested}.ts`,
+          expected: `${suggested}.ts`,
         })
       }
       break

@@ -10,7 +10,7 @@ This rule enforces consistent naming conventions for Vue component filenames and
 - **Components** → PascalCase filenames → `UserTable.vue`, `LoginForm.vue`, `CgsIcon.vue`
 - **Stores** → Use Pinia convention: `useXxxStore.ts` (only for files directly in stores directory)
 - **Composables** → Always start with `useXxx.ts`
-- **Services** → `<domain>.api.ts` for API clients (e.g., `auth.api.ts`)
+- **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`
 
 **Note**: This rule is designed for modern Vue 3 applications where components typically don't have explicit `name` properties (especially with `<script setup>`). The rule primarily validates **filenames** rather than component names.
 
@@ -63,8 +63,8 @@ export function fetchData() {
 ```
 
 ```js
-// File: src/services/authService.ts
-// Service files should follow '<domain>.api.ts' pattern
+// File: src/services/AuthService.ts
+// Service files should start with lowercase letter
 export class AuthService {
   // service implementation
 }
@@ -118,8 +118,23 @@ export function useApi() {
 
 ```js
 // File: src/services/auth.api.ts
-// Proper service naming
+// Proper service naming (starts with lowercase)
 export class AuthAPI {
+  // service implementation
+}
+```
+
+```js
+// File: src/services/index.ts
+// Proper service naming (starts with lowercase)
+export * from './auth.api'
+export * from './frameMessages'
+```
+
+```js
+// File: src/services/frameMessages.ts
+// Proper service naming (starts with lowercase)
+export function sendMessage() {
   // service implementation
 }
 ```
@@ -200,8 +215,8 @@ The rule automatically detects file types based on directory structure and filen
 
 - **Directory patterns**: `/services/`, `/service/`
 - **File pattern**: `*.ts`, `*.js`
-- **Convention**: Must follow `<domain>.api.ts` pattern
-- **Examples**: `auth.api.ts`, `users.api.ts`, `notifications.api.ts`
+- **Convention**: Must start with lowercase letter
+- **Examples**: `auth.api.ts`, `index.ts`, `frameMessages.ts`, `notifications.api.ts`
 
 ## Configuration Examples
 
@@ -285,7 +300,9 @@ This enforces:
 ❌ src/views/Login.vue → Should be LoginView.vue
 
 # Service naming issues
-❌ src/services/authService.ts → Should be auth.api.ts
+❌ src/services/AuthService.ts → Should be authService.ts
+❌ src/services/FrameMessages.ts → Should be frameMessages.ts
+✅ src/services/index.ts → OK (starts with lowercase)
 ```
 
 ## When Not To Use

@@ -221,18 +221,26 @@ describe('vue-modular/enforce-naming-convention rule', () => {
         },
         {
           code: 'export default { }',
+          filename: '/src/services/index.ts',
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/services/frameMessages.ts',
+        },
+        {
+          code: 'export default { }',
           filename: '/src/modules/users/services/users.api.ts',
         },
       ],
       invalid: [
         {
           code: 'export default { }',
-          filename: '/src/services/authService.ts',
+          filename: '/src/services/AuthService.ts',
           errors: [{ messageId: 'namingConvention' }],
         },
         {
           code: 'export default { }',
-          filename: '/src/services/auth.ts',
+          filename: '/src/services/FrameMessages.ts',
           errors: [{ messageId: 'namingConvention' }],
         },
       ],
