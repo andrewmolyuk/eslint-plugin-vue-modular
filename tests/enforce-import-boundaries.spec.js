@@ -42,6 +42,9 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         // ✅ Stores can still import entities, shared
         { code: "import { User } from '@/entities/User'", filename: '/src/stores/user.js' },
         { code: "import constants from '@/shared/constants'", filename: '/src/stores/app.js' },
+        // ✅ Components can import stores (common pattern in Vue.js apps)
+        { code: "import { useTransactionsStore } from '@/stores/transactions'", filename: '/src/components/TransactionList.vue' },
+        { code: "import { useAuthStore } from '@/stores/auth'", filename: '/src/components/UserProfile.vue' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [
