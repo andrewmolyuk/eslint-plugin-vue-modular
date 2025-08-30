@@ -11,6 +11,7 @@ import enforceNamingConvention from './rules/enforce-naming-convention.js'
 import noBusinessLogicInUiKit from './rules/no-business-logic-in-ui-kit.js'
 import noOrphanedFiles from './rules/no-orphaned-files.js'
 import noDeepNesting from './rules/no-deep-nesting.js'
+import enforceSfcOrder from './rules/enforce-sfc-order.js'
 
 // Import utilities
 import { isTestFile } from './utils/import-boundaries.js'
@@ -29,6 +30,7 @@ const plugin = {
     'no-business-logic-in-ui-kit': noBusinessLogicInUiKit,
     'no-orphaned-files': noOrphanedFiles,
     'no-deep-nesting': noDeepNesting,
+    'enforce-sfc-order': enforceSfcOrder,
   },
   processors: {},
   configs: {},
@@ -54,6 +56,7 @@ plugin.configs['flat/recommended'] = [
       'vue-modular/enforce-feature-exports': 'error',
       'vue-modular/no-orphaned-files': 'error',
       'vue-modular/no-deep-nesting': 'warn',
+      'vue-modular/enforce-sfc-order': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -80,6 +83,7 @@ plugin.configs['flat/strict'] = [
       'vue-modular/enforce-naming-convention': 'error',
       'vue-modular/no-orphaned-files': 'error',
       'vue-modular/no-deep-nesting': 'error',
+      'vue-modular/enforce-sfc-order': 'error',
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -102,6 +106,7 @@ plugin.configs.recommended = {
     'vue-modular/enforce-feature-exports': 'error',
     'vue-modular/no-orphaned-files': 'error',
     'vue-modular/no-deep-nesting': 'warn',
+    'vue-modular/enforce-sfc-order': 'error',
   },
 }
 
@@ -119,6 +124,7 @@ plugin.configs.strict = {
     'vue-modular/enforce-naming-convention': 'error',
     'vue-modular/no-orphaned-files': 'error',
     'vue-modular/no-deep-nesting': 'error',
+    'vue-modular/enforce-sfc-order': 'error',
   },
 }
 
