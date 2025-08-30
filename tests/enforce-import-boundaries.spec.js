@@ -55,6 +55,9 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         { code: "import LoginModule from '@/modules/login'", filename: '/src/app/router/routes.ts' },
         { code: "import ErrorModule from '@/modules/error'", filename: '/src/app/router/routes.ts' },
         { code: "import DebugModule from '@/modules/debug'", filename: '/src/app/main.ts' },
+        // ✅ App layer can import from other app layer files
+        { code: "import routes from './routes'", filename: '/src/app/router/router.ts' },
+        { code: "import config from '@/app/config/database'", filename: '/src/app/main.ts' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [

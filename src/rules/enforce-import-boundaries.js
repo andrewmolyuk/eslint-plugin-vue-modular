@@ -20,7 +20,7 @@ const defaultOptions = {
 const LAYER_RULES = {
   // Each layer can import from layers listed in 'canImport'
   app: {
-    canImport: ['shared', 'components', 'composables', 'services', 'stores', 'entities'],
+    canImport: ['shared', 'components', 'composables', 'services', 'stores', 'entities', 'app'],
     // Special rules for modules/features - only public API
     restrictedImports: {
       module: 'publicApiOnly',
