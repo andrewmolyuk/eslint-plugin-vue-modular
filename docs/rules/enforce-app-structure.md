@@ -104,4 +104,4 @@ Disable this rule if you prefer no enforcement of app-level scaffolding or if yo
 
 ## Further Reading
 
-- [Vue 3 Project Modules Blueprint](../vue3-project-modules-blueprint.md)
+- [Vue Project Modules Blueprint](../vue-project-modules-blueprint.md)

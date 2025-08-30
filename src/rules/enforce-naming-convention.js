@@ -191,7 +191,7 @@ export default {
   meta: {
     type: 'suggestion',
     docs: {
-      description: 'Enforce consistent naming patterns for different file types based on Vue 3 modular architecture',
+      description: 'Enforce consistent naming patterns for different file types based on Vue modular architecture',
       category: 'Best Practices',
       recommended: false,
     },

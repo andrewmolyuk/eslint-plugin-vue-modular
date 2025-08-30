@@ -91,7 +91,7 @@ This document outlines the current status and planned development of rules for e
 
 ### Architecture References
 
-- [Vue 3 Project Modules Blueprint](./vue3-project-modules-blueprint.md)
+- [Vue Project Modules Blueprint](./vue-project-modules-blueprint.md)
 - [Feature-Driven Development](https://en.wikipedia.org/wiki/Feature-driven_development)
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 

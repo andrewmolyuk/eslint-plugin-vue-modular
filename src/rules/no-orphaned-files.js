@@ -5,7 +5,7 @@ import path from 'node:path'
 import { minimatch } from 'minimatch'
 import { isTestFile } from '../utils/import-boundaries.js'
 
-// Default configuration based on Vue 3 project modules blueprint
+// Default configuration based on Vue project modules blueprint
 const defaultOptions = {
   src: 'src',
 

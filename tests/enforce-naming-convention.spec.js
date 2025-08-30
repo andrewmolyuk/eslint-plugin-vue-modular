@@ -100,7 +100,7 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           filename: '/src/shared/ui/BaseButton.vue',
         },
         {
-          code: 'const component = {}; export default component;', // Modern Vue 3 component
+          code: 'const component = {}; export default component;', // Modern Vue component
           filename: '/src/components/UserCard.vue',
         },
       ],
@@ -131,7 +131,7 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           errors: [{ messageId: 'namingConvention' }], // Filename error
         },
         {
-          code: 'const component = {}; export default component;', // Modern Vue 3 with wrong filename
+          code: 'const component = {}; export default component;', // Modern Vue with wrong filename
           filename: '/src/components/user-card.vue',
           errors: [{ messageId: 'namingConvention' }], // Filename error
         },

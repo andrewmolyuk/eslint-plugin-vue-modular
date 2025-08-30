@@ -1,6 +1,6 @@
-# Vue 3 Project Modules Blueprint
+# Vue Project Modules Blueprint
 
-This document provides recommendations for structuring Vue 3 projects using **modules**.  
+This document provides recommendations for structuring Vue projects using **modules**.  
 A module represents a domain (e.g., `auth`, `users`, `notifications`) and may contain **views, components, services, composables, and stores**.
 
 ## Key Concepts

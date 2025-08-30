@@ -1,10 +1,10 @@
 # vue-modular/enforce-naming-convention
 
-Enforce consistent naming patterns for different file types based on Vue 3 modular architecture.
+Enforce consistent naming patterns for different file types based on Vue modular architecture.
 
 ## Rule Details
 
-This rule enforces consistent naming conventions for Vue component filenames and validates file naming patterns based on Vue 3 modular architecture guidelines. It ensures that different file types follow proper naming conventions:
+This rule enforces consistent naming conventions for Vue component filenames and validates file naming patterns based on Vue modular architecture guidelines. It ensures that different file types follow proper naming conventions:
 
 - **Views** → Always end with `View.vue` → `LoginView.vue`, `UserListView.vue`
 - **Components** → PascalCase filenames → `UserTable.vue`, `LoginForm.vue`, `CgsIcon.vue`
@@ -12,7 +12,7 @@ This rule enforces consistent naming conventions for Vue component filenames and
 - **Composables** → Always start with `useXxx.ts`
 - **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`
 
-**Note**: This rule is designed for modern Vue 3 applications where components typically don't have explicit `name` properties (especially with `<script setup>`). The rule primarily validates **filenames** rather than component names.
+**Note**: This rule is designed for modern Vue applications where components typically don't have explicit `name` properties (especially with `<script setup>`). The rule primarily validates **filenames** rather than component names.
 
 ### Examples
 
@@ -22,7 +22,7 @@ This rule enforces consistent naming conventions for Vue component filenames and
 <!-- File: src/components/user-card.vue -->
 <!-- Component filename should be PascalCase -->
 <script setup>
-// Modern Vue 3 component
+// Modern Vue component
 </script>
 ```
 
@@ -76,7 +76,7 @@ export class AuthService {
 <!-- File: src/components/UserCard.vue -->
 <!-- PascalCase component filename -->
 <script setup>
-// Modern Vue 3 component
+// Modern Vue component
 </script>
 ```
 
@@ -167,7 +167,7 @@ When enabled in legacy mode, requires that the filename matches the component na
 
 ### `enforceFileTypeConventions` (default: `true`)
 
-When enabled, enforces Vue 3 modular architecture naming conventions based on file type and location.
+When enabled, enforces Vue modular architecture naming conventions based on file type and location.
 
 - `true` - Enforce file type-specific naming conventions
 - `false` - Use legacy component name validation only
@@ -189,7 +189,7 @@ The rule automatically detects file types based on directory structure and filen
 - **File pattern**: `*.vue`
 - **Convention**: PascalCase filenames (always enforced regardless of explicit component names)
 - **Examples**: `UserTable.vue`, `LoginForm.vue`, `SearchInput.vue`, `CgsIcon.vue`
-- **Note**: Works with modern Vue 3 patterns including `<script setup>` and anonymous components
+- **Note**: Works with modern Vue patterns including `<script setup>` and anonymous components
 
 ### Stores
 
@@ -230,7 +230,7 @@ The rule automatically detects file types based on directory structure and filen
 
 This enforces:
 
-- Vue 3 modular architecture naming conventions
+- Vue modular architecture naming conventions
 - File type-specific validation based on directory structure
 - **PascalCase component filenames** for all Vue files (regardless of explicit component names)
 - Proper filename patterns for stores, composables, and services
@@ -253,7 +253,7 @@ This enforces:
 - PascalCase component names only (when explicit `name` property exists)
 - Filename must match component name
 - No file type-specific validation
-- **Note**: Less useful for modern Vue 3 apps with `<script setup>`
+- **Note**: Less useful for modern Vue apps with `<script setup>`
 
 ### File Type Conventions Only
 
@@ -276,10 +276,10 @@ This enforces:
 
 - **Consistent codebase**: Enforces uniform naming across the entire project
 - **Clear file purpose**: File naming immediately indicates the file's role
-- **Better organization**: Supports Vue 3 modular architecture patterns
+- **Better organization**: Supports Vue modular architecture patterns
 - **Team alignment**: Ensures all developers follow the same conventions
 - **Easier navigation**: Predictable naming makes files easier to find
-- **Modern Vue 3 compatible**: Works seamlessly with `<script setup>` and anonymous components
+- **Modern Vue compatible**: Works seamlessly with `<script setup>` and anonymous components
 - **Flexible store organization**: Allows type definitions and utilities in store subdirectories while enforcing naming only for actual store files
 - **Production-ready**: Catches naming issues before they reach production
 
@@ -320,5 +320,5 @@ This enforces:
 ## Further Reading
 
 - [Vue.js Component Naming Best Practices](https://vuejs.org/style-guide/)
-- [Vue 3 Modular Architecture Blueprint](../vue3-project-modules-blueprint.md)
+- [Vue Modular Architecture Blueprint](../vue-project-modules-blueprint.md)
 - [Pinia Store Naming Conventions](https://pinia.vuejs.org/core-concepts/)

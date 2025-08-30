@@ -2,7 +2,7 @@
   "name": "eslint-plugin-vue-modular",
   "type": "module",
   "version": "0.0.27",
-  "description": "ESLint plugin for checking and maintaining architecture boundaries in Vue 3 modular applications.",
+  "description": "ESLint plugin for checking and maintaining architecture boundaries in Vue modular applications.",
   "main": "src/index.js",
   "types": "index.d.ts",
   "repository": {
@@ -11,7 +11,7 @@
   },
   "keywords": [
     "eslint",
-    "vue3",
+    "vue",
     "modular",
     "boundaries",
     "architecture"

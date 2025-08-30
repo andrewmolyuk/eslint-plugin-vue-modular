@@ -8,14 +8,14 @@
 [![NPM downloads](https://img.shields.io/npm/dw/eslint-plugin-vue-modular.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-vue-modular)
 [![License](https://img.shields.io/npm/l/eslint-plugin-vue-modular.svg)](LICENSE)
 
-A custom ESLint plugin for enforcing modular patterns in Vue 3 projects.
+A custom ESLint plugin for enforcing modular patterns in Vue projects.
 
 > [!NOTE]
 > The project is in active development and may have breaking changes in minor versions, but we will strive to keep changes minimal and well-documented.
 
 ## Features
 
-- Custom linting rules for Vue 3 modular architecture
+- Custom linting rules for Vue modular architecture
 - Supports single-file components (SFC)
 - Enforces architectural boundaries between features
 - **Automatic test file detection** - test files can import from anywhere without restrictions
@@ -117,18 +117,20 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Included Rules
 
-- [`vue-modular/no-cross-feature-imports`](./docs/rules/no-cross-feature-imports.md): Prevents direct imports from deep inside feature folders
-- [`vue-modular/no-cross-module-imports`](./docs/rules/no-cross-module-imports.md): Prevents imports between different modules
-- [`vue-modular/no-business-logic-in-ui-kit`](./docs/rules/no-business-logic-in-ui-kit.md): Prevents business logic imports in UI kit components
-- [`vue-modular/enforce-import-boundaries`](./docs/rules/enforce-import-boundaries.md): Import-boundary enforcement (modules/features/app/shared)
-- [`vue-modular/enforce-src-structure`](./docs/rules/enforce-src-structure.md): Enforces allowed top-level folders/files in source directory
-- [`vue-modular/enforce-app-structure`](./docs/rules/enforce-app-structure.md): Enforces presence of application infrastructure under `src/app`
-- [`vue-modular/enforce-module-exports`](./docs/rules/enforce-module-exports.md): Ensures modules expose a public API via `index.ts`/`index.js`
-- [`vue-modular/enforce-feature-exports`](./docs/rules/enforce-feature-exports.md): Ensures global features expose a public API via `index.ts`/`index.js`
-- [`vue-modular/enforce-sfc-order`](./docs/rules/enforce-sfc-order.md): Enforces consistent order of blocks in Vue Single File Components
-- [`vue-modular/no-orphaned-files`](./docs/rules/no-orphaned-files.md): Flag files that don't belong to any clear category in the modular architecture
-- [`vue-modular/no-deep-nesting`](./docs/rules/no-deep-nesting.md): Prevent excessive folder nesting in modules and features
-- [`vue-modular/enforce-naming-convention`](./docs/rules/enforce-naming-convention.md): Enforce consistent naming patterns for Vue components
+| Rule                                                                       | Description                                                                    |
+| -------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| [no-cross-feature-imports](./docs/rules/no-cross-feature-imports.md)       | Prevents direct imports from deep inside feature folders                       |
+| [no-cross-module-imports](./docs/rules/no-cross-module-imports.md)         | Prevents imports between different modules                                     |
+| [no-business-logic-in-ui-kit](./docs/rules/no-business-logic-in-ui-kit.md) | Prevents business logic imports in UI kit components                           |
+| [enforce-import-boundaries](./docs/rules/enforce-import-boundaries.md)     | Import-boundary enforcement (modules/features/app/shared)                      |
+| [enforce-src-structure](./docs/rules/enforce-src-structure.md)             | Enforces allowed top-level folders/files in source directory                   |
+| [enforce-app-structure](./docs/rules/enforce-app-structure.md)             | Enforces presence of application infrastructure under `src/app`                |
+| [enforce-module-exports](./docs/rules/enforce-module-exports.md)           | Ensures modules expose a public API via `index.ts`/`index.js`                  |
+| [enforce-feature-exports](./docs/rules/enforce-feature-exports.md)         | Ensures global features expose a public API via `index.ts`/`index.js`          |
+| [enforce-sfc-order](./docs/rules/enforce-sfc-order.md)                     | Enforces consistent order of blocks in Vue Single File Components              |
+| [no-orphaned-files](./docs/rules/no-orphaned-files.md)                     | Flag files that don't belong to any clear category in the modular architecture |
+| [no-deep-nesting](./docs/rules/no-deep-nesting.md)                         | Prevent excessive folder nesting in modules and features                       |
+| [enforce-naming-convention](./docs/rules/enforce-naming-convention.md)     | Enforce consistent naming patterns for Vue components                          |
 
 ### Modular Architecture in Vue
 
@@ -141,7 +143,7 @@ With modular architecture, you can:
 - Enable teams to work independently on different modules.
 - Simplify onboarding by making the project structure more intuitive.
 
-See the [Vue 3 Project Modules Blueprint](./docs/vue3-project-modules-blueprint.md) for more details and rationale behind modular structure.
+See the [Vue Project Modules Blueprint](./docs/vue-project-modules-blueprint.md) for more details and rationale behind modular structure.
 
 The `eslint-plugin-vue-modular` plugin helps enforce these boundaries, ensuring that your Vue project remains modular as it grows.
 
