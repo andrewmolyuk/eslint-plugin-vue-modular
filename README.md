@@ -10,6 +10,9 @@
 
 A custom ESLint plugin for enforcing modular patterns in Vue 3 projects.
 
+> [!NOTE]
+> The project is in active development and may have breaking changes in minor versions, but we will strive to keep changes minimal and well-documented.
+
 ## Features
 
 - Custom linting rules for Vue 3 modular architecture
