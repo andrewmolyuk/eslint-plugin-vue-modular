@@ -58,6 +58,10 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         // ✅ App layer can import from other app layer files
         { code: "import routes from './routes'", filename: '/src/app/router/router.ts' },
         { code: "import config from '@/app/config/database'", filename: '/src/app/main.ts' },
+        { code: "import router from './router'", filename: '/src/app/index.ts' },
+        { code: "import AppVue from './App.vue'", filename: '/src/app/index.ts' },
+        { code: "import defaultLayout from './ui/default-layout.vue'", filename: '/src/app/layouts/index.ts' },
+        { code: "import appHeader from './app-header.vue'", filename: '/src/app/layouts/ui/default-layout.vue' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [
