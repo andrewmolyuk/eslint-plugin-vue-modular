@@ -37,6 +37,7 @@ function checkAndReportStyle(context, node, declared, style) {
 function getFileType(filename) {
   const path = filename.toLowerCase()
   const basename = filename.split('/').pop()
+  const pathParts = filename.split('/')
 
   // Check for specific patterns based on directory structure
   if (path.includes('/views/') && basename.endsWith('.vue')) {
@@ -45,9 +46,16 @@ function getFileType(filename) {
   if ((path.includes('/components/') || path.includes('/component/')) && basename.endsWith('.vue')) {
     return 'component'
   }
-  if ((path.includes('/stores/') || path.includes('/store/')) && (basename.endsWith('.ts') || basename.endsWith('.js'))) {
-    return 'store'
+
+  // Only files DIRECTLY in stores directory, not in subdirectories
+  if (basename.endsWith('.ts') || basename.endsWith('.js')) {
+    const storesDirIndex = pathParts.findIndex((part) => part === 'stores' || part === 'store')
+    if (storesDirIndex !== -1 && storesDirIndex === pathParts.length - 2) {
+      // File is directly in stores directory (stores/filename.ts)
+      return 'store'
+    }
   }
+
   if ((path.includes('/composables/') || path.includes('/composable/')) && (basename.endsWith('.ts') || basename.endsWith('.js'))) {
     return 'composable'
   }
@@ -103,7 +111,17 @@ function validateNamingConvention(filename, componentName) {
     }
 
     case 'component': {
-      // Components should be PascalCase and descriptive
+      // Component filename should be PascalCase
+      const expectedFilename = toPascalCase(nameFromFile)
+      if (nameFromFile !== expectedFilename) {
+        violations.push({
+          type: 'filename',
+          message: `Component filename should be PascalCase. Expected: ${expectedFilename}.vue`,
+          expected: `${expectedFilename}.vue`,
+        })
+      }
+
+      // Validate component name if provided
       if (componentName) {
         const expectedPascal = toPascalCase(componentName)
         if (componentName !== expectedPascal) {
@@ -113,8 +131,8 @@ function validateNamingConvention(filename, componentName) {
             expected: expectedPascal,
           })
         }
-        // Filename should match component name
-        if (nameFromFile !== componentName) {
+        // Check filename matches component name only if both filename and component name are already PascalCase
+        if (nameFromFile === expectedFilename && componentName === expectedPascal && nameFromFile !== componentName) {
           violations.push({
             type: 'filename',
             message: `Filename should match component name. Expected: ${componentName}.vue`,
@@ -225,16 +243,21 @@ export default {
 
         // If enforceFileTypeConventions is enabled, use the new validation logic for Vue files only
         if (enforceFileTypeConventions && (fileType === 'component' || fileType === 'view')) {
-          const violations = validateNamingConvention(filename, declared)
+          // For Vue files, validate component name style if it exists
+          if (declared) {
+            const violations = validateNamingConvention(filename, declared)
 
-          violations.forEach((violation) => {
-            context.report({
-              node: nameProp ? nameProp.value : node,
-              messageId: 'namingConvention',
-              data: { message: violation.message },
+            // Only report component name violations, not filename violations (handled in Program)
+            violations.forEach((violation) => {
+              if (violation.type === 'componentName') {
+                context.report({
+                  node: nameProp.value,
+                  messageId: 'namingConvention',
+                  data: { message: violation.message },
+                })
+              }
             })
-          })
-
+          }
           return
         }
 
@@ -263,15 +286,20 @@ export default {
         }
       },
 
-      // Check files without explicit component names (only for non-Vue files)
       Program(node) {
         if (!enforceFileTypeConventions) return
 
         const filename = context.getFilename()
         const fileType = getFileType(filename)
 
-        // Only validate file naming for non-Vue files (stores, composables, services)
-        if (fileType === 'store' || fileType === 'composable' || fileType === 'service') {
+        // Validate file naming for all supported file types
+        if (
+          fileType === 'store' ||
+          fileType === 'composable' ||
+          fileType === 'service' ||
+          fileType === 'component' ||
+          fileType === 'view'
+        ) {
           const violations = validateNamingConvention(filename, null)
 
           violations.forEach((violation) => {

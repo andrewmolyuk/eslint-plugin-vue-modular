@@ -4,94 +4,122 @@ Enforce consistent naming patterns for different file types based on Vue 3 modul
 
 ## Rule Details
 
-This rule enforces consistent naming conventions for Vue component `name` properties and validates file naming patterns based on Vue 3 modular architecture guidelines. It ensures that different file types follow proper naming conventions:
+This rule enforces consistent naming conventions for Vue component filenames and validates file naming patterns based on Vue 3 modular architecture guidelines. It ensures that different file types follow proper naming conventions:
 
 - **Views** → Always end with `View.vue` → `LoginView.vue`, `UserListView.vue`
-- **Components** → PascalCase, descriptive → `UserTable.vue`, `LoginForm.vue`
-- **Stores** → Use Pinia convention: `useXxxStore.ts`
+- **Components** → PascalCase filenames → `UserTable.vue`, `LoginForm.vue`, `CgsIcon.vue`
+- **Stores** → Use Pinia convention: `useXxxStore.ts` (only for files directly in stores directory)
 - **Composables** → Always start with `useXxx.ts`
 - **Services** → `<domain>.api.ts` for API clients (e.g., `auth.api.ts`)
+
+**Note**: This rule is designed for modern Vue 3 applications where components typically don't have explicit `name` properties (especially with `<script setup>`). The rule primarily validates **filenames** rather than component names.
 
 ### Examples
 
 #### ❌ Incorrect
 
-```js
-// Component name should be PascalCase
-export default {
-  name: 'user-card',
-}
+```vue
+<!-- File: src/components/user-card.vue -->
+<!-- Component filename should be PascalCase -->
+<script setup>
+// Modern Vue 3 component
+</script>
 ```
 
-```js
-// View files must end with 'View.vue'
-// File: src/views/Login.vue
+```vue
+<!-- File: src/shared/ui/cgs-icon.vue -->
+<!-- UI component filename should be PascalCase -->
+<script>
+export default {
+  // Anonymous component
+}
+</script>
+```
+
+```vue
+<!-- File: src/views/Login.vue -->
+<!-- View files must end with 'View.vue' -->
+<script>
 export default {
   name: 'Login',
 }
+</script>
 ```
 
 ```js
-// Store files must follow 'useXxxStore.ts' pattern
 // File: src/stores/authStore.ts
-export default {
+// Store files must follow 'useXxxStore.ts' pattern
+export const authStore = defineStore('auth', {
   // store implementation
-}
+})
 ```
 
 ```js
-// Composable files must start with 'use'
 // File: src/composables/api.ts
-export default {
+// Composable files must start with 'use'
+export function fetchData() {
   // composable implementation
 }
 ```
 
 ```js
-// Service files should follow '<domain>.api.ts' pattern
 // File: src/services/authService.ts
-export default {
+// Service files should follow '<domain>.api.ts' pattern
+export class AuthService {
   // service implementation
 }
 ```
 
 #### ✅ Correct
 
-```js
-// PascalCase component name
-export default {
-  name: 'UserCard',
-}
+```vue
+<!-- File: src/components/UserCard.vue -->
+<!-- PascalCase component filename -->
+<script setup>
+// Modern Vue 3 component
+</script>
 ```
 
-```js
-// View files ending with 'View.vue'
-// File: src/views/LoginView.vue
+```vue
+<!-- File: src/shared/ui/CgsIcon.vue -->
+<!-- PascalCase UI component filename -->
+<script>
+export default {
+  // Anonymous component with proper filename
+}
+</script>
+```
+
+```vue
+<!-- File: src/views/LoginView.vue -->
+<!-- View files ending with 'View.vue' -->
+<script>
 export default {
   name: 'LoginView',
 }
+</script>
 ```
 
 ```js
-// Proper store naming
 // File: src/stores/useAuthStore.ts
-export default {
+// Proper store naming (directly in stores directory)
+export const useAuthStore = defineStore('auth', {
   // store implementation
-}
+})
 ```
 
 ```js
-// Proper composable naming
 // File: src/composables/useApi.ts
-export default {
+// Proper composable naming
+export function useApi() {
   // composable implementation
 }
 ```
 
 ```js
-// Proper service naming
 // File: src/services/auth.api.ts
-export default {
+// Proper service naming
+export class AuthAPI {
   // service implementation
 }
 ```
@@ -142,17 +170,24 @@ The rule automatically detects file types based on directory structure and filen
 
 ### Components
 
-- **Directory patterns**: `/components/`, `/component/`
+- **Directory patterns**: `/components/`, `/component/`, `/shared/ui/`
 - **File pattern**: `*.vue`
-- **Convention**: PascalCase, descriptive names
-- **Examples**: `UserTable.vue`, `LoginForm.vue`, `SearchInput.vue`
+- **Convention**: PascalCase filenames (always enforced regardless of explicit component names)
+- **Examples**: `UserTable.vue`, `LoginForm.vue`, `SearchInput.vue`, `CgsIcon.vue`
+- **Note**: Works with modern Vue 3 patterns including `<script setup>` and anonymous components
 
 ### Stores
 
-- **Directory patterns**: `/stores/`, `/store/`
+- **Directory patterns**: `/stores/`, `/store/` (files must be **directly** in the stores directory)
 - **File pattern**: `*.ts`, `*.js`
 - **Convention**: Must follow `useXxxStore.ts` pattern
-- **Examples**: `useAuthStore.ts`, `useUserStore.ts`, `useSettingsStore.ts`
+- **Examples**:
+  - ✅ `src/stores/useAuthStore.ts` (direct file - validated)
+  - ✅ `src/stores/useUserStore.ts` (direct file - validated)
+  - ❌ `src/stores/types/config.ts` (subdirectory - **not** treated as store)
+  - ❌ `src/stores/config/constants.ts` (subdirectory - **not** treated as store)
+
+**Important**: Only files directly in the stores directory are treated as stores. Files in subdirectories like `stores/types/`, `stores/config/`, etc. are ignored by this rule, allowing for type definitions, configuration files, and other utilities without naming restrictions.
 
 ### Composables
 
@@ -181,11 +216,12 @@ The rule automatically detects file types based on directory structure and filen
 This enforces:
 
 - Vue 3 modular architecture naming conventions
-- File type-specific validation
-- PascalCase component names for Vue files
-- Proper filename patterns for all file types
+- File type-specific validation based on directory structure
+- **PascalCase component filenames** for all Vue files (regardless of explicit component names)
+- Proper filename patterns for stores, composables, and services
+- **Store validation only for direct files** in stores directory (subdirectories ignored)
 
-### Legacy Mode
+### Legacy Mode (Component Names Only)
 
 ```js
 {
@@ -199,20 +235,10 @@ This enforces:
 
 This enforces:
 
-- PascalCase component names only
+- PascalCase component names only (when explicit `name` property exists)
 - Filename must match component name
 - No file type-specific validation
-
-### Custom Style (Legacy Mode)
-
-```js
-{
-  "vue-modular/enforce-naming-convention": ["error", {
-    "enforceFileTypeConventions": false,
-    "style": "kebab-case"
-  }]
-}
-```
+- **Note**: Less useful for modern Vue 3 apps with `<script setup>`
 
 ### File Type Conventions Only
 
@@ -225,6 +251,12 @@ This enforces:
 }
 ```
 
+This enforces:
+
+- File type-specific naming conventions
+- Vue component filename validation
+- No legacy component name matching
+
 ## Benefits
 
 - **Consistent codebase**: Enforces uniform naming across the entire project
@@ -232,6 +264,29 @@ This enforces:
 - **Better organization**: Supports Vue 3 modular architecture patterns
 - **Team alignment**: Ensures all developers follow the same conventions
 - **Easier navigation**: Predictable naming makes files easier to find
+- **Modern Vue 3 compatible**: Works seamlessly with `<script setup>` and anonymous components
+- **Flexible store organization**: Allows type definitions and utilities in store subdirectories while enforcing naming only for actual store files
+- **Production-ready**: Catches naming issues before they reach production
+
+## Real-World Examples
+
+### Typical Issues Caught
+
+```bash
+# Component filename issues
+❌ src/shared/ui/cgs-icon.vue → Should be CgsIcon.vue
+❌ src/components/user-card.vue → Should be UserCard.vue
+
+# Store naming issues (only direct files)
+❌ src/stores/authStore.ts → Should be useAuthStore.ts
+✅ src/stores/types/config.ts → Ignored (subdirectory)
+
+# View naming issues
+❌ src/views/Login.vue → Should be LoginView.vue
+
+# Service naming issues
+❌ src/services/authService.ts → Should be auth.api.ts
+```
 
 ## When Not To Use
 

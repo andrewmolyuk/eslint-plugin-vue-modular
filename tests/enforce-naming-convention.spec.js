@@ -91,17 +91,49 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           code: "export default { name: 'LoginForm' }",
           filename: '/src/modules/auth/components/LoginForm.vue',
         },
+        {
+          code: "export default { name: 'CgsIcon' }",
+          filename: '/src/shared/ui/CgsIcon.vue',
+        },
+        {
+          code: 'export default { }', // Anonymous component with PascalCase filename
+          filename: '/src/shared/ui/BaseButton.vue',
+        },
+        {
+          code: 'const component = {}; export default component;', // Modern Vue 3 component
+          filename: '/src/components/UserCard.vue',
+        },
       ],
       invalid: [
         {
-          code: "export default { name: 'userTable' }",
+          code: "export default { name: 'userTable' }", // Component name not PascalCase
           filename: '/src/components/UserTable.vue',
-          errors: [{ messageId: 'namingConvention' }, { messageId: 'namingConvention' }],
+          errors: [{ messageId: 'namingConvention' }], // Only component name error
         },
         {
-          code: "export default { name: 'user-table' }",
+          code: "export default { name: 'user-table' }", // Component name not PascalCase
           filename: '/src/components/UserTable.vue',
-          errors: [{ messageId: 'namingConvention' }, { messageId: 'namingConvention' }],
+          errors: [{ messageId: 'namingConvention' }], // Only component name error
+        },
+        {
+          code: "export default { name: 'CgsIcon' }",
+          filename: '/src/shared/ui/cgs-icon.vue', // kebab-case filename
+          errors: [{ messageId: 'namingConvention' }], // Only filename error
+        },
+        {
+          code: 'export default { }', // Anonymous component with kebab-case filename
+          filename: '/src/shared/ui/cgs-icon.vue',
+          errors: [{ messageId: 'namingConvention' }], // Filename error
+        },
+        {
+          code: 'export default { }', // Anonymous component with kebab-case filename
+          filename: '/src/components/user-card.vue',
+          errors: [{ messageId: 'namingConvention' }], // Filename error
+        },
+        {
+          code: 'const component = {}; export default component;', // Modern Vue 3 with wrong filename
+          filename: '/src/components/user-card.vue',
+          errors: [{ messageId: 'namingConvention' }], // Filename error
         },
       ],
     })
@@ -118,6 +150,19 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           code: 'export default { }',
           filename: '/src/modules/users/stores/useUserStore.ts',
         },
+        // Files in subdirectories of stores should not be treated as stores
+        {
+          code: 'export const config = { name: "test" };',
+          filename: '/src/stores/types/config.ts',
+        },
+        {
+          code: 'export const User = { id: "string" };',
+          filename: '/src/stores/types/User.ts',
+        },
+        {
+          code: 'export const constants = { API_URL: "test" };',
+          filename: '/src/stores/config/constants.ts',
+        },
       ],
       invalid: [
         {
@@ -128,6 +173,12 @@ describe('vue-modular/enforce-naming-convention rule', () => {
         {
           code: 'export default { }',
           filename: '/src/stores/useAuth.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+        // Direct store files should follow the pattern
+        {
+          code: 'export default { }',
+          filename: '/src/stores/auth.ts',
           errors: [{ messageId: 'namingConvention' }],
         },
       ],
