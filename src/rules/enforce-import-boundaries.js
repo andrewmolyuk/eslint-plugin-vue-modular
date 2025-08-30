@@ -43,7 +43,7 @@ const LAYER_RULES = {
     },
   },
   components: {
-    canImport: ['shared', 'entities', 'stores'],
+    canImport: ['shared', 'entities', 'stores', 'components', 'composables'],
     restrictedImports: {
       app: 'forbidden',
       module: 'forbidden',
@@ -51,12 +51,11 @@ const LAYER_RULES = {
     },
   },
   composables: {
-    canImport: ['shared', 'entities', 'services', 'stores'],
+    canImport: ['shared', 'entities', 'services', 'stores', 'components', 'composables'],
     restrictedImports: {
       app: 'forbidden',
       module: 'forbidden',
       feature: 'forbidden',
-      components: 'forbidden',
     },
   },
   services: {

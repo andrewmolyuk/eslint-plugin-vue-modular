@@ -45,6 +45,9 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         // ✅ Components can import stores (common pattern in Vue.js apps)
         { code: "import { useTransactionsStore } from '@/stores/transactions'", filename: '/src/components/TransactionList.vue' },
         { code: "import { useAuthStore } from '@/stores/auth'", filename: '/src/components/UserProfile.vue' },
+        // ✅ Components can import other components
+        { code: "import CommonDialog from '@/components/CommonDialog.vue'", filename: '/src/components/UserForm.vue' },
+        { code: "import Button from '@/components/ui/Button.vue'", filename: '/src/components/FormActions.vue' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [
