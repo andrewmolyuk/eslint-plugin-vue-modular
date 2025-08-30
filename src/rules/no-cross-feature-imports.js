@@ -1,4 +1,10 @@
-import { isDeepFeatureImport, getModulePublicImport, isWithinSameFeature, isTestFile } from '../utils/import-boundaries.js'
+import {
+  isDeepFeatureImport,
+  getModulePublicImport,
+  isWithinSameFeature,
+  isWithinSameModule,
+  isTestFile,
+} from '../utils/import-boundaries.js'
 
 export default {
   meta: {
@@ -57,7 +63,10 @@ export default {
         const modulePublicName = getModulePublicImport(source, opts)
         if (modulePublicName) {
           const isAppLayerFile = filename.includes(`/${src}/app/`)
-          if (!isAppLayerFile) {
+          const isWithinModule = isWithinSameModule(filename, modulePublicName, opts)
+
+          // Allow imports if file is in app layer OR within the same module
+          if (!isAppLayerFile && !isWithinModule) {
             context.report({
               node: node.source,
               messageId: 'crossFeatureImport',

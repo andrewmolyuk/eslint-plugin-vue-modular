@@ -70,6 +70,16 @@ describe('vue-modular/no-cross-feature-imports rule', () => {
           code: "import AuthModule from '@/modules/auth';",
           filename: '/project/src/app/router/index.js',
         },
+        // ✅ Files within a module can import their own module's public API
+        {
+          code: "import ErrorModule from '@/modules/error';",
+          filename: '/project/src/modules/error/ui/error-page.vue',
+        },
+        // ✅ Files within a module can import their own module's public API (different structure)
+        {
+          code: "import AuthModule from '@/modules/auth';",
+          filename: '/project/src/modules/auth/components/LoginForm.vue',
+        },
       ],
       invalid: [
         // ❌ App-layer or components cannot import internal module feature files directly
