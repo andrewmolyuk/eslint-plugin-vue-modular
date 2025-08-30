@@ -70,6 +70,10 @@ describe('no-orphaned-files rule', () => {
             code: 'export const store = {}',
             filename: '/project/src/stores/userStore.js',
           },
+          {
+            code: 'export const FrameMessage = {}',
+            filename: '/project/src/stores/types/FrameMessage.ts', // TypeScript files allowed in subdirectories
+          },
 
           // Entities
           {
@@ -334,12 +338,12 @@ describe('no-orphaned-files rule', () => {
           },
           {
             code: 'export const store = {}',
-            filename: '/project/src/stores/auth/authStore.ts',
+            filename: '/project/src/stores/auth/authStore.js',
             errors: [
               {
                 messageId: 'orphanedFile',
                 data: {
-                  message: "Directory 'stores' should have a flat structure, but found subdirectory 'auth'",
+                  message: "Subdirectory 'auth' is not allowed in 'stores'. Allowed: *.ts",
                 },
               },
             ],

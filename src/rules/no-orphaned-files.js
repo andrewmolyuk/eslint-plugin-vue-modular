@@ -24,7 +24,7 @@ const defaultOptions = {
     services: [], // Flat structure expected
 
     // State layer
-    stores: [], // Flat structure expected
+    stores: ['*.ts'], // Allow TypeScript files in subdirectories (for types, etc.)
 
     // Data layer
     entities: ['*'], // Can have any subdirectory structure
