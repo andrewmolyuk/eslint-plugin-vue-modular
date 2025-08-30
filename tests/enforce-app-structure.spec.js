@@ -25,4 +25,28 @@ describe('enforce-app-structure rule', () => {
 
     expect(context.report).toHaveBeenCalled()
   })
+
+  it('allows app structure without stores (stores is optional)', () => {
+    const mockFileSystem = createMockFileSystem({
+      '**/src': ['app'],
+      '**/src/app': ['router', 'layouts', 'App.vue'], // No stores directory
+    })
+    vi.spyOn(fs, 'readdirSync').mockImplementation(mockFileSystem)
+
+    const context = runRule(appStructureRule)
+
+    expect(context.report).not.toHaveBeenCalled()
+  })
+
+  it('allows app structure with stores', () => {
+    const mockFileSystem = createMockFileSystem({
+      '**/src': ['app'],
+      '**/src/app': ['router', 'stores', 'layouts', 'App.vue'], // With stores directory
+    })
+    vi.spyOn(fs, 'readdirSync').mockImplementation(mockFileSystem)
+
+    const context = runRule(appStructureRule)
+
+    expect(context.report).not.toHaveBeenCalled()
+  })
 })

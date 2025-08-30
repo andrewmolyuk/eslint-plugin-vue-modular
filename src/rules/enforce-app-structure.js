@@ -7,7 +7,7 @@ import { createCheckedDirsGetter, parseRuleOptions, createDirectoryStructureRule
 
 const defaultOptions = {
   src: 'src',
-  required: ['router', 'stores', 'layouts', 'App.vue'],
+  required: ['router', 'layouts', 'App.vue'],
 }
 
 // Create the getCheckedDirs function for this rule
