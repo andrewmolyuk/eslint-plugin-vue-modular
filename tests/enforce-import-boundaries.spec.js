@@ -51,6 +51,10 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         // ✅ Components can import services (common pattern in Vue.js apps)
         { code: "import authService from '@/services/auth'", filename: '/src/components/SidebarUser.vue' },
         { code: "import apiClient from '@/services/api'", filename: '/src/components/DataTable.vue' },
+        // ✅ App layer can import module public APIs
+        { code: "import LoginModule from '@/modules/login'", filename: '/src/app/router/routes.ts' },
+        { code: "import ErrorModule from '@/modules/error'", filename: '/src/app/router/routes.ts' },
+        { code: "import DebugModule from '@/modules/debug'", filename: '/src/app/main.ts' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [

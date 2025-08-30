@@ -269,10 +269,11 @@ function validateImport(fromLayer, toLayer, targetPath, importPath, options) {
     }
   }
 
-  // Check if import is explicitly allowed
+  // Check if import is explicitly allowed or has a specific restriction
   const isExplicitlyAllowed = rules.canImport.includes(toLayer.layer) || rules.canImport.includes('*')
+  const hasSpecificRestriction = specificRestriction !== undefined
 
-  if (!isExplicitlyAllowed) {
+  if (!isExplicitlyAllowed && !hasSpecificRestriction) {
     return {
       messageId: 'forbiddenLayerImport',
       data: { from: fromLayer.layer, to: toLayer.layer, importPath },
