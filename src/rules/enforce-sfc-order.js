@@ -1,17 +1,17 @@
 /**
  * @fileoverview Enforce correct order of SFC blocks in Vue.js files
- * Template must be first, then script (if exists), then style (if exists)
+ * At least one of script or template is required, style is optional and must be last
  */
 
 const defaultOptions = {
-  order: ['template', 'script', 'style'],
+  order: ['script', 'template', 'style'], // script-first order as per Vue style guide
 }
 
 export default {
   meta: {
     type: 'layout',
     docs: {
-      description: 'Enforce correct order of SFC blocks (template, script, style)',
+      description: 'Enforce correct order of SFC blocks according to Vue.js style guide',
       category: 'Stylistic Issues',
       recommended: true,
     },
@@ -27,16 +27,16 @@ export default {
               type: 'string',
               enum: ['template', 'script', 'style'],
             },
-            description: 'Expected order of SFC blocks',
+            description: 'Expected order of SFC blocks (style must be last)',
           },
         },
         additionalProperties: false,
       },
     ],
     messages: {
-      missingTemplate: 'Vue SFC must have a <template> block and it must be first',
+      missingRequiredBlock: 'Vue SFC must have at least one <script> or <template> block',
       wrongOrder: '{{currentBlock}} block should come {{expected}} {{otherBlock}} block',
-      templateNotFirst: '<template> block must be the first block in Vue SFC',
+      styleNotLast: '<style> block must be the last block in Vue SFC',
     },
   },
 
@@ -90,57 +90,62 @@ export default {
         // Sort blocks by their position in the file
         blocks.sort((a, b) => a.start - b.start)
 
-        // Check if template exists and is first
-        if (blocks.length === 0 || blocks[0].type !== 'template') {
+        // Check if at least one of script or template exists
+        const hasScript = blocks.some((block) => block.type === 'script')
+        const hasTemplate = blocks.some((block) => block.type === 'template')
+
+        if (!hasScript && !hasTemplate) {
           context.report({
             loc: { line: 1, column: 0 },
-            messageId: 'missingTemplate',
+            messageId: 'missingRequiredBlock',
           })
           return
         }
 
-        // Check order according to the expected sequence
-        const expectedOrder = options.order
-        let expectedIndex = 0
+        // Check that style blocks are last (if any exist)
+        const styleBlocks = blocks.filter((block) => block.type === 'style')
+        const nonStyleBlocks = blocks.filter((block) => block.type !== 'style')
 
-        for (const block of blocks) {
-          // Find the position of current block type in expected order
+        if (styleBlocks.length > 0 && nonStyleBlocks.length > 0) {
+          const lastNonStyleBlock = nonStyleBlocks[nonStyleBlocks.length - 1]
+          const firstStyleBlock = styleBlocks[0]
+
+          if (firstStyleBlock.start < lastNonStyleBlock.start) {
+            context.report({
+              loc: { line: firstStyleBlock.startLine, column: 0 },
+              messageId: 'styleNotLast',
+            })
+          }
+        }
+
+        // Check order according to the expected sequence (excluding style which must be last)
+        const expectedOrder = options.order.filter((type) => type !== 'style')
+        const nonStyleBlocksSorted = nonStyleBlocks.slice()
+
+        // Check if the blocks follow the expected order
+        let previousExpectedIndex = -1
+        for (const block of nonStyleBlocksSorted) {
           const currentExpectedIndex = expectedOrder.indexOf(block.type)
 
           if (currentExpectedIndex === -1) {
             continue // Skip unknown block types
           }
 
-          // Check if this block type should come after the last valid block
-          if (currentExpectedIndex < expectedIndex) {
-            // Find what block should come before this one
-            let expectedPreviousBlock = null
-            for (let i = currentExpectedIndex - 1; i >= 0; i--) {
-              if (blocks.some((b) => b.type === expectedOrder[i])) {
-                expectedPreviousBlock = expectedOrder[i]
-                break
-              }
-            }
-
-            if (expectedPreviousBlock) {
-              context.report({
-                loc: { line: block.startLine, column: 0 },
-                messageId: 'wrongOrder',
-                data: {
-                  currentBlock: block.type,
-                  expected: 'after',
-                  otherBlock: expectedPreviousBlock,
-                },
-              })
-            } else if (block.type !== 'template') {
-              context.report({
-                loc: { line: block.startLine, column: 0 },
-                messageId: 'templateNotFirst',
-              })
-            }
+          if (currentExpectedIndex < previousExpectedIndex) {
+            // This block appears before a block that should come later
+            const expectedPreviousType = expectedOrder[previousExpectedIndex]
+            context.report({
+              loc: { line: block.startLine, column: 0 },
+              messageId: 'wrongOrder',
+              data: {
+                currentBlock: block.type,
+                expected: 'after',
+                otherBlock: expectedPreviousType,
+              },
+            })
           }
 
-          expectedIndex = Math.max(expectedIndex, currentExpectedIndex + 1)
+          previousExpectedIndex = Math.max(previousExpectedIndex, currentExpectedIndex)
         }
       },
     }
