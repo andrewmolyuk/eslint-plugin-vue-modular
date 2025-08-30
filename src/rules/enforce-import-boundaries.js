@@ -43,7 +43,7 @@ const LAYER_RULES = {
     },
   },
   components: {
-    canImport: ['shared', 'entities', 'stores', 'components', 'composables'],
+    canImport: ['shared', 'entities', 'services', 'stores', 'components', 'composables'],
     restrictedImports: {
       app: 'forbidden',
       module: 'forbidden',

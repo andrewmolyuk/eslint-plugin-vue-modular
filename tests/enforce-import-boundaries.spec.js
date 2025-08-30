@@ -48,6 +48,9 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
         // ✅ Components can import other components
         { code: "import CommonDialog from '@/components/CommonDialog.vue'", filename: '/src/components/UserForm.vue' },
         { code: "import Button from '@/components/ui/Button.vue'", filename: '/src/components/FormActions.vue' },
+        // ✅ Components can import services (common pattern in Vue.js apps)
+        { code: "import authService from '@/services/auth'", filename: '/src/components/SidebarUser.vue' },
+        { code: "import apiClient from '@/services/api'", filename: '/src/components/DataTable.vue' },
         // (Type-only import tests require a TS parser; skipped here)
       ],
       invalid: [
