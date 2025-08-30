@@ -247,16 +247,19 @@ function validateImport(fromLayer, toLayer, targetPath, importPath, options) {
   const rules = LAYER_RULES[fromLayer.layer]
   if (!rules) return null // Unknown layer, allow
 
-  const restriction = rules.restrictedImports[toLayer.layer] || rules.restrictedImports['*']
+  // Check for specific restrictions first
+  const specificRestriction = rules.restrictedImports[toLayer.layer]
+  const wildcardRestriction = rules.restrictedImports['*']
 
-  if (restriction === 'forbidden') {
+  // Apply specific restriction if it exists
+  if (specificRestriction === 'forbidden') {
     return {
       messageId: 'forbiddenLayerImport',
       data: { from: fromLayer.layer, to: toLayer.layer, importPath },
     }
   }
 
-  if (restriction === 'publicApiOnly' && !isPublicApiImport(targetPath, options)) {
+  if (specificRestriction === 'publicApiOnly' && !isPublicApiImport(targetPath, options)) {
     const messageMap = {
       module: fromLayer.layer === 'app' ? 'appDeepImport' : 'deepModuleImport',
       feature: fromLayer.layer === 'app' ? 'appDeepImport' : 'deepFeatureImport',
@@ -267,8 +270,18 @@ function validateImport(fromLayer, toLayer, targetPath, importPath, options) {
     }
   }
 
-  // Check if import is generally allowed
-  if (!rules.canImport.includes(toLayer.layer) && !rules.canImport.includes('*')) {
+  // Check if import is explicitly allowed
+  const isExplicitlyAllowed = rules.canImport.includes(toLayer.layer) || rules.canImport.includes('*')
+
+  if (!isExplicitlyAllowed) {
+    return {
+      messageId: 'forbiddenLayerImport',
+      data: { from: fromLayer.layer, to: toLayer.layer, importPath },
+    }
+  }
+
+  // Apply wildcard restriction only if layer is not explicitly allowed AND no specific restriction exists
+  if (!specificRestriction && wildcardRestriction === 'forbidden' && !isExplicitlyAllowed) {
     return {
       messageId: 'forbiddenLayerImport',
       data: { from: fromLayer.layer, to: toLayer.layer, importPath },

@@ -24,6 +24,9 @@ describe('vue-modular/enforce-import-boundaries rule', () => {
           filename: '/src/modules/admin/pages/Users.vue',
           options: [{ allow: ['@/modules/allowed/*'] }],
         },
+        // ✅ shared-to-shared imports should be allowed
+        { code: "import cn from '@/shared/cn'", filename: '/src/shared/ui/toggle/Toggle.vue' },
+        { code: "import utils from '@/shared/utils'", filename: '/src/shared/components/Button.vue' },
         // ✅ Global services can import other global services
         { code: "import { authService } from '@/services/auth'", filename: '/src/services/user/api.js' },
         { code: "import apiClient from '@/services/http'", filename: '/src/services/auth/index.js' },
