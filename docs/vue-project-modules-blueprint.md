@@ -2044,3 +2044,207 @@ shared/ (Purple Background)
 - [ ] Document team guidelines and examples
 
 **Result**: A visually clear, maintainable modular architecture that scales with your team and project complexity.
+
+## File Creation Decision Matrix for Global Features
+
+When implementing new global features, follow this decision matrix to ensure consistent architecture:
+
+| File Type                               | When to Create                          | Responsibilities                                                                                                                  | What Should NOT Go Inside                                                     |
+| --------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **`src/entities/<Feature>.ts`**         | **Always**                              | • Zod schema definition; • Type exports; • Field-level validation rules; • Schema-derived utilities                               | • RPC calls; • Data transformation logic; • Business rules; • Vue composables |
+| **`src/services/<feature>.ts`**         | **Always**                              | • RPC/API calls; • Response → domain mapping; • Validation using entity schema; • Caching (export `cached` ref); • Error handling | • Vue composables; • UI-specific logic; • Component imports                   |
+| **`src/services/<feature>.helpers.ts`** | **When business logic is complex**      | • Pure transformation functions; • Business rules (if/then logic); • Data normalization; • Cross-field validations                | • Vue reactivity; • RPC calls; • Side effects                                 |
+| **`src/composables/use<Feature>.ts`**   | **Always**                              | • Reactive wrapper around service; • `load()` method calling service; • UI-friendly computed refs; • Vue lifecycle hooks          | • RPC calls; • Data transformation; • Business logic                          |
+| **`src/stores/use<Feature>Store.ts`**   | **When you need cross-component state** | • Pinia store actions; • UI state management; • Service orchestration; • Loading/error states                                     | • RPC calls (delegate to service); • Business logic (delegate to service)     |
+
+### Layer Import Rules
+
+To maintain clean architecture, follow these import restrictions:
+
+- ✅ **Services** can import: `entities`, `helpers`
+- ✅ **Composables** can import: `services` (cached refs only)
+- ✅ **Stores** can import: `services`
+- ❌ **Services** cannot import: `composables`, `stores`
+- ❌ **Entities** cannot import: anything except other entities
+
+### Quick Decision Flow
+
+For any new feature, ask:
+
+1. **"Do I need a data contract?"** → Create entity
+2. **"Do I need to fetch/process data?"** → Create service
+3. **"Is the processing logic complex?"** → Create service helpers
+4. **"Do I need reactive UI state?"** → Create composable
+5. **"Do I need cross-component state management?"** → Create store
+
+**Always create**: Entity + Service + Composable  
+**Sometimes create**: Helpers + Store
+
+### Example Implementation
+
+```typescript
+// src/entities/SystemDetails.ts - Data contract only
+export const SystemDetailsSchema = z.object({
+  'product-name': z.string(),
+  'hw-version': z.string(),
+})
+export type SystemDetails = z.infer<typeof SystemDetailsSchema>
+
+// src/services/systemDetails.ts - I/O + orchestration
+export const cachedDetails = ref<SystemDetails | null>(null)
+export const systemDetailsService = {
+  async fetchDetails(th: string | number): Promise<SystemDetails> {
+    // RPC call, validation, caching
+  },
+}
+
+// src/composables/useSystemDetails.ts - UI wrapper
+export const useSystemDetails = createGlobalState(() => {
+  const systemDetails = computed(() => cachedDetails.value)
+  const loadValues = async () => {
+    await systemDetailsService.fetchDetails(session.value.th)
+  }
+  return { systemDetails, loadValues }
+})
+```
+
+## File Creation Decision Matrix for Module/Feature Implementation
+
+When implementing features within specific modules (under `src/modules/<module-name>/`), follow this decision matrix:
+
+| File Type                         | When to Create                   | Responsibilities                                                                                                                | What Should NOT Go Inside                                                               |
+| --------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| **`types.ts`**                    | **Always**                       | • Zod schemas for module data; • TypeScript type definitions; • Module-specific validation rules; • Type exports for public API | • Business logic; • API calls; • Vue composables; • Component logic                     |
+| **`services/<feature>.ts`**       | **Always**                       | • Module-specific API calls; • RPC/HTTP requests; • Response transformation; • Error handling; • Request/response mapping       | • Vue reactivity; • UI logic; • Component imports; • Global state management            |
+| **`services/helpers.ts`**         | **When API logic is complex**    | • Pure transformation functions; • Request/response mapping; • Data normalization; • Validation helpers                         | • Vue composables; • Side effects; • Global state; • UI concerns                        |
+| **`composables/use<Feature>.ts`** | **When UI needs reactive state** | • Module-specific reactive logic; • Local state management; • UI lifecycle hooks; • Form handling                               | • Direct API calls (use services/ instead); • Global state; • Cross-module dependencies |
+| **`components/<Component>.vue`**  | **For reusable components**      | • Presentation logic; • User interactions; • Local component state; • Props/events handling                                     | • API calls; • Business logic; • Cross-module imports; • Global state mutations         |
+| **`views/<View>.vue`**            | **For page-level views**         | • Page layout and structure; • Route handling; • Composition of components; • Page-specific state                               | • Direct API calls; • Business logic; • Reusable component logic                        |
+| **`index.ts`**                    | **Always**                       | • Module public API exports; • External interface definition; • Re-exports of public components/composables                     | • Implementation details; • Internal utilities; • Private components                    |
+
+### Module Layer Import Rules
+
+Within modules, follow these import restrictions:
+
+- ✅ **`services/`** can import: `types.ts`, `services/helpers.ts`, global `@/entities`
+- ✅ **`composables/`** can import: `services/`, `types.ts`
+- ✅ **`components/`** can import: `composables/`, `types.ts`, global `@/shared/components`
+- ✅ **`views/`** can import: `components/`, `composables/`, `types.ts`
+- ✅ **`index.ts`** can import: any file within the module (for re-export)
+- ❌ **`services/`** cannot import: `composables/`, `components/`, `views/`
+- ❌ **`types.ts`** cannot import: anything except other types and global entities
+- ❌ **Modules** cannot import: internal files from other modules (only via `index.ts`)
+
+### Module Decision Flow
+
+For any new module feature, ask:
+
+1. **"Do I need module-specific types?"** → Create/update `types.ts`
+2. **"Do I need to fetch external data?"** → Create `services/<feature>.ts`
+3. **"Is the API logic complex?"** → Create `services/helpers.ts`
+4. **"Do I need reactive UI state?"** → Create `composables/use<Feature>.ts`
+5. **"Do I need reusable components?"** → Create `components/<Component>.vue`
+6. **"Do I need page views?"** → Create `views/<View>.vue`
+7. **"Should this be available to other modules?"** → Export via `index.ts`
+
+### Module Structure Example
+
+```plaintext
+src/modules/port-configuration/
+├── types.ts                    # Port-specific schemas and types
+├── services/
+│   ├── ports.ts               # Port CRUD operations
+│   ├── configurations.ts      # Configuration API calls
+│   └── helpers.ts             # API transformation utilities
+├── composables/
+│   ├── usePortEditor.ts       # Port editing state
+│   └── usePortValidation.ts   # Port validation logic
+├── components/
+│   ├── PortList.vue           # Port listing component
+│   ├── PortEditor.vue         # Port editing form
+│   └── PortStatus.vue         # Port status display
+├── views/
+│   ├── PortConfigurationView.vue    # Main port configuration page
+│   └── PortDetailsView.vue          # Individual port details page
+└── index.ts                   # Public API exports
+```
+
+### Example Module Implementation
+
+```typescript
+// src/modules/port-configuration/types.ts
+export const PortSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  status: z.enum(['active', 'inactive']),
+})
+export type Port = z.infer<typeof PortSchema>
+
+// src/modules/port-configuration/services/ports.ts
+import { PortSchema, type Port } from '../types'
+
+export const portsService = {
+  async fetchPorts(): Promise<Port[]> {
+    const response = await fetchJsonRpc({ method: 'get_ports' })
+    return response.map((port) => PortSchema.parse(port))
+  },
+
+  async updatePort(port: Port): Promise<void> {
+    await fetchJsonRpc({ method: 'update_port', params: port })
+  },
+}
+
+// src/modules/port-configuration/composables/usePortEditor.ts
+import { ref } from 'vue'
+import { portsService } from '../services/ports'
+import type { Port } from '../types'
+
+export function usePortEditor() {
+  const selectedPort = ref<Port | null>(null)
+  const loading = ref(false)
+
+  const loadPort = async (id: string) => {
+    loading.value = true
+    try {
+      const ports = await portsService.fetchPorts()
+      selectedPort.value = ports.find((p) => p.id === id) || null
+    } finally {
+      loading.value = false
+    }
+  }
+
+  return { selectedPort, loading, loadPort }
+}
+
+// src/modules/port-configuration/index.ts - Public API
+export type { Port } from './types'
+export { usePortEditor } from './composables/usePortEditor'
+export { default as PortList } from './components/PortList.vue'
+export { default as PortEditor } from './components/PortEditor.vue'
+export { default as PortConfigurationView } from './views/PortConfigurationView.vue'
+```
+
+### Cross-Module Communication
+
+When modules need to communicate:
+
+```typescript
+// ✅ CORRECT - Import via public API
+import { usePortEditor, type Port } from '@/modules/port-configuration'
+
+// ❌ WRONG - Direct import of internal files
+import { usePortEditor } from '@/modules/port-configuration/composables/usePortEditor'
+```
+
+### Module vs Global Decision
+
+| Scope                       | Use Module Files                                            | Use Global Files                  |
+| --------------------------- | ----------------------------------------------------------- | --------------------------------- |
+| **Feature-specific**        | Module `services/`, `composables/`, `components/`, `views/` | Never                             |
+| **Reusable across modules** | Export via `index.ts` then decide                           | Often better as global            |
+| **Shared types/entities**   | If module-specific                                          | Global `src/entities/`            |
+| **Common services**         | If module-specific                                          | Global `src/services/`            |
+| **UI components**           | If module-specific                                          | Global `src/shared/components/`   |
+| **Page views**              | Always module-specific                                      | Never (views are module-specific) |
+
+This structure ensures modules are self-contained while maintaining clean interfaces for cross-module communication.
