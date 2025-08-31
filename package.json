@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-vue-modular",
   "type": "module",
-  "version": "0.0.27",
+  "version": "0.0.0",
   "description": "ESLint plugin for checking and maintaining architecture boundaries in Vue modular applications.",
   "main": "src/index.js",
   "types": "index.d.ts",
@@ -26,7 +26,6 @@
     "lint": "make lint",
     "test": "make test",
     "update": "make update",
-    "release": "make release",
     "drawio": "make drawio",
     "prepare": "husky"
   },
