@@ -4,6 +4,7 @@
 import path from 'node:path'
 import { minimatch } from 'minimatch'
 import { isTestFile } from '../utils/import-boundaries.js'
+import { createCheckedDirsGetter } from '../utils/global-state.js'
 
 // Default configuration based on Vue project modules blueprint
 const defaultOptions = {
@@ -358,6 +359,9 @@ export default {
       ...(context.options[0] || {}),
     }
 
+    // Initialize global state to track reported subdirectories
+    const getReportedSubdirs = createCheckedDirsGetter('no-orphaned-files-subdirs')
+
     const filename = context.filename || context.getFilename()
 
     // Skip files outside of src
@@ -394,6 +398,20 @@ export default {
         const orphanError = checkOrphanedFile(fileInfo, options.allowedDirectories, options.allowedRootFiles)
 
         if (orphanError) {
+          // For flat structure violations, only report once per subdirectory
+          if (orphanError.message.includes('should have a flat structure')) {
+            const subdirKey = `${fileInfo.category}/${fileInfo.subcategory}`
+            const reportedSubdirs = getReportedSubdirs()
+
+            if (reportedSubdirs.has(subdirKey)) {
+              // Already reported this subdirectory, skip
+              return
+            }
+
+            // Mark this subdirectory as reported
+            reportedSubdirs.add(subdirKey)
+          }
+
           // Report main error
           context.report({
             loc: { line: 1, column: 0 },
