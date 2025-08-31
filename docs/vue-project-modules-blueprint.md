@@ -40,7 +40,9 @@ src/
 ├── services/                 # Global API clients and business logic services
 │   ├── auth.api.ts
 │   ├── users.api.ts
-│   └── notifications.api.ts
+│   ├── notifications.api.ts
+│   └── jsonrpc/              # Services can have subdirectories for organization
+│       └── config.ts
 │
 ├── entities/                 # Global business entities
 │   ├── base/

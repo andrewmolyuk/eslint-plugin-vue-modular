@@ -21,8 +21,8 @@ const defaultOptions = {
 
     // Shared business layer
     components: ['*'], // Components can have subdirectories for complex components
-    composables: [], // Flat structure expected
-    services: [], // Flat structure expected
+    composables: ['*'], // Flat structure expected
+    services: ['*'], // Services can have subdirectories for organization
 
     // State layer
     stores: ['*.ts'], // Allow TypeScript files in subdirectories (for types, etc.)

@@ -60,8 +60,8 @@ The rule validates files against these predefined categories:
 ### Business Layer
 
 - **`components/`** - Global business components (can contain subdirectories for complex components)
-- **`composables/`** - Reusable composition functions (flat structure)
-- **`services/`** - Business services and API clients (flat structure)
+- **`composables/`** - Reusable composition functions (can contain subdirectories)
+- **`services/`** - Business services and API clients (can have subdirectories for organization)
 
 ### State Layer
 
@@ -244,9 +244,11 @@ src/
 ├── composables/                ✅ Global composables (flat)
 │   ├── useAuth.ts
 │   └── useApi.ts
-├── services/                   ✅ Global services (flat)
+├── services/                   ✅ Global services (can have subdirectories)
 │   ├── apiClient.ts
-│   └── authService.ts
+│   ├── authService.ts
+│   └── jsonrpc/
+│       └── config.ts
 ├── stores/                     ✅ Global stores (flat)
 │   └── userStore.ts
 ├── entities/                   ✅ Data models

@@ -313,29 +313,10 @@ describe('no-orphaned-files rule', () => {
       })
     })
 
-    it('should flag unexpected subdirectories in flat categories (composables, stores)', () => {
+    it('should flag unexpected subdirectories in flat categories (stores)', () => {
       ruleTester.run('no-orphaned-files', noOrphanedFilesRule, {
         valid: [],
         invalid: [
-          {
-            code: 'export function useApi() {}',
-            filename: '/project/src/composables/api/useApi.ts',
-            errors: [
-              {
-                messageId: 'orphanedFile',
-                data: {
-                  message: "Directory 'composables' should have a flat structure, but found subdirectory 'api'",
-                },
-              },
-              {
-                messageId: 'suggestion',
-                data: {
-                  suggestion:
-                    "Move files from 'composables/api/' directly to 'composables/' or consider if this belongs in modules/ or features/",
-                },
-              },
-            ],
-          },
           {
             code: 'export const store = {}',
             filename: '/project/src/stores/auth/authStore.js',
