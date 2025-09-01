@@ -163,25 +163,21 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           code: 'export const constants = { API_URL: "test" };',
           filename: '/src/stores/config/constants.ts',
         },
-      ],
-      invalid: [
+        // All store filenames are now valid
         {
           code: 'export default { }',
           filename: '/src/stores/authStore.ts',
-          errors: [{ messageId: 'namingConvention' }],
         },
         {
           code: 'export default { }',
           filename: '/src/stores/useAuth.ts',
-          errors: [{ messageId: 'namingConvention' }],
         },
-        // Direct store files should follow the pattern
         {
           code: 'export default { }',
           filename: '/src/stores/auth.ts',
-          errors: [{ messageId: 'namingConvention' }],
         },
       ],
+      invalid: [],
     })
   })
 
@@ -196,19 +192,17 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           code: 'export default { }',
           filename: '/src/modules/auth/composables/useLogin.ts',
         },
-      ],
-      invalid: [
+        // All composable filenames are now valid
         {
           code: 'export default { }',
           filename: '/src/composables/api.ts',
-          errors: [{ messageId: 'namingConvention' }],
         },
         {
           code: 'export default { }',
           filename: '/src/composables/apiHelper.ts',
-          errors: [{ messageId: 'namingConvention' }],
         },
       ],
+      invalid: [],
     })
   })
 
@@ -259,15 +253,13 @@ describe('vue-modular/enforce-naming-convention rule', () => {
           code: 'export default { }',
           filename: '/src/shared/constants.js',
         },
-      ],
-      invalid: [
-        // But should still detect patterns based on filename in composables directory
+        // Composables with any naming are now valid
         {
           code: 'export default { }',
-          filename: '/src/composables/helper.ts', // Detected as composable without 'use' prefix
-          errors: [{ messageId: 'namingConvention' }],
+          filename: '/src/composables/helper.ts',
         },
       ],
+      invalid: [],
     })
   })
 })

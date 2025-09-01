@@ -144,29 +144,12 @@ function validateNamingConvention(filename, componentName) {
     }
 
     case 'store': {
-      // Stores must use 'useXxxStore.ts' pattern
-      if (!basename.startsWith('use') || !basename.includes('Store.')) {
-        const cleanName = nameFromFile.replace(/^use/, '').replace(/Store$/, '')
-        const suggested = `use${toPascalCase(cleanName)}Store.ts`
-        violations.push({
-          type: 'filename',
-          message: `Store files must follow 'useXxxStore.ts' pattern. Expected: ${suggested}`,
-          expected: suggested,
-        })
-      }
+      // No naming requirement for stores
       break
     }
 
     case 'composable': {
-      // Composables must start with 'useXxx.ts'
-      if (!basename.startsWith('use')) {
-        const suggested = `use${toPascalCase(nameFromFile)}.ts`
-        violations.push({
-          type: 'filename',
-          message: `Composable files must start with 'use'. Expected: ${suggested}`,
-          expected: suggested,
-        })
-      }
+      // No naming requirement for composables
       break
     }
 
@@ -292,13 +275,7 @@ export default {
         const fileType = getFileType(filename)
 
         // Validate file naming for all supported file types
-        if (
-          fileType === 'store' ||
-          fileType === 'composable' ||
-          fileType === 'service' ||
-          fileType === 'component' ||
-          fileType === 'view'
-        ) {
+        if (fileType === 'service' || fileType === 'component' || fileType === 'view') {
           const violations = validateNamingConvention(filename, null)
 
           violations.forEach((violation) => {
