@@ -8,8 +8,8 @@ This rule enforces consistent naming conventions for Vue component filenames and
 
 - **Views** → Always end with `View.vue` → `LoginView.vue`, `UserListView.vue`
 - **Components** → PascalCase filenames → `UserTable.vue`, `LoginForm.vue`, `CgsIcon.vue`
-- **Stores** → Use Pinia convention: `useXxxStore.ts` (only for files directly in stores directory)
-- **Composables** → Always start with `useXxx.ts`
+- **Stores** → Free naming (any filename allowed)
+- **Composables** → Free naming (any filename allowed)
 - **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`
 
 **Note**: This rule is designed for modern Vue applications where components typically don't have explicit `name` properties (especially with `<script setup>`). The rule primarily validates **filenames** rather than component names.
@@ -48,7 +48,7 @@ export default {
 
 ```js
 // File: src/stores/authStore.ts
-// Store files must follow 'useXxxStore.ts' pattern
+// Any store filename is now allowed
 export const authStore = defineStore('auth', {
   // store implementation
 })
@@ -56,7 +56,7 @@ export const authStore = defineStore('auth', {
 
 ```js
 // File: src/composables/api.ts
-// Composable files must start with 'use'
+// Any composable filename is now allowed
 export function fetchData() {
   // composable implementation
 }
@@ -102,16 +102,32 @@ export default {
 
 ```js
 // File: src/stores/useAuthStore.ts
-// Proper store naming (directly in stores directory)
+// Any store filename is allowed
 export const useAuthStore = defineStore('auth', {
   // store implementation
 })
 ```
 
 ```js
+// File: src/stores/authStore.ts
+// Any store filename is allowed
+export const authStore = defineStore('auth', {
+  // store implementation
+})
+```
+
+```js
 // File: src/composables/useApi.ts
-// Proper composable naming
+// Any composable filename is allowed
 export function useApi() {
+  // composable implementation
+}
+```
+
+```js
+// File: src/composables/api.ts
+// Any composable filename is allowed
+export function fetchData() {
   // composable implementation
 }
 ```
@@ -195,10 +211,11 @@ The rule automatically detects file types based on directory structure and filen
 
 - **Directory patterns**: `/stores/`, `/store/` (files must be **directly** in the stores directory)
 - **File pattern**: `*.ts`, `*.js`
-- **Convention**: Must follow `useXxxStore.ts` pattern
+- **Convention**: Free naming (any filename allowed)
 - **Examples**:
-  - ✅ `src/stores/useAuthStore.ts` (direct file - validated)
-  - ✅ `src/stores/useUserStore.ts` (direct file - validated)
+  - ✅ `src/stores/useAuthStore.ts` (any filename allowed)
+  - ✅ `src/stores/authStore.ts` (any filename allowed)
+  - ✅ `src/stores/auth.ts` (any filename allowed)
   - ❌ `src/stores/types/config.ts` (subdirectory - **not** treated as store)
   - ❌ `src/stores/config/constants.ts` (subdirectory - **not** treated as store)
 
@@ -208,8 +225,8 @@ The rule automatically detects file types based on directory structure and filen
 
 - **Directory patterns**: `/composables/`, `/composable/`
 - **File pattern**: `*.ts`, `*.js`
-- **Convention**: Must start with `use`
-- **Examples**: `useApi.ts`, `useAuth.ts`, `useLocalStorage.ts`
+- **Convention**: Free naming (any filename allowed)
+- **Examples**: `useApi.ts`, `api.ts`, `helpers.ts`, `validation.ts`
 
 ### Services
 
@@ -233,8 +250,8 @@ This enforces:
 - Vue modular architecture naming conventions
 - File type-specific validation based on directory structure
 - **PascalCase component filenames** for all Vue files (regardless of explicit component names)
-- Proper filename patterns for stores, composables, and services
-- **Store validation only for direct files** in stores directory (subdirectories ignored)
+- Proper filename patterns for services
+- **Free naming for stores and composables** (no restrictions)
 
 ### Legacy Mode (Component Names Only)
 
@@ -292,10 +309,6 @@ This enforces:
 ❌ src/shared/ui/cgs-icon.vue → Should be CgsIcon.vue
 ❌ src/components/user-card.vue → Should be UserCard.vue
 
-# Store naming issues (only direct files)
-❌ src/stores/authStore.ts → Should be useAuthStore.ts
-✅ src/stores/types/config.ts → Ignored (subdirectory)
-
 # View naming issues
 ❌ src/views/Login.vue → Should be LoginView.vue
 
@@ -303,6 +316,12 @@ This enforces:
 ❌ src/services/AuthService.ts → Should be authService.ts
 ❌ src/services/FrameMessages.ts → Should be frameMessages.ts
 ✅ src/services/index.ts → OK (starts with lowercase)
+
+# Store and composable naming
+✅ src/stores/authStore.ts → OK (free naming)
+✅ src/stores/useAuthStore.ts → OK (free naming)
+✅ src/composables/api.ts → OK (free naming)
+✅ src/composables/useApi.ts → OK (free naming)
 ```
 
 ## When Not To Use

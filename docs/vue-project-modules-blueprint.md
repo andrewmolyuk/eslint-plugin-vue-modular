@@ -754,8 +754,8 @@ This navigation organization system provides flexibility for apps of any size wh
 
 - **Views** → Always end with `View.vue` → `LoginView.vue`, `UserListView.vue`.
 - **Components** → PascalCase, descriptive → `UserTable.vue`, `LoginForm.vue`.
-- **Stores** → Use Pinia convention: `useXxxStore.ts`.
-- **Composables** → Always start with `useXxx.ts`.
+- **Stores** → Free naming (any filename allowed).
+- **Composables** → Free naming (any filename allowed).
 - **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`.
 - **Entities** → `<domain>.ts` for business/domain entities (e.g., `User.ts`, `Settings.ts`).
 - **Routes** → `routes.ts` inside module.
