@@ -11,7 +11,7 @@ This rule enforces consistent naming conventions for Vue component filenames and
 - **Stores** → Free naming (any filename allowed)
 - **Composables** → Free naming (any filename allowed)
 - **Services** → Start with lowercase letter → `index.ts`, `auth.ts`, `frameMessages.ts`
-- **Entities** → PascalCase filenames → `User.ts`, `Settings.ts`, `ApiResponse.ts`
+- **Entities** → Start with lowercase letter → `user.ts`, `settings.ts`, `apiResponse.ts`
 - **Routes** → Must be exactly `routes.ts` in modules
 - **Menu** → Must be exactly `menu.ts` in modules
 
@@ -75,7 +75,7 @@ export class AuthService {
 
 ```js
 // File: src/entities/user.ts
-// Entity files should use PascalCase
+// Entity files should start with lowercase letter
 export interface User {
   // entity definition
 }
@@ -183,8 +183,8 @@ export function sendMessage() {
 ```
 
 ```js
-// File: src/entities/User.ts
-// Proper entity naming (PascalCase)
+// File: src/entities/user.ts
+// Proper entity naming (lowercase start)
 export interface User {
   id: string
   name: string
@@ -193,8 +193,8 @@ export interface User {
 ```
 
 ```js
-// File: src/entities/Settings.ts
-// Proper entity naming (PascalCase)
+// File: src/entities/settings.ts
+// Proper entity naming (lowercase start)
 export interface Settings {
   theme: string
   language: string
@@ -303,8 +303,8 @@ The rule automatically detects file types based on directory structure and filen
 
 - **Directory patterns**: `/entities/`, `/entity/`
 - **File pattern**: `*.ts`, `*.js`
-- **Convention**: PascalCase filenames (domain/business entities)
-- **Examples**: `User.ts`, `Settings.ts`, `ApiResponse.ts`, `Permission.ts`
+- **Convention**: Start with lowercase letter (domain/business entities)
+- **Examples**: `user.ts`, `settings.ts`, `apiResponse.ts`, `permission.ts`
 
 ### Routes
 
@@ -336,7 +336,7 @@ This enforces:
 - File type-specific validation based on directory structure
 - **PascalCase component filenames** for all Vue files (regardless of explicit component names)
 - Proper filename patterns for services
-- **PascalCase entity filenames** for business/domain objects
+- **Lowercase entity filenames** for business/domain objects
 - **Exact naming for module routes and menu files**
 - **Free naming for stores and composables** (no restrictions)
 
@@ -405,9 +405,9 @@ This enforces:
 ✅ src/services/index.ts → OK (starts with lowercase)
 
 # Entity naming issues
-❌ src/entities/user.ts → Should be User.ts
-❌ src/entities/api-response.ts → Should be ApiResponse.ts
-✅ src/entities/Settings.ts → OK (PascalCase)
+❌ src/entities/User.ts → Should be user.ts
+❌ src/entities/Api-Response.ts → Should be apiResponse.ts
+✅ src/entities/settings.ts → OK (lowercase start)
 
 # Module file naming issues
 ❌ src/modules/auth/Routes.ts → Should be routes.ts

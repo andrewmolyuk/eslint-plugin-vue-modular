@@ -757,7 +757,7 @@ This navigation organization system provides flexibility for apps of any size wh
 - **Stores** → Use Pinia convention, start with lowercase letter: `user.ts`.
 - **Composables** → Start with lowercase letter: `system.ts`.
 - **Services** → Start with lowercase letter → `index.ts`, `auth.ts`, `frameMessages.ts`.
-- **Entities** → `<domain>.ts` for business/domain entities (e.g., `User.ts`, `Settings.ts`).
+- **Entities** → `<domain>.ts` for business/domain entities, start with lowercase letter (e.g., `user.ts`, `settings.ts`).
 - **Routes** → `routes.ts` inside module.
 
 ## Architectural Principles

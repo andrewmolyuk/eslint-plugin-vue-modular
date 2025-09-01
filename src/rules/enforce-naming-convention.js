@@ -186,13 +186,13 @@ function validateNamingConvention(filename, componentName) {
     }
 
     case 'entity': {
-      // Entities should use PascalCase (e.g., User.ts, Settings.ts)
-      const expectedFilename = toPascalCase(nameFromFile)
-      if (nameFromFile !== expectedFilename) {
+      // Entities should start with lowercase letter (e.g., user.ts, settings.ts)
+      if (nameFromFile.charAt(0) !== nameFromFile.charAt(0).toLowerCase()) {
+        const suggested = nameFromFile.charAt(0).toLowerCase() + nameFromFile.slice(1)
         violations.push({
           type: 'filename',
-          message: `Entity files should use PascalCase. Expected: ${expectedFilename}.ts`,
-          expected: `${expectedFilename}.ts`,
+          message: `Entity files should start with lowercase letter. Expected: ${suggested}.ts`,
+          expected: `${suggested}.ts`,
         })
       }
       break
