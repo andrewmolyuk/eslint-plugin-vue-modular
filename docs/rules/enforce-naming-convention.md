@@ -10,7 +10,10 @@ This rule enforces consistent naming conventions for Vue component filenames and
 - **Components** → PascalCase filenames → `UserTable.vue`, `LoginForm.vue`, `CgsIcon.vue`
 - **Stores** → Free naming (any filename allowed)
 - **Composables** → Free naming (any filename allowed)
-- **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`
+- **Services** → Start with lowercase letter → `index.ts`, `auth.ts`, `frameMessages.ts`
+- **Entities** → PascalCase filenames → `User.ts`, `Settings.ts`, `ApiResponse.ts`
+- **Routes** → Must be exactly `routes.ts` in modules
+- **Menu** → Must be exactly `menu.ts` in modules
 
 **Note**: This rule is designed for modern Vue applications where components typically don't have explicit `name` properties (especially with `<script setup>`). The rule primarily validates **filenames** rather than component names.
 
@@ -68,6 +71,30 @@ export function fetchData() {
 export class AuthService {
   // service implementation
 }
+```
+
+```js
+// File: src/entities/user.ts
+// Entity files should use PascalCase
+export interface User {
+  // entity definition
+}
+```
+
+```js
+// File: src/modules/auth/Routes.ts
+// Module routes file must be exactly 'routes.ts'
+export default [
+  // route definitions
+]
+```
+
+```js
+// File: src/modules/users/navigation.ts
+// Module menu file must be exactly 'menu.ts'
+export const moduleNavigation = [
+  // menu definitions
+]
 ```
 
 #### ✅ Correct
@@ -133,7 +160,7 @@ export function fetchData() {
 ```
 
 ```js
-// File: src/services/auth.api.ts
+// File: src/services/auth.ts
 // Proper service naming (starts with lowercase)
 export class AuthAPI {
   // service implementation
@@ -143,7 +170,7 @@ export class AuthAPI {
 ```js
 // File: src/services/index.ts
 // Proper service naming (starts with lowercase)
-export * from './auth.api'
+export * from './auth'
 export * from './frameMessages'
 ```
 
@@ -153,6 +180,43 @@ export * from './frameMessages'
 export function sendMessage() {
   // service implementation
 }
+```
+
+```js
+// File: src/entities/User.ts
+// Proper entity naming (PascalCase)
+export interface User {
+  id: string
+  name: string
+  email: string
+}
+```
+
+```js
+// File: src/entities/Settings.ts
+// Proper entity naming (PascalCase)
+export interface Settings {
+  theme: string
+  language: string
+}
+```
+
+```js
+// File: src/modules/auth/routes.ts
+// Correct module routes file name
+export default [
+  { path: '/login', component: () => import('./views/LoginView.vue') },
+  { path: '/register', component: () => import('./views/RegisterView.vue') },
+]
+```
+
+```js
+// File: src/modules/users/menu.ts
+// Correct module menu file name
+export const moduleNavigation = [
+  { title: 'User List', route: '/users' },
+  { title: 'User Roles', route: '/users/roles' },
+]
 ```
 
 ## Options
@@ -233,7 +297,28 @@ The rule automatically detects file types based on directory structure and filen
 - **Directory patterns**: `/services/`, `/service/`
 - **File pattern**: `*.ts`, `*.js`
 - **Convention**: Must start with lowercase letter
-- **Examples**: `auth.api.ts`, `index.ts`, `frameMessages.ts`, `notifications.api.ts`
+- **Examples**: `auth.ts`, `index.ts`, `frameMessages.ts`, `notifications.ts`
+
+### Entities
+
+- **Directory patterns**: `/entities/`, `/entity/`
+- **File pattern**: `*.ts`, `*.js`
+- **Convention**: PascalCase filenames (domain/business entities)
+- **Examples**: `User.ts`, `Settings.ts`, `ApiResponse.ts`, `Permission.ts`
+
+### Routes
+
+- **Directory patterns**: Module files only (`modules/*/routes.ts`)
+- **File pattern**: Must be exactly `routes.ts`
+- **Convention**: Fixed filename for module route definitions
+- **Examples**: `modules/auth/routes.ts`, `modules/users/routes.ts`
+
+### Menu
+
+- **Directory patterns**: Module files only (`modules/*/menu.ts`)
+- **File pattern**: Must be exactly `menu.ts`
+- **Convention**: Fixed filename for module navigation definitions
+- **Examples**: `modules/auth/menu.ts`, `modules/users/menu.ts`
 
 ## Configuration Examples
 
@@ -251,6 +336,8 @@ This enforces:
 - File type-specific validation based on directory structure
 - **PascalCase component filenames** for all Vue files (regardless of explicit component names)
 - Proper filename patterns for services
+- **PascalCase entity filenames** for business/domain objects
+- **Exact naming for module routes and menu files**
 - **Free naming for stores and composables** (no restrictions)
 
 ### Legacy Mode (Component Names Only)
@@ -316,6 +403,17 @@ This enforces:
 ❌ src/services/AuthService.ts → Should be authService.ts
 ❌ src/services/FrameMessages.ts → Should be frameMessages.ts
 ✅ src/services/index.ts → OK (starts with lowercase)
+
+# Entity naming issues
+❌ src/entities/user.ts → Should be User.ts
+❌ src/entities/api-response.ts → Should be ApiResponse.ts
+✅ src/entities/Settings.ts → OK (PascalCase)
+
+# Module file naming issues
+❌ src/modules/auth/Routes.ts → Should be routes.ts
+❌ src/modules/users/navigation.ts → Should be menu.ts
+✅ src/modules/auth/routes.ts → OK (exact name)
+✅ src/modules/users/menu.ts → OK (exact name)
 
 # Store and composable naming
 ✅ src/stores/authStore.ts → OK (free naming)

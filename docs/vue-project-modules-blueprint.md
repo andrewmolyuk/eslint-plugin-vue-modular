@@ -33,14 +33,14 @@ src/
 │   └── ErrorView.vue
 │
 ├── composables/              # Global reusable composables
-│   ├── useApi.ts
-│   ├── useAuth.ts
-│   └── useLocalStorage.ts
+│   ├── server.ts
+│   ├── auth.ts
+│   └── localStorage.ts
 │
 ├── services/                 # Global API clients and business logic services
-│   ├── auth.api.ts
-│   ├── users.api.ts
-│   ├── notifications.api.ts
+│   ├── auth.ts
+│   ├── users.ts
+│   ├── notifications.ts
 │   └── jsonrpc/              # Services can have subdirectories for organization
 │       └── config.ts
 │
@@ -50,9 +50,9 @@ src/
 │   └── Permission.ts
 │
 ├── stores/                   # Global stores (cross-module state)
-│   ├── app.store.ts
-│   ├── user.store.ts
-│   └── settings.store.ts
+│   ├── app.ts
+│   ├── user.ts
+│   └── settings.ts
 │
 ├── features/                 # Global reusable features
 │   ├── search/
@@ -73,11 +73,11 @@ src/
 │   │   ├── components/
 │   │   │   └── LoginForm.vue
 │   │   ├── services/
-│   │   │   └── auth.api.ts
+│   │   │   └── auth.ts
 │   │   ├── composables/
-│   │   │   └── useLogin.ts
+│   │   │   └── Login.ts
 │   │   ├── stores/
-│   │   │   └── auth.store.ts
+│   │   │   └── auth.ts
 │   │   ├── entities/         # Business/domain entities for auth
 │   │   ├── routes.ts
 │   │   ├── menu.ts
@@ -91,11 +91,11 @@ src/
 │   │   ├── components/
 │   │   │   └── UserTable.vue
 │   │   ├── services/
-│   │   │   └── users.api.ts
+│   │   │   └── users.ts
 │   │   ├── composables/
 │   │   │   └── useUsers.ts
 │   │   ├── stores/
-│   │   │   └── users.store.ts
+│   │   │   └── users.ts
 │   │   ├── entities/         # Business/domain entities for users
 │   │   ├── routes.ts
 │   │   ├── menu.ts
@@ -107,7 +107,7 @@ src/
 │   │   ├── components/
 │   │   │   └── Toast.vue
 │   │   ├── stores/
-│   │   │   └── notifications.store.ts
+│   │   │   └── notifications.ts
 │   │   ├── entities/         # Business/domain entities for notifications
 │   │   └── index.ts          # MANDATORY - Public API exports
 │   │
@@ -115,7 +115,7 @@ src/
 │       ├── views/
 │       │   └── SettingsView.vue
 │       ├── services/
-│       │   └── settings.api.ts
+│       │   └── settings.ts
 │       ├── composables/
 │       │   └── useSettings.ts
 │       ├── entities/         # Business/domain entities for settings
@@ -143,15 +143,15 @@ The project uses a three-tier store architecture:
 ```ts
 // Example store organization:
 stores/
-├── app.store.ts           # Global app state (theme, language, etc.)
-├── user.store.ts          # Global user state (current user, permissions)
-└── settings.store.ts      # Global settings (app-wide preferences)
+├── app.ts           # Global app state (theme, language, etc.)
+├── user.ts          # Global user state (current user, permissions)
+└── settings.ts      # Global settings (app-wide preferences)
 
 app/stores/
 └── pinia.config.ts        # Store configuration and setup
 
 modules/auth/stores/
-└── auth.store.ts          # Auth-specific state (login form, tokens)
+└── auth.ts          # Auth-specific state (login form, tokens)
 ```
 
 ## Mandatory Public API Files
@@ -167,7 +167,7 @@ modules/auth/stores/
 export { default as moduleRoutes } from './routes'
 export { default as moduleNavigation } from './menu'
 export { AuthPlugin } from './plugins/auth-plugin'
-export { useAuth } from './composables/useAuth'
+export { Login } from './composables/login'
 
 // Optional: re-export types if needed by other layers
 export type { AuthConfig, AuthState } from './types'
@@ -178,8 +178,8 @@ export type { AuthConfig, AuthState } from './types'
 export { default as SearchInput } from './components/SearchInput.vue'
 export { default as SearchResults } from './components/SearchResults.vue'
 export { default as SearchFilters } from './components/SearchFilters.vue'
-export { useSearch } from './composables/useSearch'
-export { searchAPI } from './services/search.api'
+export { useSearch } from './composables/search'
+export { searchAPI } from './services/search'
 
 // Optional: re-export types if needed by other layers
 export type { SearchResult, SearchFilters } from './entities/SearchResult'
@@ -193,7 +193,7 @@ export type { SearchResult, SearchFilters } from './entities/SearchResult'
 - **❌ App layer CANNOT import**: `@/modules/auth/routes` (direct file access)
 - **❌ App layer CANNOT import**: `@/features/search/components/SearchInput.vue` (bypasses public API)
 - **❌ Any layer CANNOT import**: `@/modules/auth/components/LoginForm.vue` (bypasses public API)
-- **❌ Features CANNOT import**: `@/features/search/composables/useSearch.ts` (cross-feature direct access)
+- **❌ Features CANNOT import**: `@/features/search/composables/search.ts` (cross-feature direct access)
 
 **Key Principle:** All modules and global features should export consistent interfaces:
 
@@ -243,9 +243,9 @@ Keep test-only imports clearly flagged as test code and out of production bundle
 
 - **views/** → Pages mapped to routes (e.g., `LoginView.vue`, `UserListView.vue`).
 - **components/** → UI parts specific to the module (not shared globally).
-- **services/** → API calls or domain logic (e.g., `auth.api.ts`, `index.ts`, `frameMessages.ts`).
-- **composables/** → Hooks with stateful or computed logic (e.g., `useUsers.ts`).
-- **store/** → Module-specific Pinia/Vuex stores (e.g., `useAuthStore.ts`).
+- **services/** → API calls or domain logic (e.g., `auth.ts`, `index.ts`, `frameMessages.ts`).
+- **composables/** → Hooks with stateful or computed logic (e.g., `users.ts`).
+- **store/** → Module-specific Pinia/Vuex stores (e.g., `auth.ts`).
 - **entities/** → Business/domain entities specific to this module.
 - **routes.ts** → Defines routes for this module.
 - **menu.ts** → Navigation items for this module (if applicable).
@@ -611,7 +611,7 @@ export const moduleNavigation = {
 // app/navigation/index.ts
 import { moduleNavigation as userNav } from '@/modules/users'
 import { moduleNavigation as authNav } from '@/modules/auth'
-import { usePermissions } from '@/composables/usePermissions'
+import { usePermissions } from '@/composables/permissions'
 
 export function useAppNavigation() {
   const { hasPermission } = usePermissions()
@@ -720,7 +720,7 @@ const { navigation } = useAppNavigation()
 #### Breadcrumb Navigation
 
 ```ts
-// composables/useBreadcrumbs.ts
+// composables/breadcrumbs.ts
 export function useBreadcrumbs() {
   const route = useRoute()
 
@@ -754,9 +754,9 @@ This navigation organization system provides flexibility for apps of any size wh
 
 - **Views** → Always end with `View.vue` → `LoginView.vue`, `UserListView.vue`.
 - **Components** → PascalCase, descriptive → `UserTable.vue`, `LoginForm.vue`.
-- **Stores** → Free naming (any filename allowed).
-- **Composables** → Free naming (any filename allowed).
-- **Services** → Start with lowercase letter → `index.ts`, `auth.api.ts`, `frameMessages.ts`.
+- **Stores** → Use Pinia convention, start with lowercase letter: `user.ts`.
+- **Composables** → Start with lowercase letter: `system.ts`.
+- **Services** → Start with lowercase letter → `index.ts`, `auth.ts`, `frameMessages.ts`.
 - **Entities** → `<domain>.ts` for business/domain entities (e.g., `User.ts`, `Settings.ts`).
 - **Routes** → `routes.ts` inside module.
 
@@ -771,7 +771,7 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 - **Access**: Public API exports ONLY from Domain layers (via `index.ts`)
 - **Purpose**: Application setup, routing, configuration, plugins, layouts, global styles (including TailwindCSS configuration)
 - **Stability**: High - foundational infrastructure
-- **Contains**: `router/`, `plugins/`, `layouts/`, `styles/`, `config/`
+- **Contains**: `router/`, `layouts/`, `styles/`, `config/` etc
 - **Module Integration**: Strict public API enforcement - no direct file imports from modules/features
 - **Note**: Pink background represents application foundation
 
@@ -802,7 +802,7 @@ The modular architecture follows a strict 6-layer hierarchy where each layer has
 #### Data Layer (`entities/`)
 
 - **Access**: Can import from Utility layer and cross-reference other entities
-- **Purpose**: Pure data models, business objects, and domain entities
+- **Purpose**: Pure data models, business objects, and domain entities, contains data related functionality like loaders, validation and transformation
 - **Stability**: High - core data contracts
 - **Contains**: User, Product, Order entities and data structures
 - **Note**: Blue background represents data models
@@ -905,7 +905,7 @@ import UsersModule from '@/modules/users'
 import { SearchInput, useSearch } from '@/features/search'
 import { FileUploader } from '@/features/file-upload'
 import UserCard from '@/components/UserCard.vue'
-import { useApi } from '@/composables/useApi'
+import { useApi } from '@/composables/api'
 ```
 
 #### Forbidden App → Module/Feature Imports
@@ -918,19 +918,19 @@ import userRoutes from '@/modules/users/routes'
 
 // ❌ Direct feature file imports (must go through public API)
 import SearchInput from '@/features/search/components/SearchInput.vue'
-import { useSearch } from '@/features/search/composables/useSearch'
+import { useSearch } from '@/features/search/composables/search'
 
 // ❌ Internal module components
 import LoginForm from '@/modules/auth/components/LoginForm.vue'
 
 // ❌ Internal composables
-import { useAuth } from '@/modules/auth/composables/useAuth'
+import { useAuth } from '@/modules/auth/composables/auth'
 
 // ❌ Internal services
-import { authAPI } from '@/modules/auth/services/auth.api'
+import { authAPI } from '@/modules/auth/services/auth'
 
 // ❌ Internal stores
-import { useAuthStore } from '@/modules/auth/store/useAuthStore'
+import { useAuthStore } from '@/modules/auth/store/authStore'
 
 // ❌ Any internal module/feature file except index.ts
 import anything from '@/modules/auth/internal-file'
@@ -1060,12 +1060,12 @@ Features are **independent units of functionality** that should never depend on 
 import UserFilter from '@/features/user-management/components/UserFilter.vue'
 
 // ❌ FORBIDDEN - Feature importing feature logic
-// features/notifications/composables/useNotifications.ts
-import { useSearch } from '@/features/search/composables/useSearch'
+// features/notifications/composables/notifications.ts
+import { useSearch } from '@/features/search/composables/search'
 
 // ❌ FORBIDDEN - Cross-feature dependencies
-// features/dashboard/services/dashboard.api.ts
-import { searchAPI } from '@/features/search/services/search.api'
+// features/dashboard/services/dashboard.ts
+import { searchAPI } from '@/features/search/services/search'
 ```
 
 #### Correct Feature Communication Patterns
@@ -1074,16 +1074,16 @@ If features need to share functionality, use these patterns:
 
 ```ts
 // ✅ OPTION 1: Move shared logic to global layers
-// composables/useSearch.ts (global)
+// composables/search.ts (global)
 export function useSearch() {
   /* shared search logic */
 }
 
-// features/search/composables/useFeatureSearch.ts
-import { useSearch } from '@/composables/useSearch' // Global composable
+// features/search/composables/featureSearch.ts
+import { useSearch } from '@/composables/search' // Global composable
 
-// features/dashboard/composables/useDashboardSearch.ts
-import { useSearch } from '@/composables/useSearch' // Same global composable
+// features/dashboard/composables/dashboardSearch.ts
+import { useSearch } from '@/composables/search' // Same global composable
 ```
 
 ```ts
@@ -1432,7 +1432,7 @@ export default {
    import DataTable from '@/components/DataTable.vue'
 
    // ✅ Component can use composables
-   import { useApi } from '@/composables/useApi'
+   import { useApi } from '@/composables/api'
    ```
 
 2. **`services/` cross-referencing**: ✅ **Allowed for global services**
@@ -1568,18 +1568,18 @@ components/
 
 Global composables provide cross-cutting functionality used by multiple modules:
 
-- **Utility functions** (e.g., `useLocalStorage.ts`, `useDebounce.ts`)
-- **Common business logic** (e.g., `useApi.ts`, `useAuth.ts`)
-- **Framework utilities** (e.g., `useRouter.ts`, `useI18n.ts`)
+- **Utility functions** (e.g., `localStorage.ts`, `debounce.ts`)
+- **Common business logic** (e.g., `server.ts`, `auth.ts`)
+- **Framework utilities** (e.g., `router.ts`, `i18n.ts`)
 
 ```plaintext
 composables/
-├── useApi.ts             # HTTP client wrapper
-├── useAuth.ts            # Authentication state
-├── useLocalStorage.ts    # Local storage utilities
-├── useDebounce.ts        # Debouncing utility
-├── usePermissions.ts     # Authorization logic
-└── useValidation.ts      # Form validation helpers
+├── server.ts             # HTTP client wrapper
+├── auth.ts               # Authentication state
+├── localStorage.ts       # Local storage utilities
+├── debounce.ts           # Debouncing utility
+├── permissions.ts        # Authorization logic
+└── validation.ts         # Form validation helpers
 ```
 
 ### Global Entities (`entities/`)
@@ -1642,7 +1642,7 @@ features/
 │   ├── composables/
 │   │   └── useSearch.ts
 │   ├── services/
-│   │   └── search.api.ts
+│   │   └── search.ts
 │   ├── entities/
 │   │   └── SearchResult.ts
 │   └── index.ts
@@ -1654,7 +1654,7 @@ features/
 │   ├── composables/
 │   │   └── useFileUpload.ts
 │   ├── services/
-│   │   └── upload.api.ts
+│   │   └── upload.ts
 │   └── index.ts
 ├── data-table/           # Reusable data table
 │   ├── components/
@@ -1690,7 +1690,7 @@ features/
 export { default as SearchInput } from './components/SearchInput.vue'
 export { default as SearchResults } from './components/SearchResults.vue'
 export { default as SearchFilters } from './components/SearchFilters.vue'
-export { useSearch } from './composables/useSearch'
+export { useSearch } from './composables/search'
 export * from './entities/SearchResult'
 
 // Usage in modules:
@@ -1711,12 +1711,12 @@ export * from './entities/SearchResult'
 - `Button.vue` → shared/ui (UI primitive)
 - `UserCard.vue` → Global components (business component)
 - `UserForm.vue` → Module-specific (business logic)
-- `useApi.ts` → Global (utility)
-- `useUserManagement.ts` → Module-specific (domain logic)
+- `server.ts` → Global (utility)
+- `userManagement.ts` → Module-specific (domain logic)
 - `User.ts` → Global (core entity)
 - `UserPreferences.ts` → Module-specific (specific to user module)
 - `search/` feature → Global (used across modules)
-- `user-invite/` feature → Module-specific (specific to users module)
+- `userInvite/` feature → Module-specific (specific to users module)
 
 ### Feature Organization Guidelines
 
@@ -1749,8 +1749,7 @@ src/
     │       ├── entities/
     │       │   └── UserInvite.ts
     │       ├── UserInviteForm.vue
-    │       ├── useUserInvite.ts
-    │       ├── userInvite.api.ts
+    │       ├── userInvite.ts
     │       ├── UserInviteView.vue
     │       └── index.ts
     ├── components/
@@ -1759,8 +1758,7 @@ src/
 ```
 
 - `features/user-invite/UserInviteForm.vue`: UI for inviting a new user
-- `features/user-invite/useUserInvite.ts`: Composable for invite logic
-- `features/user-invite/userInvite.api.ts`: API client for invites
+- `features/user-invite/userInvite.ts`: API client for invites
 - `features/user-invite/UserInviteView.vue`: Feature-specific view
 
 **Note**: Internal module features do NOT require `index.ts` - they are directly accessible within the module.
@@ -1774,8 +1772,7 @@ For small features, a flat structure (all files in the feature root) is simple a
 ```plaintext
 features/user-invite/
   UserInviteForm.vue
-  useUserInvite.ts
-  userInvite.api.ts
+  userInvite.ts
   UserInviteView.vue
   index.ts
 ```
@@ -1787,9 +1784,9 @@ features/user-invite/
   components/
     UserInviteForm.vue
   composables/
-    useUserInvite.ts
+    userInviteDetails.ts
   services/
-    userInvite.api.ts
+    userInvite.ts
   entities/
     UserInvite.ts
   views/
@@ -1866,7 +1863,8 @@ src/
 │   ├── stores/           # Global app stores
 │   ├── plugins/          # App-level plugins
 │   ├── layouts/          # App layouts
-│   └── styles/           # Global styles (only accessible by app layer)
+│   ├── styles/           # Global styles (only accessible by app layer)
+│   └── App.vue           # Root component
 ├── components/           # Global business components
 ├── composables/          # Global composables
 ├── services/             # Global API clients and business logic services
@@ -1874,7 +1872,6 @@ src/
 ├── features/             # Global cross-cutting features
 ├── modules/              # Domain-specific modules
 ├── shared/               # UI kit and utilities (organized by purpose)
-├── App.vue               # Root component
 └── main.ts               # Entry point
 ```
 
@@ -1891,11 +1888,8 @@ src/
 
 ```ts
 // ✅ GOOD - Only essential app initialization
-import { createApp } from 'vue'
-import { router } from './app/router'
-import App from './App.vue'
-
-createApp(App).use(router).mount('#app')
+import { application } from '@/app'
+application.mount('#app')
 ```
 
 ```ts
@@ -1913,13 +1907,13 @@ import Button from '@/shared/ui/Button.vue'
 
 // Global assets
 import UserCard from '@/components/UserCard.vue'
-import { useApi } from '@/composables/useApi'
+import { useApi } from '@/composables/api'
 import { User } from '@/entities/User'
 import { SearchInput } from '@/features/search'
 
 // Module-specific
 import LoginForm from '@/modules/auth/components/LoginForm.vue'
-import { useAuth } from '@/modules/auth/composables/useAuth'
+import { useAuth } from '@/modules/auth/composables/auth'
 // or via public module export path
 import LoginForm from '@/modules/auth'
 import { useAuth } from '@/modules/auth'
@@ -1938,9 +1932,8 @@ This modular architecture implements a strict **6-layer hierarchy** where depend
 
 ```plaintext
 app/ (Pink/Red Background)
-├── routing/        ← Navigation and route configuration
-├── config/         ← App-wide settings and environment (including tailwind.config.js)
-├── plugins/        ← Framework plugins and integrations
+├── router/         ← Navigation and route configuration
+├── config/         ← App-wide settings and environment
 ├── layouts/        ← Page layout templates
 └── styles/         ← Global styles and design system
 ```
@@ -1969,9 +1962,9 @@ modules/           features/ (Yellow Background)
 
 ```plaintext
 composables/       components/       services/ (Green Background)
-├── useApi.ts      ├── UserCard.vue  ├── auth.api.ts
-├── useAuth.ts     ├── DataTable.vue ├── users.api.ts
-└── useForm.ts     └── SearchInput.vue └── notifications.api.ts
+├── server.ts      ├── UserCard.vue    ├── auth.ts
+├── auth.ts        ├── DataTable.vue   ├── users.ts
+└── form.ts        └── SearchInput.vue └── notifications.ts
 ```
 
 **Role**: Reusable business logic, UI components, API clients
@@ -1982,9 +1975,9 @@ composables/       components/       services/ (Green Background)
 
 ```plaintext
 stores/ (Gray Background)
-├── authStore.ts       ← Authentication state
-├── userStore.ts       ← User management state
-└── notificationStore.ts ← Global notifications
+├── auth.ts         ← Authentication state
+├── user.ts         ← User management state
+└── notification.ts ← Global notifications
 ```
 
 **Role**: Global state management and cross-module communication
@@ -2044,207 +2037,3 @@ shared/ (Purple Background)
 - [ ] Document team guidelines and examples
 
 **Result**: A visually clear, maintainable modular architecture that scales with your team and project complexity.
-
-## File Creation Decision Matrix for Global Features
-
-When implementing new global features, follow this decision matrix to ensure consistent architecture:
-
-| File Type                               | When to Create                          | Responsibilities                                                                                                                  | What Should NOT Go Inside                                                     |
-| --------------------------------------- | --------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| **`src/entities/<Feature>.ts`**         | **Always**                              | • Zod schema definition; • Type exports; • Field-level validation rules; • Schema-derived utilities                               | • RPC calls; • Data transformation logic; • Business rules; • Vue composables |
-| **`src/services/<feature>.ts`**         | **Always**                              | • RPC/API calls; • Response → domain mapping; • Validation using entity schema; • Caching (export `cached` ref); • Error handling | • Vue composables; • UI-specific logic; • Component imports                   |
-| **`src/services/<feature>.helpers.ts`** | **When business logic is complex**      | • Pure transformation functions; • Business rules (if/then logic); • Data normalization; • Cross-field validations                | • Vue reactivity; • RPC calls; • Side effects                                 |
-| **`src/composables/use<Feature>.ts`**   | **Always**                              | • Reactive wrapper around service; • `load()` method calling service; • UI-friendly computed refs; • Vue lifecycle hooks          | • RPC calls; • Data transformation; • Business logic                          |
-| **`src/stores/use<Feature>Store.ts`**   | **When you need cross-component state** | • Pinia store actions; • UI state management; • Service orchestration; • Loading/error states                                     | • RPC calls (delegate to service); • Business logic (delegate to service)     |
-
-### Layer Import Rules
-
-To maintain clean architecture, follow these import restrictions:
-
-- ✅ **Services** can import: `entities`, `helpers`
-- ✅ **Composables** can import: `services` (cached refs only)
-- ✅ **Stores** can import: `services`
-- ❌ **Services** cannot import: `composables`, `stores`
-- ❌ **Entities** cannot import: anything except other entities
-
-### Quick Decision Flow
-
-For any new feature, ask:
-
-1. **"Do I need a data contract?"** → Create entity
-2. **"Do I need to fetch/process data?"** → Create service
-3. **"Is the processing logic complex?"** → Create service helpers
-4. **"Do I need reactive UI state?"** → Create composable
-5. **"Do I need cross-component state management?"** → Create store
-
-**Always create**: Entity + Service + Composable  
-**Sometimes create**: Helpers + Store
-
-### Example Implementation
-
-```typescript
-// src/entities/SystemDetails.ts - Data contract only
-export const SystemDetailsSchema = z.object({
-  'product-name': z.string(),
-  'hw-version': z.string(),
-})
-export type SystemDetails = z.infer<typeof SystemDetailsSchema>
-
-// src/services/systemDetails.ts - I/O + orchestration
-export const cachedDetails = ref<SystemDetails | null>(null)
-export const systemDetailsService = {
-  async fetchDetails(th: string | number): Promise<SystemDetails> {
-    // RPC call, validation, caching
-  },
-}
-
-// src/composables/useSystemDetails.ts - UI wrapper
-export const useSystemDetails = createGlobalState(() => {
-  const systemDetails = computed(() => cachedDetails.value)
-  const loadValues = async () => {
-    await systemDetailsService.fetchDetails(session.value.th)
-  }
-  return { systemDetails, loadValues }
-})
-```
-
-## File Creation Decision Matrix for Module/Feature Implementation
-
-When implementing features within specific modules (under `src/modules/<module-name>/`), follow this decision matrix:
-
-| File Type                         | When to Create                   | Responsibilities                                                                                                                | What Should NOT Go Inside                                                               |
-| --------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| **`types.ts`**                    | **Always**                       | • Zod schemas for module data; • TypeScript type definitions; • Module-specific validation rules; • Type exports for public API | • Business logic; • API calls; • Vue composables; • Component logic                     |
-| **`services/<feature>.ts`**       | **Always**                       | • Module-specific API calls; • RPC/HTTP requests; • Response transformation; • Error handling; • Request/response mapping       | • Vue reactivity; • UI logic; • Component imports; • Global state management            |
-| **`services/helpers.ts`**         | **When API logic is complex**    | • Pure transformation functions; • Request/response mapping; • Data normalization; • Validation helpers                         | • Vue composables; • Side effects; • Global state; • UI concerns                        |
-| **`composables/use<Feature>.ts`** | **When UI needs reactive state** | • Module-specific reactive logic; • Local state management; • UI lifecycle hooks; • Form handling                               | • Direct API calls (use services/ instead); • Global state; • Cross-module dependencies |
-| **`components/<Component>.vue`**  | **For reusable components**      | • Presentation logic; • User interactions; • Local component state; • Props/events handling                                     | • API calls; • Business logic; • Cross-module imports; • Global state mutations         |
-| **`views/<View>.vue`**            | **For page-level views**         | • Page layout and structure; • Route handling; • Composition of components; • Page-specific state                               | • Direct API calls; • Business logic; • Reusable component logic                        |
-| **`index.ts`**                    | **Always**                       | • Module public API exports; • External interface definition; • Re-exports of public components/composables                     | • Implementation details; • Internal utilities; • Private components                    |
-
-### Module Layer Import Rules
-
-Within modules, follow these import restrictions:
-
-- ✅ **`services/`** can import: `types.ts`, `services/helpers.ts`, global `@/entities`
-- ✅ **`composables/`** can import: `services/`, `types.ts`
-- ✅ **`components/`** can import: `composables/`, `types.ts`, global `@/shared/components`
-- ✅ **`views/`** can import: `components/`, `composables/`, `types.ts`
-- ✅ **`index.ts`** can import: any file within the module (for re-export)
-- ❌ **`services/`** cannot import: `composables/`, `components/`, `views/`
-- ❌ **`types.ts`** cannot import: anything except other types and global entities
-- ❌ **Modules** cannot import: internal files from other modules (only via `index.ts`)
-
-### Module Decision Flow
-
-For any new module feature, ask:
-
-1. **"Do I need module-specific types?"** → Create/update `types.ts`
-2. **"Do I need to fetch external data?"** → Create `services/<feature>.ts`
-3. **"Is the API logic complex?"** → Create `services/helpers.ts`
-4. **"Do I need reactive UI state?"** → Create `composables/use<Feature>.ts`
-5. **"Do I need reusable components?"** → Create `components/<Component>.vue`
-6. **"Do I need page views?"** → Create `views/<View>.vue`
-7. **"Should this be available to other modules?"** → Export via `index.ts`
-
-### Module Structure Example
-
-```plaintext
-src/modules/port-configuration/
-├── types.ts                    # Port-specific schemas and types
-├── services/
-│   ├── ports.ts               # Port CRUD operations
-│   ├── configurations.ts      # Configuration API calls
-│   └── helpers.ts             # API transformation utilities
-├── composables/
-│   ├── usePortEditor.ts       # Port editing state
-│   └── usePortValidation.ts   # Port validation logic
-├── components/
-│   ├── PortList.vue           # Port listing component
-│   ├── PortEditor.vue         # Port editing form
-│   └── PortStatus.vue         # Port status display
-├── views/
-│   ├── PortConfigurationView.vue    # Main port configuration page
-│   └── PortDetailsView.vue          # Individual port details page
-└── index.ts                   # Public API exports
-```
-
-### Example Module Implementation
-
-```typescript
-// src/modules/port-configuration/types.ts
-export const PortSchema = z.object({
-  id: z.string(),
-  name: z.string(),
-  status: z.enum(['active', 'inactive']),
-})
-export type Port = z.infer<typeof PortSchema>
-
-// src/modules/port-configuration/services/ports.ts
-import { PortSchema, type Port } from '../types'
-
-export const portsService = {
-  async fetchPorts(): Promise<Port[]> {
-    const response = await fetchJsonRpc({ method: 'get_ports' })
-    return response.map((port) => PortSchema.parse(port))
-  },
-
-  async updatePort(port: Port): Promise<void> {
-    await fetchJsonRpc({ method: 'update_port', params: port })
-  },
-}
-
-// src/modules/port-configuration/composables/usePortEditor.ts
-import { ref } from 'vue'
-import { portsService } from '../services/ports'
-import type { Port } from '../types'
-
-export function usePortEditor() {
-  const selectedPort = ref<Port | null>(null)
-  const loading = ref(false)
-
-  const loadPort = async (id: string) => {
-    loading.value = true
-    try {
-      const ports = await portsService.fetchPorts()
-      selectedPort.value = ports.find((p) => p.id === id) || null
-    } finally {
-      loading.value = false
-    }
-  }
-
-  return { selectedPort, loading, loadPort }
-}
-
-// src/modules/port-configuration/index.ts - Public API
-export type { Port } from './types'
-export { usePortEditor } from './composables/usePortEditor'
-export { default as PortList } from './components/PortList.vue'
-export { default as PortEditor } from './components/PortEditor.vue'
-export { default as PortConfigurationView } from './views/PortConfigurationView.vue'
-```
-
-### Cross-Module Communication
-
-When modules need to communicate:
-
-```typescript
-// ✅ CORRECT - Import via public API
-import { usePortEditor, type Port } from '@/modules/port-configuration'
-
-// ❌ WRONG - Direct import of internal files
-import { usePortEditor } from '@/modules/port-configuration/composables/usePortEditor'
-```
-
-### Module vs Global Decision
-
-| Scope                       | Use Module Files                                            | Use Global Files                  |
-| --------------------------- | ----------------------------------------------------------- | --------------------------------- |
-| **Feature-specific**        | Module `services/`, `composables/`, `components/`, `views/` | Never                             |
-| **Reusable across modules** | Export via `index.ts` then decide                           | Often better as global            |
-| **Shared types/entities**   | If module-specific                                          | Global `src/entities/`            |
-| **Common services**         | If module-specific                                          | Global `src/services/`            |
-| **UI components**           | If module-specific                                          | Global `src/shared/components/`   |
-| **Page views**              | Always module-specific                                      | Never (views are module-specific) |
-
-This structure ensures modules are self-contained while maintaining clean interfaces for cross-module communication.

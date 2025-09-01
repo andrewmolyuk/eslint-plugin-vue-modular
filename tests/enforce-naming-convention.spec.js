@@ -211,7 +211,7 @@ describe('vue-modular/enforce-naming-convention rule', () => {
       valid: [
         {
           code: 'export default { }',
-          filename: '/src/services/auth.api.ts',
+          filename: '/src/services/auth.ts',
         },
         {
           code: 'export default { }',
@@ -223,7 +223,7 @@ describe('vue-modular/enforce-naming-convention rule', () => {
         },
         {
           code: 'export default { }',
-          filename: '/src/modules/users/services/users.api.ts',
+          filename: '/src/modules/users/services/users.ts',
         },
       ],
       invalid: [
@@ -260,6 +260,100 @@ describe('vue-modular/enforce-naming-convention rule', () => {
         },
       ],
       invalid: [],
+    })
+  })
+
+  it('entity naming conventions', () => {
+    ruleTester.run('enforce-naming-convention', plugin.rules['enforce-naming-convention'], {
+      valid: [
+        {
+          code: 'export default { }',
+          filename: '/src/entities/User.ts',
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/entities/Settings.ts',
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/modules/auth/entities/AuthConfig.ts',
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/entities/ApiResponse.ts',
+        },
+      ],
+      invalid: [
+        {
+          code: 'export default { }',
+          filename: '/src/entities/user.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/entities/api-response.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/modules/users/entities/userPreferences.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+      ],
+    })
+  })
+
+  it('routes file naming conventions', () => {
+    ruleTester.run('enforce-naming-convention', plugin.rules['enforce-naming-convention'], {
+      valid: [
+        {
+          code: 'export default { }',
+          filename: '/src/modules/auth/routes.ts',
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/modules/users/routes.ts',
+        },
+      ],
+      invalid: [
+        {
+          code: 'export default { }',
+          filename: '/src/modules/auth/Routes.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/modules/users/auth-routes.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+      ],
+    })
+  })
+
+  it('menu file naming conventions', () => {
+    ruleTester.run('enforce-naming-convention', plugin.rules['enforce-naming-convention'], {
+      valid: [
+        {
+          code: 'export default { }',
+          filename: '/src/modules/auth/menu.ts',
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/modules/users/menu.ts',
+        },
+      ],
+      invalid: [
+        {
+          code: 'export default { }',
+          filename: '/src/modules/auth/Menu.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+        {
+          code: 'export default { }',
+          filename: '/src/modules/users/navigation.ts',
+          errors: [{ messageId: 'namingConvention' }],
+        },
+      ],
     })
   })
 })

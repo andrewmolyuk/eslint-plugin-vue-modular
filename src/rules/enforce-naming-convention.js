@@ -62,15 +62,34 @@ function getFileType(filename) {
   if ((path.includes('/services/') || path.includes('/service/')) && (basename.endsWith('.ts') || basename.endsWith('.js'))) {
     return 'service'
   }
+  if ((path.includes('/entities/') || path.includes('/entity/')) && (basename.endsWith('.ts') || basename.endsWith('.js'))) {
+    return 'entity'
+  }
+
+  // Check for specific module files (detect any .ts/.js file in modules directory that should be routes or menu)
+  if (pathParts.includes('modules') && (basename.endsWith('.ts') || basename.endsWith('.js'))) {
+    // Check if it's a routes file (basename starts with route-related names or is routes.ts)
+    if (basename === 'routes.ts' || basename.startsWith('route') || basename.startsWith('Route') || basename.includes('routes')) {
+      return 'routes'
+    }
+    // Check if it's a menu file (basename starts with menu/nav-related names or is menu.ts)
+    if (
+      basename === 'menu.ts' ||
+      basename.startsWith('menu') ||
+      basename.startsWith('Menu') ||
+      basename.startsWith('nav') ||
+      basename.startsWith('Nav') ||
+      basename.includes('navigation')
+    ) {
+      return 'menu'
+    }
+  }
 
   // Fallback based on file extension and common patterns
   if (basename.endsWith('.vue')) {
     return 'component'
   }
   if (basename.endsWith('.ts') || basename.endsWith('.js')) {
-    if (basename.includes('.api.')) {
-      return 'service'
-    }
     if (basename.startsWith('use') && basename.includes('Store')) {
       return 'store'
     }
@@ -161,6 +180,43 @@ function validateNamingConvention(filename, componentName) {
           type: 'filename',
           message: `Service files should start with lowercase letter. Expected: ${suggested}.ts`,
           expected: `${suggested}.ts`,
+        })
+      }
+      break
+    }
+
+    case 'entity': {
+      // Entities should use PascalCase (e.g., User.ts, Settings.ts)
+      const expectedFilename = toPascalCase(nameFromFile)
+      if (nameFromFile !== expectedFilename) {
+        violations.push({
+          type: 'filename',
+          message: `Entity files should use PascalCase. Expected: ${expectedFilename}.ts`,
+          expected: `${expectedFilename}.ts`,
+        })
+      }
+      break
+    }
+
+    case 'routes': {
+      // Routes files should be exactly 'routes.ts'
+      if (basename !== 'routes.ts') {
+        violations.push({
+          type: 'filename',
+          message: `Module routes file must be named 'routes.ts'. Found: ${basename}`,
+          expected: 'routes.ts',
+        })
+      }
+      break
+    }
+
+    case 'menu': {
+      // Menu files should be exactly 'menu.ts'
+      if (basename !== 'menu.ts') {
+        violations.push({
+          type: 'filename',
+          message: `Module menu file must be named 'menu.ts'. Found: ${basename}`,
+          expected: 'menu.ts',
         })
       }
       break
@@ -275,7 +331,14 @@ export default {
         const fileType = getFileType(filename)
 
         // Validate file naming for all supported file types
-        if (fileType === 'service' || fileType === 'component' || fileType === 'view') {
+        if (
+          fileType === 'service' ||
+          fileType === 'component' ||
+          fileType === 'view' ||
+          fileType === 'entity' ||
+          fileType === 'routes' ||
+          fileType === 'menu'
+        ) {
           const violations = validateNamingConvention(filename, null)
 
           violations.forEach((violation) => {
