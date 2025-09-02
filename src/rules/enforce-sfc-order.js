@@ -139,7 +139,7 @@ export default {
               messageId: 'wrongOrder',
               data: {
                 currentBlock: block.type,
-                expected: 'after',
+                expected: 'before',
                 otherBlock: expectedPreviousType,
               },
             })

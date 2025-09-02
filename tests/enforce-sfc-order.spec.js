@@ -118,6 +118,10 @@ export default { name: 'Test' }
   const wrongOrderErrors = testRule(invalidSfc2) // template before script with script-first order
   expect(wrongOrderErrors).toHaveLength(1)
   expect(wrongOrderErrors[0].messageId).toBe('wrongOrder')
+  // Verify the error message is correct: script should come before template
+  expect(wrongOrderErrors[0].data.currentBlock).toBe('script')
+  expect(wrongOrderErrors[0].data.expected).toBe('before')
+  expect(wrongOrderErrors[0].data.otherBlock).toBe('template')
 
   const invalidSfc3 = `<script>
 export default { name: 'Test' }
