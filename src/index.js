@@ -4,6 +4,7 @@ import meta from './meta.js'
 import fileComponentNaming from './rules/file-component-naming.js'
 import fileTsNaming from './rules/file-ts-naming.js'
 import folderKebabCase from './rules/folder-kebab-case.js'
+import featureIndexRequired from './rules/feature-index-required.js'
 
 const plugin = {
   meta,
@@ -11,6 +12,7 @@ const plugin = {
     'file-component-naming': fileComponentNaming,
     'file-ts-naming': fileTsNaming,
     'folder-kebab-case': folderKebabCase,
+    'feature-index-required': featureIndexRequired,
   },
   processors: {},
   configs: {},
