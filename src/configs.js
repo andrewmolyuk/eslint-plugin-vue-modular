@@ -6,6 +6,7 @@ const recommendedRules = {
   'vue-modular/components-index-required': 'error',
   'vue-modular/shared-ui-index-required': 'error',
   'vue-modular/no-direct-feature-imports': 'error',
+  'vue-modular/feature-imports-from-shared-only': 'error',
 }
 
 const allRules = {

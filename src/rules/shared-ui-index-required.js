@@ -3,7 +3,7 @@ import path from 'path'
 import { parseRuleOptions, runOnce } from '../utils.js'
 
 const defaultOptions = {
-  shared: 'shared',
+  shared: 'src/shared',
   index: 'index.ts',
 }
 

@@ -99,13 +99,13 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Dependency Rules
 
-| Rule                                                                   | Description                                                                                                                                       |
-| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [no-direct-feature-imports](./docs/rules/no-direct-feature-imports.md) | Features cannot import from other features directly.                                                                                              |
-| feature-imports-from-shared-only                                       | Features can only import from `shared/` folder.                                                                                                   |
-| no-shared-imports-from-features                                        | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
-| app-imports                                                            | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
-| cross-feature-via-shared                                               | All cross-feature communication must go through the `shared/` layer.                                                                              |
+| Rule                                                                                 | Description                                                                                                                                       |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [no-direct-feature-imports](./docs/rules/no-direct-feature-imports.md)               | Features cannot import from other features directly.                                                                                              |
+| [feature-imports-from-shared-only](./docs/rules/feature-imports-from-shared-only.md) | Features can only import from `shared/` folder.                                                                                                   |
+| no-shared-imports-from-features                                                      | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
+| app-imports                                                                          | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
+| cross-feature-via-shared                                                             | All cross-feature communication must go through the `shared/` layer.                                                                              |
 
 ### Component Rules
 

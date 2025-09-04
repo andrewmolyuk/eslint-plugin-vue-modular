@@ -8,6 +8,7 @@ import featureIndexRequired from './rules/feature-index-required.js'
 import componentsIndexRequired from './rules/components-index-required.js'
 import sharedUiIndexRequired from './rules/shared-ui-index-required.js'
 import noDirectFeatureImports from './rules/no-direct-feature-imports.js'
+import featureImportsFromSharedOnly from './rules/feature-imports-from-shared-only.js'
 
 const plugin = {
   meta,
@@ -19,6 +20,7 @@ const plugin = {
     'components-index-required': componentsIndexRequired,
     'shared-ui-index-required': sharedUiIndexRequired,
     'no-direct-feature-imports': noDirectFeatureImports,
+    'feature-imports-from-shared-only': featureImportsFromSharedOnly,
   },
   processors: {},
   configs: {},
