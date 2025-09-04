@@ -68,6 +68,11 @@ export function parseRuleOptions(context, defaultOptions) {
     parsed.required = Array.isArray(options.required) && options.required.length > 0 ? options.required : defaultOptions.required
   }
 
+  // Parse ignore option with array validation
+  if (defaultOptions.ignore !== undefined) {
+    parsed.ignore = Array.isArray(options.ignore) ? options.ignore : defaultOptions.ignore
+  }
+
   return parsed
 }
 

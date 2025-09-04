@@ -8,13 +8,12 @@ import enforceModuleExports from './rules/enforce-module-exports.js'
 import enforceFeatureExports from './rules/enforce-feature-exports.js'
 import enforceImportBoundaries from './rules/enforce-import-boundaries.js'
 import enforceNamingConvention from './rules/enforce-naming-convention.js'
+import fileComponentNaming from './rules/file-component-naming.js'
 import noBusinessLogicInUiKit from './rules/no-business-logic-in-ui-kit.js'
 import noOrphanedFiles from './rules/no-orphaned-files.js'
 import noDeepNesting from './rules/no-deep-nesting.js'
 import enforceSfcOrder from './rules/enforce-sfc-order.js'
-
-// Import utilities
-import { isTestFile } from './utils/import-boundaries.js'
+import createConfigs from './configs.js'
 
 const plugin = {
   meta,
@@ -26,6 +25,7 @@ const plugin = {
     'enforce-module-exports': enforceModuleExports,
     'enforce-feature-exports': enforceFeatureExports,
     'enforce-naming-convention': enforceNamingConvention,
+    'file-component-naming': fileComponentNaming,
     'enforce-import-boundaries': enforceImportBoundaries,
     'no-business-logic-in-ui-kit': noBusinessLogicInUiKit,
     'no-orphaned-files': noOrphanedFiles,
@@ -34,98 +34,9 @@ const plugin = {
   },
   processors: {},
   configs: {},
-  utils: {
-    isTestFile,
-  },
+  utils: {},
 }
 
-// Flat config for ESLint v9+
-plugin.configs['flat/recommended'] = [
-  {
-    plugins: {
-      'vue-modular': plugin,
-    },
-    rules: {
-      'vue-modular/no-cross-feature-imports': 'error',
-      'vue-modular/no-cross-module-imports': 'error',
-      'vue-modular/no-business-logic-in-ui-kit': 'error',
-      'vue-modular/enforce-import-boundaries': 'error',
-      'vue-modular/enforce-src-structure': 'error',
-      'vue-modular/enforce-app-structure': 'error',
-      'vue-modular/enforce-module-exports': 'error',
-      'vue-modular/enforce-feature-exports': 'error',
-      'vue-modular/no-orphaned-files': 'error',
-      'vue-modular/no-deep-nesting': 'warn',
-      'vue-modular/enforce-sfc-order': 'error',
-    },
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-    },
-  },
-]
-
-// Strict config with all rules enabled
-plugin.configs['flat/strict'] = [
-  {
-    plugins: {
-      'vue-modular': plugin,
-    },
-    rules: {
-      'vue-modular/no-cross-feature-imports': 'error',
-      'vue-modular/no-cross-module-imports': 'error',
-      'vue-modular/no-business-logic-in-ui-kit': 'error',
-      'vue-modular/enforce-import-boundaries': 'error',
-      'vue-modular/enforce-src-structure': 'error',
-      'vue-modular/enforce-app-structure': 'error',
-      'vue-modular/enforce-module-exports': 'error',
-      'vue-modular/enforce-feature-exports': 'error',
-      'vue-modular/enforce-naming-convention': 'error',
-      'vue-modular/no-orphaned-files': 'error',
-      'vue-modular/no-deep-nesting': 'error',
-      'vue-modular/enforce-sfc-order': 'error',
-    },
-    languageOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module',
-    },
-  },
-]
-
-// Classic config for legacy support
-plugin.configs.recommended = {
-  plugins: ['vue-modular'],
-  rules: {
-    'vue-modular/no-cross-feature-imports': 'error',
-    'vue-modular/no-cross-module-imports': 'error',
-    'vue-modular/no-business-logic-in-ui-kit': 'error',
-    'vue-modular/enforce-import-boundaries': 'error',
-    'vue-modular/enforce-src-structure': 'error',
-    'vue-modular/enforce-app-structure': 'error',
-    'vue-modular/enforce-module-exports': 'error',
-    'vue-modular/enforce-feature-exports': 'error',
-    'vue-modular/no-orphaned-files': 'error',
-    'vue-modular/no-deep-nesting': 'warn',
-    'vue-modular/enforce-sfc-order': 'error',
-  },
-}
-
-// Strict config with all rules enabled (legacy)
-plugin.configs.strict = {
-  plugins: ['vue-modular'],
-  rules: {
-    'vue-modular/no-cross-feature-imports': 'error',
-    'vue-modular/no-cross-module-imports': 'error',
-    'vue-modular/enforce-src-structure': 'error',
-    'vue-modular/enforce-app-structure': 'error',
-    'vue-modular/enforce-module-exports': 'error',
-    'vue-modular/enforce-feature-exports': 'error',
-    'vue-modular/enforce-import-boundaries': 'error',
-    'vue-modular/enforce-naming-convention': 'error',
-    'vue-modular/no-orphaned-files': 'error',
-    'vue-modular/no-deep-nesting': 'error',
-    'vue-modular/enforce-sfc-order': 'error',
-  },
-}
+plugin.configs = createConfigs(plugin)
 
 export default plugin

@@ -87,14 +87,14 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### File Organization Rules
 
-| Rule                                  | Description                                                                              |
-| ------------------------------------- | ---------------------------------------------------------------------------------------- |
-| vue-modular/file-component-naming     | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`). |
-| vue-modular/file-ts-naming            | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).       |
-| vue-modular/folder-kebab-case         | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).              |
-| vue-modular/feature-index-required    | Each feature folder must contain an `index.ts` file as its public API.                   |
-| vue-modular/components-index-required | All `components/` folders must contain an `index.ts` file for component exports.         |
-| vue-modular/shared-ui-index-required  | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.        |
+| Rule                                                                       | Description                                                                              |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| [vue-modular/file-component-naming](./docs/rules/file-component-naming.md) | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`). |
+| vue-modular/file-ts-naming                                                 | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).       |
+| vue-modular/folder-kebab-case                                              | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).              |
+| vue-modular/feature-index-required                                         | Each feature folder must contain an `index.ts` file as its public API.                   |
+| vue-modular/components-index-required                                      | All `components/` folders must contain an `index.ts` file for component exports.         |
+| vue-modular/shared-ui-index-required                                       | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.        |
 
 ### Dependency Rules
 
