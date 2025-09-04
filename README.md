@@ -103,7 +103,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [no-direct-feature-imports](./docs/rules/no-direct-feature-imports.md)               | Features cannot import from other features directly.                                                                                              |
 | [feature-imports-from-shared-only](./docs/rules/feature-imports-from-shared-only.md) | Features can only import from `shared/` folder.                                                                                                   |
-| no-shared-imports-from-features                                                      | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
+| [no-shared-imports-from-features](./docs/rules/no-shared-imports-from-features.md)   | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
 | app-imports                                                                          | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
 | cross-feature-via-shared                                                             | All cross-feature communication must go through the `shared/` layer.                                                                              |
 
@@ -269,4 +269,4 @@ Pull requests and issues are welcome! Please follow the code style and add tests
 
 ## License
 
-MIT, see [LICENSE](./LICENSE) for details.
+MIT, see [LICENSE](./LICENSE.md) for details.
