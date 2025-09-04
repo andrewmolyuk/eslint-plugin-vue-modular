@@ -109,15 +109,15 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Component Rules
 
-| Rule                         | Description                                                                                                      |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| sfc-required                 | All Vue components should be written as Single File Components (SFC) with `.vue` extension.                      |
-| sfc-order                    | SFC blocks must be ordered: `<script>`, `<template>`, `<style>` (at least one of script or template must exist). |
-| layout-components-location   | Layout-specific components must be in `app/components/`.                                                         |
-| ui-components-location       | Reusable UI components (design system) must be in `shared/ui/`.                                                  |
-| business-components-location | Business components used across features must be in `shared/components/`.                                        |
-| feature-components-location  | Feature-specific components must be in `features/{feature}/components/`.                                         |
-| component-props-typed        | Component props must be typed with TypeScript interfaces.                                                        |
+| Rule                                         | Description                                                                                                                                                                                                 |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [sfc-required](./docs/rules/sfc-required.md) | All Vue components should be written as Single File Components (SFC) with `.vue` extension; when present on disk a `.vue` file must contain at least a `<template>` or `<script>` / `<script setup>` block. |
+| sfc-order                                    | SFC blocks must be ordered: `<script>`, `<template>`, `<style>` (at least one of script or template must exist).                                                                                            |
+| layout-components-location                   | Layout-specific components must be in `app/components/`.                                                                                                                                                    |
+| ui-components-location                       | Reusable UI components (design system) must be in `shared/ui/`.                                                                                                                                             |
+| business-components-location                 | Business components used across features must be in `shared/components/`.                                                                                                                                   |
+| feature-components-location                  | Feature-specific components must be in `features/{feature}/components/`.                                                                                                                                    |
+| component-props-typed                        | Component props must be typed with TypeScript interfaces.                                                                                                                                                   |
 
 ### Service Rules
 
