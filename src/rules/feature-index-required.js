@@ -1,7 +1,3 @@
-/**
- * @fileoverview Require features/{feature}/index.ts public API file
- */
-
 import fs from 'fs'
 import path from 'path'
 import { parseRuleOptions, isFileIgnored, runOnce } from '../utils.js'

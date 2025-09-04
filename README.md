@@ -95,7 +95,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | [folder-kebab-case](./docs/rules/folder-kebab-case.md)                 | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).                               |
 | [feature-index-required](./docs/rules/feature-index-required.md)       | Each feature folder must contain an `index.ts` file as its public API.                                    |
 | [components-index-required](./docs/rules/components-index-required.md) | All `components/` folders must contain an `index.ts` (or configured filename) file for component exports. |
-| shared-ui-index-required                                               | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
+| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)   | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
 
 ### Dependency Rules
 

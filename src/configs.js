@@ -4,6 +4,7 @@ const recommendedRules = {
   'vue-modular/folder-kebab-case': 'error',
   'vue-modular/feature-index-required': 'error',
   'vue-modular/components-index-required': 'error',
+  'vue-modular/shared-ui-index-required': 'error',
 }
 
 const allRules = {

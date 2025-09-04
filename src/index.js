@@ -6,6 +6,7 @@ import fileTsNaming from './rules/file-ts-naming.js'
 import folderKebabCase from './rules/folder-kebab-case.js'
 import featureIndexRequired from './rules/feature-index-required.js'
 import componentsIndexRequired from './rules/components-index-required.js'
+import sharedUiIndexRequired from './rules/shared-ui-index-required.js'
 
 const plugin = {
   meta,
@@ -15,6 +16,7 @@ const plugin = {
     'folder-kebab-case': folderKebabCase,
     'feature-index-required': featureIndexRequired,
     'components-index-required': componentsIndexRequired,
+    'shared-ui-index-required': sharedUiIndexRequired,
   },
   processors: {},
   configs: {},
