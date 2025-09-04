@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, expect } from 'vitest'
-import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile } from '../src/utils.js'
+import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile, toCamelCase } from '../src/utils.js'
 
 describe('src/utils', () => {
   describe('parseRuleOptions', () => {
@@ -27,6 +27,18 @@ describe('src/utils', () => {
       expect(toPascalCase('alreadyPascal')).toBe('AlreadyPascal')
       expect(toPascalCase('mixed CASE-name')).toBe('MixedCASEName')
       expect(toPascalCase('123-number')).toBe('123Number')
+    })
+  })
+
+  describe('toCamelCase', () => {
+    it('converts various separators to camelCase', () => {
+      expect(toCamelCase('user-card')).toBe('userCard')
+      expect(toCamelCase('login_form')).toBe('loginForm')
+      expect(toCamelCase('AlreadyCamel')).toBe('alreadyCamel')
+      expect(toCamelCase('mixed CASE-name')).toBe('mixedCASEName')
+      expect(toCamelCase('123-number')).toBe('123Number')
+      expect(toCamelCase('foo--bar_baz')).toBe('fooBarBaz')
+      expect(toCamelCase('')).toBe('')
     })
   })
 

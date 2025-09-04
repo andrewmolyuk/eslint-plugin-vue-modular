@@ -53,3 +53,38 @@ export function isTestFile(filename) {
   const lower = String(filename).toLowerCase()
   return lower.includes('/test/') || lower.includes('/tests/') || lower.includes('.spec.') || lower.includes('.test.')
 }
+
+// Utility to convert strings to camelCase
+export function toCamelCase(name) {
+  const s = String(name)
+    .replace(/[^a-zA-Z0-9]+/g, ' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+  if (s.length === 0) return ''
+  const [first, ...rest] = s
+  if (rest.length === 0) return first.charAt(0).toLowerCase() + first.slice(1)
+  return first.toLowerCase() + rest.map((w) => w[0].toUpperCase() + w.slice(1)).join('')
+}
+
+// Utility to ensure a function runs only once per ESLint execution context
+export const runOnce = (ruleId) => {
+  if (!global.__eslintVueModularRunId) {
+    global.__eslintVueModularRunId = `${process.pid}_${process.cwd()}`
+  }
+
+  if (!global.__eslintVueModularState) {
+    global.__eslintVueModularState = new Map()
+  }
+
+  const eslintRunId = global.__eslintVueModularRunId
+  if (!global.__eslintVueModularState.has(eslintRunId)) {
+    global.__eslintVueModularState.set(eslintRunId, new Set())
+  }
+
+  const seen = global.__eslintVueModularState.get(eslintRunId)
+  if (seen.has(ruleId)) return false
+
+  seen.add(ruleId)
+  return true
+}
