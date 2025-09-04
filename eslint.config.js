@@ -1,14 +1,13 @@
 import js from '@eslint/js'
-import eslintPlugin from 'eslint-plugin-eslint-plugin'
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
 export default [
   // ignore common build and dependency folders
   { ignores: ['node_modules/**', 'dist/**', '.git/**', 'examples/**', '**/*.d.ts'] },
   js.configs.recommended,
-  eslintPlugin.configs.recommended,
   eslintPluginPrettierRecommended,
   {
+    files: ['**/*.js'],
     // default language options and globals for plugin source files (Node environment)
     languageOptions: {
       ecmaVersion: 2022,
@@ -25,8 +24,7 @@ export default [
     },
   },
   {
-    files: ['tests/**/*.js'],
-    plugins: {},
+    files: ['test/**/*.js'],
     // tests run under vitest/jest-like globals
     languageOptions: {
       globals: {

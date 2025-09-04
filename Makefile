@@ -1,7 +1,7 @@
-@PHONY: lint install test update drawio
+.PHONY: install lint test update drawio
 
 install:
-	npm install --no-audit --no-fund --prefer-offline
+	npm install --no-audit --no-fund 
 
 lint:
 	npx eslint . --ext .ts,.js,.vue --fix
@@ -9,11 +9,11 @@ lint:
 	npx prettier --write "**/*.md" "**/*.json" "**/*.js" "**/*.ts" --log-level warn
 
 test: lint
-	CI=CI npx vitest
+	CI=CI npx vitest --coverage
 
 update:
 	npx npm-check-updates -u
-	npm install --no-audit --no-fund --prefer-offline
+	npm install --no-audit --no-fund
 
 drawio:
 	@if [ -z "$(DRAWIO_CMD)" ]; then \
