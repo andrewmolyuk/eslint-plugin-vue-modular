@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import moduleStructureRule from '../src/rules/enforce-module-exports.js'
-import { setupTest, runRule, createMockFileSystem } from './test-utils.js'
+import { setupTest, runRule, createMockFileSystem } from './utils'
 
 describe('enforce-module-exports rule', () => {
   beforeEach(setupTest)

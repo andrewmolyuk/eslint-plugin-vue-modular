@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import srcStructureRule, { resetSession } from '../src/rules/enforce-src-structure.js'
-import { setupTestWithReset, createContext, runRule } from './test-utils.js'
+import { setupTestWithReset, createContext, runRule } from './utils'
 
 describe('enforce-src-structure rule', () => {
   beforeEach(setupTestWithReset(resetSession))

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import fs from 'fs'
 import featureStructureRule from '../src/rules/enforce-feature-exports.js'
-import { setupTest, runRule, createMockFileSystem } from './test-utils.js'
+import { setupTest, runRule, createMockFileSystem } from './utils'
 
 describe('enforce-feature-exports rule', () => {
   beforeEach(setupTest)

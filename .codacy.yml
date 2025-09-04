@@ -2,8 +2,8 @@ engines:
   duplication:
     enabled: true
     exclude_paths:
-      - 'test/**'
+      - 'tests/**'
   metric:
     enabled: true
     exclude_paths:
-      - 'test/**'
+      - 'tests/**'

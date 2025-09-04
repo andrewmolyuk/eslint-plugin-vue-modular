@@ -1,6 +1,6 @@
 import { describe, it, beforeEach, expect } from 'vitest'
 import plugin from '../src/index.js'
-import { setupRuleTester } from './test-utils.js'
+import { setupRuleTester } from './utils'
 
 describe('Test files handling', () => {
   let ruleTester

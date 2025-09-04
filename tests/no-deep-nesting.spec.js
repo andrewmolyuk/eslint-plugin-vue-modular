@@ -1,5 +1,5 @@
 import { describe, it, beforeEach } from 'vitest'
-import { setupRuleTester } from './test-utils.js'
+import { setupRuleTester } from './utils'
 import noDeepNestingRule from '../src/rules/no-deep-nesting.js'
 
 describe('no-deep-nesting rule', () => {
