@@ -19,10 +19,10 @@ const createConfigs = (plugin) => {
   }
 
   return {
-    'flat/recommended': [{ ...flatPluginBlock, rules: recommendedRules }],
-    'flat/all': [{ ...flatPluginBlock, rules: allRules }],
-    recommended: { ...legacyPluginBlock, rules: recommendedRules },
-    all: { ...legacyPluginBlock, rules: allRules },
+    recommended: [{ ...flatPluginBlock, rules: recommendedRules }],
+    all: [{ ...flatPluginBlock, rules: allRules }],
+    'legacy/recommended': { ...legacyPluginBlock, rules: recommendedRules },
+    'legacy/all': { ...legacyPluginBlock, rules: allRules },
   }
 }
 
