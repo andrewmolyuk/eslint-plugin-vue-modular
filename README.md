@@ -1,12 +1,10 @@
 # eslint-plugin-vue-modular
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/andrewmolyuk/eslint-plugin-vue-modular/release.yml)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/release.yml)
-[![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/819ccf509a694fcc8204bca4a78c634d)](https://app.codacy.com/gh/andrewmolyuk/eslint-plugin-vue-modular/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Issues](https://img.shields.io/github/issues/andrewmolyuk/eslint-plugin-vue-modular)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/issues)
-[![NPM](https://img.shields.io/npm/v/eslint-plugin-vue-modular.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-vue-modular)
 [![NPM downloads](https://img.shields.io/npm/dw/eslint-plugin-vue-modular.svg?style=flat)](https://www.npmjs.com/package/eslint-plugin-vue-modular)
-[![License](https://img.shields.io/npm/l/eslint-plugin-vue-modular.svg)](LICENSE)
+[![semantic-release: conventional](https://img.shields.io/badge/semantic--release-conventional-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
 
 A custom ESLint plugin for enforcing modular patterns in Vue projects.
 
@@ -115,7 +113,7 @@ module.exports = {
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-### Included Rules
+See the latest list of rules in the [Rules](./docs/rules.md) documentation. The legacy rules listed below are scheduled for refactoring and will be deprecated soon.
 
 | Rule                                                                       | Description                                                                    |
 | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
@@ -132,7 +130,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | [no-deep-nesting](./docs/rules/no-deep-nesting.md)                         | Prevent excessive folder nesting in modules and features                       |
 | [enforce-naming-convention](./docs/rules/enforce-naming-convention.md)     | Enforce consistent naming patterns for Vue components                          |
 
-### Modular Architecture in Vue
+## Modular Architecture in Vue
 
 In Vue applications, modular architecture means organizing your codebase into self-contained feature modules. Each module typically contains its own components, composables, stores, and styles, grouped by feature rather than by file type. This approach improves maintainability, scalability, and testability by reducing coupling and clarifying dependencies.
 
@@ -143,40 +141,13 @@ With modular architecture, you can:
 - Enable teams to work independently on different modules.
 - Simplify onboarding by making the project structure more intuitive.
 
-See the [Vue Project Modules Blueprint](./docs/vue-project-modules-blueprint.md) for more details and rationale behind modular structure.
+See the [Vue Modular Architecture](./docs/vue-modular-architecture.md) for more details and rationale behind modular structure.
 
 The `eslint-plugin-vue-modular` plugin helps enforce these boundaries, ensuring that your Vue project remains modular as it grows.
 
-## Recommended VS Code Extensions
-
-See `.vscode/extensions.json` for a list of recommended extensions to
-improve your development experience.
-
 ## Contributing
 
-Pull requests and issues are welcome! Please follow the code style and add
-tests for new rules.
-
-## Release Process
-
-This project uses [semantic-release](https://semantic-release.gitbook.io/semantic-release/) for automated releases. Releases are triggered automatically when commits are pushed to the `main` branch.
-
-### Commit Message Format
-
-Use [conventional commit messages](https://www.conventionalcommits.org/) to trigger releases:
-
-- `feat: description` → minor version bump (new features)
-- `fix: description` → patch version bump (bug fixes)
-- `BREAKING CHANGE: description` → major version bump (breaking changes)
-- `docs:`, `style:`, `refactor:`, `test:`, `chore:` → no release
-
-### Development Workflow
-
-1. Create a feature branch: `git checkout -b feature/awesome-feature`
-2. Make changes with conventional commits
-3. Create a Pull Request to `main`
-4. After PR approval and merge → automatic release is triggered
-5. New version is published to NPM automatically
+Pull requests and issues are welcome! Please follow the code style and add tests for new rules.
 
 ## License
 
