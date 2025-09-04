@@ -1,12 +1,12 @@
 import { describe, it, beforeEach } from 'vitest'
-import { setupRuleTester } from './utils'
+import { createRuleTester } from './utils'
 import noDeepNestingRule from '../src/rules/no-deep-nesting.js'
 
 describe('no-deep-nesting rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = setupRuleTester()
+    ruleTester = createRuleTester()
   })
 
   it('should allow files within default depth limit (3 levels)', () => {

@@ -1,12 +1,12 @@
 import { describe, it, beforeEach } from 'vitest'
 import plugin from '../src/index.js'
-import { setupRuleTester } from './utils'
+import { createRuleTester } from './utils'
 
 describe('vue-modular/enforce-import-boundaries rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = setupRuleTester()
+    ruleTester = createRuleTester()
   })
 
   it('basic cases', () => {

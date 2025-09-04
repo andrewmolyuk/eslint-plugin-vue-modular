@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import plugin from '../src/index.js'
-import { setupRuleTester } from './utils'
+import { createRuleTester } from './utils'
 
 describe('vue-modular/no-business-logic-in-ui-kit rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = setupRuleTester()
+    ruleTester = createRuleTester()
   })
 
   it('flags forbidden imports and side-effect calls inside UI-kit files', () => {

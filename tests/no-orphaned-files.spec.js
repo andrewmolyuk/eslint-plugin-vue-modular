@@ -1,12 +1,12 @@
 import { describe, it, beforeEach } from 'vitest'
 import noOrphanedFilesRule from '../src/rules/no-orphaned-files.js'
-import { setupRuleTester } from './utils'
+import { createRuleTester } from './utils'
 
 describe('no-orphaned-files rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = setupRuleTester()
+    ruleTester = createRuleTester()
   })
 
   describe('valid cases', () => {

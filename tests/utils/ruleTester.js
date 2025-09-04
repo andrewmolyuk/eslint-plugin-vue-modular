@@ -16,8 +16,3 @@ export const createRuleTester = () => {
     },
   })
 }
-
-export const setupRuleTester = () => {
-  // Keep backward compatibility
-  return createRuleTester()
-}

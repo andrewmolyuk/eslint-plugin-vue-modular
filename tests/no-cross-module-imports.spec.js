@@ -1,12 +1,12 @@
 import { describe, it, beforeEach } from 'vitest'
 import plugin from '../src/index.js'
-import { setupRuleTester } from './utils'
+import { createRuleTester } from './utils'
 
 describe('vue-modular/no-cross-module-imports rule', () => {
   let ruleTester
 
   beforeEach(() => {
-    ruleTester = setupRuleTester()
+    ruleTester = createRuleTester()
   })
 
   it('should allow same module imports', () => {
