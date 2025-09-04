@@ -14,7 +14,7 @@ The rule accepts an options object with the following properties:
 
 - `shared` (string, default: `"src/shared"`) — path segment used to detect the shared root in file paths.
 - `features` (string, default: `"src/features"`) — path segment for features to detect feature imports.
-- `views` (string, default: `"views"`) — path segment for views to detect view imports.
+- `views` (string, default: `"src/views"`) — path segment for views to detect view imports.
 - `ignore` (string[], default: `[]`) — array of feature/view-name patterns to skip; patterns use `minimatch` semantics and are matched against the single path segment after the `features` or `views` segment.
 
 ### Example configuration

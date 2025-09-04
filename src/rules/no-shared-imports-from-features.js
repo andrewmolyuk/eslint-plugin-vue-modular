@@ -4,7 +4,7 @@ import { parseRuleOptions, isTestFile, isFileIgnored } from '../utils.js'
 const defaultOptions = {
   shared: 'src/shared',
   features: 'src/features',
-  views: 'views',
+  views: 'src/views',
   ignore: [],
 }
 
