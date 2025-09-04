@@ -10,6 +10,7 @@ import sharedUiIndexRequired from './rules/shared-ui-index-required.js'
 import noDirectFeatureImports from './rules/no-direct-feature-imports.js'
 import featureImportsFromSharedOnly from './rules/feature-imports-from-shared-only.js'
 import noSharedImportsFromFeatures from './rules/no-shared-imports-from-features.js'
+import appImports from './rules/app-imports.js'
 
 const plugin = {
   meta,
@@ -23,6 +24,7 @@ const plugin = {
     'no-direct-feature-imports': noDirectFeatureImports,
     'feature-imports-from-shared-only': featureImportsFromSharedOnly,
     'no-shared-imports-from-features': noSharedImportsFromFeatures,
+    'app-imports': appImports,
   },
   processors: {},
   configs: {},
