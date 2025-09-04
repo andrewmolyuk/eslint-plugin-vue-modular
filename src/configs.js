@@ -3,6 +3,7 @@ const recommendedRules = {
   'vue-modular/file-ts-naming': 'error',
   'vue-modular/folder-kebab-case': 'error',
   'vue-modular/feature-index-required': 'error',
+  'vue-modular/components-index-required': 'error',
 }
 
 const allRules = {
