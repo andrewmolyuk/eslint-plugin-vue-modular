@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, expect } from 'vitest'
-import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc } from '../src/utils.js'
+import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile } from '../src/utils.js'
 
 describe('src/utils', () => {
   describe('parseRuleOptions', () => {
@@ -53,11 +53,24 @@ describe('src/utils', () => {
   describe('isOutsideSrc', () => {
     it('returns false when inside src and true when outside', () => {
       const inSrc = path.join(process.cwd(), 'src', 'components', 'Foo.vue')
-      const out = path.join(process.cwd(), 'other', 'components', 'Foo.vue')
+      const outSrc = path.join(process.cwd(), 'other', 'components', 'Foo.vue')
       expect(isOutsideSrc(inSrc, 'src')).toBe(false)
-      expect(isOutsideSrc(out, 'src')).toBe(true)
+      expect(isOutsideSrc(outSrc, 'src')).toBe(true)
       expect(isOutsideSrc(inSrc, '')).toBe(false)
       expect(isOutsideSrc(inSrc, undefined)).toBe(false)
+    })
+  })
+
+  describe('isTestFile', () => {
+    it('detects test files by folder or filename', () => {
+      expect(isTestFile(path.join(process.cwd(), 'src', 'tests', 'Foo.spec.js'))).toBe(true)
+      expect(isTestFile(path.join(process.cwd(), 'src', 'test', 'Foo.js'))).toBe(true)
+      expect(isTestFile(path.join(process.cwd(), 'src', 'components', 'Foo.test.ts'))).toBe(true)
+      expect(isTestFile(path.join(process.cwd(), 'src', 'components', 'Foo.spec.vue'))).toBe(true)
+      expect(isTestFile(path.join(process.cwd(), 'src', 'components', 'NotATest.vue'))).toBe(false)
+      expect(isTestFile('')).toBe(false)
+      expect(isTestFile(null)).toBe(false)
+      expect(isTestFile(undefined)).toBe(false)
     })
   })
 })

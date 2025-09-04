@@ -82,4 +82,10 @@ describe('vue-modular/file-component-naming (compact)', () => {
     const ctxAbs = { getFilename: () => absFilename, options: [{ ignore: [absFilename] }] }
     expect(rule.create(ctxAbs)).toEqual({})
   })
+
+  it('skips test files via direct create() invocation', () => {
+    const testFile = path.join(process.cwd(), 'src', 'components', 'MyComponent.spec.vue')
+    const ctxTest = { getFilename: () => testFile, options: [{}] }
+    expect(rule.create(ctxTest)).toEqual({})
+  })
 })

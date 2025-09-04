@@ -1,5 +1,5 @@
 import path from 'path'
-import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc } from '../utils'
+import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile } from '../utils'
 
 const defaultOptions = {
   src: 'src', // Base source directory
@@ -34,6 +34,7 @@ export default {
     const filename = context.getFilename()
     const { src, ignore } = parseRuleOptions(context, defaultOptions)
 
+    if (isTestFile(filename)) return {}
     if (!isComponent(filename)) return {}
     if (isFileIgnored(filename, ignore)) return {}
     if (isOutsideSrc(filename, src)) return {}

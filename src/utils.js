@@ -29,7 +29,7 @@ export function toPascalCase(name) {
 // Utility to check if a file is a Vue component based on its path
 export function isComponent(filename) {
   if (!filename) return false
-  const lower = filename.toLowerCase()
+  const lower = String(filename).toLowerCase()
   return lower.endsWith('.vue') || lower.includes('.component.') || lower.includes('.comp.')
 }
 
@@ -45,4 +45,11 @@ export function isOutsideSrc(filename, src) {
   const rel = path.relative(process.cwd(), filename)
   const parts = rel.split(path.sep)
   return !parts.includes(src)
+}
+
+// Utility to check if a file is likely a test file based on its path
+export function isTestFile(filename) {
+  if (!filename) return false
+  const lower = String(filename).toLowerCase()
+  return lower.includes('/test/') || lower.includes('/tests/') || lower.includes('.spec.') || lower.includes('.test.')
 }
