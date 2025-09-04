@@ -1,6 +1,7 @@
 const recommendedRules = {
   'vue-modular/file-component-naming': 'error',
   'vue-modular/file-ts-naming': 'error',
+  'vue-modular/folder-kebab-case': 'error',
 }
 
 const allRules = {

@@ -67,6 +67,15 @@ export function toCamelCase(name) {
   return first.toLowerCase() + rest.map((w) => w[0].toUpperCase() + w.slice(1)).join('')
 }
 
+// Utility to convert strings to kebab-case
+export function toKebabCase(name) {
+  return String(name)
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/[^A-Za-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase()
+}
+
 // Utility to ensure a function runs only once per ESLint execution context
 export const runOnce = (ruleId) => {
   if (!global.__eslintVueModularRunId) {

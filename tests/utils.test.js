@@ -1,6 +1,16 @@
 import path from 'path'
-import { describe, it, expect } from 'vitest'
-import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile, toCamelCase } from '../src/utils.js'
+import { describe, it, expect, beforeEach } from 'vitest'
+import {
+  parseRuleOptions,
+  toPascalCase,
+  isComponent,
+  isFileIgnored,
+  isOutsideSrc,
+  isTestFile,
+  toCamelCase,
+  toKebabCase,
+  runOnce,
+} from '../src/utils.js'
 
 describe('src/utils', () => {
   describe('parseRuleOptions', () => {
@@ -39,6 +49,19 @@ describe('src/utils', () => {
       expect(toCamelCase('123-number')).toBe('123Number')
       expect(toCamelCase('foo--bar_baz')).toBe('fooBarBaz')
       expect(toCamelCase('')).toBe('')
+    })
+
+    describe('toKebabCase', () => {
+      it('converts various inputs to kebab-case', () => {
+        expect(toKebabCase('UserCard')).toBe('user-card')
+        expect(toKebabCase('userCard')).toBe('user-card')
+        expect(toKebabCase('login_form')).toBe('login-form')
+        expect(toKebabCase('Mixed CASE-name')).toBe('mixed-case-name')
+        expect(toKebabCase('123Number')).toBe('123-number')
+        expect(toKebabCase('already-kebab')).toBe('already-kebab')
+        expect(toKebabCase('foo--bar_baz')).toBe('foo-bar-baz')
+        expect(toKebabCase('')).toBe('')
+      })
     })
   })
 
@@ -83,6 +106,42 @@ describe('src/utils', () => {
       expect(isTestFile('')).toBe(false)
       expect(isTestFile(null)).toBe(false)
       expect(isTestFile(undefined)).toBe(false)
+    })
+  })
+
+  describe('runOnce', () => {
+    beforeEach(() => {
+      // ensure a clean global state between tests
+      try {
+        delete global.__eslintVueModularRunId
+        delete global.__eslintVueModularState
+      } catch {
+        /* ignore */
+      }
+    })
+
+    it('returns true first time and false afterwards for the same rule id', () => {
+      expect(runOnce('test-rule-1')).toBe(true)
+      expect(runOnce('test-rule-1')).toBe(false)
+      expect(runOnce('test-rule-2')).toBe(true)
+      expect(runOnce('test-rule-2')).toBe(false)
+    })
+
+    it('is scoped by the eslint run id (different run ids allow same rule again)', () => {
+      // first run
+      expect(runOnce('scoped-rule')).toBe(true)
+      expect(runOnce('scoped-rule')).toBe(false)
+
+      // simulate a new eslint run id
+      const prevRunId = global.__eslintVueModularRunId
+      try {
+        global.__eslintVueModularRunId = `${process.pid}_newscope`
+        // new map is created internally for the new run id
+        expect(runOnce('scoped-rule')).toBe(true)
+      } finally {
+        if (prevRunId === undefined) delete global.__eslintVueModularRunId
+        else global.__eslintVueModularRunId = prevRunId
+      }
     })
   })
 })

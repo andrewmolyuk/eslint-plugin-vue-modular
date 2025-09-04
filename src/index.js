@@ -3,12 +3,14 @@ import meta from './meta.js'
 
 import fileComponentNaming from './rules/file-component-naming.js'
 import fileTsNaming from './rules/file-ts-naming.js'
+import folderKebabCase from './rules/folder-kebab-case.js'
 
 const plugin = {
   meta,
   rules: {
     'file-component-naming': fileComponentNaming,
     'file-ts-naming': fileTsNaming,
+    'folder-kebab-case': folderKebabCase,
   },
   processors: {},
   configs: {},
