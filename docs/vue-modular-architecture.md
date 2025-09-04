@@ -4,23 +4,23 @@ Based on industry best practices, established architectural patterns, and lesson
 
 ## Core Architectural Principles
 
-### 1. Domain-Driven Design (DDD)
+### Domain-Driven Design (DDD)
 
 Modern Vue.js applications should be organized around business domains rather than technical layers. This aligns with DDD principles and makes the codebase more intuitive for business stakeholders.
 
-### 2. Feature-First Organization
+### Feature-First Organization
 
 Structure code by features/capabilities rather than file types. This improves discoverability and makes it easier for teams to work on complete features.
 
-### 3. Dependency Inversion
+### Dependency Inversion
 
 Higher-level modules should not depend on lower-level modules. Both should depend on abstractions. This is crucial for maintainable, testable code.
 
-### 4. Single Responsibility Principle
+### Single Responsibility Principle
 
 Each module, component, and service should have one reason to change. This reduces coupling and improves maintainability.
 
-### 5. Interface Segregation
+### Interface Segregation
 
 Modules should expose minimal, focused interfaces. Large monolithic APIs should be avoided in favor of smaller, purpose-specific interfaces.
 
