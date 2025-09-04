@@ -1,17 +1,13 @@
-import { describe, it, beforeEach, expect } from 'vitest'
-import { RuleTester } from 'eslint'
 import path from 'path'
-import plugin from '../src/index.js'
-import rule from '../src/rules/file-component-naming.js'
+import { describe, it, beforeEach, expect } from 'vitest'
+import rule from '../../src/rules/file-component-naming.js'
+import { tester, setupTest } from '../utils.js'
 
 describe('vue-modular/file-component-naming (compact)', () => {
-  let ruleTester
+  beforeEach(setupTest)
 
-  beforeEach(() => {
-    ruleTester = new RuleTester({ languageOptions: { ecmaVersion: 2022, sourceType: 'module' }, plugins: { 'vue-modular': plugin } })
-  })
   it('valid PascalCase filenames', () => {
-    ruleTester.run('file-component-naming', plugin.rules['file-component-naming'], {
+    tester.run('file-component-naming', rule, {
       valid: [
         { code: 'export default {}', filename: '/src/components/UserCard.vue' },
         { code: 'export default {}', filename: '/src/modules/auth/components/LoginForm.vue' },
@@ -22,7 +18,7 @@ describe('vue-modular/file-component-naming (compact)', () => {
   })
 
   it('invalid non-PascalCase filenames', () => {
-    ruleTester.run('file-component-naming', plugin.rules['file-component-naming'], {
+    tester.run('file-component-naming', rule, {
       valid: [],
       invalid: [
         { code: 'export default {}', filename: '/src/components/user-card.vue', errors: [{ messageId: 'filenameNotPascal' }] },
@@ -33,7 +29,7 @@ describe('vue-modular/file-component-naming (compact)', () => {
   })
 
   it('respects ignore patterns (glob and absolute)', () => {
-    ruleTester.run('file-component-naming', plugin.rules['file-component-naming'], {
+    tester.run('file-component-naming', rule, {
       valid: [
         { code: 'export default {}', filename: '/src/components/ignored-file.vue', options: [{ ignore: ['**/ignored-file.vue'] }] },
         {
@@ -48,13 +44,13 @@ describe('vue-modular/file-component-naming (compact)', () => {
 
   it('respects src scoping', () => {
     // file outside configured src should be ignored
-    ruleTester.run('file-component-naming', plugin.rules['file-component-naming'], {
+    tester.run('file-component-naming', rule, {
       valid: [{ code: 'export default {}', filename: '/other/components/user-card.vue', options: [{ src: 'src' }] }],
       invalid: [],
     })
 
     // file inside custom src should be checked
-    ruleTester.run('file-component-naming', plugin.rules['file-component-naming'], {
+    tester.run('file-component-naming', rule, {
       valid: [],
       invalid: [
         {
@@ -68,7 +64,7 @@ describe('vue-modular/file-component-naming (compact)', () => {
   })
 
   it('ignores non-.vue filenames and empty filename', () => {
-    ruleTester.run('file-component-naming', plugin.rules['file-component-naming'], {
+    tester.run('file-component-naming', rule, {
       valid: [
         { code: 'export default {}', filename: '/src/components/not-a-vue.txt' },
         { code: 'export default {}', filename: '' },

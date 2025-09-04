@@ -1,14 +1,8 @@
-/**
- * Enforce PascalCase filenames for Vue component files
- */
-
-import { toPascalCase } from '../utils'
-import { minimatch } from 'minimatch'
 import path from 'path'
-import { parseRuleOptions } from '../utils/global-state'
+import { parseRuleOptions, toPascalCase, isComponent, isFileIgnored, isOutsideSrc } from '../utils'
 
 const defaultOptions = {
-  src: 'src', // Base source directory to enforce the rule in
+  src: 'src', // Base source directory
   ignore: [], // Array of glob patterns to ignore
 }
 
@@ -40,25 +34,13 @@ export default {
     const filename = context.getFilename()
     const { src, ignore } = parseRuleOptions(context, defaultOptions)
 
-    if (!filename || !filename.endsWith('.vue')) {
-      return {}
-    }
-
-    // Skip ignored patterns (match against absolute and project-relative paths)
-    const rel = path.relative(process.cwd(), filename)
-    const isIgnored = ignore.some((pattern) => minimatch(filename, pattern) || minimatch(rel, pattern))
-    if (isIgnored) return {}
-
-    // If src option is provided, only apply inside that folder
-    if (src) {
-      const parts = rel.split(path.sep)
-      if (!parts.includes(src)) return {}
-    }
+    if (!isComponent(filename)) return {}
+    if (isFileIgnored(filename, ignore)) return {}
+    if (isOutsideSrc(filename, src)) return {}
 
     return {
       Program(node) {
-        const base = filename.split('/').pop()
-        const name = base.replace(/\.vue$/i, '')
+        const { base, name } = path.parse(filename)
         const expected = toPascalCase(name)
 
         if (name !== expected) {
