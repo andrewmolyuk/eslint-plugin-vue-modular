@@ -121,13 +121,13 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Service Rules
 
-| Rule                       | Description                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------- |
-| services-shared-location   | Cross-cutting services must be in `shared/services/`.                                 |
-| services-feature-location  | Feature-specific services must be in `features/{feature}/services/`.                  |
-| service-filename-no-suffix | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
-| service-named-exports      | Services must export named classes or named functions (avoid default exports).        |
-| service-use-api-client     | API services must use the shared `apiClient.ts`.                                      |
+| Rule                                                                     | Description                                                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| services-shared-location                                                 | Cross-cutting services must be in `shared/services/`.                                 |
+| services-feature-location                                                | Feature-specific services must be in `features/{feature}/services/`.                  |
+| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
+| service-named-exports                                                    | Services must export named classes or named functions (avoid default exports).        |
+| service-use-api-client                                                   | API services must use the shared `apiClient.ts`.                                      |
 
 ### Store Rules
 

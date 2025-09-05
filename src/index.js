@@ -13,6 +13,7 @@ import noSharedImportsFromFeatures from './rules/no-shared-imports-from-features
 import appImports from './rules/app-imports.js'
 import sfcRequired from './rules/sfc-required.js'
 import sfcOrder from './rules/sfc-order.js'
+import serviceFilenameNoSuffix from './rules/service-filename-no-suffix.js'
 
 const plugin = {
   meta,
@@ -29,6 +30,7 @@ const plugin = {
     'app-imports': appImports,
     'sfc-required': sfcRequired,
     'sfc-order': sfcOrder,
+    'service-filename-no-suffix': serviceFilenameNoSuffix,
   },
   processors: {},
   configs: {},
