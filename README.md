@@ -86,7 +86,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 > [!IMPORTANT]  
 > The list of rules is a work in progress. Rules with links are implemented and documented.
 >
-> 15 of 92 rules completed.
+> 16 of 92 rules completed.
 
 ### File Organization Rules
 
@@ -156,7 +156,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 | Rule                                                               | Description                                                       |
 | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| routes-global-location                                             | Global routes must be in `app/router.ts`.                         |
+| [routes-global-location](./docs/rules/routes-global-location.md)   | Global routes must be in `app/router.ts`.                         |
 | [routes-feature-location](./docs/rules/routes-feature-location.md) | Feature routes must be in `features/{feature}/routes.ts`.         |
 | routes-merge-in-app                                                | Feature routes must be imported and merged in `app/router.ts`.    |
 | routes-lazy-load                                                   | Route components must be lazy-loaded using dynamic imports.       |
