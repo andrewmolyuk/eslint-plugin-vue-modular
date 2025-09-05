@@ -15,6 +15,7 @@ import sfcRequired from './rules/sfc-required.js'
 import sfcOrder from './rules/sfc-order.js'
 import serviceFilenameNoSuffix from './rules/service-filename-no-suffix.js'
 import storeFilenameNoSuffix from './rules/store-filename-no-suffix.js'
+import routesFeatureLocation from './rules/routes-feature-location.js'
 
 const plugin = {
   meta,
@@ -33,6 +34,7 @@ const plugin = {
     'sfc-order': sfcOrder,
     'service-filename-no-suffix': serviceFilenameNoSuffix,
     'store-filename-no-suffix': storeFilenameNoSuffix,
+    'routes-feature-location': routesFeatureLocation,
   },
   processors: {},
   configs: {},

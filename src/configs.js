@@ -12,6 +12,7 @@ const recommendedRules = {
   'vue-modular/sfc-required': 'error',
   'vue-modular/service-filename-no-suffix': 'error',
   'vue-modular/store-filename-no-suffix': 'error',
+  'vue-modular/routes-feature-location': 'error',
   'vue-modular/app-imports': 'error',
 }
 

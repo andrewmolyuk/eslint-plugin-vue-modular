@@ -152,13 +152,13 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Routing Rules
 
-| Rule                    | Description                                                       |
-| ----------------------- | ----------------------------------------------------------------- |
-| routes-global-location  | Global routes must be in `app/router.ts`.                         |
-| routes-feature-location | Feature routes must be in `features/{feature}/routes.ts`.         |
-| routes-merge-in-app     | Feature routes must be imported and merged in `app/router.ts`.    |
-| routes-lazy-load        | Route components must be lazy-loaded using dynamic imports.       |
-| routes-layout-meta      | Layout selection must be defined in route `meta.layout` property. |
+| Rule                                                               | Description                                                       |
+| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| routes-global-location                                             | Global routes must be in `app/router.ts`.                         |
+| [routes-feature-location](./docs/rules/routes-feature-location.md) | Feature routes must be in `features/{feature}/routes.ts`.         |
+| routes-merge-in-app                                                | Feature routes must be imported and merged in `app/router.ts`.    |
+| routes-lazy-load                                                   | Route components must be lazy-loaded using dynamic imports.       |
+| routes-layout-meta                                                 | Layout selection must be defined in route `meta.layout` property. |
 
 ### View Rules
 
