@@ -86,7 +86,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 > [!IMPORTANT]  
 > The list of rules is a work in progress. Rules with links are implemented and documented.
 >
-> 16 of 92 rules completed.
+> ![Progress](https://progress-bar.xyz/16/?scale=92&width=300&title=16%20of%2092%20rules%20completed)
 
 ### File Organization Rules
 
