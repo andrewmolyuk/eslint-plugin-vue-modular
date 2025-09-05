@@ -38,7 +38,7 @@ export default {
       },
     ],
     messages: {
-      folderNotKebab: 'Folder "{{folder}}" should be kebab-case (e.g., "my-folder").',
+      folderNotKebab: 'Folder "{{folder}}" should be kebab-case (e.g., "{{kebab}}").',
     },
   },
 
@@ -57,8 +57,9 @@ export default {
           scanDirs(srcPath, (dir) => {
             if (isFileIgnored(dir, ignore)) return
             const base = path.basename(dir)
-            if (toKebabCase(base) !== base) {
-              context.report({ node, messageId: 'folderNotKebab', data: { folder: path.relative(process.cwd(), dir) } })
+            const kebab = toKebabCase(base)
+            if (kebab !== base) {
+              context.report({ node, messageId: 'folderNotKebab', data: { folder: path.relative(process.cwd(), dir), kebab } })
             }
           })
         } catch {

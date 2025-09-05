@@ -38,16 +38,18 @@ export default {
 
   create(context) {
     const { app, shared, features, ignore } = parseRuleOptions(context, defaultOptions)
+    // per-file state: avoid mutating context
+    let fileState = null
 
     return {
       Program() {
         const filename = context.getFilename()
         if (!filename || filename === '<input>' || filename === '<text>') {
-          context.__appImportsSource = null
+          fileState = null
           return
         }
         if (isTestFile(filename)) {
-          context.__appImportsSource = null
+          fileState = null
           return
         }
 
@@ -55,7 +57,7 @@ export default {
         const parts = normalized.split(path.sep)
         const appIdx = parts.lastIndexOf(app)
         if (appIdx === -1) {
-          context.__appImportsSource = null
+          fileState = null
           return
         }
 
@@ -63,11 +65,11 @@ export default {
         const base = parts[parts.length - 1] || ''
         const isRouter = base === 'router.ts' || base === 'router.js'
 
-        context.__appImportsSource = { filename, isRouter }
+        fileState = { filename, isRouter }
       },
 
       ImportDeclaration(node) {
-        const state = context.__appImportsSource
+        const state = fileState
         if (!state) return
 
         const { filename, isRouter } = state

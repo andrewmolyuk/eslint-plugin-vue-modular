@@ -36,16 +36,18 @@ export default {
 
   create(context) {
     const { shared, features, views, ignore } = parseRuleOptions(context, defaultOptions)
+    // per-file state (avoid mutating context)
+    let fileState = null
 
     return {
       Program() {
         const filename = context.getFilename()
         if (!filename || filename === '<input>' || filename === '<text>') {
-          context.__noSharedImportsSource = null
+          fileState = null
           return
         }
         if (isTestFile(filename)) {
-          context.__noSharedImportsSource = null
+          fileState = null
           return
         }
 
@@ -53,16 +55,16 @@ export default {
         const parts = normalized.split(path.sep)
         const sharedIdx = parts.lastIndexOf(shared)
         if (sharedIdx === -1) {
-          context.__noSharedImportsSource = null
+          fileState = null
           return
         }
 
-        // store filename on context
-        context.__noSharedImportsSource = { filename }
+        // store filename in closure-scoped state
+        fileState = { filename }
       },
 
       ImportDeclaration(node) {
-        const state = context.__noSharedImportsSource
+        const state = fileState
         if (!state) return
 
         const { filename } = state

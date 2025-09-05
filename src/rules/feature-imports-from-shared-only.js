@@ -32,16 +32,18 @@ export default {
 
   create(context) {
     const { features, ignore } = parseRuleOptions(context, defaultOptions)
+    // per-file state: don't mutate context (it may be non-extensible)
+    let fileState = null
 
     return {
       Program() {
         const filename = context.getFilename()
         if (!filename || filename === '<input>' || filename === '<text>') {
-          context.__featureImportsFromSharedSource = null
+          fileState = null
           return
         }
         if (isTestFile(filename)) {
-          context.__featureImportsFromSharedSource = null
+          fileState = null
           return
         }
 
@@ -49,21 +51,21 @@ export default {
         const parts = normalized.split(path.sep)
         const featuresIdx = parts.lastIndexOf(features)
         if (featuresIdx === -1) {
-          context.__featureImportsFromSharedSource = null
+          fileState = null
           return
         }
 
         const sourceFeature = parts[featuresIdx + 1]
         if (!sourceFeature) {
-          context.__featureImportsFromSharedSource = null
+          fileState = null
           return
         }
 
-        context.__featureImportsFromSharedSource = { sourceFeature, filename }
+        fileState = { sourceFeature, filename }
       },
 
       ImportDeclaration(node) {
-        const state = context.__featureImportsFromSharedSource
+        const state = fileState
         if (!state) return
 
         const { sourceFeature, filename } = state

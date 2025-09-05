@@ -34,17 +34,20 @@ export default {
   create(context) {
     const { features, ignore } = parseRuleOptions(context, defaultOptions)
 
+    // per-file state (do not mutate `context` directly; it may be non-extensible)
+    let fileState = null
+
     return {
       Program() {
         // compute per-file context needed by ImportDeclaration visitor
         const filename = context.getFilename()
         if (!filename || filename === '<input>' || filename === '<text>') {
           // mark as no-op
-          context.__noDirectFeatureSource = null
+          fileState = null
           return
         }
         if (isTestFile(filename)) {
-          context.__noDirectFeatureSource = null
+          fileState = null
           return
         }
 
@@ -52,22 +55,22 @@ export default {
         const parts = normalized.split(path.sep)
         const featuresIdx = parts.lastIndexOf(features)
         if (featuresIdx === -1) {
-          context.__noDirectFeatureSource = null
+          fileState = null
           return
         }
 
         const sourceFeature = parts[featuresIdx + 1]
         if (!sourceFeature) {
-          context.__noDirectFeatureSource = null
+          fileState = null
           return
         }
 
-        // store sourceFeature and filename on context for ImportDeclaration to use
-        context.__noDirectFeatureSource = { sourceFeature, filename }
+        // store sourceFeature and filename in closure-scoped state for ImportDeclaration to use
+        fileState = { sourceFeature, filename }
       },
 
       ImportDeclaration(node) {
-        const state = context.__noDirectFeatureSource
+        const state = fileState
         if (!state) return
 
         const { sourceFeature, filename } = state
