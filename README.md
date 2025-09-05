@@ -84,7 +84,9 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
 > [!IMPORTANT]  
-> The list of rules is a work in progress. Rules with links are implemented and documented, and can be used in your project.
+> The list of rules is a work in progress. Rules with links are implemented and documented.
+>
+> 15 of 92 rules completed.
 
 ### File Organization Rules
 
