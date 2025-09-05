@@ -13,12 +13,12 @@ const recommendedRules = {
   'vue-modular/service-filename-no-suffix': 'error',
   'vue-modular/store-filename-no-suffix': 'error',
   'vue-modular/routes-feature-location': 'error',
-  'vue-modular/routes-global-location': 'error',
   'vue-modular/app-imports': 'error',
 }
 
 const allRules = {
   ...recommendedRules,
+  'vue-modular/routes-global-location': 'error',
 }
 
 const createConfigs = (plugin) => {
