@@ -17,7 +17,7 @@ describe('vue-modular/sfc-required', () => {
 
   it('reports when .vue has neither <template> nor <script>', () => {
     const file = path.join(process.cwd(), 'src', 'features', 'auth', 'components', 'NoBlocks.vue')
-    mockFileSystem(file, '<style>.a{}</style>')
+    mockFileSystem(file, '<style>.a{}</style')
     const ctx = runRule(rule, file, opts)
     expect(ctx.report).toHaveBeenCalled()
     expect(ctx.report).toHaveBeenCalledWith(expect.objectContaining({ messageId: 'missingSfcBlock' }))

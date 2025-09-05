@@ -8,6 +8,7 @@ const recommendedRules = {
   'vue-modular/no-direct-feature-imports': 'error',
   'vue-modular/feature-imports-from-shared-only': 'error',
   'vue-modular/no-shared-imports-from-features': 'error',
+  'vue-modular/sfc-order': 'error',
   'vue-modular/sfc-required': 'error',
   'vue-modular/app-imports': 'error',
 }

@@ -12,6 +12,7 @@ import featureImportsFromSharedOnly from './rules/feature-imports-from-shared-on
 import noSharedImportsFromFeatures from './rules/no-shared-imports-from-features.js'
 import appImports from './rules/app-imports.js'
 import sfcRequired from './rules/sfc-required.js'
+import sfcOrder from './rules/sfc-order.js'
 
 const plugin = {
   meta,
@@ -27,6 +28,7 @@ const plugin = {
     'no-shared-imports-from-features': noSharedImportsFromFeatures,
     'app-imports': appImports,
     'sfc-required': sfcRequired,
+    'sfc-order': sfcOrder,
   },
   processors: {},
   configs: {},
