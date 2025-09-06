@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { parse } from '@vue/compiler-sfc'
 import { resolvePath } from './resolvers.js'
-import minimatch from 'minimatch'
+import { minimatch } from 'minimatch'
 
 // Check if a file is a Vue component
 export function isComponent(filename, src = 'src', alias = '@') {
@@ -76,5 +76,14 @@ export function isSFC(filename) {
 export function isIgnored(filename, patterns = []) {
   if (!filename) return false
   const f = resolvePath(filename)
-  return patterns.some((pattern) => minimatch(f, pattern, { dot: true }))
+  if (!f) return false
+
+  return patterns.some((pattern) => {
+    // If pattern contains glob characters, use minimatch
+    if (['*', '?', '[', '/'].some((char) => pattern.includes(char))) {
+      return minimatch(f, pattern, { dot: true })
+    }
+    // Otherwise, treat as substring match
+    return f.includes(pattern)
+  })
 }

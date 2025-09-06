@@ -1,5 +1,6 @@
 import { RuleTester } from 'eslint'
 import { vi } from 'vitest'
+import fs from 'fs'
 import plugin from '../src/index.js'
 
 // Create a RuleTester instance with the plugin loaded
@@ -46,4 +47,10 @@ export const runRule = (rule, filename = 'index.js', options = [{}], imports = [
     }
   }
   return context
+}
+
+// Replace module mocks with spies. Use `mockFile` to stub fs reads.
+export const mockFile = (filePath, content) => {
+  vi.spyOn(fs, 'existsSync').mockImplementation((p) => String(p) === filePath)
+  vi.spyOn(fs, 'readFileSync').mockImplementation(() => content)
 }

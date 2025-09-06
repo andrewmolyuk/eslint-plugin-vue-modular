@@ -1,34 +1,8 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { isComponent, isStore, isService, isComposable, isView, isIndex, isLayout, isSFC, isIgnored } from '../../src/utils/files.js'
-import { resolvePath } from '../../src/utils/resolvers.js'
-import fs from 'fs'
+import { mockFile } from '../utils.js'
 
-// Mock resolvePath and fs.readFileSync for isolation
-vi.mock('../../src/utils/resolvers.js', () => ({
-  resolvePath: vi.fn((filename) => (filename ? filename : null)),
-  normalizePath: vi.fn((filename) => filename),
-}))
-vi.mock('fs', () => {
-  const readFileSync = vi.fn()
-  return {
-    // provide both a default export (for `import fs from 'fs'`) and a named export
-    default: { readFileSync },
-    readFileSync,
-  }
-})
-// Ensure minimatch is a simple callable default in tests
-vi.mock('minimatch', () => {
-  return {
-    default: vi.fn((file, pattern) => {
-      // very small subset behavior to satisfy tests
-      if (pattern === '**/*.js') return file.endsWith('.js')
-      if (pattern === '**/bar.js') return file.endsWith('/bar.js')
-      return file.includes(pattern)
-    }),
-  }
-})
-
-describe('js utils', () => {
+describe('files.js utils', () => {
   describe('isComponent', () => {
     it('returns true for .vue file in /components/', () => {
       expect(isComponent('/src/components/Foo.vue')).toBe(true)
@@ -40,7 +14,6 @@ describe('js utils', () => {
       expect(isComponent('/src/components/Foo.js')).toBe(false)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockReturnValueOnce(null)
       expect(isComponent('')).toBe(false)
     })
   })
@@ -59,7 +32,6 @@ describe('js utils', () => {
       expect(isStore('/src/services/foo.ts')).toBe(false)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockReturnValueOnce(null)
       expect(isStore('')).toBe(false)
     })
   })
@@ -78,7 +50,6 @@ describe('js utils', () => {
       expect(isService('/src/stores/foo.ts')).toBe(false)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockReturnValueOnce(null)
       expect(isService('')).toBe(false)
     })
   })
@@ -97,7 +68,6 @@ describe('js utils', () => {
       expect(isComposable('/src/services/foo.ts')).toBe(false)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockReturnValueOnce(null)
       expect(isComposable('')).toBe(false)
     })
   })
@@ -113,7 +83,6 @@ describe('js utils', () => {
       expect(isView('/src/views/Foo.js')).toBe(false)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockReturnValueOnce(null)
       expect(isView('')).toBe(false)
     })
     it('supports custom view folder', () => {
@@ -132,56 +101,47 @@ describe('js utils', () => {
       expect(isIndex('/src/foo/main.js', 'main.js')).toBe(true)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockReturnValueOnce(null)
       expect(isIndex('')).toBe(false)
     })
   })
 
   describe('isLayout', () => {
     it('returns true for .vue file in layouts dir', () => {
-      resolvePath.mockImplementation((filename) => filename)
       expect(isLayout('src/app/layouts/MainLayout.vue')).toBe(true)
     })
     it('returns false for .vue file not in layouts dir', () => {
-      resolvePath.mockImplementation((filename) => filename)
       expect(isLayout('src/views/MainLayout.vue')).toBe(false)
     })
     it('returns false for non-vue file in layouts dir', () => {
-      resolvePath.mockImplementation((filename) => filename)
       expect(isLayout('src/app/layouts/MainLayout.js')).toBe(false)
     })
     it('returns false if resolvePath returns null for file', () => {
-      resolvePath.mockImplementationOnce(() => null)
       expect(isLayout('')).toBe(false)
     })
-    it('returns false if resolvePath returns null for layouts', () => {
-      resolvePath.mockImplementationOnce(() => 'src/app/layouts')
-      resolvePath.mockImplementationOnce(() => null)
-      expect(isLayout('src/app/layouts/MainLayout.vue')).toBe(false)
+    it('returns false if provided layouts path does not resolve', () => {
+      // pass a layouts path without 'src' so resolvePath(layouts) returns null
+      expect(isLayout('src/app/layouts/MainLayout.vue', 'app/layouts')).toBe(false)
     })
   })
 
   describe('isSFC', () => {
     it('returns true for .vue file with <template>', () => {
-      resolvePath.mockImplementation((filename) => filename)
-      fs.readFileSync.mockReturnValue('<template><div/></template>')
+      mockFile('src/components/Foo.vue', '<template><div/></template>')
       expect(isSFC('src/components/Foo.vue')).toBe(true)
     })
     it('returns false for file without <template>', () => {
-      resolvePath.mockImplementation((filename) => filename)
-      fs.readFileSync.mockReturnValue('<script></script>')
+      mockFile('src/components/Foo.vue', '<script></script>')
       expect(isSFC('src/components/Foo.vue')).toBe(false)
     })
     it('returns false if resolvePath returns null', () => {
-      resolvePath.mockImplementationOnce(() => null)
       expect(isSFC('')).toBe(false)
     })
   })
 
   describe('isIgnored', () => {
     it('returns true if filename matches a pattern', () => {
-      expect(isIgnored('foo/bar.js', ['bar'])).toBe(true)
-      expect(isIgnored('foo/bar.js', ['**/*.js'])).toBe(true)
+      expect(isIgnored('src/foo/bar.js', ['bar'])).toBe(true)
+      expect(isIgnored('src/foo/bar.js', ['**/*.js'])).toBe(true)
       expect(isIgnored('src/app/foo/bar.js', ['**/bar.js'])).toBe(true)
     })
     it('returns false if filename does not match any pattern', () => {
@@ -189,6 +149,9 @@ describe('js utils', () => {
     })
     it('returns false if filename is falsy', () => {
       expect(isIgnored('', ['bar'])).toBe(false)
+    })
+    it('returns false if resolvePath returns null', () => {
+      expect(isIgnored('foo/bar.js', ['bar'])).toBe(false)
     })
   })
 })
