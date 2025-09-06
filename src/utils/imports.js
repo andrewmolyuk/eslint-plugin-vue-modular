@@ -7,36 +7,70 @@
 import { parse } from '@vue/compiler-sfc'
 import { resolvePath } from './resolvers.js'
 import fs from 'fs'
+import { parse as babelParse } from '@babel/parser'
 
-// Get all import paths from a file
+// Simple recursive walker for AST nodes
+function walk(node, cb) {
+  if (!node || typeof node !== 'object') return
+  cb(node)
+  for (const k of Object.keys(node)) {
+    const child = node[k]
+    if (Array.isArray(child)) child.forEach((c) => walk(c, cb))
+    else walk(child, cb)
+  }
+}
+
 export function getImports(filename, src = 'src', alias = '@') {
   const f = resolvePath(filename, src, alias)
   if (!f) return null
 
   const content = fs.readFileSync(f, 'utf-8')
-  const { descriptor } = parse(content)
-  const imports = []
+  const { descriptor } = parse(content, { filename: f })
+  if (!descriptor) return null
 
-  // Collect all import paths from the script sections
-  if (descriptor.script && descriptor.script.content) {
-    // Parse regular <script> imports
-    const scriptContent = descriptor.script.content
-    const importRegex = /import\s+.*?from\s+['"](.*?)['"]/g
-    let match
-    while ((match = importRegex.exec(scriptContent)) !== null) {
-      imports.push(match[1])
+  const results = []
+
+  // Parse script blocks with @babel/parser to extract any imports
+  const collectFromCode = (code) => {
+    try {
+      const ast = babelParse(code, {
+        sourceType: 'module',
+        plugins: ['typescript', 'jsx', 'classProperties', 'decorators-legacy', 'dynamicImport'],
+      })
+
+      // simple AST walk to find import and export declarations
+      walk(ast, (node) => {
+        // static imports: import x from 'y', import * as x from 'y', import {x} from 'y'
+        if (node.type === 'ImportDeclaration' && node.source && node.source.value) {
+          results.push(node.source.value)
+          return
+        }
+        // dynamic imports: import('x') -- handle both CallExpression and ImportExpression shapes
+        if (node.type === 'ImportExpression' || (node.type === 'CallExpression' && node.callee && node.callee.type === 'Import')) {
+          const arg = node.arguments && node.arguments[0]
+          const val = (arg && arg.type === 'StringLiteral' && arg.value) || (node.source && node.source.value)
+          if (val) {
+            results.push(val)
+            return
+          }
+        }
+        // re-exports: export * from 'x', export { .. } from 'x'
+        if ((node.type === 'ExportAllDeclaration' || node.type === 'ExportNamedDeclaration') && node.source && node.source.value) {
+          results.push(node.source.value)
+          return
+        }
+      })
+    } catch {
+      // ignore parse errors
     }
   }
 
-  if (descriptor.scriptSetup && descriptor.scriptSetup.content) {
-    // Parse <script setup> imports
-    const setupContent = descriptor.scriptSetup.content
-    const importRegex = /import\s+.*?from\s+['"](.*?)['"]/g
-    let match
-    while ((match = importRegex.exec(setupContent)) !== null) {
-      imports.push(match[1])
-    }
-  }
+  if (descriptor.script && descriptor.script.content) collectFromCode(descriptor.script.content)
+  if (descriptor.scriptSetup && descriptor.scriptSetup.content) collectFromCode(descriptor.scriptSetup.content)
 
-  return imports
+  // Deduplicate while preserving order
+  const seen = new Set()
+  return results.filter((r) => (seen.has(r) ? false : seen.add(r)))
 }
+
+export default getImports
