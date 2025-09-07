@@ -1,5 +1,5 @@
 import path from 'path'
-import { isTestFile, isFileIgnored } from '../utils.js'
+import { isTestFile, isFileIgnored } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {

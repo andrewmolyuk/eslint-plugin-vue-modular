@@ -1,5 +1,5 @@
 import path from 'path'
-import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile } from '../utils'
+import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {

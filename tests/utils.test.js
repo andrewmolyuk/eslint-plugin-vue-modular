@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile, toCamelCase, toKebabCase } from '../src/utils.js'
+import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile, toCamelCase, toKebabCase } from '../src/legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../src/utils/rules.js'
 
 describe('src/utils', () => {

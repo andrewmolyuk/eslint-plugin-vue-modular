@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { isFileIgnored } from '../utils.js'
+import { isFileIgnored } from '../legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../utils/rules.js'
 
 const defaultOptions = {

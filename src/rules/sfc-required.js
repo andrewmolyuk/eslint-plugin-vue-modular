@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { parse } from '@vue/compiler-sfc'
-import { isTestFile, isFileIgnored, isOutsideSrc } from '../utils.js'
+import { isTestFile, isFileIgnored, isOutsideSrc } from '../legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../utils/rules.js'
 
 const defaultOptions = { src: 'src', ignore: [] }
