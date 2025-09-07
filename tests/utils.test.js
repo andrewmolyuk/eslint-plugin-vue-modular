@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, toCamelCase, toKebabCase } from '../src/legacy_utils.js'
+import { toPascalCase, isComponent, isIgnored, isOutsideSrc, toCamelCase, toKebabCase } from '../src/legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../src/utils/rules.js'
 
 describe('src/utils', () => {
@@ -67,12 +67,12 @@ describe('src/utils', () => {
     })
   })
 
-  describe('isFileIgnored', () => {
+  describe('isIgnored', () => {
     it('matches relative glob patterns and absolute patterns', () => {
       const filename = path.join(process.cwd(), 'src', 'components', 'ignored-file.vue')
-      expect(isFileIgnored(filename, ['**/ignored-file.vue'])).toBe(true)
-      expect(isFileIgnored(filename, [filename])).toBe(true)
-      expect(isFileIgnored(filename, ['**/other.vue'])).toBe(false)
+      expect(isIgnored(filename, ['**/ignored-file.vue'])).toBe(true)
+      expect(isIgnored(filename, [filename])).toBe(true)
+      expect(isIgnored(filename, ['**/other.vue'])).toBe(false)
     })
   })
 

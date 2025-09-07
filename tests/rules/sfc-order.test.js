@@ -72,7 +72,7 @@ describe('vue-modular/sfc-order', () => {
     expect(ctx.report).not.toHaveBeenCalled()
   })
 
-  it('respects ignore patterns (isFileIgnored)', () => {
+  it('respects ignore patterns (isIgnored)', () => {
     const file = path.join(process.cwd(), 'src', 'legacy', 'Thing.vue')
     const ctx = runRule(rule, file, [{ src: 'src', ignore: ['**/legacy/**'] }])
     expect(ctx.report).not.toHaveBeenCalled()

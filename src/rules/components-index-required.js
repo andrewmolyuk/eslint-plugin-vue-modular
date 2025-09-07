@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { isFileIgnored } from '../legacy_utils.js'
+import { isIgnored } from '../legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -52,7 +52,7 @@ export default {
 
         const parentName = parts[idx - 1]
         if (!parentName) return
-        if (isFileIgnored(parentName, ignore)) return
+        if (isIgnored(parentName, ignore)) return
 
         const componentsKey = parts.slice(0, idx + 1).join(path.sep)
         const indexPath = path.join(componentsKey, index)

@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { isFileIgnored, toKebabCase } from '../legacy_utils.js'
+import { isIgnored, toKebabCase } from '../legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -56,7 +56,7 @@ export default {
 
         try {
           scanDirs(srcPath, (dir) => {
-            if (isFileIgnored(dir, ignore)) return
+            if (isIgnored(dir, ignore)) return
             const base = path.basename(dir)
             const kebab = toKebabCase(base)
             if (kebab !== base) {

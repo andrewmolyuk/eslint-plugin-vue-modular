@@ -1,5 +1,5 @@
 import path from 'path'
-import { isFileIgnored, isOutsideSrc } from '../legacy_utils.js'
+import { isIgnored, isOutsideSrc } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -39,7 +39,7 @@ export default {
 
     const { src, ignore, suffix } = parseRuleOptions(context, defaultOptions)
 
-    if (isFileIgnored(filename, ignore)) return {}
+    if (isIgnored(filename, ignore)) return {}
     if (isOutsideSrc(filename, src)) return {}
 
     const { base, name } = path.parse(filename)

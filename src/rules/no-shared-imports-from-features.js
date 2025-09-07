@@ -1,5 +1,5 @@
 import path from 'path'
-import { isFileIgnored } from '../legacy_utils.js'
+import { isIgnored } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -80,7 +80,7 @@ export default {
         const impFeaturesIdx = impParts.lastIndexOf(features)
         if (impFeaturesIdx !== -1) {
           const targetFeature = impParts[impFeaturesIdx + 1]
-          if (targetFeature && !isFileIgnored(targetFeature, ignore)) {
+          if (targetFeature && !isIgnored(targetFeature, ignore)) {
             context.report({ node, messageId: 'forbidden', data: { layer: 'features', target: targetFeature } })
             return
           }
@@ -90,7 +90,7 @@ export default {
         const impViewsIdx = impParts.lastIndexOf(views)
         if (impViewsIdx !== -1) {
           const target = impParts[impViewsIdx + 1] || ''
-          if (!isFileIgnored(target, ignore)) {
+          if (!isIgnored(target, ignore)) {
             context.report({ node, messageId: 'forbidden', data: { layer: 'views', target } })
             return
           }

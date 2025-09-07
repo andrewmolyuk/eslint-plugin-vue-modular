@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { parse } from '@vue/compiler-sfc'
-import { isFileIgnored, isOutsideSrc } from '../legacy_utils.js'
+import { isIgnored, isOutsideSrc } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = { src: 'src', ignore: [], order: ['script', 'template', 'style'] }
@@ -41,7 +41,7 @@ export default {
 
         if (String(filename).startsWith('<')) return
         if (isOutsideSrc(filename, opts.src)) return
-        if (isFileIgnored(filename, opts.ignore)) return
+        if (isIgnored(filename, opts.ignore)) return
         if (!String(filename).toLowerCase().endsWith('.vue')) return
 
         try {

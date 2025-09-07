@@ -1,5 +1,5 @@
 import path from 'path'
-import { isFileIgnored } from '../legacy_utils.js'
+import { isIgnored } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -82,7 +82,7 @@ export default {
         const targetFeature = impParts[impFeaturesIdx + 1]
         if (!targetFeature) return
 
-        if (isFileIgnored(targetFeature, ignore)) return
+        if (isIgnored(targetFeature, ignore)) return
 
         // importing from another feature (including its public API) is forbidden
         if (targetFeature !== sourceFeature) {

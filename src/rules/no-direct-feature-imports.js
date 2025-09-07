@@ -1,5 +1,5 @@
 import path from 'path'
-import { isFileIgnored } from '../legacy_utils.js'
+import { isIgnored } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -88,7 +88,7 @@ export default {
         if (!targetFeature) return
 
         // skip reporting for ignored target features
-        if (isFileIgnored(targetFeature, ignore)) return
+        if (isIgnored(targetFeature, ignore)) return
 
         if (targetFeature !== sourceFeature) {
           context.report({ node, messageId: 'forbidden', data: { targetFeature } })

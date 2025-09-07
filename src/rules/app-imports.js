@@ -1,5 +1,5 @@
 import path from 'path'
-import { isFileIgnored } from '../legacy_utils.js'
+import { isIgnored } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -90,7 +90,7 @@ export default {
         if (impFeaturesIdx !== -1) {
           const targetFeature = impParts[impFeaturesIdx + 1]
           if (!targetFeature) return
-          if (isFileIgnored(targetFeature, ignore)) return
+          if (isIgnored(targetFeature, ignore)) return
 
           const nextSegment = impParts[impFeaturesIdx + 2]
           // deep import (beyond the feature folder)
@@ -112,7 +112,7 @@ export default {
         // Import is not from shared or features -> forbidden
         const allowed = `${shared}, ${features}`
         const target = impParts[impParts.length - 1] || ''
-        if (!isFileIgnored(target, ignore)) {
+        if (!isIgnored(target, ignore)) {
           context.report({ node, messageId: 'forbiddenOther', data: { allowed, target } })
         }
       },

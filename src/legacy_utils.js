@@ -34,7 +34,7 @@ export function isComponent(filename) {
 }
 
 // Utility to check if a file matches any ignore patterns
-export function isFileIgnored(filename, ignorePatterns) {
+export function isIgnored(filename, ignorePatterns) {
   const rel = path.relative(process.cwd(), filename)
   return ignorePatterns.some((pattern) => minimatch(filename, pattern) || minimatch(rel, pattern))
 }
