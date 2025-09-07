@@ -32,7 +32,6 @@ The `eslint-plugin-vue-modular` plugin helps enforce these boundaries, ensuring 
 - Custom linting rules for Vue modular architecture
 - Supports single-file components (SFC)
 - Enforces architectural boundaries between features
-- Automatic test file detection - test files can import from anywhere without restrictions
 - Supports both flat config (ESLint v9+) and legacy config formats
 - Easily extendable for your team's needs
 

@@ -16,8 +16,7 @@ import feature route files (paths that include a `routes` segment) so the
 application router can compose feature routes.
 
 Import specifiers are resolved against the linted file, so relative imports
-like `../features/payments/...` are interpreted correctly. Virtual filenames
-and test files are ignored to avoid false positives.
+like `../features/payments/...` are interpreted correctly. Virtual filenames are ignored to avoid false positives.
 
 ## Options
 
@@ -81,7 +80,7 @@ import paymentsRoutes from 'src/features/payments/routes'
 
 - Relative import specifiers are resolved against the linted file so `..`
   segments map to the filesystem path.
-- Virtual filenames and test files are ignored to reduce noise.
+- Virtual filenames are ignored to reduce noise.
 - Use the `ignore` option to whitelist specific feature names during
   migrations.
 

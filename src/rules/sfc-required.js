@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { parse } from '@vue/compiler-sfc'
-import { isTestFile, isFileIgnored, isOutsideSrc } from '../legacy_utils.js'
+import { isFileIgnored, isOutsideSrc } from '../legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../utils/rules.js'
 
 const defaultOptions = { src: 'src', ignore: [] }
@@ -41,7 +41,6 @@ export default {
         // ignore virtual files and text inputs
         if (String(filename).startsWith('<')) return
 
-        if (isTestFile(filename)) return
         if (isOutsideSrc(filename, opts.src)) return
         if (isFileIgnored(filename, opts.ignore)) return
 

@@ -6,7 +6,7 @@ Prevent `shared/` code from importing implementation from `features/` or `views/
 
 Shared code should be infrastructure- or design-system-level code that does not depend on feature implementations or view-specific modules. This rule flags import statements in files under the configured `shared` segment that reference `features/` or `views/` paths (for example `src/features/payments/...` or `src/views/Home/...`).
 
-By default the rule inspects filenames that include `src/shared`. Relative import specifiers are resolved against the current file so `../../features/payments/...` is correctly recognized. Virtual filenames and test files are ignored by the rule.
+By default the rule inspects filenames that include `src/shared`. Relative import specifiers are resolved against the current file so `../../features/payments/...` is correctly recognized. Virtual filenames are ignored by the rule.
 
 ## Options
 
@@ -49,7 +49,7 @@ import { apiClient } from '../services/apiClient'
 ## Usage Notes
 
 - The rule resolves relative import paths against the linted file to correctly map `..` segments to absolute filesystem paths.
-- Test files and virtual filenames are ignored to avoid false positives in test code.
+- Virtual filenames are ignored to avoid false positives.
 - Use the `ignore` option to whitelist specific feature or view names during migrations.
 
 ## When Not To Use

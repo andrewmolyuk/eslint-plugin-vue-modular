@@ -2,7 +2,7 @@
 
 Require Single File Component (SFC) structure for Vue component files under a configured `src` segment.
 
-This rule enforces that any Vue component file that lives under the configured `src` segment uses the `.vue` SFC format and, when the file is present on disk, contains at least one of the meaningful SFC blocks (`<template>` or `<script>` / `<script setup>`). Files that are virtual (like `"<input>"`), test files, or explicitly ignored by the rule's `ignore` option are skipped.
+This rule enforces that any Vue component file that lives under the configured `src` segment uses the `.vue` SFC format and, when the file is present on disk, contains at least one of the meaningful SFC blocks (`<template>` or `<script>` / `<script setup>`). Files that are virtual (like `"<input>"`) or explicitly ignored by the rule's `ignore` option are skipped.
 
 ## Rule Details
 
@@ -11,7 +11,7 @@ The rule performs two related checks:
 1. It only runs for files inside the configured `src` segment (default: `src`). Files outside that segment are ignored.
 2. For on-disk `.vue` files it parses the SFC using `@vue/compiler-sfc` and verifies the descriptor contains either a `<template>` block or a `<script>` / `<script setup>` block. If neither block exists the rule reports `missingSfcBlock` with the filename.
 
-This behavior helps catch accidentally empty `.vue` files or files that only contain style blocks (for example UI kit style-only files that should not be placed inside feature code), while avoiding false positives for virtual/test files or non-.vue files.
+This behavior helps catch accidentally empty `.vue` files or files that only contain style blocks (for example UI kit style-only files that should not be placed inside feature code), while avoiding false positives for virtual or non-.vue files.
 
 ## Options
 

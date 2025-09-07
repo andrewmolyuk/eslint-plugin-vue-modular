@@ -27,13 +27,9 @@ describe('vue-modular/feature-imports-from-shared-only', () => {
     expect(ctx.report).not.toHaveBeenCalled()
   })
 
-  it('ignores virtual filenames and test files', () => {
-    const ctx1 = runRule(rule, '<input>', [{ features: 'features' }], ['src/features/other/x.js'])
-    expect(ctx1.report).not.toHaveBeenCalled()
-
-    const filename = path.join(process.cwd(), 'tests', 'features', 'auth', 'components', 'Button.test.js')
-    const ctx2 = runRule(rule, filename, [{ features: 'features' }], ['src/features/other/x.js'])
-    expect(ctx2.report).not.toHaveBeenCalled()
+  it('ignores virtual filenames', () => {
+    const ctx = runRule(rule, '<input>', [{ features: 'features' }], ['src/features/other/x.js'])
+    expect(ctx.report).not.toHaveBeenCalled()
   })
 
   it('respects ignore option for target features', () => {

@@ -6,7 +6,7 @@ Require that feature code imports only from the `shared/` layer (features must n
 
 This rule flags imports originating from feature code that reference other features (for example `src/features/payments/utils/api.js`). Keeping cross-feature dependencies routed through the `shared/` layer reduces coupling and prevents consumers from depending on implementation details inside other features.
 
-The rule inspects file paths containing the configured `features` segment (default: `src/features`). Import specifiers are resolved and analyzed; relative imports are resolved against the current file so `../../payments/...` correctly identifies the `payments` feature. Virtual filenames and test files are ignored.
+The rule inspects file paths containing the configured `features` segment (default: `src/features`). Import specifiers are resolved and analyzed; relative imports are resolved against the current file so `../../payments/...` correctly identifies the `payments` feature. Virtual filenames are ignored.
 
 ## Options
 

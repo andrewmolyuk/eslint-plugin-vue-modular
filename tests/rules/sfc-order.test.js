@@ -108,10 +108,4 @@ describe('vue-modular/sfc-order', () => {
     if (inst.Program) inst.Program()
     expect(context.report).not.toHaveBeenCalled()
   })
-
-  it('ignores test files (isTestFile)', () => {
-    const testFilename = path.join(process.cwd(), 'tests', 'some', 'comp.test.js')
-    const ctx = runRule(rule, testFilename, opts)
-    expect(ctx.report).not.toHaveBeenCalled()
-  })
 })

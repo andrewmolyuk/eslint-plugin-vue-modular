@@ -50,13 +50,9 @@ describe('app-imports', () => {
     expect(ctx.report).toHaveBeenCalled()
   })
 
-  it('ignores virtual filenames and test files', () => {
-    const ctx1 = runRule(rule, '<input>', opts, [path.join(process.cwd(), 'src', 'features', 'payments', 'components', 'button.js')])
-    expect(ctx1.report).not.toHaveBeenCalled()
-
-    const testFilename = path.join(process.cwd(), 'tests', 'app', 'main.test.js')
-    const ctx2 = runRule(rule, testFilename, opts, [path.join(process.cwd(), 'src', 'features', 'payments', 'components', 'button.js')])
-    expect(ctx2.report).not.toHaveBeenCalled()
+  it('ignores virtual filenames', () => {
+    const ctx = runRule(rule, '<input>', opts, [path.join(process.cwd(), 'src', 'features', 'payments', 'components', 'button.js')])
+    expect(ctx.report).not.toHaveBeenCalled()
   })
 
   it('ignores non-string imports', () => {

@@ -48,12 +48,6 @@ describe('vue-modular/sfc-required', () => {
     expect(ctx.report).not.toHaveBeenCalled()
   })
 
-  it('ignores test files', () => {
-    const testFilename = path.join(process.cwd(), 'tests', 'some', 'comp.test.js')
-    const ctx = runRule(rule, testFilename, opts)
-    expect(ctx.report).not.toHaveBeenCalled()
-  })
-
   it('ignores files outside configured src', () => {
     const filename = path.join(process.cwd(), 'lib', 'some', 'Comp.vue')
     const ctx = runRule(rule, filename, opts)

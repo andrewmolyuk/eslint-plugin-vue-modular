@@ -13,7 +13,7 @@ By default the recommended order is:
 ## Rule Details
 
 - The rule runs only for on-disk `.vue` files under the configured `src` segment (default: `src`).
-- Virtual inputs (filenames starting with `<...>`), test files, and files matched by the `ignore` option are skipped.
+- Virtual inputs (filenames starting with `<...>`) and files matched by the `ignore` option are skipped.
 - The rule computes the actual block order from the SFC descriptor and validates that the sequence of present blocks respects the relative order defined by the `order` option (or the default order).
 - This rule intentionally does not report missing blocks — use `vue-modular/sfc-required` to enforce presence of `<template>`/`<script>`.
 

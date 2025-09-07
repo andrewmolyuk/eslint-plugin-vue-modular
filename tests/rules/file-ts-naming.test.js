@@ -63,7 +63,7 @@ describe('vue-modular/file-ts-naming (compact)', () => {
     })
   })
 
-  it('directly verifies create() branches for ignore matching and test files', () => {
+  it('directly verifies create() branches for ignore matching', () => {
     const relFilename = path.join(process.cwd(), 'src', 'utils', 'ignored-by-rel.ts')
     const ctxRel = { getFilename: () => relFilename, options: [{ ignore: ['src/utils/ignored-by-rel.ts'] }] }
     expect(rule.create(ctxRel)).toEqual({})
@@ -71,10 +71,6 @@ describe('vue-modular/file-ts-naming (compact)', () => {
     const absFilename = path.join(process.cwd(), 'src', 'utils', 'abs-ignored.ts')
     const ctxAbs = { getFilename: () => absFilename, options: [{ ignore: [absFilename] }] }
     expect(rule.create(ctxAbs)).toEqual({})
-
-    const testFile = path.join(process.cwd(), 'src', 'utils', 'useAuth.test.ts')
-    const ctxTest = { getFilename: () => testFile, options: [{}] }
-    expect(rule.create(ctxTest)).toEqual({})
 
     const emptyCtx = { getFilename: () => '', options: [{}] }
     expect(rule.create(emptyCtx)).toEqual({})

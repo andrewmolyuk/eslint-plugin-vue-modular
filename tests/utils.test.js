@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, isTestFile, toCamelCase, toKebabCase } from '../src/legacy_utils.js'
+import { toPascalCase, isComponent, isFileIgnored, isOutsideSrc, toCamelCase, toKebabCase } from '../src/legacy_utils.js'
 import { parseRuleOptions, runOnce } from '../src/utils/rules.js'
 
 describe('src/utils', () => {
@@ -84,19 +84,6 @@ describe('src/utils', () => {
       expect(isOutsideSrc(outSrc, 'src')).toBe(true)
       expect(isOutsideSrc(inSrc, '')).toBe(false)
       expect(isOutsideSrc(inSrc, undefined)).toBe(false)
-    })
-  })
-
-  describe('isTestFile', () => {
-    it('detects test files by folder or filename', () => {
-      expect(isTestFile(path.join(process.cwd(), 'src', 'tests', 'Foo.spec.js'))).toBe(true)
-      expect(isTestFile(path.join(process.cwd(), 'src', 'test', 'Foo.js'))).toBe(true)
-      expect(isTestFile(path.join(process.cwd(), 'src', 'components', 'Foo.test.ts'))).toBe(true)
-      expect(isTestFile(path.join(process.cwd(), 'src', 'components', 'Foo.spec.vue'))).toBe(true)
-      expect(isTestFile(path.join(process.cwd(), 'src', 'components', 'NotATest.vue'))).toBe(false)
-      expect(isTestFile('')).toBe(false)
-      expect(isTestFile(null)).toBe(false)
-      expect(isTestFile(undefined)).toBe(false)
     })
   })
 

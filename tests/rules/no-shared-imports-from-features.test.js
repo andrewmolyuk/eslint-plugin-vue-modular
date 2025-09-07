@@ -34,13 +34,9 @@ describe('vue-modular/no-shared-imports-from-features', () => {
     expect(ctx.report).not.toHaveBeenCalled()
   })
 
-  it('ignores virtual filenames and test files', () => {
-    const ctx1 = runRule(rule, '<input>', [{ shared: 'shared' }], ['src/features/other/x.js'])
-    expect(ctx1.report).not.toHaveBeenCalled()
-
-    const filename = path.join(process.cwd(), 'tests', 'shared', 'utils', 'index.test.js')
-    const ctx2 = runRule(rule, filename, [{ shared: 'shared' }], ['src/features/other/x.js'])
-    expect(ctx2.report).not.toHaveBeenCalled()
+  it('ignores virtual filenames', () => {
+    const ctx = runRule(rule, '<input>', [{ shared: 'shared' }], ['src/features/other/x.js'])
+    expect(ctx.report).not.toHaveBeenCalled()
   })
 
   it('ignores non-string imports', () => {

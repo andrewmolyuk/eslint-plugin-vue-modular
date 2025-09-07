@@ -8,7 +8,7 @@ This rule detects imports that reference another feature's implementation files 
 
 By default the rule considers file paths that contain the configured `features` segment (default: `src/features`) as feature sources to inspect. Import specifiers are resolved and analyzed; relative imports are resolved against the current file so `../../payments/...` correctly identifies the `payments` feature.
 
-The rule ignores virtual filenames (`<input>`, `<text>`) and test files (files matched by the project's test detection utility). It also accepts an `ignore` option to skip reporting for specific target feature names.
+The rule ignores virtual filenames (`<input>`, `<text>`). It also accepts an `ignore` option to skip reporting for specific target feature names.
 
 ## Options
 
@@ -55,7 +55,7 @@ import { charge } from 'shared/services/paymentClient' // shared layer
 ## Notes
 
 - The rule resolves relative import paths against the linted file to correctly map `..` segments to absolute filesystem paths.
-- Test files and virtual filenames are ignored to avoid false positives during tests and non-file sources.
+- Virtual filenames are ignored to avoid false positives.
 - Use the `ignore` option to whitelist feature names that should not be reported.
 
 ## When Not To Use

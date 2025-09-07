@@ -47,13 +47,6 @@ export function isOutsideSrc(filename, src) {
   return !parts.includes(src)
 }
 
-// Utility to check if a file is likely a test file based on its path
-export function isTestFile(filename) {
-  if (!filename) return false
-  const lower = String(filename).toLowerCase()
-  return lower.includes('/test/') || lower.includes('/tests/') || lower.includes('.spec.') || lower.includes('.test.')
-}
-
 // Utility to convert strings to camelCase
 export function toCamelCase(name) {
   const s = String(name)

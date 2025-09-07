@@ -1,5 +1,5 @@
 import path from 'path'
-import { isTestFile, isFileIgnored } from '../legacy_utils.js'
+import { isFileIgnored } from '../legacy_utils.js'
 import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
@@ -44,10 +44,6 @@ export default {
       Program() {
         const filename = context.getFilename()
         if (!filename || filename === '<input>' || filename === '<text>') {
-          fileState = null
-          return
-        }
-        if (isTestFile(filename)) {
           fileState = null
           return
         }
