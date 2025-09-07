@@ -7,7 +7,7 @@ function norm(p) {
   return p.replace(/\\/g, '/')
 }
 
-describe('utils/fs', () => {
+describe('fs.js', () => {
   let virtualRoot
 
   beforeEach(() => {
