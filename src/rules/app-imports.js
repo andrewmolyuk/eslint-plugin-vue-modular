@@ -1,6 +1,5 @@
 import path from 'path'
-import { isIgnored } from '../legacy_utils.js'
-import { parseRuleOptions } from '../utils/rules.js'
+import { parseRuleOptions, isIgnored } from '../utils'
 
 const defaultOptions = {
   app: 'src/app',

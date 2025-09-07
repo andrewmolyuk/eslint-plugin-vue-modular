@@ -83,6 +83,7 @@ export function isIgnored(filename, patterns = []) {
     if (['*', '?', '[', '/'].some((char) => pattern.includes(char))) {
       return minimatch(f, pattern, { dot: true })
     }
+
     // Otherwise, treat as substring match
     return f.includes(pattern)
   })

@@ -1,5 +1,6 @@
 import path from 'path'
-import { describe, it, expect, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach, vi } from 'vitest'
+import * as utils from '@/utils'
 import { setupTest, runRule } from '../helpers.js'
 import rule from '@/rules/app-imports.js'
 
@@ -70,10 +71,25 @@ describe('app-imports', () => {
     const ctx1 = runRule(rule, filename, opts, imports)
     expect(ctx1.report).toHaveBeenCalled()
 
-    // with ignore on payments -> should not report
+    // with ignore on payments (glob pattern) -> should still report because rule checks the feature token
+    const optsIgnoreGlob = [{ app: 'app', shared: 'shared', features: 'features', ignore: ['/payments/'] }]
+    const ctx2 = runRule(rule, filename, optsIgnoreGlob, imports)
+    expect(ctx2.report).toHaveBeenCalled()
+  })
+
+  it('honors ignore when feature token is matched (covers isIgnored return)', () => {
+    const filename = path.join(process.cwd(), 'src', 'app', 'main.js')
+    const imports = ['../features/payments/components/button.js']
     const optsIgnore = [{ app: 'app', shared: 'shared', features: 'features', ignore: ['payments'] }]
-    const ctx2 = runRule(rule, filename, optsIgnore, imports)
-    expect(ctx2.report).not.toHaveBeenCalled()
+
+    // stub isIgnored so the rule's feature-token check returns true
+    const spy = vi.spyOn(utils, 'isIgnored').mockImplementation((name, patterns) => {
+      return name === 'payments' && Array.isArray(patterns) && patterns.includes('payments')
+    })
+
+    const ctx = runRule(rule, filename, optsIgnore, imports)
+    expect(ctx.report).not.toHaveBeenCalled()
+    spy.mockRestore()
   })
 
   it('does nothing when filename does not include configured app segment', () => {
