@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { toCamelCase, toKebabCase, toPascalCase } from '../../src/utils/strings.js'
+import { toCamelCase, toKebabCase, toPascalCase } from '@/utils/strings.js'
 
 describe('strings.js', () => {
   describe('toCamelCase', () => {

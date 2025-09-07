@@ -2,7 +2,7 @@ import path from 'path'
 import fs from 'fs'
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 
-import rule from '../../src/rules/routes-feature-location.js'
+import rule from '@/rules/routes-feature-location.js'
 import { setupTest, runRule } from '../utils.js'
 
 describe('routes-feature-location', () => {

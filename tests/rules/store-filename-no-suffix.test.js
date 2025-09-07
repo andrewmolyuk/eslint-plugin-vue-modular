@@ -1,4 +1,4 @@
-import rule from '../../src/rules/store-filename-no-suffix.js'
+import rule from '@/rules/store-filename-no-suffix.js'
 import { runRule, setupTest } from '../utils.js'
 import path from 'path'
 import fs from 'fs'

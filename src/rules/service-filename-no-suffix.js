@@ -1,5 +1,6 @@
 import path from 'path'
-import { parseRuleOptions, isFileIgnored, isOutsideSrc, isTestFile } from '../utils'
+import { isFileIgnored, isOutsideSrc, isTestFile } from '../utils'
+import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
   src: 'src',

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setupTest, runRule } from '../utils.js'
-import rule from '../../src/rules/folder-kebab-case.js'
+import rule from '@/rules/folder-kebab-case.js'
 
 const mockFileSystem = () => {
   vi.spyOn(fs, 'readdirSync').mockImplementation((dir) => {

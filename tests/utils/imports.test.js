@@ -1,14 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import * as bp from '@babel/parser'
 import * as sfc from '@vue/compiler-sfc'
-import {
-  getImports,
-  isAbsoluteImport,
-  isAliasImport,
-  isRelativeImport,
-  getImportDepth,
-  resolveImportPath,
-} from '../../src/utils/imports.js'
+import { getImports, isAbsoluteImport, isAliasImport, isRelativeImport, getImportDepth, resolveImportPath } from '@/utils/imports.js'
 import { mockFile, setupTest } from '../utils.js'
 
 const filename = 'src/mock/path/MyComponent.vue'

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import { parseRuleOptions, runOnce } from '../../src/utils/rules'
+import { parseRuleOptions, runOnce } from '@/utils/rules'
 
 describe('parseRuleOptions', () => {
   it('returns defaults when no options provided', () => {

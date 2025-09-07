@@ -1,23 +1,23 @@
 import { minimatch } from 'minimatch'
 import path from 'path'
 
-// Utility to parse rule options with defaults and normalization
-export const parseRuleOptions = (context, defaultOptions) => {
-  const options = context.options && context.options[0] ? context.options[0] : {}
-  const parsed = {}
+// // Utility to parse rule options with defaults and normalization
+// export const parseRuleOptions = (context, defaultOptions) => {
+//   const options = context.options && context.options[0] ? context.options[0] : {}
+//   const parsed = {}
 
-  for (const [key, value] of Object.entries(defaultOptions)) {
-    parsed[key] = options[key] !== undefined ? options[key] : value
+//   for (const [key, value] of Object.entries(defaultOptions)) {
+//     parsed[key] = options[key] !== undefined ? options[key] : value
 
-    if (Array.isArray(parsed[key])) {
-      parsed[key] = parsed[key].map((item) => String(item).trim())
-    } else if (typeof parsed[key] === 'string') {
-      parsed[key] = String(parsed[key]).trim()
-    }
-  }
+//     if (Array.isArray(parsed[key])) {
+//       parsed[key] = parsed[key].map((item) => String(item).trim())
+//     } else if (typeof parsed[key] === 'string') {
+//       parsed[key] = String(parsed[key]).trim()
+//     }
+//   }
 
-  return parsed
-}
+//   return parsed
+// }
 
 // Utility to convert strings to PascalCase
 export function toPascalCase(name) {

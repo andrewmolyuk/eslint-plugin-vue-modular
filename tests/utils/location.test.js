@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { isInApp, isInFeature, isInShared, isInPath } from '../../src/utils/location.js'
+import { isInApp, isInFeature, isInShared, isInPath } from '@/utils/location.js'
 
 describe('location.js', () => {
   // Tests for isInApp

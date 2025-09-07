@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { normalizePath, resolvePath } from '../../src/utils/resolvers'
+import { normalizePath, resolvePath } from '@/utils/resolvers'
 
 describe('resolvers.js', () => {
   describe('normalizePath', () => {

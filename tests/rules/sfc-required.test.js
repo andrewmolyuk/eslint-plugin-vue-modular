@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { setupTest, runRule } from '../utils.js'
-import rule from '../../src/rules/sfc-required.js'
+import rule from '@/rules/sfc-required.js'
 
 const mockFileSystem = (filePath, content) => {
   vi.spyOn(fs, 'existsSync').mockImplementation((p) => String(p) === filePath)

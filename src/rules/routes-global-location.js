@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { parseRuleOptions, runOnce } from '../utils.js'
+import { parseRuleOptions, runOnce } from '../utils/rules.js'
 
 const defaultOptions = {
   app: 'src/app',

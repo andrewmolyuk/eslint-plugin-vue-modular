@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, beforeEach, expect } from 'vitest'
-import rule from '../../src/rules/file-component-naming.js'
+import rule from '@/rules/file-component-naming.js'
 import { tester, setupTest } from '../utils.js'
 
 describe('vue-modular/file-component-naming (compact)', () => {

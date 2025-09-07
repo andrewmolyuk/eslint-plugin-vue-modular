@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
-import { listFilesRecursive, listFiles, listDirs, getFileContent } from '../../src/utils/fs'
+import { listFilesRecursive, listFiles, listDirs, getFileContent } from '@/utils/fs'
 
 function norm(p) {
   return p.replace(/\\/g, '/')

@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setupTest, runRule } from '../utils.js'
-import rule from '../../src/rules/components-index-required.js'
+import rule from '@/rules/components-index-required.js'
 
 const mockFileSystem = (hasIndex = true, indexFilename = 'index.ts') => {
   vi.spyOn(fs, 'existsSync').mockImplementation((p) => {

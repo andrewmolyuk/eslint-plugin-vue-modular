@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { setupTest, runRule } from '../utils.js'
-import rule from '../../src/rules/feature-index-required.js'
+import rule from '@/rules/feature-index-required.js'
 
 const mockFileSystem = (hasIndex = true, indexFilename = 'index.ts') => {
   // make existsSync return true for directories and conditionally for index files

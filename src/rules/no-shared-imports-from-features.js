@@ -1,5 +1,6 @@
 import path from 'path'
-import { parseRuleOptions, isTestFile, isFileIgnored } from '../utils.js'
+import { isTestFile, isFileIgnored } from '../utils.js'
+import { parseRuleOptions } from '../utils/rules.js'
 
 const defaultOptions = {
   shared: 'src/shared',
