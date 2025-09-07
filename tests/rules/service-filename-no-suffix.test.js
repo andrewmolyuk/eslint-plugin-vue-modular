@@ -1,5 +1,5 @@
 import rule from '@/rules/service-filename-no-suffix.js'
-import { runRule, setupTest } from '../utils.js'
+import { runRule, setupTest } from '../helpers.js'
 import path from 'path'
 import fs from 'fs'
 import { describe, it, beforeEach, afterEach, vi, expect } from 'vitest'

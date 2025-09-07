@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { isComponent, isStore, isService, isComposable, isView, isIndex, isLayout, isSFC, isIgnored } from '@/utils/files.js'
-import { mockFile } from '../utils.js'
+import { mockFile } from '../helpers.js'
 
 describe('files.js', () => {
   // Tests for isComponent

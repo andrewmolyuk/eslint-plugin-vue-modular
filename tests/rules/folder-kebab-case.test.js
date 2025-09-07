@@ -1,6 +1,6 @@
 import fs from 'fs'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { setupTest, runRule } from '../utils.js'
+import { setupTest, runRule } from '../helpers.js'
 import rule from '@/rules/folder-kebab-case.js'
 
 const mockFileSystem = () => {

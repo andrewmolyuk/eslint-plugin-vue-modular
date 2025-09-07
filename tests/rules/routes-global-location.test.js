@@ -3,7 +3,7 @@ import fs from 'fs'
 import { vi, describe, it, expect, beforeEach } from 'vitest'
 
 import rule from '@/rules/routes-global-location.js'
-import { setupTest, runRule } from '../utils.js'
+import { setupTest, runRule } from '../helpers.js'
 
 describe('routes-global-location', () => {
   beforeEach(() => {

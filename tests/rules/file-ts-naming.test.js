@@ -1,7 +1,7 @@
 import path from 'path'
 import { describe, it, beforeEach, expect } from 'vitest'
 import rule from '@/rules/file-ts-naming.js'
-import { tester, setupTest } from '../utils.js'
+import { tester, setupTest } from '../helpers.js'
 
 describe('vue-modular/file-ts-naming (compact)', () => {
   beforeEach(setupTest)

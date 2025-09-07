@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { describe, it, expect, beforeEach, vi } from 'vitest'
-import { setupTest, runRule } from '../utils.js'
+import { setupTest, runRule } from '../helpers.js'
 import rule from '@/rules/feature-index-required.js'
 
 const mockFileSystem = (hasIndex = true, indexFilename = 'index.ts') => {

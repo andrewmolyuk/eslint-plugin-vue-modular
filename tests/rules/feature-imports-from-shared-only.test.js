@@ -1,6 +1,6 @@
 import path from 'path'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { setupTest, runRule } from '../utils.js'
+import { setupTest, runRule } from '../helpers.js'
 import rule from '@/rules/feature-imports-from-shared-only.js'
 
 describe('vue-modular/feature-imports-from-shared-only', () => {
