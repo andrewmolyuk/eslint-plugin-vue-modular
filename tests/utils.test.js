@@ -143,5 +143,15 @@ describe('src/utils', () => {
         else global.__eslintVueModularRunId = prevRunId
       }
     })
+
+    it('allows two different rules to run once each in the same session', () => {
+      // both different rule ids should be allowed the first time
+      expect(runOnce('rule-a')).toBe(true)
+      expect(runOnce('rule-b')).toBe(true)
+
+      // subsequent calls for both should return false
+      expect(runOnce('rule-a')).toBe(false)
+      expect(runOnce('rule-b')).toBe(false)
+    })
   })
 })

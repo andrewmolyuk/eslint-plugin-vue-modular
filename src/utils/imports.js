@@ -1,9 +1,3 @@
-// getImports(filename: string) => string[]
-// isAliasImport(filename: string) => boolean
-// isRelativeImport(filename: string) => boolean
-// getImportDepth(from: string, to: string) => number
-// resolveImportPath(from: string, to: string) => string
-
 import { parse } from '@vue/compiler-sfc'
 import { resolvePath } from './resolvers.js'
 import fs from 'fs'
@@ -71,4 +65,60 @@ export function getImports(filename, src = 'src', alias = '@') {
   return results
 }
 
-export default getImports
+// Check if an import path is absolute (starts with / or \)
+export function isAbsoluteImport(importPath) {
+  if (!importPath || typeof importPath !== 'string') return false
+  return importPath.startsWith('/') || importPath.startsWith('\\')
+}
+
+// Check if an import path uses the configured alias (e.g. '@' or '~')
+export function isAliasImport(importPath, alias = '@') {
+  if (!importPath || typeof importPath !== 'string') return false
+  return importPath === alias || importPath.startsWith(`${alias}/`)
+}
+
+// Check if an import path is relative (./ or ../)
+export function isRelativeImport(importPath) {
+  if (!importPath || typeof importPath !== 'string') return false
+  return importPath.startsWith('./') || importPath.startsWith('../') || importPath === '.' || importPath === '..'
+}
+
+// Calculate the "depth" of an import from one file to another
+export function getImportDepth(from, to, src = 'src', alias = '@') {
+  if (!from || !to) return null
+  const fromPath = resolvePath(from, src, alias)
+  const toPath = resolvePath(to, src, alias)
+  if (!fromPath || !toPath) return null
+
+  const fromParts = fromPath.split('/').filter((p) => p && p !== src)
+  const toParts = toPath.split('/').filter((p) => p && p !== src)
+
+  // Remove filename parts
+  fromParts.pop()
+  toParts.pop()
+
+  // remove common leading parts
+  while (fromParts.length && toParts.length && fromParts[0] === toParts[0]) {
+    fromParts.shift()
+    toParts.shift()
+  }
+
+  // depth is number of up moves (fromParts) plus down moves (toParts)
+  return fromParts.length + toParts.length
+}
+
+// Resolve an import path to an absolute path within the project structure
+export function resolveImportPath(from, to, src = 'src', alias = '@') {
+  if (!from || !to) return null
+  const fromPath = resolvePath(from, src, alias)
+  if (!fromPath) return null
+
+  if (isRelativeImport(to)) {
+    const base = fromPath.split('/').slice(0, -1).join('/')
+    return resolvePath(`${base}/${to}`, src, alias)
+  }
+  if (isAliasImport(to, alias) || isAbsoluteImport(to)) {
+    return resolvePath(to, src, alias)
+  }
+  return null
+}

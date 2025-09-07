@@ -2,7 +2,8 @@ import { describe, it, expect } from 'vitest'
 import { isComponent, isStore, isService, isComposable, isView, isIndex, isLayout, isSFC, isIgnored } from '../../src/utils/files.js'
 import { mockFile } from '../utils.js'
 
-describe('files.js utils', () => {
+describe('files.js', () => {
+  // Tests for isComponent
   describe('isComponent', () => {
     it('returns true for .vue file in /components/', () => {
       expect(isComponent('/src/components/Foo.vue')).toBe(true)
@@ -18,6 +19,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isStore
   describe('isStore', () => {
     it('returns true for .ts file in /stores/', () => {
       expect(isStore('/src/stores/foo.ts')).toBe(true)
@@ -36,6 +38,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isService
   describe('isService', () => {
     it('returns true for .ts file in /services/', () => {
       expect(isService('/src/services/foo.ts')).toBe(true)
@@ -54,6 +57,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isComposable
   describe('isComposable', () => {
     it('returns true for .ts file in /composables/', () => {
       expect(isComposable('/src/composables/foo.ts')).toBe(true)
@@ -72,6 +76,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isView
   describe('isView', () => {
     it('returns true for .vue file in /views/', () => {
       expect(isView('/src/views/Foo.vue')).toBe(true)
@@ -90,6 +95,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isIndex
   describe('isIndex', () => {
     it('returns true for index.ts file', () => {
       expect(isIndex('/src/foo/index.ts')).toBe(true)
@@ -105,6 +111,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isLayout
   describe('isLayout', () => {
     it('returns true for .vue file in layouts dir', () => {
       expect(isLayout('src/app/layouts/MainLayout.vue')).toBe(true)
@@ -124,6 +131,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isSFC
   describe('isSFC', () => {
     it('returns true for .vue file with <template>', () => {
       mockFile('src/components/Foo.vue', '<template><div/></template>')
@@ -138,6 +146,7 @@ describe('files.js utils', () => {
     })
   })
 
+  // Tests for isIgnored
   describe('isIgnored', () => {
     it('returns true if filename matches a pattern', () => {
       expect(isIgnored('src/foo/bar.js', ['bar'])).toBe(true)

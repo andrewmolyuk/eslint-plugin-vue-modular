@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest'
 import { isInApp, isInFeature, isInShared, isInPath } from '../../src/utils/location.js'
 
-describe('location.js utils', () => {
+describe('location.js', () => {
+  // Tests for isInApp
   describe('isInApp', () => {
     it('returns true for file inside app directory', () => {
       expect(isInApp('src/app/foo.js')).toBe(true)
@@ -15,6 +16,7 @@ describe('location.js utils', () => {
     })
   })
 
+  // Tests for isInFeature
   describe('isInFeature', () => {
     it('returns true for file inside feature directory', () => {
       expect(isInFeature('src/features/foo.js')).toBe(true)
@@ -28,6 +30,7 @@ describe('location.js utils', () => {
     })
   })
 
+  // Tests for isInShared
   describe('isInShared', () => {
     it('returns true for file inside shared directory', () => {
       expect(isInShared('src/shared/foo.js')).toBe(true)
@@ -41,6 +44,7 @@ describe('location.js utils', () => {
     })
   })
 
+  // Tests for isInPath
   describe('isInPath', () => {
     it('returns true for file inside specified directory', () => {
       expect(isInPath('src/custom/foo.js', '@/custom')).toBe(true)
