@@ -20,6 +20,41 @@ function walk(node, cb) {
   }
 }
 
+// Parse script blocks with @babel/parser to extract any imports
+const collectFromCode = (code, results) => {
+  try {
+    const ast = babelParse(code, {
+      sourceType: 'module',
+      plugins: ['typescript', 'jsx', 'classProperties', 'decorators-legacy', 'dynamicImport'],
+    })
+
+    // simple AST walk to find import and export declarations
+    walk(ast, (node) => {
+      // static imports: import x from 'y', import * as x from 'y', import {x} from 'y'
+      if (node.type === 'ImportDeclaration' && node.source && node.source.value) {
+        if (!results.includes(node.source.value)) results.push(node.source.value)
+        return
+      }
+      // dynamic imports: import('x') -- handle both CallExpression and ImportExpression shapes
+      if (node.type === 'ImportExpression' || (node.type === 'CallExpression' && node.callee && node.callee.type === 'Import')) {
+        const arg = node.arguments && node.arguments[0]
+        const val = (arg && arg.type === 'StringLiteral' && arg.value) || (node.source && node.source.value)
+        if (val) {
+          if (!results.includes(val)) results.push(val)
+          return
+        }
+      }
+      // re-exports: export * from 'x', export { .. } from 'x'
+      if ((node.type === 'ExportAllDeclaration' || node.type === 'ExportNamedDeclaration') && node.source && node.source.value) {
+        if (!results.includes(node.source.value)) results.push(node.source.value)
+        return
+      }
+    })
+  } catch {
+    // ignore parse errors
+  }
+}
+
 export function getImports(filename, src = 'src', alias = '@') {
   const f = resolvePath(filename, src, alias)
   if (!f) return null
@@ -30,47 +65,10 @@ export function getImports(filename, src = 'src', alias = '@') {
 
   const results = []
 
-  // Parse script blocks with @babel/parser to extract any imports
-  const collectFromCode = (code) => {
-    try {
-      const ast = babelParse(code, {
-        sourceType: 'module',
-        plugins: ['typescript', 'jsx', 'classProperties', 'decorators-legacy', 'dynamicImport'],
-      })
+  if (descriptor.script && descriptor.script.content) collectFromCode(descriptor.script.content, results)
+  if (descriptor.scriptSetup && descriptor.scriptSetup.content) collectFromCode(descriptor.scriptSetup.content, results)
 
-      // simple AST walk to find import and export declarations
-      walk(ast, (node) => {
-        // static imports: import x from 'y', import * as x from 'y', import {x} from 'y'
-        if (node.type === 'ImportDeclaration' && node.source && node.source.value) {
-          results.push(node.source.value)
-          return
-        }
-        // dynamic imports: import('x') -- handle both CallExpression and ImportExpression shapes
-        if (node.type === 'ImportExpression' || (node.type === 'CallExpression' && node.callee && node.callee.type === 'Import')) {
-          const arg = node.arguments && node.arguments[0]
-          const val = (arg && arg.type === 'StringLiteral' && arg.value) || (node.source && node.source.value)
-          if (val) {
-            results.push(val)
-            return
-          }
-        }
-        // re-exports: export * from 'x', export { .. } from 'x'
-        if ((node.type === 'ExportAllDeclaration' || node.type === 'ExportNamedDeclaration') && node.source && node.source.value) {
-          results.push(node.source.value)
-          return
-        }
-      })
-    } catch {
-      // ignore parse errors
-    }
-  }
-
-  if (descriptor.script && descriptor.script.content) collectFromCode(descriptor.script.content)
-  if (descriptor.scriptSetup && descriptor.scriptSetup.content) collectFromCode(descriptor.scriptSetup.content)
-
-  // Deduplicate while preserving order
-  const seen = new Set()
-  return results.filter((r) => (seen.has(r) ? false : seen.add(r)))
+  return results
 }
 
 export default getImports

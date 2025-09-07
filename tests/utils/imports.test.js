@@ -1,21 +1,10 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import * as bp from '@babel/parser'
+import * as sfc from '@vue/compiler-sfc'
 import { getImports } from '../../src/utils/imports.js'
 import { mockFile, setupTest } from '../utils.js'
 
 const filename = 'src/mock/path/MyComponent.vue'
-const scriptImports = `
-  <script>
-    import * as foo from './foo.js'
-    import bar from '@/bar.js'
-  </script>`
-
-const scriptSetupImports = `
-  <script setup>
-    import { baz } from './baz.js'
-    export { qux } from './qux.js'
-    export const quux = 42
-  </script>`
 
 beforeEach(() => {
   setupTest(filename)
@@ -31,24 +20,50 @@ describe('getImports', () => {
   })
 
   it('returns import paths from script section', () => {
-    mockFile(filename, scriptImports)
+    const scripts = `
+      <script>
+        import * as foo from './foo.js'
+        import bar from '@/bar.js'
+      </script>`
+    mockFile(filename, scripts)
     const imports = getImports(filename)
     expect(imports).toEqual(['./foo.js', '@/bar.js'])
   })
 
   it('uses custom src and alias arguments', () => {
-    mockFile(filename, scriptImports)
+    const scripts = `
+      <script>
+        import * as foo from './foo.js'
+        import bar from '$/bar.js'
+      </script>`
+    mockFile(filename, scripts)
     getImports(filename, 'customSrc', '$')
   })
 
   it('returns import paths from script setup section', () => {
-    mockFile(filename, scriptSetupImports)
+    const scriptSetup = `
+      <script setup>
+        import { baz } from './baz.js'
+        export { qux } from './qux.js'
+        export const quux = 42
+      </script>`
+    mockFile(filename, scriptSetup)
     const imports = getImports(filename)
     expect(imports).toEqual(['./baz.js', './qux.js'])
   })
 
   it('returns import paths from both script and script setup sections', () => {
-    mockFile(filename, scriptImports + scriptSetupImports)
+    const scripts = `
+      <script>
+        import * as foo from './foo.js'
+        import bar from '@/bar.js'
+      </script>
+      <script setup>
+        import { baz } from './baz.js'
+        export { qux } from './qux.js'
+        export const quux = 42
+      </script>`
+    mockFile(filename, scripts)
     const imports = getImports(filename)
     expect(imports).toEqual(['./foo.js', '@/bar.js', './baz.js', './qux.js'])
   })
@@ -117,10 +132,7 @@ describe('getImports', () => {
   })
 
   it('returns null if SFC parse returns no descriptor (scoped spy)', async () => {
-    // ensure file exists so readFileSync doesn't throw
     mockFile(filename, `<script></script>`)
-    // spy on the compiler-sfc parse function to simulate missing descriptor
-    const sfc = await import('@vue/compiler-sfc')
     const spy = vi.spyOn(sfc, 'parse').mockImplementation(() => ({ descriptor: null }))
     try {
       const result = getImports(filename)
@@ -144,16 +156,7 @@ describe('getImports', () => {
   })
 
   it('executes CallExpression dynamic-import path (covers argument-based extraction)', async () => {
-    // ensure file exists
-    mockFile(
-      filename,
-      `
-      <script>
-        // content irrelevant, parser is spied
-      </script>`,
-    )
-
-    // use the statically imported parser
+    mockFile(filename, `<script>{}</script>`)
     const ast = {
       type: 'File',
       program: {
@@ -180,16 +183,7 @@ describe('getImports', () => {
   })
 
   it('executes ImportExpression dynamic-import path (covers node.source extraction)', async () => {
-    // ensure file exists
-    mockFile(
-      filename,
-      `
-      <script>
-        // content irrelevant, parser is spied
-      </script>`,
-    )
-
-    // use the statically imported parser
+    mockFile(filename, `<script>{}</script>`)
     const ast = {
       type: 'File',
       program: {
