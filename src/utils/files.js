@@ -4,11 +4,15 @@ import { resolvePath } from './resolvers.js'
 import { minimatch } from 'minimatch'
 
 // Check if a file is a Vue component
-export function isComponent(filename, src = 'src', alias = '@') {
-  const f = resolvePath(filename, src, alias)
+export function isComponent(filename, root, alias, componentsName) {
+  const f = resolvePath(filename, root, alias)
   if (!f) return false
+
   const lower = f.toLowerCase()
-  return lower.endsWith('.vue') && lower.includes('/components/')
+  if (!lower.endsWith('.vue')) return false
+  // check last part of path is 'components'
+  const parts = f.split('/')
+  return parts.length >= 2 && parts[parts.length - 2] === componentsName
 }
 
 // Check if a file is a store file

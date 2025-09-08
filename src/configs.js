@@ -21,14 +21,28 @@ const allRules = {
   'vue-modular/routes-global-location': 'error',
 }
 
+const projectOptions = {
+  rootPath: 'src',
+  rootAlias: '@',
+  appPath: 'src/app',
+  layoutsPath: 'src/app/layouts',
+  featuresPath: 'src/features',
+  sharedPath: 'src/shared',
+  componentsFolderName: 'components',
+  viewsFolderName: 'views',
+  uiFolderName: 'ui',
+}
+
 const createConfigs = (plugin) => {
   const flatPluginBlock = {
     plugins: { 'vue-modular': plugin },
     languageOptions: { ecmaVersion: 2022, sourceType: 'module' },
+    projectOptions,
   }
 
   const legacyPluginBlock = {
     plugins: ['vue-modular'],
+    projectOptions,
   }
 
   return {

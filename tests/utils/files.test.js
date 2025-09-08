@@ -6,16 +6,16 @@ describe('files.js', () => {
   // Tests for isComponent
   describe('isComponent', () => {
     it('returns true for .vue file in /components/', () => {
-      expect(isComponent('/src/components/Foo.vue')).toBe(true)
+      expect(isComponent('/src/components/Foo.vue', 'src', '@', 'components')).toBe(true)
     })
     it('returns false for .vue file not in /components/', () => {
-      expect(isComponent('/src/views/Foo.vue')).toBe(false)
+      expect(isComponent('/src/components/views/Foo.vue', 'src', '@', 'components')).toBe(false)
     })
     it('returns false for non-vue file', () => {
-      expect(isComponent('/src/components/Foo.js')).toBe(false)
+      expect(isComponent('/src/components/Foo.js', 'src', '@', 'components')).toBe(false)
     })
-    it('returns false if resolvePath returns null', () => {
-      expect(isComponent('')).toBe(false)
+    it('returns false for file outside of the project root', () => {
+      expect(isComponent('/app/components/Foo.vue', 'src', '@', 'components')).toBe(false)
     })
   })
 
