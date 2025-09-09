@@ -1,24 +1,26 @@
-import { RuleModule } from '@typescript-eslint/utils/ts-eslint'
+// import { RuleModule } from '@typescript-eslint/utils/ts-eslint'
 import { ESLint } from 'eslint'
-import { rules } from './rules'
+import * as fs from 'fs'
+import * as path from 'path'
+// import { rules } from './rules'
 
-type RuleKey = keyof typeof rules
+// type RuleKey = keyof typeof rules
 
-interface Plugin extends Omit<ESLint.Plugin, 'rules'> {
-  rules: Record<RuleKey, RuleModule<any, any, any>>
-}
+// interface Plugin extends Omit<ESLint.Plugin, 'rules'> {
+// rules: Record<RuleKey, RuleModule<any, any, any>>
+// }
 
-const { name, version } = require('../package.json') as {
-  name: string
-  version: string
-}
+type PkgInfo = { name: string; version: string }
+const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')) as PkgInfo
 
-const plugin: Plugin = {
+const { name, version } = pkg
+
+const plugin: ESLint.Plugin = {
   meta: {
     name,
     version,
   },
-  rules,
+  // rules,
 }
 
-export = plugin
+export default plugin

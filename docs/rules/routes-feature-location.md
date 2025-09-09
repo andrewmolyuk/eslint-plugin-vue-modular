@@ -8,6 +8,9 @@ This rule ensures that when a feature contains view components (files whose name
 
 The rule runs once per ESLint execution (it scans the repository layout from the first matched file) and only reports a problem if view components are present in the feature and the configured routes file is missing.
 
+> [!NOTE]
+> Note: The rule only checks for the presence of the routes file; it does not parse or validate its contents.
+
 ### Incorrect
 
 ```ts

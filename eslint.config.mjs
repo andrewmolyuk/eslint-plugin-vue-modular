@@ -1,22 +1,12 @@
 // @ts-check
 import eslint from '@eslint/js'
-import markdown from '@eslint/markdown'
-import jsonPlugin from '@eslint/json'
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended'
 import tsPlugin from 'typescript-eslint'
 
-/* prettier and typescript-eslint configs are intentionally omitted here; enable them when needed */
-
 export default [
-  { ignores: ['**/*.js', 'node_modules/**', 'dist/**', '.git/**', '**/*.d.ts'] },
-  // Base recommendations
+  { ignores: ['\\!JS/**', 'node_modules/**', 'dist/**', '.git/**', '**/*.d.ts'] },
+  // Base recommended configuration
   eslint.configs.recommended,
-
-  // Markdown plugin configuration
-  ...(Array.isArray(markdown.configs && markdown.configs.processor) ? markdown.configs.processor : []),
-
-  // JSON plugin configuration
-  jsonPlugin.configs.recommended,
 
   // Prettier plugin configuration
   prettierPluginRecommended,
