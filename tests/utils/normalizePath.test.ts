@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { normalizePath } from '@/utils'
+import { normalizePath } from '../../src/utils'
 
 describe('normalizePath', () => {
   const cases: Array<[string, string]> = [

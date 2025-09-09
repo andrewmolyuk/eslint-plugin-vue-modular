@@ -8,11 +8,12 @@ lint:
 	npx eslint . --fix
 	npx markdownlint --fix "**/*.md" -i node_modules
 	npx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
+	npx tsc --noEmit
 
 test:
 	CI=CI npx vitest --coverage
 
-build:
+build: lint test
 	rm -Rf dist
 	npx tsc --build
 

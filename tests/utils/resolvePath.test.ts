@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { resolvePath } from '@/utils'
+import { resolvePath } from '../../src/utils'
 
 describe('resolvePath', () => {
   it('replaces single-character alias at start with root when followed by "/"', () => {

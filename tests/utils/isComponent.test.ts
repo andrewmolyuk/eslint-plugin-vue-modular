@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { isComponent, resolvePath } from '@/utils'
+import { isComponent, resolvePath } from '../../src/utils'
 
 vi.mock('../../src/utils/resolvePath', () => ({
   resolvePath: vi.fn(),

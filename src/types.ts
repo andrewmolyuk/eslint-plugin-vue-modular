@@ -1,6 +1,6 @@
 import type { RuleContext, SharedConfigurationSettings } from '@typescript-eslint/utils/dist/ts-eslint'
 
-type VueModularProjectOptions = SharedConfigurationSettings & {
+export type VueModularProjectOptions = SharedConfigurationSettings & {
   rootPath: string
   rootAlias: string
   appPath: string
