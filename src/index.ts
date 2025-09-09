@@ -1,26 +1,15 @@
-// import { RuleModule } from '@typescript-eslint/utils/ts-eslint'
-import { ESLint } from 'eslint'
-import * as fs from 'fs'
-import * as path from 'path'
-// import { rules } from './rules'
+import type { ESLint } from 'eslint'
 
-// type RuleKey = keyof typeof rules
+import { meta } from './meta'
+import { rules } from './rules'
 
-// interface Plugin extends Omit<ESLint.Plugin, 'rules'> {
-// rules: Record<RuleKey, RuleModule<any, any, any>>
-// }
+type VueModularPlugin = Omit<ESLint.Plugin, 'rules'> & {
+  rules: Record<string, unknown>
+}
 
-type PkgInfo = { name: string; version: string }
-const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../package.json'), 'utf8')) as PkgInfo
-
-const { name, version } = pkg
-
-const plugin: ESLint.Plugin = {
-  meta: {
-    name,
-    version,
-  },
-  // rules,
+const plugin: VueModularPlugin = {
+  meta,
+  rules,
 }
 
 export default plugin

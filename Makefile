@@ -13,7 +13,8 @@ test:
 	CI=CI npx vitest --coverage
 
 build:
-	tsc --build
+	rm -Rf dist
+	npx tsc --build
 
 update:
 	npx npm-check-updates -u
