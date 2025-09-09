@@ -1,5 +1,5 @@
-import { createRule } from '@/utils/createRule'
-import type { VueModularRuleContext } from '@/types'
+import { createRule } from '../utils/createRule'
+import type { VueModularRuleContext } from '../types'
 
 interface FileTsNamingOptions {
   src: string
