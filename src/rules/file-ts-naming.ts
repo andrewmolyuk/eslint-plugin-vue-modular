@@ -1,4 +1,5 @@
 import { createRule } from '../utils/createRule'
+import { getProjectOptionsFromContext } from '../utils/projectOptions'
 import type { VueModularRuleContext } from '../types'
 
 interface FileTsNamingOptions {
@@ -16,8 +17,13 @@ export const fileTsNaming = createRule<[FileTsNamingOptions], 'filenameNotCamel'
   create(context: VueModularRuleContext<'filenameNotCamel', [FileTsNamingOptions]>) {
     return {
       Program() {
-        if (context.projectOptions?.rootPath) {
-          console.log('Project root path:', context.projectOptions.rootPath)
+        console.log('file-ts-naming rule executed with options:', context.options[0])
+        const projectOptions = getProjectOptionsFromContext(context)
+        if (projectOptions?.rootPath) {
+          console.log('Project root path:', projectOptions.rootPath)
+        }
+        if (projectOptions?.rootAlias) {
+          console.log('Project root alias:', projectOptions.rootAlias)
         }
       },
     }
@@ -36,7 +42,7 @@ export const fileTsNaming = createRule<[FileTsNamingOptions], 'filenameNotCamel'
         type: 'object',
         properties: {
           src: { type: 'string' },
-          ignore: { type: 'array', items: { type: 'string' } },
+          ignores: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,
       },
