@@ -9,7 +9,6 @@
 
 A custom ESLint plugin for enforcing modular patterns in Vue projects.
 
-> [!NOTE]
 > The project is in active development and may have breaking changes in minor versions, but we will strive to keep changes minimal and well-documented.
 
 ## Modular Architecture in Vue
@@ -43,7 +42,6 @@ This package is published on npm and should be installed as a devDependency in y
 npm install eslint-plugin-vue-modular --save-dev
 ```
 
-> [!NOTE]  
 > ESLint is not bundled with eslint-plugin-vue-modular. You need to install ESLint separately in your project.
 
 ## Usage
@@ -82,7 +80,6 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-> [!IMPORTANT]  
 > The list of rules is a work in progress. Rules with links are implemented and documented.
 >
 > ![Progress](https://progress-bar.xyz/16/?scale=92&width=500&title=16%20of%2092%20rules%20completed)

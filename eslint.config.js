@@ -1,11 +1,13 @@
-import js from '@eslint/js'
-import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
+import prettierPluginRecommended from 'eslint-plugin-prettier/recommended'
+import jsonPlugin from '@eslint/json'
+import markdownPlugin from '@eslint/markdown'
 
 export default [
   // ignore common build and dependency folders
   { ignores: ['node_modules/**', 'dist/**', '.git/**', 'examples/**', '**/*.d.ts'] },
-  js.configs.recommended,
-  eslintPluginPrettierRecommended,
+  prettierPluginRecommended,
+  jsonPlugin.configs.recommended,
+  ...markdownPlugin.configs.recommended,
   {
     files: ['**/*.js'],
     // default language options and globals for plugin source files (Node environment)

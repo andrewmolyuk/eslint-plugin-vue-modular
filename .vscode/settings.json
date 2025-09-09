@@ -30,5 +30,5 @@
   "workbench.colorTheme": "Visual Studio Dark",
   "workbench.layoutControl.enabled": false,
   // Spell check settings
-  "cSpell.words": ["Molyuk", "vitest"]
+  "cSpell.words": ["elif", "Molyuk", "vitest"]
 }

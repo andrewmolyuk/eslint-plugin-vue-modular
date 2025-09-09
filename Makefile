@@ -1,19 +1,23 @@
-.PHONY: install lint test update drawio
+.PHONY: install lint test build update drawio
+DEFAULT_GOAL := build
 
 install:
-	npm install --no-audit --no-fund 
+	bun install --no-audit --no-fund 
 
 lint:
-	npx eslint . --ext .ts,.js,.vue --fix
+	npx eslint . --fix
 	npx markdownlint --fix "**/*.md" -i node_modules
-	npx prettier --write "**/*.md" "**/*.json" "**/*.js" "**/*.ts" --log-level warn
+	npx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
 
-test: lint
+test:
 	CI=CI npx vitest --coverage
+
+build:
+	tsc --build
 
 update:
 	npx npm-check-updates -u
-	npm install --no-audit --no-fund
+	bun install --no-audit --no-fund
 
 drawio:
 	@if [ -z "$(DRAWIO_CMD)" ]; then \

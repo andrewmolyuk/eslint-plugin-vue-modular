@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0",
   "description": "ESLint plugin for checking and maintaining architecture boundaries in Vue modular applications.",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "types": "index.d.ts",
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
   "scripts": {
     "lint": "make lint",
     "test": "make test",
+    "build": "make build",
     "update": "make update",
     "drawio": "make drawio",
     "prepare": "husky"
@@ -36,6 +37,8 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/json": "^0.13.2",
+    "@eslint/markdown": "^7.2.0",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
     "@vitest/coverage-v8": "^3.2.4",
