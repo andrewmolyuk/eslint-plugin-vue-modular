@@ -1,5 +1,5 @@
-import { VueModularProjectOptions, VueModularRuleContext } from 'src/types'
-import { defaultProjectOptions } from 'src/projectOptions'
+import { VueModularProjectOptions, VueModularRuleContext } from '../types'
+import { defaultProjectOptions } from '../projectOptions'
 
 // Utility to parse project options with defaults and normalization
 export const parseProjectOptions = (context: VueModularRuleContext): VueModularProjectOptions => {

@@ -7,14 +7,14 @@ interface FileTsNamingOptions {
 }
 
 const defaultOptions: FileTsNamingOptions = {
-  ignores: ['shims-vue.d.ts'],
+  ignores: ['**/*.d.ts', '**/*.spec.*', '**/*.test.*', '**/*.stories.*'],
 }
 
 // Rule to enforce camelCase naming for TypeScript files
 export const fileTsNaming = createRule<VueModularRuleModule>({
   create(context: VueModularRuleContext) {
-    const { ignores } = parseRuleOptions(context)
-    if (isIgnored(context.filename, ignores)) return {}
+    const options = parseRuleOptions(context)
+    if (isIgnored(context.filename, options.ignores)) return {}
 
     // Only check TypeScript files
     if (path.extname(context.filename) !== '.ts' && path.extname(context.filename) !== '.tsx') return {}
@@ -48,8 +48,8 @@ export const fileTsNaming = createRule<VueModularRuleModule>({
         },
         additionalProperties: false,
       },
-      defaultOptions,
     ],
+    defaultOptions: [defaultOptions],
     messages: {
       filenameNotCamel: 'TypeScript filename "{{filename}}" should be camelCase (e.g., "{{expected}}").',
     },

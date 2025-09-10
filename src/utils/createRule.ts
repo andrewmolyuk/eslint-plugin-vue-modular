@@ -1,4 +1,4 @@
-import { VueModularRuleModule } from 'src/types'
+import { VueModularRuleModule } from '../types'
 
 export function createRule<T extends VueModularRuleModule>(rule: T): T {
   return {
