@@ -10,10 +10,10 @@ lint:
 	npx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
 	npx tsc --noEmit
 
-test:
+test: lint
 	CI=CI npx vitest --coverage
 
-build: lint test
+build: test
 	rm -Rf dist
 	npx tsc --build
 

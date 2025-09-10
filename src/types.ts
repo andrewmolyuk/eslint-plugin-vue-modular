@@ -33,5 +33,4 @@ export interface VueModularRuleContext extends Rule.RuleContext {
   settings: {
     'vue-modular': VueModularProjectOptions
   }
-  projectOptions?: VueModularProjectOptions
 }
