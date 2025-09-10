@@ -26,4 +26,11 @@ export interface VueModularRuleModule extends Rule.RuleModule {
   name: string
   recommended: boolean
   level: 'error' | 'warn'
+  create(context: VueModularRuleContext): Rule.RuleListener
+}
+
+export interface VueModularRuleContext extends Rule.RuleContext {
+  settings: {
+    'vue-modular': VueModularProjectOptions
+  }
 }

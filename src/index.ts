@@ -1,11 +1,11 @@
-import { meta } from './meta'
+import { getMeta } from './meta'
 import { rules } from './rules'
 import { createConfigs } from './configs'
 import { VueModularPlugin } from './types'
 import { Linter } from 'eslint'
 
 const plugin: VueModularPlugin = {
-  meta,
+  meta: getMeta(),
   rules,
   configs: { all: [] as Linter.Config[], recommended: [] as Linter.Config[] },
 }
