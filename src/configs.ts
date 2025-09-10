@@ -1,20 +1,9 @@
 import { rules } from './rules'
+import { defaultProjectOptions } from './projectOptions'
 import type { Linter } from 'eslint'
-import { VueModularProjectOptions, VueModularPlugin, VueModularPluginConfigs } from './types'
+import { VueModularPlugin, VueModularPluginConfigs } from './types'
 
 const PLUGIN_ID = 'vue-modular'
-
-const defaultProjectOptions: VueModularProjectOptions = {
-  rootPath: 'src',
-  rootAlias: '@',
-  appPath: 'src/app',
-  layoutsPath: 'src/app/layouts',
-  featuresPath: 'src/features',
-  sharedPath: 'src/shared',
-  componentsFolderName: 'components',
-  viewsFolderName: 'views',
-  uiFolderName: 'ui',
-}
 
 export function createConfigs(plugin: VueModularPlugin): VueModularPluginConfigs {
   const all = Object.keys(rules).reduce((acc, rule) => {
