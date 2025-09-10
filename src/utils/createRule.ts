@@ -1,12 +1,14 @@
-import { ESLintUtils } from '@typescript-eslint/utils'
+import { VueModularRuleModule } from 'src/types'
 
-export interface VueModularRuleDocs {
-  category: string
-  description: string
-  recommended: boolean
-  url?: string
+export function createRule<T extends VueModularRuleModule>(rule: T): T {
+  return {
+    ...rule,
+    meta: {
+      ...rule.meta,
+      docs: {
+        ...rule.meta?.docs,
+        url: `https://github.com/andrewmolyuk/eslint-plugin-vue-modular/blob/main/docs/rules/${rule.name}.md`,
+      },
+    },
+  }
 }
-
-export const createRule = ESLintUtils.RuleCreator<VueModularRuleDocs>(
-  (name) => `https://github.com/andrewmolyuk/eslint-plugin-vue-modular/blob/main/docs/rules/${name}.md`,
-)

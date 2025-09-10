@@ -1,7 +1,6 @@
-import type { ESLint } from 'eslint'
 import { fileTsNaming } from './rules/file-ts-naming'
+import { VueModularRuleModule } from './types'
 
-export const rules: ESLint.Plugin['rules'] = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  'file-ts-naming': fileTsNaming as unknown as any,
+export const rules: Record<string, VueModularRuleModule> = {
+  'file-ts-naming': fileTsNaming,
 }
