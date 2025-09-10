@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { normalizePath } from '../../src/utils'
 
 describe('normalizePath', () => {
-  const cases: Array<[string, string]> = [
+  const cases: [string, string][] = [
     ['', ''],
     ['   ', ''],
     ['a\\b\\c', 'a/b/c'],

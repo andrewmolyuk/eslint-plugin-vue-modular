@@ -1,7 +1,6 @@
 import type { ESLint, Linter, Rule } from 'eslint'
-import type { RuleContext, SharedConfigurationSettings } from '@typescript-eslint/utils/dist/ts-eslint'
 
-export type VueModularPluginConfigs = {
+export interface VueModularPluginConfigs {
   all: Linter.Config[]
   recommended: Linter.Config[]
 }
@@ -11,7 +10,7 @@ export type VueModularPlugin = Omit<ESLint.Plugin, 'rules'> & {
   configs: VueModularPluginConfigs
 }
 
-export type VueModularProjectOptions = SharedConfigurationSettings & {
+export interface VueModularProjectOptions {
   rootPath: string
   rootAlias: string
   appPath: string
@@ -21,10 +20,6 @@ export type VueModularProjectOptions = SharedConfigurationSettings & {
   componentsFolderName: string
   viewsFolderName: string
   uiFolderName: string
-}
-
-export type VueModularRuleContext<MessageIds extends string, Options extends readonly unknown[]> = RuleContext<MessageIds, Options> & {
-  projectOptions?: VueModularProjectOptions
 }
 
 export interface VueModularRuleModule extends Rule.RuleModule {

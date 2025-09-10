@@ -1,18 +1,19 @@
 // @ts-check
 import eslint from '@eslint/js'
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended'
-import tsPlugin from 'typescript-eslint'
+import tseslint from 'typescript-eslint'
 
 export default [
   { ignores: ['\\!JS/**', 'node_modules/**', 'dist/**', '.git/**', '**/*.d.ts'] },
   // Base recommended configuration
   eslint.configs.recommended,
 
+  // TypeScript ESLint plugin configuration
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
+
   // Prettier plugin configuration
   prettierPluginRecommended,
-
-  // TypeScript plugin configuration
-  ...tsPlugin.configs.recommended,
 
   // Global overrides for TypeScript files
   {
@@ -35,7 +36,7 @@ export default [
 
   // Vitest global overrides for test files
   {
-    files: ['tests/**/*.spec.ts'],
+    files: ['tests/**/*.test.ts'],
     languageOptions: {
       globals: {
         expect: 'readonly',

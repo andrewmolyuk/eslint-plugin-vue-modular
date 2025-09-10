@@ -1,5 +1,5 @@
 import { createRule } from '../utils/createRule'
-import type { VueModularProjectOptions, VueModularRuleContext, VueModularRuleModule } from '../types'
+import type { VueModularProjectOptions, VueModularRuleModule } from '../types'
 
 interface FileTsNamingOptions {
   src: string

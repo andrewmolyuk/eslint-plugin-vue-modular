@@ -17,33 +17,30 @@ const defaultProjectOptions: VueModularProjectOptions = {
 }
 
 export function createConfigs(plugin: VueModularPlugin): VueModularPluginConfigs {
-  const all = Object.keys(rules).map((rule) => {
+  const all = Object.keys(rules).reduce((acc, rule) => {
     return {
-      [`${PLUGIN_ID}/${rules[rule].name}`]: rules[rule].meta.docs.level === 'warn' ? 'warn' : 'error',
+      ...acc,
+      [`${PLUGIN_ID}/${rules[rule].name}`]: rules[rule].level,
     }
-  }
-  // const all = Object.keys(rules ?? {}).reduce<Record<string, 'error' | 'warn'>>((acc, id) => {
-  //   const rule = rules![id]
-  //   acc[`${PLUGIN_ID}/${id}`] = rule?.meta?.docs?.level === 'warn' ? 'warn' : 'error'
-  //   return acc
-  // }, {})
+  }, {} as Linter.RulesRecord)
 
-  const recommended = Object.keys(rules ?? {}).reduce<Record<string, 'warn'>>((acc, id) => {
-    const rule = rules![id]
-    if (rule?.meta?.docs?.recommended) {
-      acc[`${PLUGIN_ID}/${id}`] = 'warn'
-    }
-    return acc
-  }, {})
+  const recommended = Object.keys(rules)
+    .filter((rule) => rules[rule].recommended)
+    .reduce((acc, rule) => {
+      return {
+        ...acc,
+        [`${PLUGIN_ID}/${rules[rule].name}`]: rules[rule].level,
+      }
+    }, {} as Linter.RulesRecord)
 
-  const allConfig: Linter.Config = {
+  const allConfig: Linter.Config<Linter.RulesRecord> = {
     name: `${PLUGIN_ID}/all`,
     plugins: { [PLUGIN_ID]: plugin },
     settings: { [PLUGIN_ID]: { ...defaultProjectOptions } },
     rules: all,
   }
 
-  const recommendedConfig: Linter.Config = {
+  const recommendedConfig: Linter.Config<Linter.RulesRecord> = {
     name: `${PLUGIN_ID}/recommended`,
     plugins: { [PLUGIN_ID]: plugin },
     settings: { [PLUGIN_ID]: { ...defaultProjectOptions } },
