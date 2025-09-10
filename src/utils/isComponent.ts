@@ -1,5 +1,4 @@
-import { resolvePath } from './resolvePath'
-import { normalizePath } from './normalizePath'
+import { resolvePath, normalizePath } from '.'
 
 // Check if a file is a Vue component
 export function isComponent(filename: string, rootPath: string, rootAlias: string, componentsFolderName: string) {

@@ -1,6 +1,5 @@
-import { createRule } from '../utils/createRule'
+import { createRule, toCamelCase, parseRuleOptions, isIgnored } from '../utils'
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
-import { parseRuleOptions } from '../utils/parseRuleOptions'
 import path from 'path'
 
 interface FileTsNamingOptions {
@@ -14,31 +13,18 @@ const defaultOptions: FileTsNamingOptions = {
 // Rule to enforce camelCase naming for TypeScript files
 export const fileTsNaming = createRule<VueModularRuleModule>({
   create(context: VueModularRuleContext) {
+    const { ignores } = parseRuleOptions(context)
+    if (isIgnored(context.filename, ignores)) return {}
+
+    // Only check TypeScript files
+    if (path.extname(context.filename) !== '.ts' && path.extname(context.filename) !== '.tsx') return {}
+
     return {
       Program(node) {
-        // Read options per-invocation to respect RuleTester per-case options
-        const opts = (parseRuleOptions(context) || {}) as { ignores?: string[] }
-        const ignores: string[] = opts.ignores ?? defaultOptions.ignores
+        const base = path.basename(context.filename)
+        const expected = toCamelCase(base)
 
-        // Determine filename per-invocation
-        const filename = context.getFilename ? context.getFilename() : ''
-        const base = filename ? path.basename(filename) : ''
-
-        // Only check TypeScript files
-        if (!base || !/\.tsx?$/.test(base)) return
-
-        // Respect ignores
-        if (ignores.includes(base)) return
-
-        const nameWithoutExt = base.replace(/\.[^.]+$/, '')
-
-        // Expected camelCase from dashed/underscored or PascalCase
-        const parts = nameWithoutExt.split(/[-_]/)
-        const expected = parts
-          .map((p, i) => (i === 0 ? p.charAt(0).toLowerCase() + p.slice(1) : p.charAt(0).toUpperCase() + p.slice(1)))
-          .join('')
-
-        if (nameWithoutExt !== expected) {
+        if (base !== expected) {
           context.report({ node, messageId: 'filenameNotCamel', data: { filename: base, expected } })
         }
       },
@@ -65,7 +51,7 @@ export const fileTsNaming = createRule<VueModularRuleModule>({
       defaultOptions,
     ],
     messages: {
-      filenameNotCamel: 'TypeScript filename "{{filename}}" should be camelCase (e.g., "{{expected}}.ts").',
+      filenameNotCamel: 'TypeScript filename "{{filename}}" should be camelCase (e.g., "{{expected}}").',
     },
   },
 })
