@@ -51,7 +51,7 @@ We provide two predefined configurations to help enforce modular architecture pr
 - **recommended** - enables the rules that follow best practices for modular architecture and Vue.js development.
 - **all** - enables all of the rules shipped with eslint-plugin-vue-modular.
 
-### ESLint v9+ Configuration (Recommended)
+### ESLint v9+ Configuration
 
 ```javascript
 import vueModular from 'eslint-plugin-vue-modular'
@@ -107,18 +107,18 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/2/?scale=92&width=500&title=2%20of%2092%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/3/?scale=92&width=500&title=3%20of%2092%20rules%20completed)
 
 ### File Organization Rules
 
-| Rule                                                   | Description                                                                                               |
-| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
-| file-component-naming                                  | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`).                  |
-| [file-ts-naming](./docs/rules/file-ts-naming.md)       | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).                        |
-| [folder-kebab-case](./docs/rules/folder-kebab-case.md) | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).                               |
-| feature-index-required                                 | Each feature folder must contain an `index.ts` file as its public API.                                    |
-| components-index-required                              | All `components/` folders must contain an `index.ts` (or configured filename) file for component exports. |
-| shared-ui-index-required                               | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
+| Rule                                                           | Description                                                                                               |
+| -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| [file-component-naming](./docs/rules/file-component-naming.md) | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`).                  |
+| [file-ts-naming](./docs/rules/file-ts-naming.md)               | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).                        |
+| [folder-kebab-case](./docs/rules/folder-kebab-case.md)         | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).                               |
+| feature-index-required                                         | Each feature folder must contain an `index.ts` file as its public API.                                    |
+| components-index-required                                      | All `components/` folders must contain an `index.ts` (or configured filename) file for component exports. |
+| shared-ui-index-required                                       | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
 
 ### Dependency Rules
 
