@@ -31,8 +31,7 @@
     "prepare": "husky"
   },
   "files": [
-    "src",
-    "index.d.ts"
+    "dist"
   ],
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
