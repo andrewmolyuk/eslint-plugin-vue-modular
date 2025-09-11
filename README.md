@@ -9,7 +9,6 @@
 
 A custom ESLint plugin for enforcing modular patterns in Vue projects.
 
-> [!NOTE]
 > The project is in active development and may have breaking changes in minor versions, but we will strive to keep changes minimal and well-documented.
 
 ## Modular Architecture in Vue
@@ -32,7 +31,7 @@ The `eslint-plugin-vue-modular` plugin helps enforce these boundaries, ensuring 
 - Custom linting rules for Vue modular architecture
 - Supports single-file components (SFC)
 - Enforces architectural boundaries between features
-- Supports both flat config (ESLint v9+) and legacy config formats
+- Supports flat config only (ESLint v9+)
 - Easily extendable for your team's needs
 
 ## Installation
@@ -43,7 +42,6 @@ This package is published on npm and should be installed as a devDependency in y
 npm install eslint-plugin-vue-modular --save-dev
 ```
 
-> [!NOTE]  
 > ESLint is not bundled with eslint-plugin-vue-modular. You need to install ESLint separately in your project.
 
 ## Usage
@@ -61,14 +59,39 @@ import vueModular from 'eslint-plugin-vue-modular'
 export default [...vueModular.configs.recommended]
 ```
 
-### Legacy ESLint v8 Configuration
+### Project options / settings (flat-config)
 
-```javascript
-// .eslintrc.js
-module.exports = {
-  extends: ['plugin:vue-modular/legacy/all'],
-}
+When using ESLint v9+ flat config or any setup that supports `settings`, plugin-wide project options should be placed under `settings['vue-modular']`.
+
+Example (flat config):
+
+```js
+export default [
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.vue'],
+    plugins: { 'vue-modular': vueModular },
+    settings: {
+      'vue-modular': {
+        // optional overrides; omitted keys fall back to sensible defaults
+        rootPath: 'src',
+        rootAlias: '@',
+        appPath: 'src/app',
+        layoutsPath: 'src/app/layouts',
+        featuresPath: 'src/features',
+        sharedPath: 'src/shared',
+        componentsFolderName: 'components',
+        viewsFolderName: 'views',
+        uiFolderName: 'ui',
+      },
+    },
+  },
+]
 ```
+
+Notes:
+
+- The plugin merges any provided settings with built-in defaults, so you only need to set the keys you want to override.
+- Rule-level options (for example the `file-ts-naming` rule) remain available per-rule; `file-ts-naming` accepts an `ignores` array. The default ignore globs are `['**/*.d.ts', '**/*.spec.*', '**/*.test.*', '**/*.stories.*']`.
 
 ### Quick Start
 
@@ -82,64 +105,63 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-> [!IMPORTANT]  
-> The list of rules is a work in progress. Rules with links are implemented and documented.
+> The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/16/?scale=92&width=500&title=16%20of%2092%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/2/?scale=92&width=500&title=2%20of%2092%20rules%20completed)
 
 ### File Organization Rules
 
-| Rule                                                                   | Description                                                                                               |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [file-component-naming](./docs/rules/file-component-naming.md)         | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`).                  |
-| [file-ts-naming](./docs/rules/file-ts-naming.md)                       | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).                        |
-| [folder-kebab-case](./docs/rules/folder-kebab-case.md)                 | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).                               |
-| [feature-index-required](./docs/rules/feature-index-required.md)       | Each feature folder must contain an `index.ts` file as its public API.                                    |
-| [components-index-required](./docs/rules/components-index-required.md) | All `components/` folders must contain an `index.ts` (or configured filename) file for component exports. |
-| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)   | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
+| Rule                                                   | Description                                                                                               |
+| ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| file-component-naming                                  | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`).                  |
+| [file-ts-naming](./docs/rules/file-ts-naming.md)       | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).                        |
+| [folder-kebab-case](./docs/rules/folder-kebab-case.md) | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).                               |
+| feature-index-required                                 | Each feature folder must contain an `index.ts` file as its public API.                                    |
+| components-index-required                              | All `components/` folders must contain an `index.ts` (or configured filename) file for component exports. |
+| shared-ui-index-required                               | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
 
 ### Dependency Rules
 
-| Rule                                                                                 | Description                                                                                                                                       |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [no-direct-feature-imports](./docs/rules/no-direct-feature-imports.md)               | Features cannot import from other features directly.                                                                                              |
-| [feature-imports-from-shared-only](./docs/rules/feature-imports-from-shared-only.md) | Features can only import from `shared/` folder.                                                                                                   |
-| [no-shared-imports-from-features](./docs/rules/no-shared-imports-from-features.md)   | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
-| [app-imports](./docs/rules/app-imports.md)                                           | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
-| cross-feature-via-shared                                                             | All cross-feature communication must go through the `shared/` layer.                                                                              |
+| Rule                             | Description                                                                                                                                       |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| no-direct-feature-imports        | Features cannot import from other features directly.                                                                                              |
+| feature-imports-from-shared-only | Features can only import from `shared/` folder.                                                                                                   |
+| no-shared-imports-from-features  | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
+| app-imports                      | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
+| cross-feature-via-shared         | All cross-feature communication must go through the `shared/` layer.                                                                              |
 
 ### Component Rules
 
-| Rule                                         | Description                                                                                                                                                                                                 |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [sfc-required](./docs/rules/sfc-required.md) | All Vue components should be written as Single File Components (SFC) with `.vue` extension; when present on disk a `.vue` file must contain at least a `<template>` or `<script>` / `<script setup>` block. |
-| [sfc-order](./docs/rules/sfc-order.md)       | Enforce SFC block order: `<script>`, `<template>`, `<style>`; the rule only enforces ordering when script/template blocks are present.                                                                      |
-| layout-components-location                   | Layout-specific components must be in `app/components/`.                                                                                                                                                    |
-| ui-components-location                       | Reusable UI components (design system) must be in `shared/ui/`.                                                                                                                                             |
-| business-components-location                 | Business components used across features must be in `shared/components/`.                                                                                                                                   |
-| feature-components-location                  | Feature-specific components must be in `features/{feature}/components/`.                                                                                                                                    |
-| component-props-typed                        | Component props must be typed with TypeScript interfaces.                                                                                                                                                   |
+| Rule                         | Description                                                                                                                                                                                                 |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| sfc-required                 | All Vue components should be written as Single File Components (SFC) with `.vue` extension; when present on disk a `.vue` file must contain at least a `<template>` or `<script>` / `<script setup>` block. |
+| sfc-order                    | Enforce SFC block order: `<script>`, `<template>`, `<style>`; the rule only enforces ordering when script/template blocks are present.                                                                      |
+| layout-components-location   | Layout-specific components must be in `app/components/`.                                                                                                                                                    |
+| ui-components-location       | Reusable UI components (design system) must be in `shared/ui/`.                                                                                                                                             |
+| business-components-location | Business components used across features must be in `shared/components/`.                                                                                                                                   |
+| feature-components-location  | Feature-specific components must be in `features/{feature}/components/`.                                                                                                                                    |
+| component-props-typed        | Component props must be typed with TypeScript interfaces.                                                                                                                                                   |
 
 ### Service Rules
 
-| Rule                                                                     | Description                                                                           |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| services-shared-location                                                 | Cross-cutting services must be in `shared/services/`.                                 |
-| services-feature-location                                                | Feature-specific services must be in `features/{feature}/services/`.                  |
-| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
-| service-named-exports                                                    | Services must export named classes or named functions (avoid default exports).        |
-| service-use-api-client                                                   | API services must use the shared `apiClient.ts`.                                      |
+| Rule                       | Description                                                                           |
+| -------------------------- | ------------------------------------------------------------------------------------- |
+| services-shared-location   | Cross-cutting services must be in `shared/services/`.                                 |
+| services-feature-location  | Feature-specific services must be in `features/{feature}/services/`.                  |
+| service-filename-no-suffix | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
+| service-named-exports      | Services must export named classes or named functions (avoid default exports).        |
+| service-use-api-client     | API services must use the shared `apiClient.ts`.                                      |
 
 ### Store Rules
 
-| Rule                                                                 | Description                                                                     |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| stores-shared-location                                               | Global state must be in `shared/stores/`.                                       |
-| stores-feature-location                                              | Feature-specific state must be in `features/{feature}/stores/`.                 |
-| store-pinia-composition                                              | Store files must use Pinia composition API syntax.                              |
-| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md) | Store files must not have "Store" suffix (e.g., `auth.ts`, not `authStore.ts`). |
-| stores-cross-cutting                                                 | Cross-cutting concerns (auth, notifications) must be in `shared/stores/`.       |
-| feature-stores-no-imports                                            | Feature stores cannot import other feature stores directly.                     |
+| Rule                      | Description                                                                     |
+| ------------------------- | ------------------------------------------------------------------------------- |
+| stores-shared-location    | Global state must be in `shared/stores/`.                                       |
+| stores-feature-location   | Feature-specific state must be in `features/{feature}/stores/`.                 |
+| store-pinia-composition   | Store files must use Pinia composition API syntax.                              |
+| store-filename-no-suffix  | Store files must not have "Store" suffix (e.g., `auth.ts`, not `authStore.ts`). |
+| stores-cross-cutting      | Cross-cutting concerns (auth, notifications) must be in `shared/stores/`.       |
+| feature-stores-no-imports | Feature stores cannot import other feature stores directly.                     |
 
 ### Type Rules
 
@@ -153,13 +175,13 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Routing Rules
 
-| Rule                                                               | Description                                                       |
-| ------------------------------------------------------------------ | ----------------------------------------------------------------- |
-| [routes-global-location](./docs/rules/routes-global-location.md)   | Global routes must be in `app/router.ts`.                         |
-| [routes-feature-location](./docs/rules/routes-feature-location.md) | Feature routes must be in `features/{feature}/routes.ts`.         |
-| routes-merge-in-app                                                | Feature routes must be imported and merged in `app/router.ts`.    |
-| routes-lazy-load                                                   | Route components must be lazy-loaded using dynamic imports.       |
-| routes-layout-meta                                                 | Layout selection must be defined in route `meta.layout` property. |
+| Rule                    | Description                                                       |
+| ----------------------- | ----------------------------------------------------------------- |
+| routes-global-location  | Global routes must be in `app/router.ts`.                         |
+| routes-feature-location | Feature routes must be in `features/{feature}/routes.ts`.         |
+| routes-merge-in-app     | Feature routes must be imported and merged in `app/router.ts`.    |
+| routes-lazy-load        | Route components must be lazy-loaded using dynamic imports.       |
+| routes-layout-meta      | Layout selection must be defined in route `meta.layout` property. |
 
 ### View Rules
 
