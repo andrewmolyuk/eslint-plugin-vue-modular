@@ -6,7 +6,9 @@ Enforce PascalCase filenames for Vue Single File Components (.vue).
 
 This rule requires that component filenames use PascalCase (for example `MyButton.vue`) to make component names predictable and consistent across a project.
 
-By default the rule only applies to files under the `src` directory. It supports an `ignore` option with glob patterns to skip files or folders.
+By default the rule applies to all `.vue` files in components folders. It supports an `ignores` option with glob patterns to skip files or folders.
+
+Components folder name can be configured via the plugin's project options (the plugin exposes a `componentsFolderName` — typically `components`).
 
 Examples of incorrect and correct code for this rule are below.
 
@@ -45,30 +47,36 @@ export default {}
 
 ## Options
 
-This rule accepts an object with the following properties:
+This rule accepts an optional object with the following properties:
 
-- `src` (string, default: `"src"`) - base source directory to scope the rule. When set, files outside this directory are ignored.
-- `ignore` (string[], default: `[]`) - array of glob patterns (minimatch) to ignore. Patterns are matched against both the absolute file path and the project-relative path.
+- `ignores` (string[], default: `['**/*.spec.*', '**/*.test.*', '**/*.stories.*']`) - array of glob patterns (minimatch) to ignore. Patterns are matched against both the absolute file path and the project-relative path.
+
+Notes about scope:
+
+- The rule determines whether a file is a Vue component by checking the filename extension (`.vue`). It also resolves the filename relative to project options when necessary. If you need to restrict checks to a different folder, configure the plugin's project options (see README) or use `ignores` to skip paths.
 
 Examples:
 
 ```js
-// Use defaults (apply inside `src` only)
+// Use defaults (validate all .vue files, ignore common test patterns)
 {
   "vue-modular/file-component-naming": ["error"]
 }
 
-// Custom source directory and ignored patterns
+// Custom ignored patterns
 {
-  "vue-modular/file-component-naming": ["error", { "src": "app", "ignore": ["**/tests/**", "**/*.spec.vue"] }]
+  "vue-modular/file-component-naming": ["error", { "ignores": ["**/tests/**", "**/*.spec.vue"] }]
 }
 ```
 
 ## Usage Notes
 
 - The rule only lints `.vue` files.
-- The `src` option is applied by checking whether the file path contains the configured segment (for example `src` or `app`). If the segment is not present the file is ignored.
-- The `ignore` patterns use `minimatch` semantics and are matched against the absolute filename and the path relative to the repository root.
+- The `ignores` patterns use `minimatch` semantics and are matched against the filename that ESLint provides to the rule (absolute or repo-relative paths depending on your ESLint invocation).
+
+Implementation notes:
+
+- The rule reports with messageIds `filenameNotPascal`. The reported `expected` value shows the PascalCase suggestion (for example `MyFile.vue`).
 
 ## When Not To Use
 

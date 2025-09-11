@@ -2,31 +2,31 @@ import { describe, it, expect } from 'vitest'
 import { toCamelCase } from '../../src/utils'
 
 describe('toCamelCase', () => {
-  it('should convert snake_case to camelCase', () => {
-    expect(toCamelCase('hello_world')).toBe('helloWorld')
-  })
+  const cases = [
+    ['HelloWorld', 'helloWorld'],
+    ['hello-world', 'helloWorld'],
+    ['hello_world', 'helloWorld'],
+    ['Hello_World', 'helloWorld'],
+    ['hello world', 'helloWorld'],
+    ['Hello World', 'helloWorld'],
+    ['mixed-Separator Test', 'mixedSeparatorTest'],
+    ['XMLHttpRequest', 'xmlHttpRequest'],
+    ['version1Number2', 'version1Number2'],
+    ['foo2Bar', 'foo2Bar'],
+    ['ABCDef', 'abcDef'],
+    ['with spaces and  multiple   spaces', 'withSpacesAndMultipleSpaces'],
+    ['', ''],
+    [' leading', 'leading'],
+    ['trailing ', 'trailing'],
+    ['__foo__bar  baz', 'fooBarBaz'],
+    ['a_B', 'aB'],
+    ['FOO-BAR', 'fooBar'],
+    ['---', ''],
+  ]
 
-  it('should convert kebab-case to camelCase', () => {
-    expect(toCamelCase('hello-world')).toBe('helloWorld')
-  })
-
-  it('should handle already camelCase strings', () => {
-    expect(toCamelCase('helloWorld')).toBe('helloWorld')
-  })
-
-  it('should handle strings with multiple separators', () => {
-    expect(toCamelCase('hello_world_test-case')).toBe('helloWorldTestCase')
-  })
-
-  it('should handle empty string', () => {
-    expect(toCamelCase('')).toBe('')
-  })
-
-  it('should handle trailing separator', () => {
-    expect(toCamelCase('trailing-')).toBe('trailing')
-  })
-
-  it('should handle single word', () => {
-    expect(toCamelCase('hello')).toBe('hello')
-  })
+  cases.forEach(([input, expected]) =>
+    it(`converts "${input}" to "${expected}"`, () => {
+      expect(toCamelCase(input)).toBe(expected)
+    }),
+  )
 })
