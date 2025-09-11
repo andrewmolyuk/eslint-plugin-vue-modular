@@ -48,7 +48,7 @@ export const featureIndexRequired = createRule<VueModularRuleModule>({
     type: 'suggestion',
     docs: {
       description: 'Require a feature public API file features/{feature}/index.ts when a feature contains files',
-      category: 'Best Practices',
+      category: 'File Organization',
       recommended: false,
     },
     defaultOptions: [defaultOptions],
