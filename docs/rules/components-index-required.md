@@ -4,7 +4,7 @@ Enforce a components folder index file (for example `features/<feature>/componen
 
 ## Rule Details
 
-This rule verifies that a `components` directory inside a feature (or any configured segment) exposes a public API file. A stable components index makes imports shorter, centralizes re-exports, and reduces accidental deep imports.
+This rule scans the project's source tree (starting at the configured project `rootPath`, default: `src`) for `components` directories and verifies they contain a public API file. A stable components index makes imports shorter, centralizes re-exports, and reduces accidental deep imports.
 
 Default index filename: `index.ts`.
 
@@ -12,23 +12,24 @@ Default index filename: `index.ts`.
 
 The rule accepts an options object with the following properties:
 
-- `components` (string, default: `"components"`) — the path segment used to locate component directories under a feature.
-- `ignore` (string[], default: `[]`) — minimatch-style patterns matched against the parent folder name to skip certain features.
+- `ignores` (string[], default: `[]`) — minimatch-style patterns matched against directory paths to skip certain folders from scanning.
 - `index` (string, default: `"index.ts"`) — filename to look for as the components public API (for example `index.js` or `main.ts`).
+
+Note: project-wide paths such as `rootPath` are read from plugin settings (`settings['vue-modular']`) and merged with defaults.
 
 ### Example configuration
 
 ```js
-// Use defaults (scan `components`, expect `index.ts`)
+// Use defaults (scan project src tree, expect `index.ts` in each components folder)
 {
   "vue-modular/components-index-required": ["error"]
 }
 
-// Custom configuration
+// Custom configuration (override index filename or add ignores)
 {
   "vue-modular/components-index-required": [
     "error",
-    { "components": "components", "ignore": ["shared"], "index": "main.ts" }
+    { "ignores": ["**/shared/**"], "index": "main.ts" }
   ]
 }
 ```
@@ -51,8 +52,7 @@ export { default as Icon } from './Icon.vue'
 ## Usage Notes
 
 - The rule executes a single scan per ESLint process using the plugin's `runOnce` utility — this avoids duplicate reports when linting many files.
-- The `ignore` option matches against the feature (parent) folder name and uses `minimatch` semantics.
-- If your repository places component folders at non-standard locations, change the `components` option (for example `shared/components` or `app/components`).
+- Use the `ignores` option or update project `rootPath` via `settings['vue-modular']` when your repository places component folders in non-standard locations (for example monorepos).
 
 ## When Not To Use
 
