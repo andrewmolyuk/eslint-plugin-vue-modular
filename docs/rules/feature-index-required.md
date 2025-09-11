@@ -6,32 +6,45 @@ Require a public feature entry file (for example `src/features/<feature>/index.t
 
 This rule verifies that each feature folder exposes a public API index file. Keeping a small, stable public surface at the feature root helps encapsulate implementation details and makes refactors safer.
 
-By default the rule applies when the linted file path contains the configured `features` segment (default: `src/features`). If a feature contains implementation files but no supported index file exists, the rule reports a problem.
+The rule scans all directories in the configured features path (default: `src/features`) and reports any feature directory that is missing the required index file. The features path is configured via the project settings `featuresPath` option.
 
-Default index filename: `index.ts`, rule still accepts any filename via the `index` option.
+Default index filename: `index.ts`, but can be customized via the `index` option.
 
 ## Options
 
 The rule accepts an options object with the following properties:
 
-- `features` (string, default: `"src/features"`) — path segment used to detect the features root in file paths. If this segment is not present in the filename the rule ignores the file.
-- `ignore` (string[], default: `[]`) — array of feature-name patterns to skip. Patterns use `minimatch` semantics and are matched against the feature folder name (the single path segment after the features segment).
+- `ignores` (string[], default: `[]`) — array of feature-name patterns to skip. Patterns are matched against the feature folder name using the plugin's ignore matching logic.
 - `index` (string, default: `"index.ts"`) — filename to look for as the feature public API. Use this to change the expected index file name (for example `index.js` or `main.ts`). The rule checks for this exact filename at the feature root.
+
+Note: The features path is configured via the project-wide `featuresPath` setting (default: `"src/features"`), not per-rule options.
 
 ### Example configuration
 
 ```js
-// Use defaults (scan `src/features` and no ignores)
+// Use defaults (scan `src/features` for `index.ts` files)
 {
   "vue-modular/feature-index-required": ["error"]
 }
 
-// Custom features folder and ignores
+// Custom ignores and index filename
 {
   "vue-modular/feature-index-required": [
     "error",
-    { "features": "app/features", "ignore": ["shared-.*", "legacy"], "index": "main.ts" }
+    { "ignores": ["shared-.*", "legacy"], "index": "main.ts" }
   ]
+}
+
+// Configure features path via project settings
+{
+  "settings": {
+    "vue-modular": {
+      "featuresPath": "app/features"
+    }
+  },
+  "rules": {
+    "vue-modular/feature-index-required": ["error"]
+  }
 }
 ```
 
@@ -39,11 +52,12 @@ The rule accepts an options object with the following properties:
 
 ### Default index (index.ts)
 
-Incorrect (feature has files but no `index.ts`):
+Incorrect (feature has directory but no `index.ts`):
 
 ```text
-// File: src/features/auth/components/LoginForm.vue
-// There is no src/features/auth/index.ts
+src/features/auth/components/LoginForm.vue
+src/features/auth/composables/useAuth.ts
+// Missing: src/features/auth/index.ts
 ```
 
 Correct (add `index.ts` at feature root):
@@ -61,28 +75,46 @@ If your project uses a different entry filename, configure `index` accordingly.
 Incorrect (rule configured with `index: 'main.ts'` but `main.ts` is missing):
 
 ```text
-// File: app/features/auth/components/LoginForm.vue
-// There is no app/features/auth/main.ts (rule expects 'main.ts')
+src/features/auth/components/LoginForm.vue
+src/features/auth/composables/useAuth.ts
+// Missing: src/features/auth/main.ts (rule expects 'main.ts')
 ```
 
 Correct (provide `main.ts` at feature root):
 
 ```ts
-// File: app/features/auth/main.ts
+// File: src/features/auth/main.ts
 export * from './components'
 export * from './composables'
 ```
 
+### Using ignores
+
+To skip certain feature directories from this rule:
+
+```js
+{
+  "vue-modular/feature-index-required": [
+    "error",
+    { "ignores": ["shared", "legacy-*"] }
+  ]
+}
+```
+
+This would skip checking for index files in `src/features/shared/` and any feature starting with `legacy-`.
+
 ## Usage Notes
 
 - The rule executes a single scan per ESLint process (the plugin `runOnce` pattern) to avoid duplicate reports when linting multiple files.
-- The rule only reports when the inspected feature directory contains implementation files other than the configured index; empty folders or features fully covered by `ignore` are not reported.
-- The `ignore` option is matched against the feature folder name only (not the whole path) and uses `minimatch` semantics.
-- In monorepos or non-standard layouts, set the `features` option to an appropriate segment (for example `packages/*/src/features` or `app/features`) to avoid false positives.
+- The rule scans the filesystem directly and reports missing index files for all feature directories found in the features path.
+- The `ignores` option is matched against the feature folder name only (not the whole path).
+- The features path can be customized via the project-wide `featuresPath` setting in ESLint settings.
+- The rule gracefully handles filesystem errors and will not crash if the features directory doesn't exist.
 
 ## When Not To Use
 
 - Do not enable this rule if your project intentionally relies on deep imports or follows a different public API strategy for features.
+- Skip this rule if you don't use a features-based architecture.
 
 ## Further Reading
 
