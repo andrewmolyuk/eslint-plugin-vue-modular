@@ -3,7 +3,7 @@ import meta from './meta.js'
 
 import fileComponentNaming from './rules/file-component-naming.js'
 import fileTsNaming from './rules/file-ts-naming.js'
-import folderKebabCase from './rules/folder-kebab-case.js'
+import folderKebabCase from '../../src/rules/folder-kebab-case.js'
 import featureIndexRequired from './rules/feature-index-required.js'
 import componentsIndexRequired from './rules/components-index-required.js'
 import sharedUiIndexRequired from './rules/shared-ui-index-required.js'

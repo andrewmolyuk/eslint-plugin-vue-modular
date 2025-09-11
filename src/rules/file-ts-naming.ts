@@ -1,4 +1,4 @@
-import { createRule, toCamelCase, parseRuleOptions, isIgnored } from '../utils'
+import { createRule, toCamelCase, parseRuleOptions, isIgnored, isTs } from '../utils'
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
 import path from 'path'
 
@@ -13,7 +13,7 @@ export const fileTsNaming = createRule<VueModularRuleModule>({
     if (isIgnored(context.filename, options.ignores)) return {}
 
     // Only check TypeScript files
-    if (path.extname(context.filename) !== '.ts' && path.extname(context.filename) !== '.tsx') return {}
+    if (!isTs(context.filename)) return {}
 
     return {
       Program(node) {
@@ -32,7 +32,7 @@ export const fileTsNaming = createRule<VueModularRuleModule>({
   meta: {
     type: 'suggestion',
     docs: {
-      category: 'Stylistic Issues',
+      category: 'File Organization',
       description: 'Require TypeScript filenames to be camelCase',
     },
     schema: [
