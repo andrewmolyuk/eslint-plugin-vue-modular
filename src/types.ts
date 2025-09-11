@@ -22,6 +22,10 @@ export interface VueModularProjectOptions {
   uiFolderName: string
 }
 
+export interface VueModularRuleOptions extends Record<string, unknown> {
+  ignores: string[]
+}
+
 export interface VueModularRuleModule extends Rule.RuleModule {
   name: string
   recommended: boolean
