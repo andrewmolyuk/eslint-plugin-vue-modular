@@ -17,9 +17,13 @@ jobs:
         with:
           configFile: .commitlintrc.json
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm ci
-      - run: make test
+          cache-dependency-path: 'bun.lock'
+          registry-url: 'https://registry.npmjs.org/'
+
+      - run: make install
+
+      - run: make build
