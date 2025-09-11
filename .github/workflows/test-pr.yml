@@ -24,6 +24,8 @@ jobs:
           cache-dependency-path: 'bun.lock'
           registry-url: 'https://registry.npmjs.org/'
 
+      - uses: oven-sh/setup-bun@v2.0.2
+
       - run: make install
 
       - run: make build
