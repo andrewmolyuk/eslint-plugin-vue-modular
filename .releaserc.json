@@ -11,7 +11,8 @@
         },
         "writerOpts": {
           "commitsSort": ["subject", "scope"]
-        }
+        },
+        "excludeMergeCommits": true
       }
     ],
     "@semantic-release/npm",
