@@ -1,8 +1,8 @@
 import { describe, it } from 'vitest'
 import { fileComponentNaming } from '../../src/rules/file-component-naming'
-import { RuleTester } from 'eslint'
+import { getRuleTester } from '../test-utils'
 
-const ruleTester = new RuleTester()
+const ruleTester = getRuleTester()
 
 describe('file-component-naming', () => {
   it('should pass for PascalCase .vue filename', () => {
