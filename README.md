@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/8/?scale=92&width=500&title=8%20of%2092%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/9/?scale=92&width=500&title=9%20of%2092%20rules%20completed)
 
 ### File Organization Rules
 
@@ -122,15 +122,15 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Dependency Rules
 
-| Rule                             | Description                                                                                                                                       |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| no-direct-feature-imports        | Features cannot import from other features directly.                                                                                              |
-| feature-imports-from-shared-only | Features can only import from `shared/` folder.                                                                                                   |
-| no-shared-imports-from-features  | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
-| app-imports                      | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
-| cross-feature-via-shared         | All cross-feature communication must go through the `shared/` layer.                                                                              |
+| Rule                                                                                 | Description                                                                                                                                       |
+| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| no-direct-feature-imports                                                            | Features cannot import from other features directly.                                                                                              |
+| [feature-imports-from-shared-only](./docs/rules/feature-imports-from-shared-only.md) | Features should only import from the `shared/` layer or their own internal files.                                                                 |
+| no-shared-imports-from-features                                                      | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
+| app-imports                                                                          | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
+| cross-feature-via-shared                                                             | All cross-feature communication must go through the `shared/` layer.                                                                              |
 
-### Components Rules
+### Component Rules
 
 | Rule                                         | Description                                                                                                                                                                                                 |
 | -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
