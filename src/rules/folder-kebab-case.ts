@@ -50,7 +50,6 @@ export const folderKebabCase = createRule<VueModularRuleModule>({
       {
         type: 'object',
         properties: {
-          src: { type: 'string' },
           ignores: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,

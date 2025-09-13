@@ -1,10 +1,10 @@
 # vue-modular/sfc-order
 
-Require a conventional order for Single File Component (SFC) blocks when those blocks exist.
+Enforce a conventional order for Single File Component (SFC) blocks.
 
-This rule parses `.vue` files using `@vue/compiler-sfc` and validates the relative order of blocks that are present in the file. Missing blocks are allowed — only the relative order among present blocks is checked.
+This rule parses Vue component files using `@vue/compiler-sfc` and validates the relative order of SFC blocks (`<script>`, `<template>`, `<style>`). The rule only enforces order among blocks that are present — missing blocks are allowed.
 
-By default the recommended order is:
+Default order:
 
 1. `<script>` / `<script setup>`
 2. `<template>`
@@ -12,54 +12,125 @@ By default the recommended order is:
 
 ## Rule Details
 
-- The rule runs only for on-disk `.vue` files under the configured `src` segment (default: `src`).
-- Virtual inputs (filenames starting with `<...>`) and files matched by the `ignore` option are skipped.
-- The rule computes the actual block order from the SFC descriptor and validates that the sequence of present blocks respects the relative order defined by the `order` option (or the default order).
-- This rule intentionally does not report missing blocks — use `vue-modular/sfc-required` to enforce presence of `<template>`/`<script>`.
+- **Component detection**: Only runs on `.vue` files located in the configured components folder. Files outside component folders are ignored.
+- **SFC parsing**: Uses `@vue/compiler-sfc` to parse the Vue file and extract block positions.
+- **Order validation**: Checks that present blocks follow the configured relative order. Missing blocks are allowed.
+- **Early exit**: If a component has neither `<template>` nor `<script>` blocks, the rule skips validation (no meaningful content to order).
 
 ## Options
 
 The rule accepts a single options object:
 
-- `src` (string, default: `"src"`) — path segment used to identify the repository source area where the rule should run.
-- `ignore` (string[], default: `[]`) — minimatch-style patterns to ignore files or folders.
-- `order` (string[], default: `['script','template','style']`) — the desired relative block ordering. Allowed values are `"script"`, `"template"`, and `"style"`. Missing blocks are permitted.
+- `order` (string[], default: `["script", "template", "style"]`) — desired relative block ordering. Allowed values: `"script"`, `"template"`, `"style"`
+- `ignores` (string[], default: `[""]`) — minimatch-style patterns to exclude specific files
+
+### Project Configuration
+
+The rule uses project-wide settings from your ESLint configuration's `settings['vue-modular']`:
+
+- `componentsFolderName` (string, default: `"components"`) — name of the folder that contains components
+- `rootPath` (string, default: `"src"`) — root path of the project
+- `rootAlias` (string, default: `"@"`) — alias for the root path
 
 ### Example configuration
 
 ```js
+// ESLint config
 {
-  "vue-modular/sfc-order": ["error", { "src": "src", "ignore": [], "order": ["script", "template", "style"] }]
+  "settings": {
+    "vue-modular": {
+      "componentsFolderName": "components",
+      "rootPath": "src",
+      "rootAlias": "@"
+    }
+  },
+  "rules": {
+    "vue-modular/sfc-order": ["error", {
+      "order": ["script", "template", "style"],
+      "ignores": []
+    }]
+  }
 }
 ```
 
 ## Incorrect
 
 ```vue
+<!-- Wrong order: template before script -->
 <template>
-  <div />
+  <div>Hello</div>
 </template>
-<script>
-export default {}
+<script setup>
+const message = 'Hello'
 </script>
+```
+
+```vue
+<!-- Wrong order: style before template -->
+<script setup>
+const message = 'Hello'
+</script>
+<style>
+.hello {
+  color: blue;
+}
+</style>
+<template>
+  <div>Hello</div>
+</template>
 ```
 
 ## Correct
 
 ```vue
+<!-- Correct order: script, template, style -->
 <script setup>
-const a = 1
+const message = 'Hello'
 </script>
 <template>
-  <div />
+  <div>{{ message }}</div>
 </template>
 <style>
-/* css */
+.hello {
+  color: blue;
+}
 </style>
+```
+
+```vue
+<!-- Missing blocks are allowed -->
+<script setup>
+// Script-only component
+export function useUtils() {}
+</script>
+```
+
+```vue
+<!-- Custom order example -->
+<style>
+/* Custom order: style first */
+.component {
+  display: block;
+}
+</style>
+<script setup>
+const props = defineProps({})
+</script>
+<template>
+  <div class="component">Content</div>
+</template>
 ```
 
 ## Usage Notes
 
-- The rule uses `@vue/compiler-sfc` to parse SFCs, so `<script setup>` and other modern SFC syntax are handled correctly.
-- The rule checks order only; it does not assert the presence of template/script blocks. Use `vue-modular/sfc-required` to require those blocks.
-- The `ignore` option accepts minimatch patterns — match feature folder names (for example `"**/legacy/**"`) to skip legacy areas.
+- The rule uses `@vue/compiler-sfc` to parse Vue files reliably, supporting `<script setup>` and other modern SFC syntax.
+- Only files identified as components (`.vue` files in the components folder) are checked.
+- Both `<script>` and `<script setup>` blocks are treated as `"script"` type for ordering purposes.
+- Multiple `<style>` blocks are allowed and treated as individual `"style"` blocks.
+- Files with only style blocks (no template or script) are skipped entirely.
+- Files can be excluded using the `ignores` option with minimatch patterns.
+
+## When Not To Use
+
+- Disable this rule if your project doesn't follow consistent SFC block ordering conventions.
+- Use the `ignores` option to exclude specific files or patterns rather than disabling the rule entirely.
