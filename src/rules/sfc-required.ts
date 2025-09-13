@@ -37,11 +37,13 @@ export const sfcRequired = createRule<VueModularRuleModule>({
   recommended: true,
   level: 'warn',
   meta: {
-    type: 'suggestion',
+    type: 'problem',
     docs: {
-      category: 'Component Rules',
-      description: 'Require Single File Component structure for Vue components',
+      description: 'Require Vue SFC to have at least a <template> or <script> block',
+      category: 'Components',
+      recommended: false,
     },
+    defaultOptions: [defaultOptions],
     schema: [
       {
         type: 'object',
@@ -51,7 +53,6 @@ export const sfcRequired = createRule<VueModularRuleModule>({
         additionalProperties: false,
       },
     ],
-    defaultOptions: [defaultOptions],
     messages: {
       missingSfcBlock: 'Vue file "{{name}}" should contain at least a <template> or a <script> block.',
     },

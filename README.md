@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/6/?scale=92&width=500&title=6%20of%2092%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/8/?scale=92&width=500&title=8%20of%2092%20rules%20completed)
 
 ### File Organization Rules
 
@@ -130,17 +130,17 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | app-imports                      | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
 | cross-feature-via-shared         | All cross-feature communication must go through the `shared/` layer.                                                                              |
 
-### Component Rules
+### Components Rules
 
-| Rule                         | Description                                                                                                                                                                                                 |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| sfc-required                 | All Vue components should be written as Single File Components (SFC) with `.vue` extension; when present on disk a `.vue` file must contain at least a `<template>` or `<script>` / `<script setup>` block. |
-| sfc-order                    | Enforce SFC block order: `<script>`, `<template>`, `<style>`; the rule only enforces ordering when script/template blocks are present.                                                                      |
-| layout-components-location   | Layout-specific components must be in `app/components/`.                                                                                                                                                    |
-| ui-components-location       | Reusable UI components (design system) must be in `shared/ui/`.                                                                                                                                             |
-| business-components-location | Business components used across features must be in `shared/components/`.                                                                                                                                   |
-| feature-components-location  | Feature-specific components must be in `features/{feature}/components/`.                                                                                                                                    |
-| component-props-typed        | Component props must be typed with TypeScript interfaces.                                                                                                                                                   |
+| Rule                                         | Description                                                                                                                                                                                                 |
+| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [sfc-required](./docs/rules/sfc-required.md) | All Vue components should be written as Single File Components (SFC) with `.vue` extension; when present on disk a `.vue` file must contain at least a `<template>` or `<script>` / `<script setup>` block. |
+| [sfc-order](./docs/rules/sfc-order.md)       | Enforce SFC block order: `<script>`, `<template>`, `<style>`; the rule only enforces ordering when script/template blocks are present.                                                                      |
+| layout-components-location                   | Layout-specific components must be in `app/components/`.                                                                                                                                                    |
+| ui-components-location                       | Reusable UI components (design system) must be in `shared/ui/`.                                                                                                                                             |
+| business-components-location                 | Business components used across features must be in `shared/components/`.                                                                                                                                   |
+| feature-components-location                  | Feature-specific components must be in `features/{feature}/components/`.                                                                                                                                    |
+| component-props-typed                        | Component props must be typed with TypeScript interfaces.                                                                                                                                                   |
 
 ### Service Rules
 

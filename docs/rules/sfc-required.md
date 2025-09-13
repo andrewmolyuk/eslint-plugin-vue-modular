@@ -1,48 +1,67 @@
 # vue-modular/sfc-required
 
-Require Single File Component (SFC) structure for Vue component files under a configured `src` segment.
+Require Vue Single File Component (SFC) files to contain at least a `<template>` or `<script>` block.
 
-This rule enforces that any Vue component file that lives under the configured `src` segment uses the `.vue` SFC format and, when the file is present on disk, contains at least one of the meaningful SFC blocks (`<template>` or `<script>` / `<script setup>`). Files that are virtual (like `"<input>"`) or explicitly ignored by the rule's `ignore` option are skipped.
+This rule enforces that Vue component files contain meaningful content by requiring at least one of the core SFC blocks (`<template>` or `<script>` / `<script setup>`). It only runs on files that are identified as Vue components (`.vue` files in the configured components folder).
 
 ## Rule Details
 
-The rule performs two related checks:
+The rule performs the following checks:
 
-1. It only runs for files inside the configured `src` segment (default: `src`). Files outside that segment are ignored.
-2. For on-disk `.vue` files it parses the SFC using `@vue/compiler-sfc` and verifies the descriptor contains either a `<template>` block or a `<script>` / `<script setup>` block. If neither block exists the rule reports `missingSfcBlock` with the filename.
+1. **Component detection**: Only runs on `.vue` files located in the configured components folder (default: `components`). Files outside component folders are ignored.
+2. **SFC parsing**: Uses `@vue/compiler-sfc` to parse the Vue file and extract the SFC descriptor.
+3. **Block validation**: Verifies that the SFC contains either a `<template>` block or a `<script>`/`<script setup>` block. If neither exists, reports an error.
 
-This behavior helps catch accidentally empty `.vue` files or files that only contain style blocks (for example UI kit style-only files that should not be placed inside feature code), while avoiding false positives for virtual or non-.vue files.
+This helps catch accidentally empty component files or files that only contain style blocks without meaningful component logic.
 
 ## Options
 
 The rule accepts a single options object:
 
-- `src` (string, default: `"src"`) — the path segment used to identify the codebase root under which the rule should run. The rule finds the configured segment in the linted file path and only enforces rules for files under that segment.
-- `ignore` (string[], default: `[]`) — minimatch-style patterns matched against the relative path (or parent segment) to skip files or features. Use this to exclude legacy folders or third-party directories.
+- `ignores` (string[], default: `[""]`) — minimatch-style patterns to exclude specific files from checking.
+
+### Project Configuration
+
+The rule uses project-wide settings from your ESLint configuration's `settings['vue-modular']`:
+
+- `componentsFolderName` (string, default: `"components"`) — name of the folder that contains components
+- `rootPath` (string, default: `"src"`) — root path of the project
+- `rootAlias` (string, default: `"@"`) — alias for the root path
 
 ### Example configuration
 
 ```js
-// Recommended defaults: scan files under `src` and do not ignore anything
+// ESLint config
 {
-  "vue-modular/sfc-required": ["error", { "src": "src", "ignore": [] }]
+  "settings": {
+    "vue-modular": {
+      "componentsFolderName": "components",
+      "rootPath": "src",
+      "rootAlias": "@"
+    }
+  },
+  "rules": {
+    "vue-modular/sfc-required": ["error", { "ignores": [] }]
+  }
 }
 ```
 
 ## Incorrect
 
-```text
-// File: src/features/payments/components/Orphan.vue
-// File contents: only style and no template or script blocks
+```vue
+<!-- File: src/components/EmptyComponent.vue -->
+<!-- Only style block, no template or script -->
 <style>
-  /* only styles */
+.card {
+  padding: 1rem;
+}
 </style>
 ```
 
 ## Correct
 
 ```vue
-<!-- File: src/features/payments/components/Card.vue -->
+<!-- File: src/components/Card.vue -->
 <template>
   <div class="card">...</div>
 </template>
@@ -52,17 +71,30 @@ const props = defineProps({})
 </script>
 
 <style>
-/* styles */
+.card {
+  padding: 1rem;
+}
 </style>
+```
+
+```vue
+<!-- File: src/components/Utility.vue -->
+<!-- Script-only component is also valid -->
+<script setup>
+export function useCardUtils() {
+  // utility logic
+}
+</script>
 ```
 
 ## Usage Notes
 
-- The rule uses `@vue/compiler-sfc` to parse the `.vue` file reliably; this allows detection of `<script setup>` and other valid SFC syntax.
-- The rule runs only once per ESLint process using the plugin's `runOnce` helper to avoid duplicate scans and noise when linting many files.
-- If a `.vue` file is missing on disk (for example an IDE virtual document) the rule will skip the content check.
-- The `ignore` option accepts minimatch patterns; match the feature folder name (for example `"**/legacy/**"`) to skip legacy areas.
+- The rule uses `@vue/compiler-sfc` to parse Vue files reliably, supporting `<script setup>` and other modern SFC syntax.
+- Only files identified as components (`.vue` files in the components folder) are checked.
+- Files can be excluded using the `ignores` option with minimatch patterns.
+- The rule respects project-wide component folder configuration via ESLint settings.
 
 ## When Not To Use
 
-- Do not enable this rule for folders that intentionally contain non-SFC Vue artifacts (for example a style-only UI-kit folder that you choose to keep outside of features). Instead, configure `ignore` to skip those paths.
+- Disable this rule if you intentionally create Vue files with only style blocks (e.g., style-only component libraries).
+- Use the `ignores` option to exclude specific files or patterns rather than disabling the rule entirely.
