@@ -34,18 +34,25 @@ src/features/user/stores/userStore.ts
 
 ## Options
 
+This rule accepts a single options object with the following properties:
+
+- `suffix` (string, default: `'Store'`) — the suffix to forbid on filenames. The rule constructs a case-insensitive regular expression from this value and tests file basenames. Use this to forbid a different suffix (for example `'StoreModule'`).
 - `ignores` (string[], default: `['**/*.d.ts', '**/*.spec.*', '**/*.test.*', '**/*.stories.*']`) — an array of glob patterns (minimatch) matched against the filename supplied by ESLint. Matching files are skipped.
 
 Example configuration:
 
 ```js
+// Use defaults (forbid 'Store' suffix)
 {
  "vue-modular/store-filename-no-suffix": ["error"]
 }
 
-// With custom ignores
+// Change suffix to 'StoreModule' and ignore legacy files
 {
- "vue-modular/store-filename-no-suffix": ["error", { "ignores": ["**/legacy/**"] }]
+ "vue-modular/store-filename-no-suffix": [
+  "error",
+  { "suffix": "StoreModule", "ignores": ["**/legacy/**"] }
+ ]
 }
 ```
 
