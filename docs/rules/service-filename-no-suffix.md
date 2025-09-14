@@ -44,15 +44,15 @@ Example configuration:
 ```js
 // Use defaults (forbid 'Service' suffix)
 {
-	"vue-modular/service-filename-no-suffix": ["error"]
+ "vue-modular/service-filename-no-suffix": ["error"]
 }
 
 // Change suffix to 'ServiceModule' and ignore legacy files
 {
-	"vue-modular/service-filename-no-suffix": [
-		"error",
-		{ "suffix": "ServiceModule", "ignores": ["**/legacy/**"] }
-	]
+ "vue-modular/service-filename-no-suffix": [
+  "error",
+  { "suffix": "ServiceModule", "ignores": ["**/legacy/**"] }
+ ]
 }
 ```
 
