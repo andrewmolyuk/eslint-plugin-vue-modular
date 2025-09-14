@@ -1,4 +1,4 @@
-.PHONY: install lint test build update drawio
+.PHONY: install lint test build update drawio clean
 DEFAULT_GOAL := build
 
 install:
@@ -35,3 +35,21 @@ drawio:
 		exit 1; \
 	fi; \
 	"$$DRAWIO_CMD" -x -o docs/assets --transparent -f png docs/assets/drawio/*.drawio
+
+clean:
+	@git fetch --prune
+	@git branch -vv | awk '/: gone]/{print $$1}' > .git/branches-to-delete || true
+	@if [ -s .git/branches-to-delete ]; then \
+		echo "---" ; cat .git/branches-to-delete ; \
+		while read b; do \
+			if [ "$$b" != "$(shell git rev-parse --abbrev-ref HEAD)" ]; then \
+				git branch -D $$b || true; \
+			else \
+				echo "Skipping current branch: $$b"; \
+			fi; \
+		done < .git/branches-to-delete; \
+	else \
+		echo "No local branches to delete"; \
+	fi;
+	@rm -Rf .git/branches-to-delete || true
+	@rm -Rf dist node_modules coverage || true
