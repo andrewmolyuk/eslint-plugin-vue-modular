@@ -20,15 +20,17 @@ export const folderKebabCase = createRule<VueModularRuleModule>({
 
         if (!fs.existsSync(root)) return
         try {
-          const entries = fs.readdirSync(root, { recursive: true })
+          const entries: fs.Dirent[] = fs.readdirSync(root, { recursive: true }) as unknown as fs.Dirent[]
 
           entries.forEach((dir) => {
+            if (dir.isDirectory() === false) return
             const fullPath = path.join(root, String(dir))
             if (isIgnored(fullPath, options.ignores)) return
             const base = path.basename(fullPath)
             const kebab = toKebabCase(base)
             if (kebab !== base) {
-              context.report({ node, messageId: 'folderNotKebab', data: { folder: String(dir), kebab } })
+              context.report({ node, messageId: 'folderNotKebab', data: { folder: String(dir), expected: kebab } })
+              return
             }
           })
         } catch {
