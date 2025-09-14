@@ -9,7 +9,7 @@ const defaultOptions = {
 
 export const viewsSuffix = createRule<VueModularRuleModule>({
   create(context: VueModularRuleContext) {
-    const options = parseRuleOptions(context, defaultOptions as unknown as Record<string, unknown>) as typeof defaultOptions
+    const options = parseRuleOptions(context, defaultOptions)
     const projectOptions = parseProjectOptions(context)
 
     const filename = resolvePath(context.filename, projectOptions.rootPath, projectOptions.rootAlias)
