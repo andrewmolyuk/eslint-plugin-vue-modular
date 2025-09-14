@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/9/?scale=92&width=500&title=9%20of%2092%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/10/?scale=92&width=500&title=10%20of%2087%20rules%20completed)
 
 ### File Organization Rules
 
@@ -125,8 +125,12 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | Rule                                               | Description                                                                                                                                       |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [feature-imports](./docs/rules/feature-imports.md) | Features should only import from the `shared/` layer or their own internal files.                                                                 |
-| shared-imports                                     | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
+| [shared-imports](./docs/rules/shared-imports.md)  | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
 | app-imports                                        | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
+| imports-absolute-alias                             | Use absolute imports with `@/` alias for cross-layer imports and shared resources.                                                                |
+| imports-no-deep-relative                           | Avoid relative imports with more than 2 levels (`../../../`) - use absolute instead.                                                              |
+| imports-from-index                                 | Import from `index.ts` files when available.                                                                                                      |
+| imports-grouping                                   | Group imports: Vue imports, third-party imports, internal imports.                                                                                |
 
 ### Component Rules
 
@@ -251,18 +255,6 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | config-validate-runtime | Runtime configuration must be validated at application startup.               |
 | config-location         | App configurations must be in `app/config/` folder.                           |
 | config-export-typed     | Config files must export typed configuration objects.                         |
-
-### Import Rules
-
-| Rule                     | Description                                                                          |
-| ------------------------ | ------------------------------------------------------------------------------------ |
-| imports-absolute-alias   | Use absolute imports with `@/` alias for cross-layer imports and shared resources.   |
-| imports-relative-local   | Use relative imports for same-feature or nearby file imports (within 2 levels).      |
-| imports-no-deep-relative | Avoid relative imports with more than 2 levels (`../../../`) - use absolute instead. |
-| imports-from-index       | Import from `index.ts` files when available.                                         |
-| imports-grouping         | Group imports: Vue imports, third-party imports, internal imports.                   |
-| imports-type-syntax      | Type imports must use `import type` syntax.                                          |
-| imports-avoid-deep       | Avoid deep imports into feature internals.                                           |
 
 ### Export Rules
 
