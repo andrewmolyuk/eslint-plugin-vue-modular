@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/10/?scale=92&width=500&title=10%20of%2087%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/11/?scale=92&width=500&title=11%20of%2087%20rules%20completed)
 
 ### File Organization Rules
 
@@ -146,13 +146,13 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Service Rules
 
-| Rule                       | Description                                                                           |
-| -------------------------- | ------------------------------------------------------------------------------------- |
-| services-shared-location   | Cross-cutting services must be in `shared/services/`.                                 |
-| services-feature-location  | Feature-specific services must be in `features/{feature}/services/`.                  |
-| service-filename-no-suffix | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
-| service-named-exports      | Services must export named classes or named functions (avoid default exports).        |
-| service-use-api-client     | API services must use the shared `apiClient.ts`.                                      |
+| Rule                                                                     | Description                                                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| services-shared-location                                                 | Cross-cutting services must be in `shared/services/`.                                 |
+| services-feature-location                                                | Feature-specific services must be in `features/{feature}/services/`.                  |
+| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
+| service-named-exports                                                    | Services must export named classes or named functions (avoid default exports).        |
+| service-use-api-client                                                   | API services must use the shared `apiClient.ts`.                                      |
 
 ### Store Rules
 
