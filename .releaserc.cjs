@@ -15,6 +15,8 @@ module.exports = {
 
             // Filter out merge commits by header
             if (commit.header && typeof commit.header === 'string') {
+              if (commit.header.startsWith('chore(pr):')) return null
+              if (commit.header.startsWith('chore(merge):')) return null
               if (commit.header.startsWith('Merge pull request')) return null
               if (commit.header.startsWith('Merge branch')) return null
             }
