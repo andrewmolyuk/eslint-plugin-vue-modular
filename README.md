@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/13/?scale=87&width=500&title=13%20of%2087%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/14/?scale=87&width=500&title=14%20of%2087%20rules%20completed)
 
 ### File Organization Rules
 
@@ -126,6 +126,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [feature-imports](./docs/rules/feature-imports.md) | Features should only import from the `shared/` layer or their own internal files.                                                                 |
 | [shared-imports](./docs/rules/shared-imports.md)   | `shared/` folder cannot import from `features/` or `views/`.                                                                                      |
+| [app-imports](./docs/rules/app-imports.md)         | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files).                              |
 | app-imports                                        | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files to compose the global router). |
 | imports-absolute-alias                             | Use absolute imports with `@/` alias for cross-layer imports and shared resources.                                                                |
 | imports-no-deep-relative                           | Avoid relative imports with more than 2 levels (`../../../`) - use absolute instead.                                                              |
