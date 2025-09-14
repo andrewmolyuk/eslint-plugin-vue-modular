@@ -12,17 +12,23 @@ module.exports = {
         writerOpts: {
           transform(commit) {
             if (!commit) return null
+
+            // Filter out merge commits by header
             if (commit.header && typeof commit.header === 'string') {
               if (commit.header.startsWith('Merge pull request')) return null
               if (commit.header.startsWith('Merge branch')) return null
             }
 
+            // Return a shallow copy instead of mutating the provided object.
+            // The conventional-changelog writer may provide frozen/immutable commits.
+            const out = Object.assign({}, commit)
+
             // shorten commit hash for nicer links (7 chars is common)
-            if (commit.hash && typeof commit.hash === 'string' && commit.hash.length > 7) {
-              commit.hash = commit.hash.slice(0, 7)
+            if (out.hash && typeof out.hash === 'string' && out.hash.length > 7) {
+              out.hash = out.hash.slice(0, 7)
             }
 
-            return commit
+            return out
           },
         },
       },
