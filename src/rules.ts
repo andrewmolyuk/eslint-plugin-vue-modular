@@ -9,6 +9,7 @@ import { sharedImports } from './rules/shared-imports'
 import { serviceFilenameNoSuffix } from './rules/service-filename-no-suffix'
 import { storeFilenameNoSuffix } from './rules/store-filename-no-suffix'
 import { sharedUiIndexRequired } from './rules/shared-ui-index-required'
+import { viewsSuffix } from './rules/views-suffix'
 import { VueModularRuleModule } from './types'
 
 export const rules: Record<string, VueModularRuleModule> = {
@@ -23,4 +24,5 @@ export const rules: Record<string, VueModularRuleModule> = {
   'service-filename-no-suffix': serviceFilenameNoSuffix,
   'store-filename-no-suffix': storeFilenameNoSuffix,
   'feature-imports': featureImports,
+  'views-suffix': viewsSuffix,
 }

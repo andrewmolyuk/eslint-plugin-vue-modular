@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/12/?scale=87&width=500&title=12%20of%2087%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/13/?scale=87&width=500&title=13%20of%2087%20rules%20completed)
 
 ### File Organization Rules
 
@@ -187,13 +187,13 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### View Rules
 
-| Rule                    | Description                                                                         |
-| ----------------------- | ----------------------------------------------------------------------------------- |
-| views-feature-location  | Feature views must be in `features/{feature}/views/`.                               |
-| views-global-location   | Global views (not feature-specific) must be in `views/` folder.                     |
-| views-suffix            | View files must end with `View.vue` suffix.                                         |
-| views-no-business-logic | Views cannot contain business logic (delegate to composables/services).             |
-| views-layout-meta       | Layout selection must be defined in route metadata, not imported directly in views. |
+| Rule                                         | Description                                                                         |
+| -------------------------------------------- | ----------------------------------------------------------------------------------- |
+| views-feature-location                       | Feature views must be in `features/{feature}/views/`.                               |
+| views-global-location                        | Global views (not feature-specific) must be in `views/` folder.                     |
+| [views-suffix](./docs/rules/views-suffix.md) | View files must end with `View.vue` suffix.                                         |
+| views-no-business-logic                      | Views cannot contain business logic (delegate to composables/services).             |
+| views-layout-meta                            | Layout selection must be defined in route metadata, not imported directly in views. |
 
 ### Composable Rules
 
