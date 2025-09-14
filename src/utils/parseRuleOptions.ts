@@ -1,4 +1,4 @@
-import { VueModularRuleContext } from 'src/types'
+import { VueModularRuleContext } from '../types'
 
 // Utility to parse rule options with defaults and normalization
 export const parseRuleOptions = <T extends Record<string, unknown>>(context: VueModularRuleContext, defaults: T): T => {

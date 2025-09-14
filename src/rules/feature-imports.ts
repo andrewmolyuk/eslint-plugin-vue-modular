@@ -1,6 +1,6 @@
 import { createRule, parseRuleOptions, parseProjectOptions, resolvePath, isIgnored } from '../utils'
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
-import { resolveImportPath } from 'src/utils/resolveImportPath'
+import { resolveImportPath } from '../utils/resolveImportPath'
 
 const defaultOptions = {
   ignores: [] as string[],
