@@ -2,7 +2,7 @@
 
 Disallow the `Service` suffix in service filenames (for example `auth.ts`, not `authService.ts`).
 
-## Rule details
+## Rule Details
 
 This rule enforces concise service filenames for files placed under the configured service locations:
 
@@ -56,7 +56,7 @@ Example configuration:
 }
 ```
 
-## Usage notes
+## Usage Notes
 
 - The rule uses project settings for `rootPath`, `rootAlias`, `sharedPath`, and `featuresPath` to determine the file's normalized path. These settings are merged with plugin defaults and can be configured via `settings['vue-modular']` in your ESLint configuration.
 - Ignore globs use `minimatch` semantics and should be written relative to the filename ESLint receives (which may be absolute or repo-relative depending on your lint invocation).
