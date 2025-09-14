@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { runRule, setupTest } from '../test-utils'
-import { sharedIndexRequired } from '../../src/rules/shared-ui-index-required'
+import { sharedUiIndexRequired } from '../../src/rules/shared-ui-index-required'
 import fs from 'fs'
 
 describe('shared-ui-index-required rule', () => {
@@ -9,7 +9,7 @@ describe('shared-ui-index-required rule', () => {
   it('reports a missing shared ui index file when it does not exist', () => {
     vi.spyOn(fs, 'existsSync').mockReturnValue(false)
 
-    const context = runRule(sharedIndexRequired, 'filename.ts')
+    const context = runRule(sharedUiIndexRequired, 'filename.ts')
 
     expect(context.report).toHaveBeenCalledTimes(1)
     expect(context.report).toHaveBeenCalledWith(
@@ -23,7 +23,7 @@ describe('shared-ui-index-required rule', () => {
   it('does not report when the shared ui index exists', () => {
     vi.spyOn(fs, 'existsSync').mockReturnValue(true)
 
-    const context = runRule(sharedIndexRequired, 'filename.ts')
+    const context = runRule(sharedUiIndexRequired, 'filename.ts')
 
     expect(context.report).not.toHaveBeenCalled()
   })
@@ -34,7 +34,7 @@ describe('shared-ui-index-required rule', () => {
     // pattern matches the shared ui index path used by the rule
     const ignorePattern = ['**/src/shared/ui']
 
-    const context = runRule(sharedIndexRequired, 'filename.ts', [{ ignores: ignorePattern, index: 'index.ts' }])
+    const context = runRule(sharedUiIndexRequired, 'filename.ts', [{ ignores: ignorePattern, index: 'index.ts' }])
 
     expect(context.report).not.toHaveBeenCalled()
   })
@@ -42,8 +42,8 @@ describe('shared-ui-index-required rule', () => {
   it('does nothing when runOnce returns false', () => {
     vi.spyOn(fs, 'existsSync').mockReturnValue(false)
 
-    const context1 = runRule(sharedIndexRequired, 'filename1.ts')
-    const context2 = runRule(sharedIndexRequired, 'filename2.ts')
+    const context1 = runRule(sharedUiIndexRequired, 'filename1.ts')
+    const context2 = runRule(sharedUiIndexRequired, 'filename2.ts')
 
     expect(context1.report).toHaveBeenCalledTimes(1)
     expect(context2.report).not.toHaveBeenCalled()
@@ -55,7 +55,7 @@ describe('shared-ui-index-required rule', () => {
     })
 
     expect(() => {
-      runRule(sharedIndexRequired, 'filename.ts')
+      runRule(sharedUiIndexRequired, 'filename.ts')
     }).not.toThrow()
   })
 })
