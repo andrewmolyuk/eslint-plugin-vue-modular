@@ -8,7 +8,7 @@ const defaultOptions = {
   index: 'index.ts',
 }
 
-export const sharedIndexRequired = createRule<VueModularRuleModule>({
+export const sharedUiIndexRequired = createRule<VueModularRuleModule>({
   create(context) {
     if (!runOnce('shared-ui-index-required')) return {}
 

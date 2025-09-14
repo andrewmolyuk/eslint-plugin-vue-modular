@@ -56,4 +56,10 @@ describe('resolveImportPath', () => {
     expect(resolveImportPath('foo/bar.ts', '.', src, alias)).toBe('project/src/foo')
     expect(resolveImportPath('foo/bar.ts', '..', src, alias)).toBe('project/src')
   })
+  it('resolve local file import', () => {
+    const from = 'src/shared/lib/util.ts'
+    const to = './helper'
+    const result = resolveImportPath(from, to, src, alias)
+    expect(result).toBe('project/src/shared/lib/helper')
+  })
 })

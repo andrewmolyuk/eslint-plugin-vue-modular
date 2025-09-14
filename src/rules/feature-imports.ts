@@ -6,7 +6,7 @@ const defaultOptions = {
   ignores: [] as string[],
 }
 
-export const featureImportsFromSharedOnly = createRule<VueModularRuleModule>({
+export const featureImports = createRule<VueModularRuleModule>({
   create(context: VueModularRuleContext) {
     const options = parseRuleOptions(context, defaultOptions as unknown as Record<string, unknown>) as typeof defaultOptions
     const projectOptions = parseProjectOptions(context)
@@ -40,7 +40,7 @@ export const featureImportsFromSharedOnly = createRule<VueModularRuleModule>({
       },
     }
   },
-  name: 'feature-imports-from-shared-only',
+  name: 'feature-imports',
   recommended: true,
   level: 'error',
   meta: {
