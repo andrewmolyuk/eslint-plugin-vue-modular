@@ -22,7 +22,11 @@ export function resolveImportPath(from: string, to: string, src: string, alias: 
   if (!from || !to) return null
   // Handle relative imports: resolve against the file's directory under src
   if (isRelativeImport(to)) {
-    const fromAbs = path.resolve(src, from)
+    // If `from` already starts with the src folder (e.g. 'src/shared/...'), strip that
+    // so resolving against src does not produce '/project/src/src/...'.
+    const rootName = path.basename(src)
+    const fromClean = from.startsWith(`${rootName}/`) ? from.slice(rootName.length + 1) : from
+    const fromAbs = path.resolve(src, fromClean)
     const base = path.dirname(fromAbs)
     const resolved = path.resolve(base, to)
     return resolvePath(resolved, src, alias)
