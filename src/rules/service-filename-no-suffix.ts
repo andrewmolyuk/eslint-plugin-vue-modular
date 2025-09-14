@@ -3,6 +3,7 @@ import { createRule, parseRuleOptions, parseProjectOptions, resolvePath, isIgnor
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
 
 const defaultOptions = {
+  suffix: 'Service',
   ignores: ['**/*.d.ts', '**/*.spec.*', '**/*.test.*', '**/*.stories.*'],
 }
 
@@ -21,7 +22,7 @@ export const serviceFilenameNoSuffix = createRule<VueModularRuleModule>({
       Program(node) {
         const base = path.basename(context.filename, path.extname(context.filename))
 
-        if (/Service$/i.test(base)) {
+        if (new RegExp(`${options.suffix}$`, 'i').test(base)) {
           context.report({
             node,
             messageId: 'noServiceSuffix',
@@ -45,6 +46,7 @@ export const serviceFilenameNoSuffix = createRule<VueModularRuleModule>({
       {
         type: 'object',
         properties: {
+          suffix: { type: 'string' },
           ignores: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,
