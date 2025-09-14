@@ -1,4 +1,4 @@
-# vue-modular/feature-imports-from-shared-only
+# vue-modular/feature-imports
 
 Require that feature code imports only from the `shared/` layer (features must not import from other features).
 
@@ -26,12 +26,12 @@ Note: project-level settings control `rootPath`, `rootAlias`, `featuresPath`, an
 
 ```js
 {
-  "vue-modular/feature-imports-from-shared-only": ["error"]
+  "vue-modular/feature-imports": ["error"]
 }
 
 // ignore legacy features while migrating
 {
-  "vue-modular/feature-imports-from-shared-only": ["error", { "ignores": ["src/features/legacy-*/**"] }]
+  "vue-modular/feature-imports": ["error", { "ignores": ["src/features/legacy-*/**"] }]
 }
 ```
 

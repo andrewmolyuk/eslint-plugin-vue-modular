@@ -1,12 +1,12 @@
 import { describe, it } from 'vitest'
-import { featureImportsFromSharedOnly } from '../../src/rules/feature-imports-from-shared-only'
+import { featureImports } from '../../src/rules/feature-imports'
 import { getRuleTester } from '../test-utils'
 
 const ruleTester = getRuleTester()
 
-describe('feature-imports-from-shared-only', () => {
-  it('test cases for feature-imports-from-shared-only rule', () => {
-    ruleTester.run('feature-imports-from-shared-only', featureImportsFromSharedOnly, {
+describe('feature-imports', () => {
+  it('test cases for feature-imports rule', () => {
+    ruleTester.run('feature-imports', featureImports, {
       valid: [
         {
           code: `import { sharedUtil } from 'src/shared/utils'`,
