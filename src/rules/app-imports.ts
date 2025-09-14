@@ -24,6 +24,9 @@ export const appImports = createRule<VueModularRuleModule>({
         const resolvedPath = resolveImportPath(filename, importPath, projectOptions.rootPath, projectOptions.rootAlias)
         if (!resolvedPath) return
 
+        // Allow relative imports within app/
+        if (resolvedPath.startsWith(projectOptions.appPath)) return
+
         // Special case: allow app/router.ts to import feature route files
         const isRouterFile = filename === `${projectOptions.appPath}/router.ts`
         if (isRouterFile) {
