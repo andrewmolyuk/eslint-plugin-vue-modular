@@ -25,6 +25,10 @@ describe('app-imports', () => {
         { code: "import fm from '@/features/auth/index'", filename: 'src/app/main.ts' },
         { code: "import fm from '@/features/auth/index.ts'", filename: 'src/app/main.ts' },
         { code: "import x from '@/utils/local'", filename: 'src/app/main.ts', options: [{ ignores: ['**/app/main.ts'] }] },
+        // allow relative imports within app/
+        { code: "import x from './local'", filename: 'src/app/main.ts' },
+        { code: "import x from '../app/local'", filename: 'src/app/main.ts' },
+        { code: "import x from '@/app/local'", filename: 'src/app/main.ts' },
       ],
       invalid: [
         {

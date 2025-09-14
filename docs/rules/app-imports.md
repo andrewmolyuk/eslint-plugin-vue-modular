@@ -14,9 +14,9 @@ relative paths and reports when an import targets a non-shared, non-public
 feature path.
 
 The rule skips checks when the current filename cannot be resolved to a
-project-relative path or when the filename matches an `ignores` pattern. The
-router special-case is respected: `app/router.ts` may import feature route files
-so the global router can be composed from feature routes.
+project-relative path or when the filename matches an `ignores` pattern.
+The router special-case is respected: `app/router.ts` may import feature route
+files so the global router can be composed from feature routes.
 
 How it works
 
@@ -35,9 +35,10 @@ How it works
 
 The rule accepts an optional options object with the following properties:
 
-- `ignores` (string[], default: `['**/*.spec.*', '**/*.test.*', '**/*.stories.*']`) —
-  minimatch patterns that skip files from rule checks when they match the
-  resolved project-relative filename.
+- `ignores` (string[], default: `[]`) — minimatch patterns that skip files from
+  rule checks when they match the resolved project-relative filename. Typical
+  projects add patterns for test files, storybook files, or temporary folders
+  (for example `['**/*.spec.*', '**/*.test.*', '**/*.stories.*']`).
 
 Note: project-level settings control `rootPath`, `rootAlias`, `appPath`,
 `sharedPath`, and `featuresPath`. Configure these via `settings['vue-modular']`.
