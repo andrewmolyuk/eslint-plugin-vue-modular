@@ -11,9 +11,17 @@ module.exports = {
         preset: 'conventionalcommits',
         writerOpts: {
           transform(commit) {
-            if (commit && commit.header && typeof commit.header === 'string') {
+            if (!commit) return null
+            if (commit.header && typeof commit.header === 'string') {
               if (commit.header.startsWith('Merge pull request')) return null
+              if (commit.header.startsWith('Merge branch')) return null
             }
+
+            // shorten commit hash for nicer links (7 chars is common)
+            if (commit.hash && typeof commit.hash === 'string' && commit.hash.length > 7) {
+              commit.hash = commit.hash.slice(0, 7)
+            }
+
             return commit
           },
         },
