@@ -107,7 +107,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 > The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
 >
-> ![Progress](https://progress-bar.xyz/11/?scale=92&width=500&title=11%20of%2087%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/12/?scale=87&width=500&title=12%20of%2087%20rules%20completed)
 
 ### File Organization Rules
 
@@ -156,14 +156,14 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ### Store Rules
 
-| Rule                      | Description                                                                     |
-| ------------------------- | ------------------------------------------------------------------------------- |
-| stores-shared-location    | Global state must be in `shared/stores/`.                                       |
-| stores-feature-location   | Feature-specific state must be in `features/{feature}/stores/`.                 |
-| store-pinia-composition   | Store files must use Pinia composition API syntax.                              |
-| store-filename-no-suffix  | Store files must not have "Store" suffix (e.g., `auth.ts`, not `authStore.ts`). |
-| stores-cross-cutting      | Cross-cutting concerns (auth, notifications) must be in `shared/stores/`.       |
-| feature-stores-no-imports | Feature stores cannot import other feature stores directly.                     |
+| Rule                                                                 | Description                                                                     |
+| -------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| stores-shared-location                                               | Global state must be in `shared/stores/`.                                       |
+| stores-feature-location                                              | Feature-specific state must be in `features/{feature}/stores/`.                 |
+| store-pinia-composition                                              | Store files must use Pinia composition API syntax.                              |
+| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md) | Store files must not have "Store" suffix (e.g., `auth.ts`, not `authStore.ts`). |
+| stores-cross-cutting                                                 | Cross-cutting concerns (auth, notifications) must be in `shared/stores/`.       |
+| feature-stores-no-imports                                            | Feature stores cannot import other feature stores directly.                     |
 
 ### Type Rules
 

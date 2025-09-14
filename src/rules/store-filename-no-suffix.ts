@@ -3,11 +3,11 @@ import { createRule, parseRuleOptions, parseProjectOptions, resolvePath, isIgnor
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
 
 const defaultOptions = {
-  suffix: 'Service',
+  suffix: 'Store',
   ignores: ['**/*.d.ts', '**/*.spec.*', '**/*.test.*', '**/*.stories.*'],
 }
 
-export const serviceFilenameNoSuffix = createRule<VueModularRuleModule>({
+export const storeFilenameNoSuffix = createRule<VueModularRuleModule>({
   create(context: VueModularRuleContext) {
     const options = parseRuleOptions(context, defaultOptions)
     const projectOptions = parseProjectOptions(context)
@@ -18,6 +18,11 @@ export const serviceFilenameNoSuffix = createRule<VueModularRuleModule>({
     // Only check TypeScript files
     if (!isTs(context.filename)) return {}
 
+    // Only check files inside shared/stores or features/*/stores
+    const inSharedStores = filename.startsWith(`${projectOptions.sharedPath}/stores`)
+    const inFeatureStores = filename.startsWith(projectOptions.featuresPath) && filename.includes('/stores/')
+    if (!inSharedStores && !inFeatureStores) return {}
+
     return {
       Program(node) {
         const base = path.basename(context.filename, path.extname(context.filename))
@@ -25,21 +30,21 @@ export const serviceFilenameNoSuffix = createRule<VueModularRuleModule>({
         if (new RegExp(`${options.suffix}$`, 'i').test(base)) {
           context.report({
             node,
-            messageId: 'noServiceSuffix',
+            messageId: 'noStoreSuffix',
             data: { filename: path.basename(context.filename) },
           })
         }
       },
     }
   },
-  name: 'service-filename-no-suffix',
+  name: 'store-filename-no-suffix',
   recommended: true,
   level: 'error',
   meta: {
     type: 'suggestion',
     docs: {
-      category: 'Service Rules',
-      description: 'Service files must not have "Service" suffix (e.g., auth.ts, not authService.ts)',
+      category: 'Store Rules',
+      description: 'Store files must not have "Store" suffix (e.g., auth.ts, not authStore.ts)',
     },
     defaultOptions: [defaultOptions],
     schema: [
@@ -53,7 +58,7 @@ export const serviceFilenameNoSuffix = createRule<VueModularRuleModule>({
       },
     ],
     messages: {
-      noServiceSuffix: 'Service filename "{{filename}}" should not include the "Service" suffix (use e.g. "auth.ts").',
+      noStoreSuffix: 'Store filename "{{filename}}" should not include the "Store" suffix (use e.g. "auth.ts").',
     },
   },
 })

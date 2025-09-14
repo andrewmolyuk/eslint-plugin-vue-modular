@@ -40,7 +40,6 @@ clean:
 	@git fetch --prune
 	@git branch -vv | awk '/: gone]/{print $$1}' > .git/branches-to-delete || true
 	@if [ -s .git/branches-to-delete ]; then \
-		echo "---" ; cat .git/branches-to-delete ; \
 		while read b; do \
 			if [ "$$b" != "$(shell git rev-parse --abbrev-ref HEAD)" ]; then \
 				git branch -D $$b || true; \

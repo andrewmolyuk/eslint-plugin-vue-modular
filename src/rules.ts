@@ -7,6 +7,7 @@ import { folderKebabCase } from './rules/folder-kebab-case'
 import { sfcRequired } from './rules/sfc-required'
 import { sharedImports } from './rules/shared-imports'
 import { serviceFilenameNoSuffix } from './rules/service-filename-no-suffix'
+import { storeFilenameNoSuffix } from './rules/store-filename-no-suffix'
 import { sharedUiIndexRequired } from './rules/shared-ui-index-required'
 import { VueModularRuleModule } from './types'
 
@@ -20,5 +21,6 @@ export const rules: Record<string, VueModularRuleModule> = {
   'sfc-required': sfcRequired,
   'shared-imports': sharedImports,
   'service-filename-no-suffix': serviceFilenameNoSuffix,
+  'store-filename-no-suffix': storeFilenameNoSuffix,
   'feature-imports': featureImports,
 }
