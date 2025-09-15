@@ -105,176 +105,40 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-> The list of rules is a work in progress. Implemented rules are linked below; unimplemented rules are listed as plain names.
+> The list shows the most important rules for establishing modular architecture, ordered by priority.
 >
-> ![Progress](https://progress-bar.xyz/14/?scale=87&width=500&title=14%20of%2087%20rules%20completed)
+> ![Progress](https://progress-bar.xyz/50/?scale=100&width=500&title=14%20of%2028%20core%20rules%20completed)
 
-### File Organization Rules
-
-| Rule                                                                   | Description                                                                                               |
-| ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [file-component-naming](./docs/rules/file-component-naming.md)         | All Vue components must use PascalCase naming (e.g., `UserForm.vue`, `ProductList.vue`).                  |
-| [file-ts-naming](./docs/rules/file-ts-naming.md)                       | All TypeScript files must use camelCase naming (e.g., `useAuth.ts`, `userApi.ts`).                        |
-| [folder-kebab-case](./docs/rules/folder-kebab-case.md)                 | All folders must use kebab-case naming (e.g., `user-management/`, `auth/`).                               |
-| [feature-index-required](./docs/rules/feature-index-required.md)       | Each feature folder must contain an `index.ts` file as its public API.                                    |
-| [components-index-required](./docs/rules/components-index-required.md) | All `components/` folders must contain an `index.ts` (or configured filename) file for component exports. |
-| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)   | The `shared/ui/` folder must contain an `index.ts` file for UI component exports.                         |
-
-### Dependency Rules
-
-| Rule                                               | Description                                                                                                          |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| [feature-imports](./docs/rules/feature-imports.md) | Features should only import from the `shared/` layer or their own internal files.                                    |
-| [shared-imports](./docs/rules/shared-imports.md)   | `shared/` folder cannot import from `features/` or `views/`.                                                         |
-| [app-imports](./docs/rules/app-imports.md)         | `app/` folder can import from `shared/` and `features/` (exception: `app/router.ts` may import feature route files). |
-| imports-absolute-alias                             | Use absolute imports with `@/` alias for cross-layer imports and shared resources.                                   |
-| imports-no-deep-relative                           | Avoid relative imports with more than 2 levels (`../../../`) - use absolute instead.                                 |
-| imports-from-index                                 | Import from `index.ts` files when available.                                                                         |
-| imports-grouping                                   | Group imports: Vue imports, third-party imports, internal imports.                                                   |
-
-### Component Rules
-
-| Rule                                         | Description                                                                                                                                                                                                 |
-| -------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [sfc-required](./docs/rules/sfc-required.md) | All Vue components should be written as Single File Components (SFC) with `.vue` extension; when present on disk a `.vue` file must contain at least a `<template>` or `<script>` / `<script setup>` block. |
-| [sfc-order](./docs/rules/sfc-order.md)       | Enforce SFC block order: `<script>`, `<template>`, `<style>`; the rule only enforces ordering when script/template blocks are present.                                                                      |
-| layout-components-location                   | Layout-specific components must be in `app/components/`.                                                                                                                                                    |
-| ui-components-location                       | Reusable UI components (design system) must be in `shared/ui/`.                                                                                                                                             |
-| business-components-location                 | Business components used across features must be in `shared/components/`.                                                                                                                                   |
-| feature-components-location                  | Feature-specific components must be in `features/{feature}/components/`.                                                                                                                                    |
-| component-props-typed                        | Component props must be typed with TypeScript interfaces.                                                                                                                                                   |
-
-### Service Rules
-
-| Rule                                                                     | Description                                                                           |
-| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| services-shared-location                                                 | Cross-cutting services must be in `shared/services/`.                                 |
-| services-feature-location                                                | Feature-specific services must be in `features/{feature}/services/`.                  |
-| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have "Service" suffix (e.g., `auth.ts`, not `authService.ts`). |
-| service-named-exports                                                    | Services must export named classes or named functions (avoid default exports).        |
-| service-use-api-client                                                   | API services must use the shared `apiClient.ts`.                                      |
-
-### Store Rules
-
-| Rule                                                                 | Description                                                                     |
-| -------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| stores-shared-location                                               | Global state must be in `shared/stores/`.                                       |
-| stores-feature-location                                              | Feature-specific state must be in `features/{feature}/stores/`.                 |
-| store-pinia-composition                                              | Store files must use Pinia composition API syntax.                              |
-| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md) | Store files must not have "Store" suffix (e.g., `auth.ts`, not `authStore.ts`). |
-| stores-cross-cutting                                                 | Cross-cutting concerns (auth, notifications) must be in `shared/stores/`.       |
-| feature-stores-no-imports                                            | Feature stores cannot import other feature stores directly.                     |
-
-### Type Rules
-
-| Rule                    | Description                                                    |
-| ----------------------- | -------------------------------------------------------------- |
-| types-shared-location   | Global types must be in `shared/types/`.                       |
-| types-feature-location  | Feature-specific types must be in `features/{feature}/types/`. |
-| types-export-interfaces | Type files must export interfaces and types, not classes.      |
-| types-common-location   | Common utility types must be in `shared/types/common.ts`.      |
-| types-api-location      | API response types must be in `shared/types/api.ts`.           |
-
-### Routing Rules
-
-| Rule                    | Description                                                       |
-| ----------------------- | ----------------------------------------------------------------- |
-| routes-global-location  | Global routes must be in `app/router.ts`.                         |
-| routes-feature-location | Feature routes must be in `features/{feature}/routes.ts`.         |
-| routes-merge-in-app     | Feature routes must be imported and merged in `app/router.ts`.    |
-| routes-lazy-load        | Route components must be lazy-loaded using dynamic imports.       |
-| routes-layout-meta      | Layout selection must be defined in route `meta.layout` property. |
-
-### View Rules
-
-| Rule                                         | Description                                                                         |
-| -------------------------------------------- | ----------------------------------------------------------------------------------- |
-| views-feature-location                       | Feature views must be in `features/{feature}/views/`.                               |
-| views-global-location                        | Global views (not feature-specific) must be in `views/` folder.                     |
-| [views-suffix](./docs/rules/views-suffix.md) | View files must end with `View.vue` suffix.                                         |
-| views-no-business-logic                      | Views cannot contain business logic (delegate to composables/services).             |
-| views-layout-meta                            | Layout selection must be defined in route metadata, not imported directly in views. |
-
-### Composable Rules
-
-| Rule                         | Description                                                       |
-| ---------------------------- | ----------------------------------------------------------------- |
-| composables-shared-location  | Global composables must be in `shared/composables/`.              |
-| composables-feature-location | Feature composables must be in `features/{feature}/composables/`. |
-| composables-prefix-use       | Composable files must start with `use` prefix.                    |
-| composables-return-reactive  | Composables must return reactive refs and computed properties.    |
-| composables-no-dom           | Composables cannot directly manipulate DOM elements.              |
-
-### Asset Rules
-
-| Rule                   | Description                                                      |
-| ---------------------- | ---------------------------------------------------------------- |
-| assets-styles-location | Global styles must be in `assets/styles/`.                       |
-| assets-images-location | Images must be in `assets/images/`.                              |
-| assets-icons-location  | Icons must be in `assets/icons/`.                                |
-| assets-fonts-location  | Fonts must be in `assets/fonts/`.                                |
-| assets-scoped-styles   | Component-specific styles must be scoped within component files. |
-
-### Utility Rules
-
-| Rule                   | Description                                                        |
-| ---------------------- | ------------------------------------------------------------------ |
-| utils-shared-location  | Global utilities must be in `shared/utils/`.                       |
-| utils-feature-location | Feature-specific utilities must be in `features/{feature}/utils/`. |
-| utils-pure-functions   | Utility files must export pure functions without side effects.     |
-| utils-stateless        | Utility functions must be stateless and deterministic.             |
-
-### Middleware Rules
-
-| Rule                         | Description                                                                         |
-| ---------------------------- | ----------------------------------------------------------------------------------- |
-| middleware-global-location   | Global route middleware must be in `app/middleware/`.                               |
-| middleware-feature-location  | Feature-specific middleware must be in `features/{feature}/middleware/`.            |
-| middleware-descriptive-names | Middleware files must use descriptive names (e.g., `authGuard.ts`, not `guard.ts`). |
-| middleware-registration      | Route guards must be registered in feature route configurations.                    |
-| middleware-composable        | Middleware must be composable and chainable.                                        |
-
-### Plugin Rules
-
-| Rule                      | Description                                                  |
-| ------------------------- | ------------------------------------------------------------ |
-| plugins-registration      | Global plugin registration must be in `app/plugins.ts`.      |
-| plugins-env-aware         | Plugin configurations must be environment-aware.             |
-| plugins-init-before-mount | Third-party plugins must be initialized before app mounting. |
-| plugins-api-conformance   | Custom plugins must follow Vue.js plugin API conventions.    |
-| plugins-document-deps     | Plugin dependencies must be clearly documented.              |
-
-### Environment / Config Rules
-
-| Rule                    | Description                                                                   |
-| ----------------------- | ----------------------------------------------------------------------------- |
-| config-type-safe        | Environment configurations must be type-safe.                                 |
-| config-env-files        | Configuration files must use `.env` files for environment variables.          |
-| config-no-secrets       | Sensitive data must not be committed to version control.                      |
-| config-environments     | Different environments (dev/staging/prod) must have separate config handling. |
-| config-validate-runtime | Runtime configuration must be validated at application startup.               |
-| config-location         | App configurations must be in `app/config/` folder.                           |
-| config-export-typed     | Config files must export typed configuration objects.                         |
-
-### Export Rules
-
-| Rule                     | Description                                                                            |
-| ------------------------ | -------------------------------------------------------------------------------------- |
-| exports-named            | Use named exports instead of default exports for better tree-shaking.                  |
-| exports-internal-hidden  | Internal feature helpers should not be exported from their modules.                    |
-| exports-types            | Types must be exported with `export type` syntax.                                      |
-| exports-components-index | Components must use default exports and be re-exported as named exports in `index.ts`. |
-
-### Naming Conventions
-
-| Rule                      | Description                                                                                                                                                  |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| naming-camelcase-runtime  | Use camelCase for variables, function names, and named exports (e.g., `fetchUsers`, `getUserById`).                                                          |
-| naming-pascalcase-exports | Use PascalCase for exported types, interfaces, classes, and component identifiers (e.g., `User`, `AuthState`, `UserCard`). Avoid `I` prefixes on interfaces. |
-| naming-composables-prefix | Prefix composable functions with `use` and keep them camelCase (e.g., `useAuth`, `useProductForm`).                                                          |
-| naming-pinia-stores       | Pinia store factory exports should follow Pinia's recommendation: start with `use` and include the `Store` suffix (e.g., `useAuthStore`).                    |
-| naming-constants          | Use UPPER_SNAKE_CASE for compile-time constants and environment keys and camelCase for runtime constants.                                                    |
-| naming-event-kebab        | Component-emitted custom event names should use kebab-case (e.g., `item-selected`, `save:success`).                                                          |
+| Rule                                                                     | Description                                                                   |
+| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| [feature-imports](./docs/rules/feature-imports.md)                       | Features should only import from the shared layer or their own internal files |
+| [shared-imports](./docs/rules/shared-imports.md)                         | Shared folder cannot import from features or views                            |
+| [app-imports](./docs/rules/app-imports.md)                               | App folder can import from shared and features with specific exceptions       |
+| [feature-index-required](./docs/rules/feature-index-required.md)         | Each feature folder must contain an index.ts file as its public API           |
+| [components-index-required](./docs/rules/components-index-required.md)   | All components folders must contain an index.ts file for component exports    |
+| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)     | The shared/ui folder must contain an index.ts file for UI component exports   |
+| [file-component-naming](./docs/rules/file-component-naming.md)           | All Vue components must use PascalCase naming                                 |
+| [file-ts-naming](./docs/rules/file-ts-naming.md)                         | All TypeScript files must use camelCase naming                                |
+| [sfc-required](./docs/rules/sfc-required.md)                             | All Vue components should be written as Single File Components                |
+| [folder-kebab-case](./docs/rules/folder-kebab-case.md)                   | All folders must use kebab-case naming                                        |
+| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have Service suffix                                    |
+| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md)     | Store files must not have Store suffix                                        |
+| stores-shared-location                                                   | Global state must be in shared/stores                                         |
+| [sfc-order](./docs/rules/sfc-order.md)                                   | Enforce SFC block order: script, template, style                              |
+| [views-suffix](./docs/rules/views-suffix.md)                             | View files must end with View.vue suffix                                      |
+| services-shared-location                                                 | Cross-cutting services must be in shared/services                             |
+| services-feature-location                                                | Feature-specific services must be in features/{feature}/services              |
+| store-pinia-composition                                                  | Store files must use Pinia composition API syntax                             |
+| stores-feature-location                                                  | Feature-specific state must be in features/{feature}/stores                   |
+| feature-stores-no-imports                                                | Feature stores cannot import other feature stores directly                    |
+| routes-global-location                                                   | Global routes must be in app/router.ts                                        |
+| routes-feature-location                                                  | Feature routes must be in features/{feature}/routes.ts                        |
+| feature-components-location                                              | Feature-specific components must be in features/{feature}/components          |
+| ui-components-location                                                   | Reusable UI components must be in shared/ui                                   |
+| business-components-location                                             | Business components used across features must be in shared/components         |
+| views-feature-location                                                   | Feature views must be in features/{feature}/views                             |
+| composables-shared-location                                              | Global composables must be in shared/composables                              |
+| composables-feature-location                                             | Feature composables must be in features/{feature}/composables                 |
 
 ## Contributing
 
