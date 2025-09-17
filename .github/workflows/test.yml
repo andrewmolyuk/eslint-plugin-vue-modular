@@ -1,6 +1,8 @@
-name: Test PR
+name: Test
 
 on:
+  push:
+    branches: [next]
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -30,8 +32,8 @@ jobs:
       - uses: oven-sh/setup-bun@v2.0.2
 
       - run: make install
-
-      - run: make build
+      - run: make lint
+      - run: make test
 
       - uses: codacy/codacy-coverage-reporter-action@v1.3.0
         with:
