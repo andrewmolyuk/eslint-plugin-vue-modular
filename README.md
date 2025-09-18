@@ -9,8 +9,6 @@
 
 A custom ESLint plugin for enforcing modular patterns in Vue projects.
 
-> The project is in active development and may have breaking changes in minor versions, but we will strive to keep changes minimal and well-documented.
-
 ## Modular Architecture in Vue
 
 In Vue applications, modular architecture means organizing your codebase into self-contained feature modules. Each module typically contains its own components, composables, stores, and styles, grouped by feature rather than by file type. This approach improves maintainability, scalability, and testability by reducing coupling and clarifying dependencies.
@@ -105,40 +103,24 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-> The list shows the most important rules for establishing modular architecture, ordered by priority.
->
-> ![Progress](https://progress-bar.xyz/50/?scale=100&width=500&title=14%20of%2028%20core%20rules%20completed)
+> If you have suggestions for new rules or improvements, please open an issue or write me directly to andrew@molyuk.com. I'm happy to discuss and probably add new rules that can make our Vue projects better!
 
 | Rule                                                                     | Description                                                                   |
 | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| [feature-imports](./docs/rules/feature-imports.md)                       | Features should only import from the shared layer or their own internal files |
-| [shared-imports](./docs/rules/shared-imports.md)                         | Shared folder cannot import from features or views                            |
 | [app-imports](./docs/rules/app-imports.md)                               | App folder can import from shared and features with specific exceptions       |
-| [feature-index-required](./docs/rules/feature-index-required.md)         | Each feature folder must contain an index.ts file as its public API           |
 | [components-index-required](./docs/rules/components-index-required.md)   | All components folders must contain an index.ts file for component exports    |
-| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)     | The shared/ui folder must contain an index.ts file for UI component exports   |
+| [feature-imports](./docs/rules/feature-imports.md)                       | Features should only import from the shared layer or their own internal files |
+| [feature-index-required](./docs/rules/feature-index-required.md)         | Each feature folder must contain an index.ts file as its public API           |
 | [file-component-naming](./docs/rules/file-component-naming.md)           | All Vue components must use PascalCase naming                                 |
 | [file-ts-naming](./docs/rules/file-ts-naming.md)                         | All TypeScript files must use camelCase naming                                |
-| [sfc-required](./docs/rules/sfc-required.md)                             | All Vue components should be written as Single File Components                |
 | [folder-kebab-case](./docs/rules/folder-kebab-case.md)                   | All folders must use kebab-case naming                                        |
 | [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have Service suffix                                    |
-| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md)     | Store files must not have Store suffix                                        |
-| stores-shared-location                                                   | Global state must be in shared/stores                                         |
 | [sfc-order](./docs/rules/sfc-order.md)                                   | Enforce SFC block order: script, template, style                              |
+| [sfc-required](./docs/rules/sfc-required.md)                             | All Vue components should be written as Single File Components                |
+| [shared-imports](./docs/rules/shared-imports.md)                         | Shared folder cannot import from features or views                            |
+| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)     | The shared/ui folder must contain an index.ts file for UI component exports   |
+| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md)     | Store files must not have Store suffix                                        |
 | [views-suffix](./docs/rules/views-suffix.md)                             | View files must end with View.vue suffix                                      |
-| services-shared-location                                                 | Cross-cutting services must be in shared/services                             |
-| services-feature-location                                                | Feature-specific services must be in features/{feature}/services              |
-| store-pinia-composition                                                  | Store files must use Pinia composition API syntax                             |
-| stores-feature-location                                                  | Feature-specific state must be in features/{feature}/stores                   |
-| feature-stores-no-imports                                                | Feature stores cannot import other feature stores directly                    |
-| routes-global-location                                                   | Global routes must be in app/router.ts                                        |
-| routes-feature-location                                                  | Feature routes must be in features/{feature}/routes.ts                        |
-| feature-components-location                                              | Feature-specific components must be in features/{feature}/components          |
-| ui-components-location                                                   | Reusable UI components must be in shared/ui                                   |
-| business-components-location                                             | Business components used across features must be in shared/components         |
-| views-feature-location                                                   | Feature views must be in features/{feature}/views                             |
-| composables-shared-location                                              | Global composables must be in shared/composables                              |
-| composables-feature-location                                             | Feature composables must be in features/{feature}/composables                 |
 
 ## Contributing
 
