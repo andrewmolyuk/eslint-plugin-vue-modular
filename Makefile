@@ -3,9 +3,8 @@ DEFAULT_GOAL := build
 
 install:
 	bun install --no-audit --no-fund 
-
-
-lint:
+	
+lint: install
 	npx eslint . --ext .js,.ts,.json,.md --fix
 	npx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
 	npx tsc --noEmit

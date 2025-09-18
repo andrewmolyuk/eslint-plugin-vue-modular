@@ -1,11 +1,15 @@
 // @ts-check
 import eslint from '@eslint/js'
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended'
-import tseslint from 'typescript-eslint'
+import * as tsPlugin from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 import markdownPlugin from 'eslint-plugin-markdown'
 import jsoncPlugin from 'eslint-plugin-jsonc'
 
 export default [
+  // Ignore built files and dependencies
+  { ignores: ['dist/**', 'coverage/**', 'node_modules/**'] },
+
   // Prettier plugin configuration
   prettierPluginRecommended,
 
@@ -13,38 +17,24 @@ export default [
   eslint.configs.recommended,
 
   // TypeScript ESLint plugin configuration
-  ...tseslint.configs.strict,
-  ...tseslint.configs.stylistic,
-
-  // Global overrides for TypeScript files
   {
     files: ['**/*.ts'],
+    plugins: { '@typescript-eslint': tsPlugin },
+    // merge rules from both presets (fall back to empty objects)
+    rules: {
+      ...(tsPlugin.configs.strict && tsPlugin.configs.strict.rules ? tsPlugin.configs.strict.rules : {}),
+      ...(tsPlugin.configs.stylistic && tsPlugin.configs.stylistic.rules ? tsPlugin.configs.stylistic.rules : {}),
+    },
     languageOptions: {
+      parser: tsParser,
       ecmaVersion: 2022,
       sourceType: 'module',
       globals: {
         process: 'readonly',
         global: 'readonly',
-        module: 'readonly',
-        require: 'readonly',
         __dirname: 'readonly',
-        __filename: 'readonly',
         Buffer: 'readonly',
-      },
-    },
-  },
-
-  // Vitest global overrides for test files
-  {
-    files: ['tests/**/*.test.ts'],
-    languageOptions: {
-      globals: {
-        expect: 'readonly',
-        describe: 'readonly',
-        it: 'readonly',
-        test: 'readonly',
-        beforeEach: 'readonly',
-        afterEach: 'readonly',
+        structuredClone: 'readonly',
       },
     },
   },
@@ -54,13 +44,6 @@ export default [
     files: ['**/*.md', '**/*.md/*'],
     plugins: { markdown: markdownPlugin },
     processor: 'markdown/markdown',
-    // disable all @typescript-eslint rules inside markdown code blocks
-    rules: Object.fromEntries(
-      Object.keys(/** @type {any} */ (tseslint.plugin && /** @type {any} */ (tseslint.plugin).rules) || {}).map((r) => [
-        `@typescript-eslint/${r}`,
-        'off',
-      ]),
-    ),
   },
 
   // JSONC plugin - lint JSON files
