@@ -1,4 +1,5 @@
-.PHONY: install lint test build update drawio clean
+.PHONY: install lint test build update drawio clean next
+SHELL := /bin/bash
 DEFAULT_GOAL := build
 
 install:
@@ -27,3 +28,9 @@ drawio:
 clean:
 	@chmod +x .scripts/clean.sh || true
 	@.scripts/clean.sh
+
+next:
+	git pull origin main
+	git checkout main
+	git merge next
+	git push -u origin main
