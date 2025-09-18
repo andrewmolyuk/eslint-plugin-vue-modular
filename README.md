@@ -1,6 +1,6 @@
 # eslint-plugin-vue-modular
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/andrewmolyuk/eslint-plugin-vue-modular/release.yml)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/release.yml)
+[![Build Status](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/test.yml/badge.svg)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/test.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/819ccf509a694fcc8204bca4a78c634d)](https://app.codacy.com/gh/andrewmolyuk/eslint-plugin-vue-modular/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/819ccf509a694fcc8204bca4a78c634d)](https://app.codacy.com/gh/andrewmolyuk/eslint-plugin-vue-modular/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Issues](https://img.shields.io/github/issues/andrewmolyuk/eslint-plugin-vue-modular)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/issues)
