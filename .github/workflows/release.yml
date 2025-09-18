@@ -26,8 +26,6 @@ jobs:
 
       - uses: oven-sh/setup-bun@v2.0.2
 
-      - run: make install
-
       - run: make build
 
       - run: npx semantic-release
