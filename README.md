@@ -103,7 +103,7 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 
 This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
 
-> If you have suggestions for new rules or improvements, please open an issue or write me directly to <andrew@molyuk.com>. I'm happy to discuss and probably add new rules that can make our Vue projects better!
+If you have suggestions for new rules or improvements, please open an issue or write me directly to <andrew@molyuk.com>. I'm happy to discuss and probably add new rules that can make our Vue projects better!
 
 | Rule                                                                     | Description                                                                   |
 | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
@@ -124,7 +124,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 
 ## Contributing
 
-Pull requests and issues are welcome! Please follow the code style and add tests for new rules.
+Pull requests and issues are welcome! Please follow the code style and add tests for new rules. See [CONTRIBUTING](./CONTRIBUTING.md) for details.
 
 ## License
 
