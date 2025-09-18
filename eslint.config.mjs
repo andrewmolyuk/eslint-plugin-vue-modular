@@ -2,9 +2,13 @@
 import eslint from '@eslint/js'
 import prettierPluginRecommended from 'eslint-plugin-prettier/recommended'
 import tseslint from 'typescript-eslint'
+import markdownPlugin from 'eslint-plugin-markdown'
+import jsoncPlugin from 'eslint-plugin-jsonc'
 
 export default [
-  { ignores: ['node_modules/**', 'dist/**', '.git/**', '**/*.d.ts', '.releaserc.cjs'] },
+  // Prettier plugin configuration
+  prettierPluginRecommended,
+
   // Base recommended configuration
   eslint.configs.recommended,
 
@@ -12,13 +16,9 @@ export default [
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
 
-  // Prettier plugin configuration
-  prettierPluginRecommended,
-
   // Global overrides for TypeScript files
   {
     files: ['**/*.ts'],
-    // default language options and globals for plugin source files (Node environment)
     languageOptions: {
       ecmaVersion: 2022,
       sourceType: 'module',
@@ -48,4 +48,21 @@ export default [
       },
     },
   },
+
+  // Markdown files: run ESLint over fenced code blocks
+  {
+    files: ['**/*.md', '**/*.md/*'],
+    plugins: { markdown: markdownPlugin },
+    processor: 'markdown/markdown',
+    // disable all @typescript-eslint rules inside markdown code blocks
+    rules: Object.fromEntries(
+      Object.keys(/** @type {any} */ (tseslint.plugin && /** @type {any} */ (tseslint.plugin).rules) || {}).map((r) => [
+        `@typescript-eslint/${r}`,
+        'off',
+      ]),
+    ),
+  },
+
+  // JSONC plugin - lint JSON files
+  ...jsoncPlugin.configs['flat/recommended-with-jsonc'],
 ]
