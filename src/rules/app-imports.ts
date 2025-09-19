@@ -54,14 +54,13 @@ export const appImports = createRule<VueModularRuleModule>({
     }
   },
   name: 'app-imports',
-  recommended: false,
+  recommended: true,
   level: 'error',
   meta: {
     type: 'problem',
     docs: {
       description: 'app/ folder can import from shared/ and features/ (exception: app/router.ts may import feature route files)',
       category: 'Dependency',
-      recommended: false,
     },
     defaultOptions: [defaultOptions],
     schema: [

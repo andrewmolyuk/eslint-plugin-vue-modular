@@ -15,7 +15,6 @@ describe('createRule utility', () => {
         docs: {
           category: 'Test',
           description: 'Test description',
-          recommended: true,
           url: 'http://example.com/docs/test-rule',
         },
         type: 'suggestion' as const,
@@ -36,6 +35,5 @@ describe('createRule utility', () => {
     expect(rule.meta?.docs?.category).toBe('Test')
     expect(rule.meta?.docs?.description).toBe('Test description')
     expect(rule.meta?.docs?.url).toBe('https://github.com/andrewmolyuk/eslint-plugin-vue-modular/blob/main/docs/rules/test-rule.md')
-    expect(rule.meta?.docs?.recommended).toBe(true)
   })
 })

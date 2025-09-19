@@ -1,16 +1,12 @@
 import { createRule, parseRuleOptions, parseProjectOptions, resolvePath, isIgnored } from '../utils'
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
-import { resolveImportPath } from '../utils/resolveImportPath'
+import { resolveImportPath } from '../utils'
 
 const defaultOptions = {
   ignores: [] as string[],
 }
 
-// Enforce that when importing across layers (e.g., feature -> feature or feature -> shared)
-// the import must use the project root alias (e.g. '@' by default) or be relative when inside
-// the same module. This rule reports imports that reference other parts of the project using
-// non-aliased absolute or other non-allowed forms.
-export const crossImportsAbsolute = createRule<VueModularRuleModule>({
+export const internalImportsRelative = createRule<VueModularRuleModule>({
   create(context: VueModularRuleContext) {
     const options = parseRuleOptions(context, defaultOptions as unknown as Record<string, unknown>) as typeof defaultOptions
     const projectOptions = parseProjectOptions(context)
@@ -21,47 +17,49 @@ export const crossImportsAbsolute = createRule<VueModularRuleModule>({
     return {
       ImportDeclaration(node) {
         const importPath = node.source.value as string
-        // Defensive: AST nodes without a string source are extremely rare in our tests
         if (!importPath || typeof importPath !== 'string') return
 
-        let resolvedPath = resolveImportPath(filename, importPath, projectOptions.rootPath, projectOptions.rootAlias)
+        const resolvedPath = resolveImportPath(filename, importPath, projectOptions.rootPath, projectOptions.rootAlias)
         if (!resolvedPath) return
 
-        // If import is within same logical area (same feature or both in shared), allow
-        const fromApp = filename.startsWith(projectOptions.appPath)
-        const toApp = resolvedPath.startsWith(projectOptions.appPath)
-        if (fromApp && toApp) return
-
+        // Only care about imports within the same feature or same shared folder
         const fromFeature = filename.startsWith(projectOptions.featuresPath)
         const toFeature = resolvedPath.startsWith(projectOptions.featuresPath)
-        // same feature -> allow (could be relative or alias)
         if (fromFeature && toFeature) {
           const fromFeatureSegment = filename.slice(projectOptions.featuresPath.length).split('/')[1]
           const toFeatureSegment = resolvedPath.slice(projectOptions.featuresPath.length).split('/')[1]
-          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment === toFeatureSegment) return
+          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment !== toFeatureSegment) return
         }
+
+        // Care about app and shared folders as well
+        const fromApp = filename.startsWith(projectOptions.appPath)
+        const toApp = resolvedPath.startsWith(projectOptions.appPath)
+        if (fromApp && toApp) return
 
         const fromShared = filename.startsWith(projectOptions.sharedPath)
         const toShared = resolvedPath.startsWith(projectOptions.sharedPath)
         if (fromShared && toShared) return
 
-        // Determine if this import is a non-aliased absolute import (e.g. '/features/..' or 'src/features/...')
+        // If import is outside of app, features, or shared, ignore
+        if (!fromApp && !fromFeature && !fromShared) return
+        if (!toApp && !toFeature && !toShared) return
+
+        // If import uses alias, report (should be relative)
         const alias = projectOptions.rootAlias
         const isAliasImport = importPath === alias || importPath.startsWith(`${alias}/`)
-
-        if (!isAliasImport) {
-          context.report({ node, messageId: 'useAlias', data: { file: filename, target: importPath, alias } })
+        if (isAliasImport) {
+          context.report({ node, messageId: 'useRelativeImport', data: { file: filename, target: importPath } })
         }
       },
     }
   },
-  name: 'cross-imports-alias',
+  name: 'internal-imports-relative',
   recommended: false,
   level: 'error',
   meta: {
-    type: 'problem',
+    type: 'suggestion',
     docs: {
-      description: 'Cross-layer imports must use the project root alias (e.g. @/) instead of non-aliased absolute paths',
+      description: 'Use relative imports for same-feature or nearby file imports.',
       category: 'Dependency',
     },
     defaultOptions: [defaultOptions],
@@ -75,7 +73,7 @@ export const crossImportsAbsolute = createRule<VueModularRuleModule>({
       },
     ],
     messages: {
-      useAlias: "File '{{file}}' must import cross-layer resources using the alias '{{alias}}' (found '{{target}}').",
+      useRelativeImport: 'Use relative import for same-feature or nearby file imports.',
     },
   },
 })

@@ -48,7 +48,6 @@ export const featureImports = createRule<VueModularRuleModule>({
     docs: {
       description: 'Features should only import from shared layer or their own internal files',
       category: 'Dependency',
-      recommended: false,
     },
     defaultOptions: [defaultOptions],
     schema: [

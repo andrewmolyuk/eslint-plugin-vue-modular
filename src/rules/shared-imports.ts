@@ -61,7 +61,6 @@ export const sharedImports = createRule<VueModularRuleModule>({
     docs: {
       description: 'Shared layer must not import from Features or Views',
       category: 'Dependency',
-      recommended: false,
     },
     defaultOptions: [defaultOptions],
     schema: [

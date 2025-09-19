@@ -28,7 +28,7 @@ export const viewsSuffix = createRule<VueModularRuleModule>({
     }
   },
   name: 'views-suffix',
-  recommended: false,
+  recommended: true,
   level: 'error',
   meta: {
     type: 'suggestion',

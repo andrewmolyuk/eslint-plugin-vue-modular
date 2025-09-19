@@ -49,7 +49,6 @@ export const componentsIndexRequired = createRule<VueModularRuleModule>({
     docs: {
       description: 'Require a components/index.ts to expose the components public API',
       category: 'File Organization',
-      recommended: false,
     },
     defaultOptions: [defaultOptions],
     schema: [

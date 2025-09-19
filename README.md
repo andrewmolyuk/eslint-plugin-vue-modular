@@ -101,25 +101,26 @@ The plugin will now enforce modular architecture patterns in your Vue.js project
 
 ## Rules
 
-This plugin provides rules to enforce modular architecture boundaries in Vue.js applications.
+This plugin provides rules to enforce modular architecture boundaries in Vue.js applications. Here is a summary of the available rules:
 
-| Rule                                                                     | Description                                                                   |
-| ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
-| [app-imports](./docs/rules/app-imports.md)                               | App folder can import from shared and features with specific exceptions       |
-| [components-index-required](./docs/rules/components-index-required.md)   | All components folders must contain an index.ts file for component exports    |
-| [cross-imports-alias](./docs/rules/cross-imports-alias.md)               | Cross-layer imports must use the project root alias instead of absolute paths |
-| [feature-imports](./docs/rules/feature-imports.md)                       | Features should only import from the shared layer or their own internal files |
-| [feature-index-required](./docs/rules/feature-index-required.md)         | Each feature folder must contain an index.ts file as its public API           |
-| [file-component-naming](./docs/rules/file-component-naming.md)           | All Vue components must use PascalCase naming                                 |
-| [file-ts-naming](./docs/rules/file-ts-naming.md)                         | All TypeScript files must use camelCase naming                                |
-| [folder-kebab-case](./docs/rules/folder-kebab-case.md)                   | All folders must use kebab-case naming                                        |
-| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have Service suffix                                    |
-| [sfc-order](./docs/rules/sfc-order.md)                                   | Enforce SFC block order: script, template, style                              |
-| [sfc-required](./docs/rules/sfc-required.md)                             | All Vue components should be written as Single File Components                |
-| [shared-imports](./docs/rules/shared-imports.md)                         | Shared folder cannot import from features or views                            |
-| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)     | The shared/ui folder must contain an index.ts file for UI component exports   |
-| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md)     | Store files must not have Store suffix                                        |
-| [views-suffix](./docs/rules/views-suffix.md)                             | View files must end with View.vue suffix                                      |
+| Rule                                                                     | Description                                                                    |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| [app-imports](./docs/rules/app-imports.md)                               | App folder can import from shared and features with specific exceptions        |
+| [components-index-required](./docs/rules/components-index-required.md)   | All components folders must contain an index.ts file for component exports     |
+| [cross-imports-alias](./docs/rules/cross-imports-alias.md)               | Cross-layer imports must use the project root alias instead of absolute paths  |
+| [feature-imports](./docs/rules/feature-imports.md)                       | Features should only import from the shared layer or their own internal files  |
+| [feature-index-required](./docs/rules/feature-index-required.md)         | Each feature folder must contain an index.ts file as its public API            |
+| [file-component-naming](./docs/rules/file-component-naming.md)           | All Vue components must use PascalCase naming                                  |
+| [file-ts-naming](./docs/rules/file-ts-naming.md)                         | All TypeScript files must use camelCase naming                                 |
+| [folder-kebab-case](./docs/rules/folder-kebab-case.md)                   | All folders must use kebab-case naming                                         |
+| [internal-imports-relative](./docs/rules/internal-imports-relative.md)   | Internal feature/shared/app imports should use relative paths instead of alias |
+| [service-filename-no-suffix](./docs/rules/service-filename-no-suffix.md) | Service files must not have Service suffix                                     |
+| [sfc-order](./docs/rules/sfc-order.md)                                   | Enforce SFC block order: script, template, style                               |
+| [sfc-required](./docs/rules/sfc-required.md)                             | All Vue components should be written as Single File Components                 |
+| [shared-imports](./docs/rules/shared-imports.md)                         | Shared folder cannot import from features or views                             |
+| [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)     | The shared/ui folder must contain an index.ts file for UI component exports    |
+| [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md)     | Store files must not have Store suffix                                         |
+| [views-suffix](./docs/rules/views-suffix.md)                             | View files must end with View.vue suffix                                       |
 
 ## Contributing
 
