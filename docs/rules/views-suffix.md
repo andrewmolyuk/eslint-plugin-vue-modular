@@ -2,6 +2,8 @@
 
 Require that view files end with `View.vue` suffix.
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule checks files located inside a `views/` folder (the exact folder name is configurable via project settings). When a file in a views folder does not end with the configured suffix (default `View.vue`) the rule reports.

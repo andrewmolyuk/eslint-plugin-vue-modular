@@ -2,6 +2,8 @@
 
 Require Vue Single File Component (SFC) files to contain at least a `<template>` or `<script>` block.
 
+Included in recommended config.
+
 This rule enforces that Vue component files contain meaningful content by requiring at least one of the core SFC blocks (`<template>` or `<script>` / `<script setup>`). It only runs on files that are identified as Vue components (`.vue` files in the configured components folder).
 
 ## Rule Details

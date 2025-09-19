@@ -2,6 +2,8 @@
 
 Disallow the `Service` suffix in service filenames (for example `auth.ts`, not `authService.ts`).
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule enforces concise service filenames for files placed under the configured service locations:

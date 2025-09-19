@@ -2,6 +2,8 @@
 
 Enforce a components folder index file (for example `features/<feature>/components/index.ts`) so component consumers import from the components root instead of deep-importing implementation files.
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule scans the project's source tree (starting at the configured project `rootPath`, default: `src`) for `components` directories and verifies they contain a public API file. A stable components index makes imports shorter, centralizes re-exports, and reduces accidental deep imports.

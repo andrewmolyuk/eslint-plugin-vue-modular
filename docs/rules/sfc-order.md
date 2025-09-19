@@ -2,6 +2,8 @@
 
 Enforce a conventional order for Single File Component (SFC) blocks.
 
+Included in recommended config.
+
 This rule parses Vue component files using `@vue/compiler-sfc` and validates the relative order of SFC blocks (`<script>`, `<template>`, `<style>`). The rule only enforces order among blocks that are present — missing blocks are allowed.
 
 Default order:

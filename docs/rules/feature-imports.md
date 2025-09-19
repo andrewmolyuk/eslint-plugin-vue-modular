@@ -2,6 +2,8 @@
 
 Require that feature code imports only from the `shared/` layer (features must not import from other features).
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule flags imports originating from files under the configured features root (default: `src/features`) that resolve into a different feature. Keeping cross-feature dependencies routed through the `shared/` layer reduces coupling and prevents consumers from depending on implementation details inside other features.

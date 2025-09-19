@@ -2,6 +2,8 @@
 
 Prevent files inside the `shared/` layer from importing implementation from `features/` (or `views`) folders.
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule flags imports and re-exports found in files under the configured shared path (default: `src/shared`) when the resolved import points into a feature implementation or a `views` folder. The goal is to keep `shared/` code layer-agnostic and avoid coupling shared utilities to feature internals.

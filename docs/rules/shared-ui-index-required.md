@@ -2,6 +2,8 @@
 
 Require a `shared/ui` public API file (for example `src/shared/ui/index.ts`) so shared UI components are exported from a single, stable entry point.
 
+Not included in recommended config.
+
 ## Rule Details
 
 This rule verifies that the configured `shared` UI folder contains a public API file. A central entry file shortens imports, centralizes re-exports, and prevents consumers from deep-importing component implementation files.

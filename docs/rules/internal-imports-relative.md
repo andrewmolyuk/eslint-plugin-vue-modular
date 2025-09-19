@@ -2,6 +2,8 @@
 
 Enforce that imports between nearby files inside the same feature (or within the shared/app folders) use relative paths instead of the project root alias (e.g. `@/`). This keeps internal feature wiring local and avoids coupling through the root alias for nearby imports.
 
+Not included in recommended config.
+
 ## Rule Details
 
 This rule flags import declarations that use the configured project root alias (default `@`) when the import target is within the same feature (same feature segment under `src/features`) or otherwise a nearby file inside the same architectural area (e.g. both files inside `src/shared` or `src/app`). In these cases prefer relative imports (like `./foo` or `../bar`) to make the dependency clearly local and easier to refactor.

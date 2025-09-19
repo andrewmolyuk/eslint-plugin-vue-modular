@@ -5,6 +5,8 @@ import from the `shared/` layer or from feature public APIs. This helps keep the
 app shell focused on composition and prevents accidental dependencies on feature
 internals.
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule flags import declarations that originate from files inside the
@@ -18,7 +20,7 @@ project-relative path or when the filename matches an `ignores` pattern.
 The router special-case is respected: `app/router.ts` may import feature route
 files so the global router can be composed from feature routes.
 
-How it works
+## How it works
 
 - Resolve the current filename to a project-relative path. If the file is not
   inside `appPath` do nothing.

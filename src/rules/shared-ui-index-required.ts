@@ -36,14 +36,13 @@ export const sharedUiIndexRequired = createRule<VueModularRuleModule>({
     }
   },
   name: 'shared-ui-index-required',
-  recommended: true,
+  recommended: false,
   level: 'error',
   meta: {
     type: 'suggestion',
     docs: {
       description: 'Require a shared UI public API file shared/ui/index.ts when UI components exist',
       category: 'File Organization',
-      recommended: false,
     },
     defaultOptions: [defaultOptions],
     schema: [

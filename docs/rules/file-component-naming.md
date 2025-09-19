@@ -2,6 +2,8 @@
 
 Enforce PascalCase filenames for Vue Single File Components (.vue).
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule requires that component filenames use PascalCase (for example `MyButton.vue`) to make component names predictable and consistent across a project.

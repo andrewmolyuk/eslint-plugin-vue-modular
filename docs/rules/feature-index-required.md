@@ -2,6 +2,8 @@
 
 Require a public feature entry file (for example `src/features/<feature>/index.ts`) so consumers import from the feature root instead of deep-importing internal implementation files.
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule verifies that each feature folder exposes a public API index file. Keeping a small, stable public surface at the feature root helps encapsulate implementation details and makes refactors safer.

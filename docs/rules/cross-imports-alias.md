@@ -3,6 +3,8 @@
 
 Enforce that cross-layer imports (between features or from features to shared) must use the project root alias (e.g. `@/`) instead of non-aliased absolute paths or relative paths that cross architectural boundaries.
 
+Not included in recommended config.
+
 ## Rule Details
 
 This rule flags import declarations that reference other parts of the project using non-aliased absolute paths (like `src/features/...` or `/features/...`) or relative paths that traverse outside the current architectural layer. Cross-layer imports should use the configured root alias to maintain consistency and prevent coupling to internal directory structures.

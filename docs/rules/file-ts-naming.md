@@ -2,6 +2,8 @@
 
 Enforce camelCase filenames for TypeScript files (.ts and .tsx).
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule requires that TypeScript filenames use camelCase (for example `useAuth.ts` or `userApi.ts`) to keep filenames consistent across a project.

@@ -41,7 +41,6 @@ export const sfcRequired = createRule<VueModularRuleModule>({
     docs: {
       description: 'Require Vue SFC to have at least a <template> or <script> block',
       category: 'Components',
-      recommended: false,
     },
     defaultOptions: [defaultOptions],
     schema: [

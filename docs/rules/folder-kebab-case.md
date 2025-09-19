@@ -2,6 +2,8 @@
 
 Enforce kebab-case folder names under the project's source directory.
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule requires that folder (directory) names use kebab-case: lowercase letters, numbers, and single hyphens between segments (for example `my-feature` or `api-v1`). The rule helps keep filesystem structure predictable and consistent across a project.

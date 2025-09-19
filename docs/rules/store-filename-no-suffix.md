@@ -2,6 +2,8 @@
 
 Disallow the `Store` suffix in store filenames (for example `auth.ts`, not `authStore.ts`).
 
+Included in recommended config.
+
 ## Rule Details
 
 This rule enforces concise store filenames for files placed under the configured store locations:
