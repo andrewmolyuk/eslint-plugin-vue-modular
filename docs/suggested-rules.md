@@ -1,0 +1,78 @@
+# Suggested Rules by Severity Score
+
+The following rules are suggestions for future implementation. They are sorted from highest to lowest severity score (1-10 scale).
+
+Scoring is based on: modular architecture impact (50%), maintainability (30%), and clean code practices (20%).
+
+- stores-shared-location - 6.45 — shared store placement.
+- services-shared-location - 6.20 — shared services placement.
+- services-feature-location - 6.00 — feature-local services placement.
+- store-pinia-composition - 5.84 — store composition conventions.
+- stores-feature-location - 5.70 — feature stores placement.
+- feature-stores-no-imports - 5.34 — prevent external imports into feature stores.
+- routes-global-location - 5.20 — convention for global routes placement.
+- routes-feature-location - 5.00 — convention for feature routes placement.
+- routes-merge-in-app - 4.95 — merge feature routes into app router.
+- routes-lazy-load - 4.90 — lazy-loading routes where appropriate.
+- routes-layout-meta - 4.66 — consistency for route layout metadata.
+- feature-components-location - 4.49 — location for feature components.
+- ui-components-location - 4.38 — rules for UI component placement.
+- business-components-location - 4.33 — rules for business component placement.
+- layout-components-location - 3.90 — rules for layout components.
+- views-feature-location - 3.75 — location for feature view files.
+- component-props-typed - 3.65 — require typed component props.
+- views-global-location - 3.64 — global view placement rules.
+- views-no-business-logic - 3.48 — keep business logic out of views.
+- composables-shared-location - 3.38 — shared location for composables.
+- views-layout-meta - 3.37 — view layout metadata rules.
+- composables-feature-location - 3.08 — location for feature composables.
+- composables-prefix-use - 2.79 — require `use` prefix for composables.
+- composables-return-reactive - 2.68 — enforce reactive returns for composables.
+- types-shared-location - 2.64 — shared location for types.
+- composables-no-dom - 2.57 — avoid DOM operations in composables.
+- types-feature-location - 2.53 — feature-local type location.
+- types-export-interfaces - 2.42 — export interfaces from feature roots.
+- types-common-location - 2.31 — location for common types.
+- types-api-location - 2.20 — API types location.
+- utils-shared-location - 2.11 — shared placement for utilities.
+- utils-feature-location - 1.99 — feature-local utilities location.
+- utils-pure-functions - 1.89 — enforce pure functions in utils.
+- utils-stateless - 1.77 — keep utils stateless.
+- assets-styles-location - 1.67 — styles placement.
+- assets-images-location - 1.59 — images placement.
+- assets-icons-location - 1.52 — icons placement.
+- assets-fonts-location - 1.44 — fonts placement.
+- assets-scoped-styles - 1.38 — scoped styles guidance.
+- middleware-global-location - 1.31 — global middleware location.
+- middleware-feature-location - 1.26 — feature middleware location.
+- middleware-descriptive-names - 1.19 — descriptive middleware names.
+- middleware-registration - 1.11 — middleware registration checks.
+- middleware-composable - 1.03 — middleware composable usage.
+- plugins-registration - 1.01 — plugin registration rules.
+- plugins-env-aware - 0.96 — plugin env-awareness checks.
+- plugins-init-before-mount - 0.88 — plugin initialization ordering.
+- plugins-api-conformance - 0.83 — plugin API conformance checks.
+- plugins-document-deps - 0.78 — plugin dependency documentation.
+- config-type-safe - 0.73 — config type-safety rules.
+- config-env-files - 0.68 — env file placement and usage.
+- config-no-secrets - 0.63 — prevent secrets in config.
+- config-environments - 0.58 — environment-specific config rules.
+- config-validate-runtime - 0.53 — runtime config validation.
+- config-location - 0.48 — config file location guidance.
+- config-export-typed - 0.43 — typed exports for config.
+- exports-named - 0.38 — prefer named exports.
+- exports-internal-hidden - 0.33 — hiding internal exports.
+- exports-types - 0.28 — export location for types.
+- exports-components-index - 0.23 — exporting components via index.
+- naming-pascalcase-exports - 0.18 — PascalCase export naming.
+- naming-camelcase-runtime - 0.15 — camelCase runtime naming.
+- naming-composables-prefix - 0.12 — `use` prefix naming for composables.
+- naming-pinia-stores - 0.09 — naming for Pinia stores.
+- naming-constants - 0.07 — naming for constants.
+- naming-event-kebab - 0.06 — kebab-case naming for events.
+- imports-no-deep-relative - 0.05 — avoid deep relative imports.
+- imports-from-index - 0.04 — prefer index imports.
+- imports-grouping - 0.03 — import grouping conventions.
+- service-named-exports - 0.02 — named exports for services.
+- service-use-api-client - 0.01 — enforce API client usage in services.
+- stores-cross-cutting - 0.01 — checks for cross-cutting stores.
