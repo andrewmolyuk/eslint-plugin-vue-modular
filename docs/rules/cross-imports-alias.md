@@ -1,5 +1,5 @@
 ````markdown
-# vue-modular/cross-imports-absolute
+# vue-modular/cross-imports-alias
 
 Enforce that cross-layer imports (between features or from features to shared) must use the project root alias (e.g. `@/`) instead of non-aliased absolute paths or relative paths that cross architectural boundaries.
 
@@ -32,12 +32,12 @@ Note: project-level settings control `rootPath`, `rootAlias`, `appPath`, `featur
 
 ```js
 {
-  "vue-modular/cross-imports-absolute": ["error"]
+  "vue-modular/cross-imports-alias": ["error"]
 }
 
 // ignore specific legacy files
 {
-  "vue-modular/cross-imports-absolute": ["error", { "ignores": ["src/legacy/**"] }]
+  "vue-modular/cross-imports-alias": ["error", { "ignores": ["src/legacy/**"] }]
 }
 ```
 

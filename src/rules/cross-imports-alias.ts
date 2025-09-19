@@ -55,7 +55,7 @@ export const crossImportsAbsolute = createRule<VueModularRuleModule>({
       },
     }
   },
-  name: 'cross-imports-absolute',
+  name: 'cross-imports-alias',
   recommended: false,
   level: 'error',
   meta: {

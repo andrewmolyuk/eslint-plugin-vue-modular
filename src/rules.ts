@@ -1,6 +1,6 @@
 import { componentsIndexRequired } from './rules/components-index-required'
 import { featureImports } from './rules/feature-imports'
-import { crossImportsAbsolute } from './rules/cross-imports-absolute'
+import { crossImportsAbsolute } from './rules/cross-imports-alias'
 import { featureIndexRequired } from './rules/feature-index-required'
 import { fileComponentNaming } from './rules/file-component-naming'
 import { fileTsNaming } from './rules/file-ts-naming'
@@ -26,7 +26,7 @@ export const rules: Record<string, VueModularRuleModule> = {
   'app-imports': appImports,
   'service-filename-no-suffix': serviceFilenameNoSuffix,
   'store-filename-no-suffix': storeFilenameNoSuffix,
-  'cross-imports-absolute': crossImportsAbsolute,
+  'cross-imports-alias': crossImportsAbsolute,
   'feature-imports': featureImports,
   'views-suffix': viewsSuffix,
 }

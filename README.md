@@ -109,7 +109,7 @@ If you have suggestions for new rules or improvements, please open an issue or w
 | ------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
 | [app-imports](./docs/rules/app-imports.md)                               | App folder can import from shared and features with specific exceptions       |
 | [components-index-required](./docs/rules/components-index-required.md)   | All components folders must contain an index.ts file for component exports    |
-| [cross-imports-absolute](./docs/rules/cross-imports-absolute.md)         | Cross-layer imports must use the project root alias instead of absolute paths |
+| [cross-imports-alias](./docs/rules/cross-imports-alias.md)               | Cross-layer imports must use the project root alias instead of absolute paths |
 | [feature-imports](./docs/rules/feature-imports.md)                       | Features should only import from the shared layer or their own internal files |
 | [feature-index-required](./docs/rules/feature-index-required.md)         | Each feature folder must contain an index.ts file as its public API           |
 | [file-component-naming](./docs/rules/file-component-naming.md)           | All Vue components must use PascalCase naming                                 |

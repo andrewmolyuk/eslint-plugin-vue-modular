@@ -1,12 +1,12 @@
 import { describe, it } from 'vitest'
-import { crossImportsAbsolute } from '../../src/rules/cross-imports-absolute'
+import { crossImportsAbsolute } from '../../src/rules/cross-imports-alias'
 import { getRuleTester } from '../test-utils'
 
 const ruleTester = getRuleTester()
 
-describe('cross-imports-absolute', () => {
-  it('test cases for cross-imports-absolute rule', () => {
-    ruleTester.run('cross-imports-absolute', crossImportsAbsolute, {
+describe('cross-imports-alias', () => {
+  it('test cases for cross-imports-alias rule', () => {
+    ruleTester.run('cross-imports-alias', crossImportsAbsolute, {
       valid: [
         // alias import from shared -> allowed
         { code: `import { util } from '@/shared/utils'`, filename: 'src/features/auth/components/Login.ts' },
