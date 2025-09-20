@@ -1,3 +1,5 @@
+![Hero Image](./docs/assets/social.png)
+
 # eslint-plugin-vue-modular
 
 [![Build Status](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/test.yml/badge.svg)](https://github.com/andrewmolyuk/eslint-plugin-vue-modular/actions/workflows/test.yml)
