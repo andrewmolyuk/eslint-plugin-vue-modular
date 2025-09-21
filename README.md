@@ -97,7 +97,7 @@ Notes:
 
 1. Install the plugin: `npm install eslint-plugin-vue-modular --save-dev`
 2. Add the recommended configuration to your ESLint config
-3. Run: `npx eslint src/`
+3. Run: `bunx eslint src/`
 
 The plugin will now enforce modular architecture patterns in your Vue.js project!
 

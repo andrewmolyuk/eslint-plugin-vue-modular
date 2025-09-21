@@ -6,19 +6,19 @@ install:
 	bun install --no-audit --no-fund 
 	
 lint: install
-	npx eslint . --ext .js,.ts,.json,.md --fix
-	npx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
-	npx tsc --noEmit
+	bunx eslint . --ext .js,.ts,.json,.md --fix
+	bunx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
+	bunx tsc --noEmit
 
 test: lint
-	CI=CI npx vitest --coverage
+	CI=CI bunx vitest --coverage
 
 build: test
 	rm -Rf dist
-	npx tsc --build
+	bunx tsc --build
 
 update:
-	npx npm-check-updates -u
+	bunx npm-check-updates -u
 	bun install --no-audit --no-fund
 
 drawio:
