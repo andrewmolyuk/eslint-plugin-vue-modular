@@ -62,6 +62,11 @@ describe('internal-imports-relative', () => {
           filename: 'apps/web/src/app/App.vue',
           code: "<script setup>import { iButton } from '@/shared/ui'</script>",
         },
+        // Shared file importing a feature via alias should be allowed (covers fromShared && !toShared && isAliasImport)
+        {
+          filename: '/project/src/shared/components/Button.vue',
+          code: "<script>import x from '@/features/featureA/utils'</script>",
+        },
       ],
       invalid: [
         // Alias import within the same feature
