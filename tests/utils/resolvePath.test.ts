@@ -20,6 +20,15 @@ describe('resolvePath', () => {
     expect(result).toBe('src/components/Button.vue')
   })
 
+  it('handles nested folders before root (e.g. apps/web/src/...)', () => {
+    const root = '/src'
+    const alias = '@'
+    const filename = '/home/andrew/projects/apps/web/src/shared/ui/button/iButton.vue'
+
+    const result = resolvePath(filename, root, alias)
+    expect(result).toBe('src/shared/ui/button/iButton.vue')
+  })
+
   it('returns the root when filename equals the root', () => {
     const root = '/project/src'
     const alias = '@'

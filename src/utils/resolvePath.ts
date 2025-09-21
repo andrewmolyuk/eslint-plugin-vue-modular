@@ -9,8 +9,9 @@ export function resolvePath(path: string, rootPath: string, rootAlias: string): 
   // when filename starts with alias + '/', replace alias with root
   if (normalizedPath.startsWith(`${normalizedAlias}/`)) return normalizedRoot + normalizedPath.slice(normalizedAlias.length)
 
-  // when filename includes root, return filename starting from root
-  if (normalizedPath.includes(`${normalizedRoot}`)) return normalizedPath.slice(normalizedPath.indexOf(`${normalizedRoot}`))
+  // when filename includes root, return filename starting from the last occurrence of root
+  const rootIndex = normalizedPath.lastIndexOf(`${normalizedRoot}`)
+  if (rootIndex !== -1) return normalizedPath.slice(rootIndex)
 
   // otherwise, return null
   return null
