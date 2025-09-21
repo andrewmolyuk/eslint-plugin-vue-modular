@@ -11,6 +11,7 @@ export const internalImportsRelative = createRule<VueModularRuleModule>({
     const options = parseRuleOptions(context, defaultOptions as unknown as Record<string, unknown>) as typeof defaultOptions
     const projectOptions = parseProjectOptions(context)
     const filename = resolvePath(context.filename, projectOptions.rootPath, projectOptions.rootAlias)
+
     if (!filename) return {}
     if (isIgnored(filename, options.ignores)) return {}
 
@@ -22,31 +23,34 @@ export const internalImportsRelative = createRule<VueModularRuleModule>({
         const resolvedPath = resolveImportPath(filename, importPath, projectOptions.rootPath, projectOptions.rootAlias)
         if (!resolvedPath) return
 
+        const alias = projectOptions.rootAlias
+        const isAliasImport = importPath === alias || importPath.startsWith(`${alias}/`)
+
         // Only care about imports within the same feature or same shared folder
         const fromFeature = filename.startsWith(projectOptions.featuresPath)
         const toFeature = resolvedPath.startsWith(projectOptions.featuresPath)
         if (fromFeature && toFeature) {
           const fromFeatureSegment = filename.slice(projectOptions.featuresPath.length).split('/')[1]
           const toFeatureSegment = resolvedPath.slice(projectOptions.featuresPath.length).split('/')[1]
-          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment !== toFeatureSegment) return
+          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment === toFeatureSegment && !isAliasImport) return
+          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment !== toFeatureSegment && isAliasImport) return
         }
 
         // Care about app and shared folders as well
         const fromApp = filename.startsWith(projectOptions.appPath)
         const toApp = resolvedPath.startsWith(projectOptions.appPath)
-        if (fromApp && toApp) return
+        if (fromApp && toApp && !isAliasImport) return
+        if (fromApp && !toApp && isAliasImport) return
 
         const fromShared = filename.startsWith(projectOptions.sharedPath)
         const toShared = resolvedPath.startsWith(projectOptions.sharedPath)
-        if (fromShared && toShared) return
+        if (fromShared && toShared && !isAliasImport) return
+        if (fromShared && !toShared && isAliasImport) return
 
         // If import is outside of app, features, or shared, ignore
         if (!fromApp && !fromFeature && !fromShared) return
         if (!toApp && !toFeature && !toShared) return
 
-        // If import uses alias, report (should be relative)
-        const alias = projectOptions.rootAlias
-        const isAliasImport = importPath === alias || importPath.startsWith(`${alias}/`)
         if (isAliasImport) {
           context.report({ node, messageId: 'useRelativeImport', data: { file: filename, target: importPath } })
         }
@@ -73,7 +77,7 @@ export const internalImportsRelative = createRule<VueModularRuleModule>({
       },
     ],
     messages: {
-      useRelativeImport: 'Use relative import for same-feature or nearby file imports.',
+      useRelativeImport: 'Use relative import for same-feature or nearby file imports ({{ file }} -> {{ target }}).',
     },
   },
 })
