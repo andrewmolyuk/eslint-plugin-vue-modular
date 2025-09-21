@@ -67,7 +67,7 @@ describe('internal-imports-relative', () => {
         // Alias import within the same feature
         {
           filename: '/project/src/features/featureA/fileA.ts',
-          code: "<script>import x from '@/features/featureA/fileB'",
+          code: "<script>import x from '@/features/featureA/fileB'</script>",
           errors: [{ messageId: 'useRelativeImport' }],
         },
         // Alias import within the same feature (subfolder)
@@ -81,6 +81,24 @@ describe('internal-imports-relative', () => {
           filename: 'apps/web/src/shared/ui/button/iButton.vue',
           code: "<script setup>import { cn } from '@/shared/utils/cn'</script>",
           errors: [{ messageId: 'useRelativeImport' }],
+        },
+        // Relative import within the same feature but too deep -> should report useAliasImport
+        {
+          filename: '/project/src/features/featureA/sub/sub2/fileA.ts',
+          code: "<script>import x from '../aaa/bbb/fileB'</script>",
+          errors: [{ messageId: 'useAliasImport' }],
+        },
+        // Relative import within the app but too deep -> should report useAliasImport
+        {
+          filename: 'src/app/sub1/sub2/fileA.ts',
+          code: "<script>import x from '../aaa/bbb/fileB'</script>",
+          errors: [{ messageId: 'useAliasImport' }],
+        },
+        // Relative import within shared but too deep -> should report useAliasImport
+        {
+          filename: '/project/src/shared/ui/button/iButton.vue',
+          code: "<script setup>import { cn } from '../../utils/cn'</script>",
+          errors: [{ messageId: 'useAliasImport' }],
         },
       ],
     })

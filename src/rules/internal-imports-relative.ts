@@ -1,8 +1,9 @@
-import { createRule, parseRuleOptions, parseProjectOptions, resolvePath, isIgnored } from '../utils'
+import { createRule, parseRuleOptions, parseProjectOptions, resolvePath, isIgnored, normalizePath } from '../utils'
 import type { VueModularRuleModule, VueModularRuleContext } from '../types'
 import { resolveImportPath } from '../utils'
 
 const defaultOptions = {
+  depth: 2,
   ignores: [] as string[],
 }
 
@@ -26,25 +27,53 @@ export const internalImportsRelative = createRule<VueModularRuleModule>({
         const alias = projectOptions.rootAlias
         const isAliasImport = importPath === alias || importPath.startsWith(`${alias}/`)
 
+        let depthSegments = 0
+        if (!isAliasImport && importPath.startsWith('.')) {
+          let path = normalizePath(importPath)
+          depthSegments = path.split('/').length - 1
+        }
+
         // Only care about imports within the same feature or same shared folder
         const fromFeature = filename.startsWith(projectOptions.featuresPath)
         const toFeature = resolvedPath.startsWith(projectOptions.featuresPath)
         if (fromFeature && toFeature) {
           const fromFeatureSegment = filename.slice(projectOptions.featuresPath.length).split('/')[1]
           const toFeatureSegment = resolvedPath.slice(projectOptions.featuresPath.length).split('/')[1]
-          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment === toFeatureSegment && !isAliasImport) return
+
+          if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment === toFeatureSegment && !isAliasImport) {
+            if (depthSegments <= options.depth) return
+            context.report({
+              node,
+              messageId: 'useAliasImport',
+              data: { file: filename, target: importPath, distance: String(depthSegments) },
+            })
+          }
           if (fromFeatureSegment && toFeatureSegment && fromFeatureSegment !== toFeatureSegment && isAliasImport) return
         }
 
         // Care about app and shared folders as well
         const fromApp = filename.startsWith(projectOptions.appPath)
         const toApp = resolvedPath.startsWith(projectOptions.appPath)
-        if (fromApp && toApp && !isAliasImport) return
+        if (fromApp && toApp && !isAliasImport) {
+          if (depthSegments <= options.depth) return
+          context.report({
+            node,
+            messageId: 'useAliasImport',
+            data: { file: filename, target: importPath, distance: String(depthSegments) },
+          })
+        }
         if (fromApp && !toApp && isAliasImport) return
 
         const fromShared = filename.startsWith(projectOptions.sharedPath)
         const toShared = resolvedPath.startsWith(projectOptions.sharedPath)
-        if (fromShared && toShared && !isAliasImport) return
+        if (fromShared && toShared && !isAliasImport) {
+          if (depthSegments <= options.depth) return
+          context.report({
+            node,
+            messageId: 'useAliasImport',
+            data: { file: filename, target: importPath, distance: String(depthSegments) },
+          })
+        }
         if (fromShared && !toShared && isAliasImport) return
 
         // If import is outside of app, features, or shared, ignore
@@ -71,6 +100,7 @@ export const internalImportsRelative = createRule<VueModularRuleModule>({
       {
         type: 'object',
         properties: {
+          depth: { type: 'number' },
           ignores: { type: 'array', items: { type: 'string' } },
         },
         additionalProperties: false,
@@ -78,6 +108,7 @@ export const internalImportsRelative = createRule<VueModularRuleModule>({
     ],
     messages: {
       useRelativeImport: 'Use relative import for same-feature or nearby file imports ({{ file }} -> {{ target }}).',
+      useAliasImport: 'Use alias import for distant ({{ distance }} levels) file imports ({{ file }} -> {{ target }}).',
     },
   },
 })
