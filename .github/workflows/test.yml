@@ -20,7 +20,7 @@ jobs:
       - name: Validate commit messages
         uses: wagoid/commitlint-github-action@v6
         with:
-          configFile: .commitlintrc.json
+          configFile: .commitlintrc
 
       - uses: actions/setup-node@v5
         with:
