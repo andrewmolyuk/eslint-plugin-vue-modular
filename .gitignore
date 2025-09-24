@@ -1,6 +1,7 @@
 # Node dependencies
 node_modules
 dist
+package-lock.json
 
 # System files
 .DS_Store
