@@ -122,6 +122,7 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | [shared-imports](./docs/rules/shared-imports.md)                         | Shared folder cannot import from features or views                                                         |
 | [shared-ui-index-required](./docs/rules/shared-ui-index-required.md)     | The shared/ui folder must contain an index.ts file for UI component exports                                |
 | [store-filename-no-suffix](./docs/rules/store-filename-no-suffix.md)     | Store files must not have Store suffix                                                                     |
+| [stores-location](./docs/rules/stores-location.md)                       | Store files must live under shared/stores or features/\*/stores (recommended)                              |
 | [views-suffix](./docs/rules/views-suffix.md)                             | View files must end with View.vue suffix                                                                   |
 
 ## Contributing

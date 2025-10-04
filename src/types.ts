@@ -17,6 +17,7 @@ export interface VueModularProjectOptions {
   layoutsPath: string
   featuresPath: string
   sharedPath: string
+  storesFolderName: string
   componentsFolderName: string
   viewsFolderName: string
   uiFolderName: string

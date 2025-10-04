@@ -10,5 +10,6 @@ export const defaultProjectOptions: VueModularProjectOptions = {
   sharedPath: 'src/shared',
   componentsFolderName: 'components',
   viewsFolderName: 'views',
+  storesFolderName: 'stores',
   uiFolderName: 'ui',
 }

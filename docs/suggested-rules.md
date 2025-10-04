@@ -4,7 +4,7 @@ The following rules are suggestions for future implementation. They are sorted f
 
 Scoring is based on: modular architecture impact (50%), maintainability (30%), and clean code practices (20%).
 
-- stores-shared-location - 6.45 — shared store placement.
+- stores-location - 6.45 — shared store placement.
 - services-shared-location - 6.20 — shared services placement.
 - services-feature-location - 6.00 — feature-local services placement.
 - store-pinia-composition - 5.84 — store composition conventions.
