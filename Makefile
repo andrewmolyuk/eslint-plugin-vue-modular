@@ -34,5 +34,4 @@ next:
 	git checkout main
 	git merge next
 	git push -u origin main
-	git pull 
 	make clean
