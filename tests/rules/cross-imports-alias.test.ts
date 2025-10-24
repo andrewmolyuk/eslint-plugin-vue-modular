@@ -34,6 +34,8 @@ describe('cross-imports-alias', () => {
         { code: `import { config } from '@/shared/config'`, filename: 'src/shared/components/Input.vue' },
         // direct shared to shared with relative path
         { code: `import { helper } from './helper'`, filename: 'src/shared/services/api.ts' },
+        // alias import across features (allowed)
+        { code: `import other from '@/features/payments/utils'`, filename: 'src/features/auth/Login.ts' },
       ],
       invalid: [
         // feature -> another feature using non-alias absolute path
@@ -52,6 +54,12 @@ describe('cross-imports-alias', () => {
         {
           code: `import z from '../../features/auth/utils'`,
           filename: 'src/shared/lib/file.ts',
+          errors: [{ messageId: 'useAlias' }],
+        },
+        // non-aliased absolute import from one feature to another should be reported
+        {
+          code: `import stuff from '/src/features/payments/utils'`,
+          filename: 'src/features/auth/Login.ts',
           errors: [{ messageId: 'useAlias' }],
         },
       ],
