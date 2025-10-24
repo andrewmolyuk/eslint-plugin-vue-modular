@@ -36,10 +36,8 @@ export const sfcOrder = createRule<VueModularRuleModule>({
         if (descriptor.template) blocks.push({ type: 'template', pos: descriptor.template.loc.start.offset })
 
         // styles (multiple)
-        if (Array.isArray(descriptor.styles)) {
-          for (const s of descriptor.styles) {
-            blocks.push({ type: 'style', pos: s.loc.start.offset })
-          }
+        for (const s of descriptor.styles) {
+          blocks.push({ type: 'style', pos: s.loc.start.offset })
         }
 
         // Sort by position to get actual order

@@ -86,6 +86,12 @@ describe('sfc-order', () => {
           options: [{ order: ['script', 'template', 'style'] }],
           errors: [{ messageId: 'wrongOrder' }],
         },
+        // both <script> and <script setup> present, wrong order
+        {
+          code: '<template><div/></template><script>const a = 1</script><script setup>const b = 2</script><style>body{}</style>',
+          filename: 'src/components/BothScriptWrong.vue',
+          errors: [{ messageId: 'wrongOrder' }],
+        },
       ],
     })
   })
