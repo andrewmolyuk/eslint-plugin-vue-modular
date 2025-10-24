@@ -38,6 +38,11 @@ describe('shared-imports', () => {
           code: `import { util } from '@/shared/utils'`,
           filename: 'src/shared/lib/util.ts',
         },
+        // export from shared (should be allowed) - covers ExportAllDeclaration branch where resolvedPath is inside sharedPath
+        {
+          code: `export * from '@/shared/helpers'`,
+          filename: 'src/shared/lib/util.ts',
+        },
         // external imports are ignored
         {
           code: `import external from 'left-pad'`,
