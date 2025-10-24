@@ -46,6 +46,11 @@ describe('app-imports', () => {
           filename: 'src/app/router.ts',
           errors: [{ messageId: 'forbiddenImport', data: { file: 'src/app/router.ts', target: '@/lib/some' } }],
         },
+        {
+          code: "import m from '@/features/auth/someFile'",
+          filename: 'src/app/main.ts',
+          errors: [{ messageId: 'forbiddenImport', data: { file: 'src/app/main.ts', target: '@/features/auth/someFile' } }],
+        },
       ],
     })
   })
