@@ -24,6 +24,8 @@ export default [
     rules: {
       ...(tsPlugin.configs.strict && tsPlugin.configs.strict.rules ? tsPlugin.configs.strict.rules : {}),
       ...(tsPlugin.configs.stylistic && tsPlugin.configs.stylistic.rules ? tsPlugin.configs.stylistic.rules : {}),
+      // Disable problematic rule that has a bug with complex types
+      '@typescript-eslint/unified-signatures': 'off',
     },
     languageOptions: {
       parser: tsParser,
