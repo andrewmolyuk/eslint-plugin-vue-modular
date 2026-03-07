@@ -22,9 +22,9 @@ Examples of unacceptable behavior include, but are not limited to:
 
 ## Reporting
 
-If you experience or witness unacceptable behavior, please report it as soon as possible. Provide as much detail as you can (who, when, where, what happened). Reports will be treated seriously and handled promptly and confidentially.
+If you experience or witness unacceptable behavior, please report it as soon as possible. Provide as much detail as you can (who, when, where, what happened). Reports will be treated seriously and handled promptly, with confidentiality.
 
-Preferred reporting methods:
+Preferred reporting method:
 
 - Open an issue in this repository titled "Code of Conduct report" and mark it as private if your platform supports it.
 

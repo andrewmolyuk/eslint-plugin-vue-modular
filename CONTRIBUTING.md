@@ -6,7 +6,7 @@ We don't expect you to be familiar with all aspects of the project, so please fe
 
 ## Code of Conduct
 
-This project and everyone participating in it is expected to adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md). Please report unacceptable behavior to the maintainers.
+This project and everyone participating in it are expected to adhere to our [Code of Conduct](./CODE_OF_CONDUCT.md). Please report unacceptable behavior to the maintainers.
 
 ## Getting Started
 
