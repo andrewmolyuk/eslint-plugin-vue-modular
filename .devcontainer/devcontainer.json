@@ -5,6 +5,10 @@
     "context": ".."
   },
   "remoteUser": "node",
+  "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+  ],
   "postCreateCommand": "make install",
   "customizations": {
     "vscode": {
