@@ -125,6 +125,27 @@ This plugin provides rules to enforce modular architecture boundaries in Vue.js 
 | [stores-location](./docs/rules/stores-location.md)                       | Store files must live under shared/stores or features/\*/stores                                            |
 | [views-suffix](./docs/rules/views-suffix.md)                             | View files must end with View.vue suffix                                                                   |
 
+## Development Workflow
+
+All main developer tasks are managed via the Makefile. Use the following commands:
+
+- `make install` — Install dependencies
+- `make lint` — Run linting and formatting checks
+- `make test` — Run all tests with coverage
+- `make build` — Build the project
+- `make update` — Update dependencies
+- `make drawio` — Generate diagrams
+- `make clean` — Clean build artifacts and branches
+- `make next` — Merge 'next' branch into 'main' and clean
+
+You can also use npm/bun scripts as wrappers:
+
+- `bun run lint` or `npm run lint` (calls `make lint`)
+- `bun run test` or `npm run test` (calls `make test`)
+- ...etc.
+
+See the Makefile for full command details.
+
 ## Contributing
 
 We welcome contributions!
