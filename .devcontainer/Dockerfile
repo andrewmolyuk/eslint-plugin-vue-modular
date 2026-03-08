@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.23
 
 # Install necessary packages for development.
 RUN apk update && apk add git gnupg openssh curl make bash nodejs
