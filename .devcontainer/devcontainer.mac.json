@@ -1,9 +1,6 @@
 {
   "mounts": [
-    "source=${localEnv:HOME}/.ssh,target=/root/.ssh,type=bind,consistency=cached",
+    "source=${localEnv:HOME}/.ssh,target=/home/dev/.ssh,type=bind,consistency=cached",
     "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent.sock,type=bind,consistency=cached"
-  ],
-  "remoteEnv": {
-    "SSH_AUTH_SOCK": "/ssh-agent.sock"
-  }
+  ]
 }

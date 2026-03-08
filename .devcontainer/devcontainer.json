@@ -1,5 +1,5 @@
 {
-  "name": "GPG in Devcontainer",
+  "name": "eslint-plugin-vue-modular",
   "build": {
     "dockerfile": "Dockerfile"
   },
