@@ -1,19 +1,17 @@
-FROM mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
+FROM alpine:latest
 
-# Install tools required by the project's Makefile/scripts and signed commit flow.
-RUN apt-get update \
-	&& export DEBIAN_FRONTEND=noninteractive \
-	&& apt-get install -y --no-install-recommends \
-		curl \
-		make \
-		gnupg2 \
-	&& apt-get clean \
-∏	&& rm -rf /var/lib/apt/lists/*
+# Install necessary packages for development.
+RUN apk update && apk add git gnupg openssh curl make bash nodejs
 
-USER node
+# Create a non-root user for development
+RUN adduser -D dev
+USER dev
+WORKDIR /home/dev
 
-ENV BUN_INSTALL=/home/node/.bun
+ENV BUN_INSTALL=/home/dev/.bun
 ENV PATH="${BUN_INSTALL}/bin:${PATH}"
 
 # Install Bun for the dev user so bun/bunx are available in interactive shells.
-RUN curl -fsSL https://bun.sh/install | bash
+# Bun installer currently only places `bun`; add a `bunx` compatibility entrypoint.
+RUN curl -fsSL https://bun.sh/install | bash \
+	&& ln -sf "${BUN_INSTALL}/bin/bun" "${BUN_INSTALL}/bin/bunx"

@@ -11,7 +11,7 @@ lint: install
 	bunx tsc --noEmit
 
 test: lint
-	CI=CI bunx vitest --coverage
+	CI=CI node ./node_modules/vitest/vitest.mjs run --coverage
 
 build: test
 	rm -Rf dist
