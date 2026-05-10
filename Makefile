@@ -1,25 +1,35 @@
 .PHONY: install lint test build update drawio clean next
 SHELL := /bin/bash
 DEFAULT_GOAL := build
+PACKAGE_MANAGER ?= bun
+
+ifeq ($(PACKAGE_MANAGER),bun)
+INSTALL_CMD := bun install --no-audit --no-fund
+RUN_CMD := bunx
+UPDATE_CMD := bunx npm-check-updates -u && bun install --no-audit --no-fund
+else
+INSTALL_CMD := npm install --no-audit --no-fund
+RUN_CMD := npm exec --
+UPDATE_CMD := npx npm-check-updates -u && npm install --no-audit --no-fund
+endif
 
 install:
-	bun install --no-audit --no-fund 
+	$(INSTALL_CMD)
 	
 lint: install
-	bunx eslint . --ext .js,.ts,.json,.md --fix
-	bunx prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
-	bunx tsc --noEmit
+	$(RUN_CMD) eslint . --ext .js,.ts,.json,.md --fix
+	$(RUN_CMD) prettier --write "**/*.md" "**/*.json" "**/*.ts" --log-level warn
+	$(RUN_CMD) tsc --noEmit
 
 test: lint
 	CI=CI node ./node_modules/vitest/vitest.mjs run --coverage
 
 build: test
 	rm -Rf dist
-	bunx tsc --build
+	$(RUN_CMD) tsc --build
 
 update:
-	bunx npm-check-updates -u
-	bun install --no-audit --no-fund
+	@$(UPDATE_CMD)
 
 drawio:
 	@chmod +x .scripts/drawio.sh || true

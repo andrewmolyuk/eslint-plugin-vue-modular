@@ -6,7 +6,8 @@ To set up a development environment for `eslint-plugin-vue-modular`, read the fo
 
 - Git (for version control, see <https://git-scm.com/>)
 - Node.js (LTS version recommended, see <https://nodejs.org/>)
-- Bun package manager (latest version recommended, see <https://bun.sh/>)
+- npm (bundled with Node.js)
+- Bun package manager (optional, see <https://bun.sh/>)
 - Make (for running tasks from the Makefile, see <https://www.gnu.org/software/make/>)
 - GPG (for signing commits, see <https://gnupg.org/>)
 - Basic knowledge of ESLint plugin development and Vue.js is helpful but not required.
@@ -20,6 +21,8 @@ To set up a development environment for `eslint-plugin-vue-modular`, read the fo
    ```sh
    make install
    ```
+
+   The Makefile uses npm by default. If you want to use Bun instead, run `make PACKAGE_MANAGER=bun install`.
 
 3. Run lint, tests and build to ensure everything is set up correctly:
 

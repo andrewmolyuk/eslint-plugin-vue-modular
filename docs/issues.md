@@ -41,7 +41,7 @@ All issues should be reported via the [GitHub Issues page](https://github.com/an
 
 6. **Environment Details**
    - Include relevant environment info:
-     - OS, Node.js version, Bun version, ESLint version, plugin version
+   - OS, Node.js version, package manager and version (npm or Bun), ESLint version, plugin version
      - Project setup (e.g., flat config, TypeScript, Vue version)
 
 7. **Screenshots or Logs**
@@ -79,7 +79,7 @@ No error should be reported for imports from the shared layer.
 **Environment**
 - OS: Ubuntu 22.04
 - Node.js: 22.0.0
-- Bun: 1.0.0
+- Package manager: npm 10.0.0
 - ESLint: 10.0.3
 - Plugin: 0.0.0
 

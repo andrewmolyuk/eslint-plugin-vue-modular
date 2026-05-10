@@ -42,6 +42,12 @@ This package is published on npm and should be installed as a devDependency in y
 npm install eslint-plugin-vue-modular --save-dev
 ```
 
+Optional Bun alternative:
+
+```bash
+bun add -d eslint-plugin-vue-modular
+```
+
 > ESLint is not bundled with eslint-plugin-vue-modular. You need to install ESLint separately in your project.
 
 ## Usage
@@ -97,7 +103,7 @@ Notes:
 
 1. Install the plugin: `npm install eslint-plugin-vue-modular --save-dev`
 2. Add the recommended configuration to your ESLint config
-3. Run: `bunx eslint src/`
+3. Run: `npx eslint src/` or `bunx eslint src/`
 
 The plugin will now enforce modular architecture patterns in your Vue.js project!
 
@@ -138,10 +144,12 @@ All main developer tasks are managed via the Makefile. Use the following command
 - `make clean` — Clean build artifacts and branches
 - `make next` — Merge 'next' branch into 'main' and clean
 
-You can also use npm/bun scripts as wrappers:
+By default, the Makefile uses npm, so a plain `make build` works in a Node-only environment. If you prefer Bun, pass `PACKAGE_MANAGER=bun`, for example `make PACKAGE_MANAGER=bun build`.
 
-- `bun run lint` or `npm run lint` (calls `make lint`)
-- `bun run test` or `npm run test` (calls `make test`)
+You can also use package scripts as wrappers:
+
+- `npm run lint` or `bun run lint` (calls `make lint`)
+- `npm run test` or `bun run test` (calls `make test`)
 - ...etc.
 
 See the Makefile for full command details.

@@ -86,7 +86,7 @@ Formatting is enforced by [Prettier](https://prettier.io/) and [eslint-config-pr
 - Linting is enforced via ESLint with Prettier integration.
 - All code must pass lint and type checks before merging.
 - Tests are written using [Vitest](https://vitest.dev/) and must cover all rules and utilities.
-- Use `bunx eslint . --ext .js,.ts,.json,.md --fix` and `bunx tsc --noEmit` to check code quality.
+- Use `npx eslint . --ext .js,.ts,.json,.md --fix` and `npx tsc --noEmit` to check code quality. Bun users can substitute `bunx`.
 
 ---
 
