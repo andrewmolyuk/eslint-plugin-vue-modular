@@ -1,7 +1,6 @@
 # Node dependencies
 node_modules
 dist
-package-lock.json
 
 # System files
 .DS_Store
@@ -17,6 +16,7 @@ package-lock.json
 
 # Logs and build info
 *.log
+*.tsbuildinfo
 
 # Test and cache outputs
 coverage
