@@ -144,7 +144,7 @@ All main developer tasks are managed via the Makefile. Use the following command
 - `make clean` — Clean build artifacts and branches
 - `make next` — Merge 'next' branch into 'main' and clean
 
-By default, the Makefile uses npm, so a plain `make build` works in a Node-only environment. If you prefer Bun, pass `PACKAGE_MANAGER=bun`, for example `make PACKAGE_MANAGER=bun build`.
+By default, the Makefile uses Bun via `PACKAGE_MANAGER ?= bun`, so a plain `make build` uses `bun install` and `bunx`. If you prefer npm, override it explicitly, for example `make PACKAGE_MANAGER=npm build`.
 
 You can also use package scripts as wrappers:
 
