@@ -20,3 +20,7 @@ dist
 
 # Test and cache outputs
 coverage
+
+# Skills files
+.agents
+skills-lock.json

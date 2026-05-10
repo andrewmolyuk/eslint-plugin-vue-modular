@@ -12,9 +12,12 @@ INSTALL_CMD := npm install --no-audit --no-fund
 RUN_CMD := npm exec --
 UPDATE_CMD := npx npm-check-updates -u && npm install --no-audit --no-fund
 endif
+SKILLS_INSTALL_CMD := npx -y autoskills -y >/dev/null
+SKILLS_UPDATE_CMD := npx -y skills update -p -y >/dev/null
 
 install:
 	$(INSTALL_CMD)
+	@$(SKILLS_INSTALL_CMD)
 	
 lint: install
 	$(RUN_CMD) eslint . --ext .js,.ts,.json,.md --fix
@@ -30,6 +33,7 @@ build: test
 
 update:
 	@$(UPDATE_CMD)
+	@if [ -d .agents/skills ] || [ -f skills-lock.json ]; then $(SKILLS_UPDATE_CMD); fi
 
 drawio:
 	@chmod +x .scripts/drawio.sh || true
@@ -38,6 +42,8 @@ drawio:
 clean:
 	@chmod +x .scripts/clean.sh || true
 	@.scripts/clean.sh
+	rm -rf .agents
+	rm -f skills-lock.json
 
 next:
 	git pull origin main
