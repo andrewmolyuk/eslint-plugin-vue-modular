@@ -7,13 +7,16 @@ ifeq ($(PACKAGE_MANAGER),bun)
 INSTALL_CMD := bun install --no-audit --no-fund
 RUN_CMD := bunx
 UPDATE_CMD := bunx npm-check-updates -u && bun install --no-audit --no-fund
+SKILLS_INSTALL_CMD := bunx -y autoskills -y >/dev/null
+SKILLS_UPDATE_CMD := bunx -y skills update -p -y >/dev/null
 else
 INSTALL_CMD := npm install --no-audit --no-fund
 RUN_CMD := npm exec --
 UPDATE_CMD := npx npm-check-updates -u && npm install --no-audit --no-fund
-endif
 SKILLS_INSTALL_CMD := npx -y autoskills -y >/dev/null
 SKILLS_UPDATE_CMD := npx -y skills update -p -y >/dev/null
+endif
+
 
 install:
 	$(INSTALL_CMD)

@@ -16,6 +16,7 @@ import { storeFilenameNoSuffix } from './rules/store-filename-no-suffix'
 import { storesLocation } from './rules/stores-location'
 import { viewsSuffix } from './rules/views-suffix'
 import { VueModularRuleModule } from './types'
+import { composableFilenamePrefix } from './rules/composableFilenamePrefx'
 
 export const rules: Record<string, VueModularRuleModule> = {
   'app-imports': appImports,
@@ -35,4 +36,5 @@ export const rules: Record<string, VueModularRuleModule> = {
   'store-filename-no-suffix': storeFilenameNoSuffix,
   'stores-location': storesLocation,
   'views-suffix': viewsSuffix,
+  'composable-filename-prefix': composableFilenamePrefix,
 }
